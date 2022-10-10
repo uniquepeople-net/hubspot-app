@@ -6,18 +6,32 @@
 
 <script>
 export default {
-  data() {
-    return {
-      message: 'Hello World!',
-    };
-  },
+	mounted() {
+		axios.post('http://localhost:80/api/register', { 
+			name: 'chmulo',
+			email: 'chmulo@g.sk',
+			password: 'password',
+		}).then(
+			response => {
+				console.log(response)				
+			}
+		)
+	},
+	data() {
+		return {
+		message: 'Hello World!',
+		};
+	},
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
   #app {
     font-size: 18px;
     font-family: 'Roboto', sans-serif;
     color: blue;
+	& div {
+		font-size: 2rem;
+	}
   }
 </style>
