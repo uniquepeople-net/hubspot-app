@@ -1,15 +1,15 @@
 version: '3.8'
 
 services:
-  vue_app:
-    container_name: vue_app
+  vue-app:
+    container_name: vue-app
     build:
       context: .
       dockerfile: Dockerfile
-    image: vue_app:0.0.2
+    image: vue-app:0.0.2
     volumes:
-      - '.:/vue-app'
-      - '/vue-app/node_modules'
+      - .:/vue-app
+      - ./node_modules:/vue-app/node_modules
     ports:
       - 5000:5000
     environment:
