@@ -1,23 +1,6 @@
 stages:
-  #- test
-  #- build
   - package
-  #- deploy
-
-#test:
-#  image: maven:latest
-#  stage: test
-#  script: "mvn clean test" 
-#
-#build:
-#  image: maven:latest
-#  stage: build
-#  script: "mvn clean package -B -DskipTests"
-#  rules:
-#    - if: $CI_COMMIT_BRANCH == "develop"
-#  artifacts:
-#    paths:
-#      - target/*.jar
+  - deploy
 
 package:
   stage: package
@@ -29,17 +12,17 @@ package:
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA --destination $CI_REGISTRY_IMAGE:latest
 
-#deploy_develop:
-#  stage: deploy
-#  dependencies:
-#    - package
-#  image:
-#    name: bitnami/kubectl:latest
-#    entrypoint: [""]
-#  script:
-#    - kubectl set image deployment/review-app-dev-fe review-app-dev-fe=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA -n review-app-dev --token=$REVIEW_APP_DEV_TOKEN
-#  rules:
-#    - if: $CI_COMMIT_BRANCH == "develop"
-#  tags:
-#    - kube-runner 
+deploy_develop:
+  stage: deploy
+  dependencies:
+    - package
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: [""]
+  script:
+    - kubectl set image deployment/ufp-dev-ufp-vue-webpack ufp-dev-ufp-vue-webpack =$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA -n ufp-dev --token=$UFP_DEV_TOKEN
+  #rules:
+  #  - if: $CI_COMMIT_BRANCH == "develop"
+  tags:
+    - kube-runner 
 
