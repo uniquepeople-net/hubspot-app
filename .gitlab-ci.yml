@@ -20,7 +20,7 @@ deploy_develop:
     name: bitnami/kubectl:latest
     entrypoint: [""]
   script:
-    - kubectl set image deployment/ufp-dev-ufp-vue-webpack ufp-dev-ufp-vue-webpack =$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA -n ufp-dev --token=$UFP_DEV_TOKEN
+    - kubectl set image deployment/ufp-dev-ufp-vue-webpack ufp-dev-ufp-vue-webpack=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA -n ufp-dev --token=$UFP_DEV_TOKEN
   #rules:
   #  - if: $CI_COMMIT_BRANCH == "develop"
   tags:
