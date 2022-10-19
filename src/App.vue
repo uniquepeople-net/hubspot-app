@@ -1,57 +1,45 @@
 <template>
-	<div id="app">
-		{{ message }}
-	</div>
-	<Chart type="doughnut" :data="chartData" :options="options" />
+
 	<router-view></router-view>
+
 </template>
 
 <script>
 
 export default {
 	mounted() {
-		/* axios.post('http://localhost:80/api/register', { 
-			name: 'user',
-			email: 'user@g.sk',
+
+		/*axios.post('http://localhost:80/api/login' , /* { 
+			name: 'puser',
+			email: 'puser@u.sk',
 			password: 'password',
-		}).then(
-			response => {
-				console.log(response)				
-			}
-		) */
+			password_confirmation: 'password' 
+		} */
+		/*{ 
+			email: 'puser@u.sk',
+			password: 'password',			
+		}
+		/* { headers: {
+			Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYXV0aF9uZ2lueC9hcGkvbG9naW4iLCJpYXQiOjE2NjYwMDY0NzAsImV4cCI6MTY2NjAxMDA3MCwibmJmIjoxNjY2MDA2NDcwLCJqdGkiOiJ4cDh4YzBoM3RDcFNlYTVVIiwic3ViIjoiMjMiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.Ldg_ZnkWhm927H4HylgTv7DLx9hsPwcyb4ELyAJvQAg' }
+		} */
+		/*).then( response => console.log(response))*/
+		
 	},
+	
+	
+	
 	data() {
 		return {
-			message: 'Vue App',
-			chartData: {
-				labels: ['Accurate','Non'],
-				datasets: [
-					{
-						data: [15,7],
-						backgroundColor: ["#FF6384","#36A2EB"],
-						hoverBackgroundColor: ["#FF6384","#36A2EB"]
-					}
-				]
-			},
-			options: {
-				//responsive: true,
-				plugins: {
-					legend: {
-						labels: {
-							color: '#333'
-						}
-					}
-				}
-			}
-		};
+
+		}
 	},
-};
+}
 </script>
 
 <style lang="scss" scoped>
-  #app {
+  /* #app {
     font-size: 18px;
     font-family: 'Roboto', sans-serif;
     color: rgb(43, 59, 13);
-  }
+  } */
 </style>

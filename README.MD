@@ -16,12 +16,14 @@ First time you start you need to build the image
 
 
 **To every next start docker** \
-Every next time, when you start 
+**Every next time, when you start** \ 
+
 > docker-compose up -d
 
 
 **Commands**
-1. For Node commands
+**1. For Node commands** \
+
 > docker run --rm -w /home/node/vue-app -v $PWD:/home/node/vue-app node:16 npm install || do npm install
 
 **To stop docker**

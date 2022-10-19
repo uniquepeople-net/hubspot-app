@@ -34,9 +34,21 @@ export const routes = [
 	//{ path: '/user-profile', component: UserProfile, name:'user-profile' }
 ] */
 
-import Router from '../Routertest.vue';
 
+import Login from '../Auth/Login.vue';
+import Logout from '../Auth/Logout.vue';
+//import Register from '../Auth/Register.vue';
+import Forget from '../Auth/Forget.vue';
+
+import Dashboard from '../Dashboard/Dashboard.vue';
 
 export const routes = [
-	{ path: '/router', component: Router }
+
+	{ path: '/', component: Dashboard, name: 'dashboard' },
+
+	{ path: '/login', component: Login, name: 'login' },
+    //{ path: '/register', component: Register, name:'register' },
+    { path: '/logout', component: Logout, name:'logout' },
+    { path: '/forget', component: Forget, name:'forget' },
+	//{ path: '/user-profile', component: UserProfile, name:'user-profile' }
 ]
