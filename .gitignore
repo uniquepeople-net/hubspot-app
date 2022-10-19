@@ -29,4 +29,5 @@ test/
 node_modules
 dist
 yarn.lock
+/package-lock.json
 # End of https://www.toptal.com/developers/gitignore/api/vue,git
