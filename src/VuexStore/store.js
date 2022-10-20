@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 
 import user from './Modules/user';
+import links from './Modules/links';
 /*import allUsers from './Modules/allUsers';
 import specificUser from './Modules/specificUser';
 import instatByMatch from './Modules/instatByMatch';
