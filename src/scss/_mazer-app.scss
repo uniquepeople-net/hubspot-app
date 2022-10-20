@@ -747,7 +747,7 @@ select:disabled {
 [type="reset"],
 [type="submit"],
 button {
-  -webkit-appearance: button;
+  --webkit-appearance: button;
 }
 [type="button"]:not(:disabled),
 [type="reset"]:not(:disabled),
@@ -797,21 +797,21 @@ legend + * {
   height: auto;
 }
 [type="search"] {
-  -webkit-appearance: textfield;
+  --webkit-appearance: textfield;
   outline-offset: -2px;
 }
 ::-webkit-search-decoration {
-  -webkit-appearance: none;
+  --webkit-appearance: none;
 }
 ::-webkit-color-swatch-wrapper {
   padding: 0;
 }
 ::-webkit-file-upload-button {
-  -webkit-appearance: button;
+  --webkit-appearance: button;
   font: inherit;
 }
 ::file-selector-button {
-  -webkit-appearance: button;
+  --webkit-appearance: button;
   font: inherit;
 }
 output {
