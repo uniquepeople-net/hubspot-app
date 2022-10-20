@@ -21,6 +21,19 @@ const router = createRouter({
     routes
 }) 
 
+// CryptoJs
+import CryptoJs from 'crypto-js'; 
+window.CryptoJs = CryptoJs;
+
+//import helpers functions
+import Helpers from './Helpers/Helpers';
+window.Helpers = Helpers;
+
+// User helper
+import User from './Helpers/User';
+window.User = User;
+
+
 // Import main template
 import App from './App.vue';
 

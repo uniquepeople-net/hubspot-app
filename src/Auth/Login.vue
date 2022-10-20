@@ -100,8 +100,7 @@ export default {
 						}).then(
 							response => {
 								this.toggleDialog();
-								console.log(response.data)
-								
+								console.log(response.data)							
 							}
 						)
         },

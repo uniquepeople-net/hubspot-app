@@ -18,6 +18,16 @@ class Helpers {
 			})			
 	} */
 
+	encryptAes(string, secretKey) {
+		let phrase = CryptoJs.AES.encrypt(string, secretKey).toString()
+		return phrase;
+	}
+
+	decryptAes( phrase, secretKey ) {
+		let originString = CryptoJs.AES.decrypt(phrase, secretKey).toString(CryptoJs.enc.Utf8)
+		return originString
+	}
+
 }
 
 export default Helpers = new Helpers();

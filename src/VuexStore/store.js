@@ -8,6 +8,7 @@ import instatMatch from './Modules/instatMatch'; */
 
 const store = createStore({
 	modules: {
+		links,
 		user,
 		/*allUsers,
 		specificUser,
