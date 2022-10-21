@@ -2,7 +2,7 @@
 	<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
             <div class="flex align-items-center flex-column pt-6 px-3">
                 <i class="pi pi-check-circle" :style="{fontSize: '5rem', color: 'var(--green-500)' }"></i>
-                <h5>Registration Successful!</h5>
+                <h5>Login Successful!</h5>
                 <p :style="{lineHeight: 1.5, textIndent: '1rem'}">
                     Your account is registered under email: <b>{{email}}</b>.
                 </p>
@@ -13,6 +13,7 @@
                 </div>
             </template>
     </Dialog>
+	
 
 	<AuthWrapper>
 		<template v-slot:title>
@@ -76,6 +77,7 @@ export default {
             password: '',
 			submitted: false,
             showMessage: false,
+			messages: [],
         }
     },
     validations() {
@@ -93,15 +95,28 @@ export default {
                 return;
             }
 
-			axios.post( 'http://localhost:80/api/login', { 
+			let apiGwloginUrl = this.$store.getters['links/loginApiGwUrl'];
+
+			axios.post( apiGwloginUrl , { 
 								email: this.email,
 								password: this.password,
 										  
 						}).then(
 							response => {
 								this.toggleDialog();
-								console.log(response.data)							
+								console.log(response.data)
+								let data = response.data
+								if ( data.authorisation ) {
+									User.responseAfterLogin(data.authorisation.token)
+									Toast.fire({
+										icon: 'success',
+										title: 'Signed in successfully'
+									})
+									this.$router.push('/');							
+								}
 							}
+						).catch( response =>
+							console.error(response)
 						)
         },
         toggleDialog() {

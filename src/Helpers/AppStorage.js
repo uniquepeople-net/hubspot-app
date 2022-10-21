@@ -3,8 +3,9 @@ import Helpers from './Helpers';
 class AppStorage {
 
 	storeToken(data) { 
-		let encToken = Helpers.encryptAes(data, 'skey')
-		localStorage.setItem('token', encToken)
+		/*let encToken = Helpers.encryptAes(data, 'skey')
+		localStorage.setItem('token', encToken)*/
+		localStorage.setItem('token', data)
 	}
 
 	store(token) {
@@ -17,8 +18,9 @@ class AppStorage {
 
 	getToken() {
 		let localStorageToken = localStorage.getItem('token');
-		let decToken = Helpers.decryptAes( localStorageToken, 'skey' );
-		return decToken;
+		/* let decToken = Helpers.decryptAes( localStorageToken, 'skey' );
+		return decToken; */
+		return localStorageToken
 	}
 
 }

@@ -1,13 +1,34 @@
 export default {
 	namespaced: true,
-	state: () => ({
-		loginAuthUrl: 'http://auth_nginx/api/login',
-		registerAuthUrl: 'http://auth_nginx/api/register',
+	state: () => ({		
+		// API GW routes
+		loginApiGwUrl: 			'http://localhost:80/api/login',
+		userProfileApiGwUrl: 	'http://localhost:80/api/user-profile',
+		refreshApiGwUrl: 		'http://localhost:80/api/refresh',
+
+		// Auth service routes for token iss check
+		loginAuthServiceUrl: 	'http://auth_nginx/api/login',
+		registerAuthServiceUrl: 'http://auth_nginx/api/register',
 	}),
 
 	getters: {
-		jwtPayloadIss(state) {
-			return state.jwtPayloadIss
+		// Api Gw routes getters
+		loginApiGwUrl(state) {
+			return state.loginApiGwUrl
+		},
+		userProfileApiGwUrl(state) {
+			return state.userProfileApiGwUrl
+		},
+		refreshApiGwUrl(state) {
+			return state.refreshApiGwUrl
+		},
+
+		// Auth Service routes getters
+		loginAuthServiceUrl(state) {
+			return state.loginAuthServiceUrl
+		},
+		registerAuthServiceUrl(state) {
+			return state.registerAuthServiceUrl
 		}
 	}
 }

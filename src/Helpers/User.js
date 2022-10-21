@@ -1,10 +1,12 @@
-import Token from "./Token";
 import AppStorage from "./AppStorage";
+import Token from "./Token";
 
 class User {
 
+	refreshApiUrl = store.getters['links/refreshApiGwUrl']
+
 	responseAfterLogin(res)	{
-		const access_token = res.data.access_token
+		const access_token = res
 
 		if ( Token.isValid(access_token) ) {
 			AppStorage.store(access_token) 
@@ -20,54 +22,37 @@ class User {
 	}
 
 	loggedIn() {
-		if ( AppStorage.getRemember() === true && this.hasToken() ) {	
-			return true			
-		} else if ( AppStorage.getRemember() === false && this.hasToken() && this.checkNextDay() === false) {
-			return true			
-		} else return false				 
+		return this.hasToken();		 
 	}
 
-	name() {
-		if (this.loggedIn()) {
-			return localStorage.getItem('user')
-		}
-	}
-
-	checkNextDay() {
-		let currentTime = Date.now();
-		
-		function msToMidnight() {
-			var now = new Date();
-			var then = new Date(now);
-			then.setHours(24, 0, 0, 0);		
-			return Math.floor(((then - now) / 6e4) * 60 * 1000);			
-		}
-
-		if ( currentTime - AppStorage.getTime() <= msToMidnight() ) {
-			return false
-		} else return true
-	}
-
+	
 	clearStorage() {
 		AppStorage.clear();
 	}
-
+	
 	getToken() {
-		if (this.loggedIn()) {
-			return AppStorage.getToken();
-		}
+		return AppStorage.getToken();
 	}
 
-	getIsAdmin() {
-		return AppStorage.getIsAdmin()
+	storeToken(token) {
+		AppStorage.store(token)
 	}
 
-	getRole() {
-		return AppStorage.getRole()
-	}
-
-	getInstatId() {
-		return AppStorage.getInstatId()
+	async refreshWithRequest(token, fn) {
+		console.log(token, fn)
+		/* await axios.post(this.refreshApiUrl, null, {
+			headers: {
+				Authorization: 'Bearer ' + token
+		}})
+		.then( (response) => {
+			console.log(response.data)
+			if ( response.data.authorisation ) {
+				let newToken = response.data.authorisation.token
+				AppStorage.store(newToken)
+				
+				
+			}			
+		}) */
 	}
 }
 

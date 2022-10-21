@@ -7,12 +7,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import axios from 'axios';
 window.axios = axios;
 
-
-// VueX Store
-import store from './VuexStore/store';
-window.store = store
-
-
 // Vue ROUTER
 import {routes} from './router/routes'
  
@@ -33,6 +27,27 @@ window.Helpers = Helpers;
 import User from './Helpers/User';
 window.User = User;
 
+// SweetAlert 2
+import Swal from 'sweetalert2';
+window.Swal = Swal;
+
+const Toast = Swal.mixin({
+	toast: true,
+	position: 'top-end',
+	showConfirmButton: false,
+	timer: 2500,
+	timerProgressBar: true,
+	didOpen: (toast) => {
+	  toast.addEventListener('mouseenter', Swal.stopTimer)
+	  toast.addEventListener('mouseleave', Swal.resumeTimer)
+	}
+})
+
+window.Toast = Toast
+
+// VueX Store
+import store from './VuexStore/store';
+window.store = store
 
 // Import main template
 import App from './App.vue';
@@ -44,9 +59,10 @@ import InputText from 'primevue/inputtext'
 import Divider from 'primevue/divider';
 import Password from 'primevue/password';
 import Button from 'primevue/button';
+
+
 import InputIcon from './Dashboard/global/InputIcon.vue';
 import InputError from './Dashboard/global/InputError.vue';
-
 
 createApp(App)
 	.use(router)
