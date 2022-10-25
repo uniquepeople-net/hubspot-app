@@ -1,9 +1,14 @@
 <template>
-	dashboard
+	<Sidebar></Sidebar>
 </template>
  
  
 <script>
+	import Sidebar from '../Dashboard/structureComponents/Sidebar/Sidebar.vue'
+	// Import admin template js script file
+	import { app } from '../../assets/js/app';
+
+
 	export default {
 		created() {
 			if (!User.loggedIn()) {
@@ -11,13 +16,10 @@
 			}
 			this.$store.dispatch("user/getUser");	
 		},
-		data() {
-			return {
-			}
+		mounted() {
+			app()
 		},
-		methods: {
- 
-		},
+		components: { Sidebar }
 	}
 </script>
  

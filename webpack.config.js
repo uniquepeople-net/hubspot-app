@@ -1,4 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+//const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 // const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const { VueLoaderPlugin } = require('vue-loader')
 const webpack = require('webpack');
@@ -6,10 +7,11 @@ const path = require('path');
 
 module.exports = {
     entry: {
-        app: ['./src/main.js']
+        app: ['./src/main.js'],
+       //mazer: ['./src/test.js'],
     },
     resolve: {
-        extensions: [ '.tsx', '.ts', '.js', '.vue' ],
+        extensions: [ '.js', '.vue' ],
         alias: {
             '~': path.resolve(__dirname, 'src')
           }
@@ -75,8 +77,12 @@ module.exports = {
     plugins: [
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
+			inject: 'body',
             template: './src/index.html',
         }),
+		/* new AddAssetHtmlPlugin({ 
+			filepath: path.resolve(__dirname, './test.js'), 
+		}), */
         new webpack.HotModuleReplacementPlugin(),
-    ]
+    ],
 };

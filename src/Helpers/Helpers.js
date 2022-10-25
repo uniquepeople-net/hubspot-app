@@ -2,10 +2,10 @@ class Helpers {
 
 	// add script file function in vue component
 	addScript(srcUrl) {
-		const dataTableScript = document.createElement("script");
-		dataTableScript.setAttribute("src",srcUrl);
-		dataTableScript.setAttribute("defer", '');
-		document.body.appendChild(dataTableScript);
+		const script = document.createElement("script");
+		script.setAttribute("src",srcUrl);
+		script.setAttribute("defer", '');
+		document.body.appendChild(script);
 	}
 	
 	// check if user is admin ( admin = 1, editor = 2, user = 3 )

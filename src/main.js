@@ -10,7 +10,7 @@ window.axios = axios;
 // Vue ROUTER
 import {routes} from './router/routes'
  
-const router = createRouter({
+export const router = createRouter({
     history: createWebHistory(),
     routes
 }) 

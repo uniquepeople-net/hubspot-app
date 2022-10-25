@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  vue-app:
+    container_name: vue-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: vue-app:0.0.2
+    volumes:
+      - .:/vue-app
+      - ./node_modules:/vue-app/node_modules
+    ports:
+      - 5000:5000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - ufp_network
+
+networks:
+  ufp_network:
+    external:
+      name: ufp_network

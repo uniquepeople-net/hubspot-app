@@ -1,5 +1,6 @@
 import AppStorage from "./AppStorage";
 import Token from "./Token";
+import { router } from '../main'
 
 class User {
 
@@ -38,21 +39,25 @@ class User {
 		AppStorage.store(token)
 	}
 
-	async refreshWithRequest(token, fn) {
-		console.log(token, fn)
-		/* await axios.post(this.refreshApiUrl, null, {
+	/**
+	 *  Refresh token fn 
+	 * 	Added before every other request to refresh token and lenghten token expire time
+	 */
+	async refreshedToken() {	
+		await axios.post(this.refreshApiUrl, null, {
 			headers: {
-				Authorization: 'Bearer ' + token
+				Authorization: 'Bearer ' + this.getToken()
 		}})
 		.then( (response) => {
 			console.log(response.data)
+			if ( response.data.message === 'Unauthenticated.' ) {
+				router.push('/login')
+			}
 			if ( response.data.authorisation ) {
 				let newToken = response.data.authorisation.token
 				AppStorage.store(newToken)
-				
-				
 			}			
-		}) */
+		})
 	}
 }
 
