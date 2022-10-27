@@ -15,6 +15,10 @@ export const router = createRouter({
     routes
 }) 
 
+// Sidebar helpers
+/* import Sidebar from './Helpers/Sidebar';
+window.Sidebar = Sidebar; */
+
 // CryptoJs
 import CryptoJs from 'crypto-js'; 
 window.CryptoJs = CryptoJs;
@@ -42,12 +46,13 @@ const Toast = Swal.mixin({
 	  toast.addEventListener('mouseleave', Swal.resumeTimer)
 	}
 })
-
 window.Toast = Toast
 
 // VueX Store
 import store from './VuexStore/store';
 window.store = store
+
+
 
 // Import main template
 import App from './App.vue';
@@ -59,10 +64,13 @@ import InputText from 'primevue/inputtext'
 import Divider from 'primevue/divider';
 import Password from 'primevue/password';
 import Button from 'primevue/button';
-
+import Menu from 'primevue/menu';
+import Sidebar from 'primevue/sidebar';
+import PanelMenu from 'primevue/panelmenu'
 
 import InputIcon from './Dashboard/global/InputIcon.vue';
 import InputError from './Dashboard/global/InputError.vue';
+
 
 createApp(App)
 	.use(router)
@@ -76,4 +84,7 @@ createApp(App)
 	.component('Button', Button)
 	.component('InputError', InputError)
 	.component('InputIcon', InputIcon)
+	.component('Menu', Menu)
+	.component('Sidebar', Sidebar)
+	.component('PanelMenu', PanelMenu)
 	.mount('#app')

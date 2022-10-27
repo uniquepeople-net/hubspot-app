@@ -16802,7 +16802,7 @@ body .bi:before {
   content: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><path style="fill:none;stroke:%23fff;stroke-width:1" d="m6 9 6 6 6-6"/></svg>');
 }
 .sidebar-wrapper .menu .sidebar-item.active > .sidebar-link {
-  box-shadow: inset 0 0 27px -1px rgba(0, 0, 0, 0.63);
+  box-shadow: 0 0 27px -1px rgba(0, 0, 0, 0.63);
 }
 .sidebar-wrapper .menu .sidebar-item.active > .sidebar-link span {
   color: #fff;
@@ -16848,8 +16848,8 @@ body .bi:before {
   color: #00b0ef;
   margin-left: 0.3rem;
 }
-.active-sidebar {
-  box-shadow: inset 0 0 27px -1px rgba(0, 0, 0, 0.63);
+.active-sidebar, .router-link-exact-active {
+  box-shadow: 0 0 27px -1px rgba(0, 0, 0, 0.63);
 }
 .sidebar-backdrop {
   background-color: rgba(0, 0, 0, 0.5);

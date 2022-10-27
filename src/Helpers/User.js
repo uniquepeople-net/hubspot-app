@@ -49,7 +49,6 @@ class User {
 				Authorization: 'Bearer ' + this.getToken()
 		}})
 		.then( (response) => {
-			console.log(response.data)
 			if ( response.data.message === 'Unauthenticated.' ) {
 				router.push('/login')
 			}

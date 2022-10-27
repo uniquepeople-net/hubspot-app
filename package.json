@@ -14,6 +14,7 @@
 		"babel-loader": "8.2.5",
 		"css-loader": "6.7.1",
 		"file-loader": "6.2.0",
+		"html-webpack-inline-source-plugin": "^0.0.10",
 		"html-webpack-plugin": "5.5.0",
 		"node-sass": "^7.0.3",
 		"sass-loader": "^13.1.0",
@@ -36,6 +37,7 @@
 		"sweetalert2": "^11.6.0",
 		"vue": "3.2.40",
 		"vue-router": "^4.1.5",
+		"vuesax": "^4.0.1-alpha.25",
 		"vuex": "^4.0.2"
 	},
 	"scripts": {

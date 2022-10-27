@@ -8,7 +8,7 @@ const path = require('path');
 module.exports = {
     entry: {
         app: ['./src/main.js'],
-       //mazer: ['./src/test.js'],
+       	//mazer: ['./src/mazer.js'],
     },
     resolve: {
         extensions: [ '.js', '.vue' ],
@@ -18,7 +18,7 @@ module.exports = {
     },
     devtool: "eval",
     output: {
-        filename: "main.js",
+        filename: "[name].js",
         path: path.resolve(__dirname, "./dist"),
     },
     module: {
@@ -79,6 +79,8 @@ module.exports = {
         new HtmlWebpackPlugin({
 			inject: 'body',
             template: './src/index.html',
+			/* chunks: ['app', 'mazer'],
+			chunksSortMode: 'manual', */
         }),
 		/* new AddAssetHtmlPlugin({ 
 			filepath: path.resolve(__dirname, './test.js'), 

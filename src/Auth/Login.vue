@@ -104,7 +104,6 @@ export default {
 						}).then(
 							response => {
 								this.toggleDialog();
-								console.log(response.data)
 								let data = response.data
 								if ( data.authorisation ) {
 									User.responseAfterLogin(data.authorisation.token)

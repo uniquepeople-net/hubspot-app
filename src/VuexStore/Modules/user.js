@@ -8,7 +8,7 @@ export default {
 
 	mutations: {
 		SETUSER( state, data ) {
-			state.user = data;
+			state.user = data.user;
 		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
@@ -38,7 +38,7 @@ export default {
 
 	getters: {
 		userRole(state) {
-			//return state.user.role_id
+			return state.user.role_id
 		}
 	}
 }

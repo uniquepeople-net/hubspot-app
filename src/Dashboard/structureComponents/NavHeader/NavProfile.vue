@@ -1,0 +1,61 @@
+<template>
+	<div class="dropdown">
+		<a href="#" data-bs-toggle="dropdown" aria-expanded="false" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu">
+			<div class="user-menu d-flex flex-column align-items-center">
+				<div class="user-name">
+					<h6 class="mb-0 text-gray-600">John Ducky</h6>
+				</div>
+				<div class="user-img d-flex align-items-center">
+					<div class="avatar avatar-md">
+						<img src="../../../../assets/images/faces/2.jpg" />
+					</div>
+				</div>
+			</div>
+		</a>
+		<Menu id="overlay_menu" ref="menu" :model="items" :popup="true" class="mt-2"/>
+	</div>
+</template>
+ 
+ 
+<script>
+	export default {
+		data() {
+			return {
+				items: [
+                {                    
+                    items: [{
+                        label: 'My Profile',
+                        icon: 'pi pi-user-edit',
+                        command: () => {
+                        }
+                    },
+                    {
+                        label: 'Wallet',
+                        icon: 'pi pi-euro',
+                        command: () => {
+                            //this.$toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000});
+                        }
+                    }
+                ]},
+                {
+					//label: 'Sign out',
+                    items: [{
+                        label: 'Logout',
+                        icon: 'pi pi-sign-out',
+                        to: '/logout'
+                    },
+                ]}
+				]
+			}
+		},
+		methods: {
+			toggle(event) {
+				this.$refs.menu.toggle(event);
+			},
+		},
+	}
+</script>
+ 
+ 
+<style lang='scss' scoped>
+</style>
