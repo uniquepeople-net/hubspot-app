@@ -1,11 +1,10 @@
 <template>
-	 <li class="sidebar-title">{{ title }}</li>
+	
 </template>
  
  
 <script>
 	export default {
-		props: ['title'],
 		data() {
 			return {
 			}
@@ -17,5 +16,5 @@
 </script>
  
  
-<style scope>
+<style lang='scss' scoped>
 </style>

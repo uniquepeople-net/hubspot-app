@@ -41,10 +41,26 @@ import Logout from '../Auth/Logout.vue';
 import Forget from '../Auth/Forget.vue';
 
 import Dashboard from '../Dashboard/Dashboard.vue';
+import AllUsers from '../Dashboard/structureComponents/Main/Users/AllUsers.vue'
+
 
 export const routes = [
 
-	{ path: '/', component: Dashboard, name: 'dashboard' },
+	{ path: '/', component: Dashboard, name: 'dashboard',
+		children: [
+			/* { path: '/user-profile',component: UserProfile },
+
+			{ path: '/my-board', component: MyBoard, name: 'myboard'}, */
+
+			{ path: '/all-users', component: AllUsers, name: 'all-users' },
+
+			/* { path: '/users/user-:id', component: UserDetail, name: 'user-detail'},
+
+			{ path: '/player-stats', component: PlayerStats, name: 'player-stats' },
+
+			{ path: '/overall-season-stats', component: OverallSeasonStats, name: 'overall-season-stats' } */
+		],
+	},
 
 	{ path: '/login', component: Login, name: 'login' },
     //{ path: '/register', component: Register, name:'register' },

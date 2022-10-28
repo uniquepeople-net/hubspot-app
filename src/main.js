@@ -67,6 +67,10 @@ import Button from 'primevue/button';
 import Menu from 'primevue/menu';
 import Sidebar from 'primevue/sidebar';
 import PanelMenu from 'primevue/panelmenu'
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+import ColumnGroup from 'primevue/columngroup';
+import Row from 'primevue/row';
 
 import InputIcon from './Dashboard/global/InputIcon.vue';
 import InputError from './Dashboard/global/InputError.vue';
@@ -87,4 +91,8 @@ createApp(App)
 	.component('Menu', Menu)
 	.component('Sidebar', Sidebar)
 	.component('PanelMenu', PanelMenu)
+	.component('DataTable', DataTable)
+	.component('Column', Column)
+	.component('ColumnGroup', ColumnGroup)
+	.component('Row', Row)
 	.mount('#app')

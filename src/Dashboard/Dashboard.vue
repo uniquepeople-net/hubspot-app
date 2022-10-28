@@ -1,11 +1,12 @@
 <template>
-	<div v-if="userRoleId">
+	<div v-if="user.role_id">
 		<!-- <Sidebar /> -->
 		
 		<Sidebar />
 
 		<div id="main">
 			<NavHeader />	
+			<router-view></router-view>
 		</div>
 	</div>
 </template>
@@ -34,10 +35,10 @@
 			}
 		},
 		computed: {
-			...mapGetters({ userRoleId: 'user/userRole' }),
+			...mapGetters({ user: 'user/user' }),
 		},
 		watch: {
-			userRoleId: function (data) {},
+			user: function (data) {},
 		},
 		components: { NavHeader, Sidebar }
 	}

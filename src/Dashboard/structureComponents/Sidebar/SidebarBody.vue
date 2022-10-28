@@ -24,7 +24,7 @@
 
 	import SidebarTitle from './SidebarTitle.vue';
 	import SidebarItem from './SidebarItem.vue';
-	import { sidebarMenu } from '../../../Helpers/sidebar-menu';
+	import { sidebarMenu } from '../../../Helpers/Sidebar-menu';
 
 	export default {
 		data() {

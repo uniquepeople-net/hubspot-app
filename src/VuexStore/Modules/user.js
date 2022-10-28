@@ -37,8 +37,8 @@ export default {
 	},
 
 	getters: {
-		userRole(state) {
-			return state.user.role_id
+		user(state) {
+			return state.user
 		}
 	}
 }
