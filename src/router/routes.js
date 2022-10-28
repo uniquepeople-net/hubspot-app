@@ -42,6 +42,8 @@ import Forget from '../Auth/Forget.vue';
 
 import Dashboard from '../Dashboard/Dashboard.vue';
 import AllUsers from '../Dashboard/structureComponents/Main/Users/AllUsers.vue'
+import AddNewUser from '../Dashboard/structureComponents/Main/Users/AddNewUser.vue'
+
 
 
 export const routes = [
@@ -53,6 +55,7 @@ export const routes = [
 			{ path: '/my-board', component: MyBoard, name: 'myboard'}, */
 
 			{ path: '/all-users', component: AllUsers, name: 'all-users' },
+			{ path: '/add-new-user', component: AddNewUser, name: 'add-new-user' },
 
 			/* { path: '/users/user-:id', component: UserDetail, name: 'user-detail'},
 

@@ -8,6 +8,7 @@
 		created() {
 			User.clearStorage();
 			this.$store.commit('user/RESETSTATE')
+			this.$store.commit('users/RESETSTATE')
 			Toast.fire({
 				icon: 'success',
 				title: 'Logout successfully'

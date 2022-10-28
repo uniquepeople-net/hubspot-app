@@ -26,6 +26,7 @@ export const sidebarMenu = (checkRole) => [
 			},
 			{ 
 				label: 'Add New User',
+				to: '/add-new-user'
 			},
 		]
 	}

@@ -1,3 +1,8 @@
+.card {
+	border-radius:12px;
+	overflow: hidden;
+}
+
 @media( min-width: 992px ) {
 	.p-sidebar-mask.p-component-overlay {
 		display: none;

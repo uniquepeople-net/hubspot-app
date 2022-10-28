@@ -13,8 +13,6 @@
  
  
 <script>
-	// Import compiled admin template js script file
-	import { app } from '../../assets/js/app';
 	
 	import { mapGetters } from 'vuex'; 
 

@@ -6,6 +6,9 @@ export default {
 		userProfileApiGwUrl: 	'http://localhost:80/api/user-profile',
 		refreshApiGwUrl: 		'http://localhost:80/api/refresh',
 
+		getAllUsers: 			'http://localhost:80/api/users-all',
+
+
 		// Auth service routes for token iss check
 		loginAuthServiceUrl: 	'http://auth_nginx/api/login',
 		registerAuthServiceUrl: 'http://auth_nginx/api/register',
@@ -22,6 +25,10 @@ export default {
 		refreshApiGwUrl(state) {
 			return state.refreshApiGwUrl
 		},
+		// Users api routes
+		getAllUsers(state) {
+			return state.getAllUsers
+		},
 
 		// Auth Service routes getters
 		loginAuthServiceUrl(state) {
@@ -29,6 +36,6 @@ export default {
 		},
 		registerAuthServiceUrl(state) {
 			return state.registerAuthServiceUrl
-		}
+		},
 	}
 }
