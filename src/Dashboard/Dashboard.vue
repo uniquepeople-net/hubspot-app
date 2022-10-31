@@ -1,5 +1,5 @@
 <template>
-	<div v-if="user.role_id">
+	<div v-if="show">
 		<!-- <Sidebar /> -->
 		
 		<Sidebar />
@@ -29,14 +29,18 @@
 		},
 		data() {
 			return{
-				
+				show: false
 			}
 		},
 		computed: {
 			...mapGetters({ user: 'user/user' }),
 		},
 		watch: {
-			user: function (data) {},
+			user: function (data) {
+				if ( data.role_id ) {
+					this.show = true
+				}
+			},
 		},
 		components: { NavHeader, Sidebar }
 	}

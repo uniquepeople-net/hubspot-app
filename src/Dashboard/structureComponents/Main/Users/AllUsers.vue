@@ -120,5 +120,11 @@
  
  
 <style lang="scss" scoped>
-
+::v-deep(.p-datatable) {
+    .p-datatable-header {
+        padding: 1rem;
+        text-align: left;
+        font-size: 1.5rem;
+    }
+}
 </style>

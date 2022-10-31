@@ -99,8 +99,7 @@ export default {
 
 			axios.post( apiGwloginUrl , { 
 								email: this.email,
-								password: this.password,
-										  
+								password: this.password,										  
 						}).then(
 							response => {
 								this.toggleDialog();

@@ -82,9 +82,9 @@ module.exports = {
 			/* chunks: ['app', 'mazer'],
 			chunksSortMode: 'manual', */
         }),
-		/* new AddAssetHtmlPlugin({ 
-			filepath: path.resolve(__dirname, './test.js'), 
-		}), */
+		new webpack.DefinePlugin({
+			DOMAIN_URL: JSON.stringify('http://localhost:80'),
+		}),
         new webpack.HotModuleReplacementPlugin(),
     ],
 };

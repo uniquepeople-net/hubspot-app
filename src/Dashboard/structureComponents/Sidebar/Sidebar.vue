@@ -7,8 +7,6 @@
 			</div>
 		</template>
 
-	<img :src={bgImage} alt="">
-
 		<PanelMenu :model="items" />
 	</Sidebar>
 
@@ -50,8 +48,6 @@
 .sidebar-menu {
 	border-radius: 0 50px 50px 0;
 	
-	//background-image: url('../../../../assets/images/pitch.jpg');
-
 	& .p-sidebar-header {
 		justify-content: space-between;
 		& .logo img {

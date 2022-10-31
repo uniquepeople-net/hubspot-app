@@ -2,11 +2,12 @@ export default {
 	namespaced: true,
 	state: () => ({		
 		// API GW routes
-		loginApiGwUrl: 			'http://localhost:80/api/login',
-		userProfileApiGwUrl: 	'http://localhost:80/api/user-profile',
-		refreshApiGwUrl: 		'http://localhost:80/api/refresh',
+		loginApiGwUrl: 			DOMAIN_URL + '/api/login',
+		userProfileApiGwUrl: 	DOMAIN_URL + '/api/user-profile',
+		refreshApiGwUrl: 		DOMAIN_URL + '/api/refresh',
+		registerApiGwUrl: 		DOMAIN_URL + '/api/register',
 
-		getAllUsers: 			'http://localhost:80/api/users-all',
+		getAllUsers: 			DOMAIN_URL + '/api/users-all',
 
 
 		// Auth service routes for token iss check
@@ -24,6 +25,9 @@ export default {
 		},
 		refreshApiGwUrl(state) {
 			return state.refreshApiGwUrl
+		},
+		registerApiGwUrl(state) {
+			return state.registerApiGwUrl
 		},
 		// Users api routes
 		getAllUsers(state) {
