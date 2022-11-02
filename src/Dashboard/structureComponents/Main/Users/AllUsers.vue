@@ -7,7 +7,7 @@
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             :globalFilterFields="['name']" responsiveLayout="scroll">
             <template #header>
-                 <div class="flex justify-content-between align-items-center">
+                 <div class="d-flex justify-content-between align-items-center">
                     <h5 class="m-0">Users</h5>
                     <span class="p-input-icon-left">
                         <i class="pi pi-search" />
@@ -44,13 +44,13 @@
                 </template>
             </Column>
 
-            <!-- <Column headerStyle="width: 4rem; text-align: center" bodyStyle="text-align: center; overflow: visible">
+            <Column headerStyle="width: 4rem; text-align: center" bodyStyle="text-align: center; overflow: visible">
                 <template #body="{data}">
 					<router-link :to="{name: 'specific-user', params: {user_id: data.id}}">
 						<Button type="button" icon="pi pi-cog"></Button>
 					</router-link> 
                 </template>
-            </Column> -->
+            </Column>
 
 			<template #footer>
 				<Button label="Add new user" icon="pi pi-user-plus" class="p-button-raised p-button-info" @click="addUserLink"/>
@@ -62,7 +62,7 @@
  
  
 <script>
-	import {FilterMatchMode,FilterOperator} from 'primevue/api';
+	import { FilterMatchMode,FilterOperator } from 'primevue/api';
 	import { mapGetters } from 'vuex';
 
 	export default {
@@ -89,16 +89,6 @@
 			}
 		},
 		methods: {
-			/* formatDate(value) {
-				return value.toLocaleDateString('en-US', {
-					day: '2-digit',
-					month: '2-digit',
-					year: 'numeric',
-				});
-			},
-			formatCurrency(value) {
-				return value.toLocaleString('en-US', {style: 'currency', currency: 'USD'});
-			}, */
 			addUserLink() {
 				this.$router.push({name: 'add-new-user'})
 			},
@@ -120,11 +110,5 @@
  
  
 <style lang="scss" scoped>
-::v-deep(.p-datatable) {
-    .p-datatable-header {
-        padding: 1rem;
-        text-align: left;
-        font-size: 1.5rem;
-    }
-}
+
 </style>

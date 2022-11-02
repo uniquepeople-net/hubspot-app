@@ -1,48 +1,20 @@
-/* let Login = require('./vue/auth/AdminLogin.vue').default;
-let Register = require('./vue/auth/Admin.Register.vue').default;
-let Forget = require('./vue/auth/AdminForget.vue').default;
-let Logout = require('./vue/auth/AdminLogout.vue').default;
+import store from '../VuexStore/store';
+window.store = store;
 
-let Dashboard = require('./vue/Dashboard.vue').default;
-let UserProfile = require('./vue/left-panel/user-profile/UserProfile.vue').default;
-let MyBoard = require('./vue/right-panel/Board/MyBoard.vue').default;
-let Users = require('./vue/right-panel/Users/Users.vue').default;
-let UserDetail = require('./vue/right-panel/Users/UserDetail.vue').default;
-let PlayerStats = require('./vue/right-panel/Instat/PlayerStats.vue').default;
-let OverallSeasonStats = require('./vue/right-panel/Instat/OverallSeasonStats.vue').default;
+let userProfileApiGwUrl = store.getters['links/userProfileApiGwUrl']
 
-export const routes = [
-    { path: '/', component: Dashboard, name: 'home',
-		children: [
-			{ path: '/user-profile',component: UserProfile },
-
-			{ path: '/my-board', component: MyBoard, name: 'myboard'},
-
-			{ path: '/users', component: Users, name: 'users' },
-
-			{ path: '/users/user-:id', component: UserDetail, name: 'user-detail'},
-
-			{ path: '/player-stats', component: PlayerStats, name: 'player-stats' },
-
-			{ path: '/overall-season-stats', component: OverallSeasonStats, name: 'overall-season-stats' }
-		],
-	},
-    { path: '/login', component: Login, name: 'login' },
-    { path: '/register', component: Register, name:'register' },
-    { path: '/logout', component: Logout, name:'logout' },
-    { path: '/forget', component: Forget, name:'forget' },
-	//{ path: '/user-profile', component: UserProfile, name:'user-profile' }
-] */
+import User from '../Helpers/User';
 
 
 import Login from '../Auth/Login.vue';
 import Logout from '../Auth/Logout.vue';
-//import Register from '../Auth/Register.vue';
 import Forget from '../Auth/Forget.vue';
 
 import Dashboard from '../Dashboard/Dashboard.vue';
+import Users from '../Dashboard/structureComponents/Main/Users/Users.vue'
 import AllUsers from '../Dashboard/structureComponents/Main/Users/AllUsers.vue'
 import AddNewUser from '../Dashboard/structureComponents/Main/Users/AddNewUser.vue'
+import SpecificUser from '../Dashboard/structureComponents/Main/Users/SpecificUser.vue'
 
 
 
@@ -50,23 +22,29 @@ export const routes = [
 
 	{ path: '/', component: Dashboard, name: 'dashboard',
 		children: [
-			/* { path: '/user-profile',component: UserProfile },
 
-			{ path: '/my-board', component: MyBoard, name: 'myboard'}, */
+			{ path: '/users', component: Users, name: 'users',
 
-			{ path: '/all-users', component: AllUsers, name: 'all-users' },
-			{ path: '/add-new-user', component: AddNewUser, name: 'add-new-user' },
+				children: [
+					{ path: 'all', component: AllUsers, name: 'all-users',
+						// Check if user has privileges to access this route
+						beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() )
+					},
 
-			/* { path: '/users/user-:id', component: UserDetail, name: 'user-detail'},
+					{ path: 'add-new-user', component: AddNewUser, name: 'add-new-user',
+						beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() ) 
+					},
 
-			{ path: '/player-stats', component: PlayerStats, name: 'player-stats' },
+					{ path: ':user_id', component: SpecificUser, name: 'specific-user',
+						beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() )
+					}
+				]
 
-			{ path: '/overall-season-stats', component: OverallSeasonStats, name: 'overall-season-stats' } */
+			},			
 		],
 	},
 
 	{ path: '/login', component: Login, name: 'login' },
-    //{ path: '/register', component: Register, name:'register' },
     { path: '/logout', component: Logout, name:'logout' },
     { path: '/forget', component: Forget, name:'forget' },
 	//{ path: '/user-profile', component: UserProfile, name:'user-profile' }

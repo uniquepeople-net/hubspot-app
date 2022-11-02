@@ -1,10 +1,10 @@
 <template>
-	<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
+	<Dialog v-if="error" v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
             <div class="flex align-items-center flex-column pt-6 px-3">
-                <i class="pi pi-check-circle" :style="{fontSize: '5rem', color: 'var(--green-500)' }"></i>
-                <h5>Login Successful!</h5>
-                <p :style="{lineHeight: 1.5, textIndent: '1rem'}">
-                    Your account is registered under email: <b>{{email}}</b>.
+                <i class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
+                <h5 class="mt-3">{{ error }}</h5>
+                <p :style="{lineHeight: 1.5}">
+                    Login data are not correct.
                 </p>
             </div>
             <template #footer>
@@ -49,12 +49,8 @@
 				<Button type="submit" label="Submit" class="mt-2 submit-btn btn btn-primary btn-block btn-lg shadow-lg mt-5" />
 			</form>
 			<div class="text-center mt-5 text-lg fs-4">
-				<p class="text-gray-600">
-					Don't have an account?
-					<a href="auth-register.html" class="font-bold">Sign up</a>.
-				</p>
 				<p>
-					<a class="font-bold" href="auth-forgot-password.html">Forgot password?</a>.
+					<a class="font-bold" href="auth-forgot-password.html">Forgot password ?</a>
 				</p>
 			</div>
 		</template>
@@ -77,7 +73,7 @@ export default {
             password: '',
 			submitted: false,
             showMessage: false,
-			messages: [],
+			error: null,
         }
     },
     validations() {
@@ -98,24 +94,26 @@ export default {
 			let apiGwloginUrl = this.$store.getters['links/loginApiGwUrl'];
 
 			axios.post( apiGwloginUrl , { 
-								email: this.email,
-								password: this.password,										  
-						}).then(
-							response => {
-								this.toggleDialog();
-								let data = response.data
-								if ( data.authorisation ) {
-									User.responseAfterLogin(data.authorisation.token)
-									Toast.fire({
-										icon: 'success',
-										title: 'Signed in successfully'
-									})
-									this.$router.push('/');							
-								}
-							}
-						).catch( response =>
-							console.error(response)
-						)
+							email: this.email,
+							password: this.password,										  
+			}).then(
+				response => {										
+					this.toggleDialog();
+					let data = response.data
+					response.data.status === 'error' ? this.error = response.data.message : null
+
+					if ( data.authorisation ) {
+						User.responseAfterLogin(data.authorisation.token)
+						Toast.fire({
+							icon: 'success',
+							title: 'Signed in successfully'
+						})
+						this.$router.push('/');							
+					}
+				}
+			).catch( response =>
+				console.error(response)
+			)
         },
         toggleDialog() {
             this.showMessage = !this.showMessage;

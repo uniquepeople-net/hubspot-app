@@ -2,9 +2,11 @@
     
         <Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
             <div class="flex align-items-center flex-column pt-6 px-3">
-                <i class="pi pi-check-circle" :style="{fontSize: '5rem', color: 'var(--green-500)' }"></i>
-                <h5>Registration Successful!</h5>
-                <p :style="{lineHeight: 1.5, textIndent: '1rem'}">
+                <i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
+                <i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
+                <h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
+                <h6 v-if="response.error" v-for="error in response.error" class="mt-3">{{ error[0] }}</h6>
+                <p v-if="response.message" :style="{lineHeight: 1.5}">
                     Your account is registered under name <b>{{name}}</b> and email: <b>{{email}}</b>.
                 </p>
             </div>
@@ -72,37 +74,20 @@
 			
 							<InputError :validator="v$.password" :submitted="submitted" replace="Password"></InputError>
 						</div>
-	
-						<!-- <div class="p-inputgroup mb-5 col-12 col-lg-6">
-							<InputIcon icon="pi pi-lock"></InputIcon>
-							<Password id="password_confirmation" v-model="v$.password_confirmation.$model" :class="{'p-invalid':v$.password_confirmation.$invalid && submitted}" toggleMask
-									  name="password_confirmation" placeholder="password_confirmation">
-								<template #header>
-									<h6>Pick a password</h6>
-								</template>
-								<template #footer="sp">
-									{{sp.level}}
-									<PasswordSuggestions></PasswordSuggestions>
-								</template>
-							</Password>
-			
-							<InputError :validator="v$.password_confirmation" :submitted="submitted" replace="Password confirmation"></InputError>
-						</div> -->
+						
 					</div>
 
 					<Button type="submit" label="Submit" class="mt-2 submit-btn" />
 				</form>
 			</div>
-		</div>
-       
-    
+		</div>  
 </template>
 
 <script>
 import { email, required, sameAs, minLength, numeric } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import axios from 'axios';
-
+import { mapGetters } from 'vuex';
 
 import PasswordSuggestions from "../../../global/PasswordSuggestions.vue";
 import InputIcon from '../../../global/InputIcon.vue';
@@ -116,8 +101,6 @@ export default {
             email: '',
 			instatId: '',
             password: '',
-            //password_confirmation: '',
-            //accept: null,
             submitted: false,
             showMessage: false,
 			paid: false,
@@ -126,7 +109,6 @@ export default {
 			response: null
         }
     },
-    //countryService: null,
     validations() {
         return {
             name: { required, minLength: minLength(3) },
@@ -134,11 +116,8 @@ export default {
 			instatId: { numeric },
 			role: { required },
             password: { required,  minLength: minLength(8)},
-            //password_confirmation: { required, sameAsPassword: sameAs(this.password) },
-            //accept: { required }
         }
     },
-
     methods: {
         handleSubmit(isFormValid) {
             this.submitted = true;
@@ -156,7 +135,10 @@ export default {
 				password: this.password,
 			}
 
-			this.$store.dispatch("users/registerUser", data).then( res => console.log(res))					
+			this.registerUser( this.registersApiGwUrl, data )
+			
+
+			//this.$store.dispatch("users/registerUser", data).then( res => console.log(res))					
         },
         toggleDialog() {
             this.showMessage = !this.showMessage;
@@ -169,20 +151,35 @@ export default {
             this.name = '';
             this.email = '';
             this.password = '';
-            //this.password_confirmation = '';
-            //this.accept = null;
             this.submitted = false;
-        }
+        },
+		async registerUser(url, data) {
+			try {
+				await User.refreshedToken();
+
+				const user = await axios.post( url, data, {
+					headers: {
+						Authorization: 'Bearer ' + User.getToken()
+					}
+				}).then(
+					resp => {
+						this.response = resp.data
+						this.toggleDialog()
+					}				
+				)
+
+			} catch (err) {
+				throw 'Unable to register user'
+			}
+		}
     },
-	watch: {
-		response: function (data) {
-			console.log(data)
-			
-		},
+	computed: {
+		...mapGetters({ registersApiGwUrl: 'links/registerApiGwUrl' }),
 	},
 	components: { PasswordSuggestions, InputIcon, InputError }
 }
 </script>
+
 
 <style lang="scss" scoped>
 .p-inputgroup {
@@ -210,5 +207,4 @@ export default {
 .submit-btn {
 	max-width: 25rem;
 }
-
 </style>

@@ -7,13 +7,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import axios from 'axios';
 window.axios = axios;
 
-// Vue ROUTER
-import {routes} from './router/routes'
- 
-export const router = createRouter({
-    history: createWebHistory(),
-    routes
-}) 
 
 // Sidebar helpers
 /* import Sidebar from './Helpers/Sidebar';
@@ -30,6 +23,15 @@ window.Helpers = Helpers;
 // User helper
 import User from './Helpers/User';
 window.User = User;
+
+// Vue ROUTER
+import {routes} from './router/routes'
+ 
+export const router = createRouter({
+    history: createWebHistory(),
+	mode: "hash",
+    routes
+}) 
 
 // SweetAlert 2
 import Swal from 'sweetalert2';

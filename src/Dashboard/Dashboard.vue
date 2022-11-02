@@ -1,6 +1,5 @@
 <template>
 	<div v-if="show">
-		<!-- <Sidebar /> -->
 		
 		<Sidebar />
 

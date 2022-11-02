@@ -36,25 +36,6 @@ export default {
 			})
 			
 		},
-		async registerUser(context, data) {
-			try {
-				let url = context.rootGetters['links/registerApiGwUrl']
-
-				await User.refreshedToken();
-
-				const user = await axios.post( url, data, {
-					headers: {
-						Authorization: 'Bearer ' + User.getToken()
-					}
-				}).then(
-					response => response				
-				)
-				return user
-				
-			} catch (err) {
-				throw 'Unable to register user'
-			}
-		}
 	},
 
 	getters: {

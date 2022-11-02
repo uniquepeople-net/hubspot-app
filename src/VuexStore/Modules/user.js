@@ -31,8 +31,7 @@ export default {
 			}})
 			.then( response => {
 				context.commit("SETUSER", response.data)			 
-			})
-			
+			})			
 		}
 	},
 

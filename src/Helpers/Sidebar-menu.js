@@ -22,11 +22,11 @@ export const sidebarMenu = (checkRole) => [
 		items: [
 			{
 				label: 'All Users',
-				to: '/all-users'
+				to: {name: 'all-users'}
 			},
 			{ 
 				label: 'Add New User',
-				to: '/add-new-user'
+				to: {name: 'add-new-user'}
 			},
 		]
 	}

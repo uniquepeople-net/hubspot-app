@@ -28,6 +28,19 @@ class Helpers {
 		return originString
 	}
 
+	// check if user is admin ( admin = 1, editor = 2, user = 3 )
+	checkAdmin(to, from, next, url, token) {
+		axios.get(url, {
+			headers: {
+				Authorization: 'Bearer ' + token
+			}
+		}).then( response => {
+				if (response.data.user.role_id === 1) {
+					next()
+				} else next({ name: 'dashboard' })			 
+		})			
+	}
+
 }
 
 export default Helpers = new Helpers();
