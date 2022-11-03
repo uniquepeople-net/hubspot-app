@@ -75,6 +75,8 @@ import ColumnGroup from 'primevue/columngroup';
 import Row from 'primevue/row';
 import ToggleButton from 'primevue/togglebutton';
 import Dropdown from 'primevue/dropdown';
+import Card from 'primevue/card';
+import Skeleton from 'primevue/skeleton'
 
 import InputIcon from './Dashboard/global/InputIcon.vue';
 import InputError from './Dashboard/global/InputError.vue';
@@ -101,4 +103,6 @@ createApp(App)
 	.component('Row', Row)
 	.component('ToggleButton', ToggleButton)
 	.component('Dropdown', Dropdown)
+	.component('Card', Card)
+	.component('Skeleton', Skeleton)
 	.mount('#app')

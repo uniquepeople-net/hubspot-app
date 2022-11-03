@@ -8,7 +8,16 @@ export default {
 		registerApiGwUrl: 		DOMAIN_URL + '/api/register',
 
 		getAllUsers: 			DOMAIN_URL + '/api/users-all',
+		specificUser:			DOMAIN_URL + '/api/users/',
 
+
+		// Instat API
+		instatBasic:				'https://service.instatfootball.com/feed.php?id=1098908&key=4VYKAPm0',				 
+		instatPlayerData:			'&tpl=11&player_id=',
+		instatTeamData:				'&tpl=12&team_id=',
+		instatOPtions:				'&lang_id=1&lang=en&format=json',
+
+		//http://service.instatfootball.com/feed.php?id=1098908&key=4VYKAPm0&tpl=12&team_id=772&lang_id=1&lang=en&format=xml
 
 		// Auth service routes for token iss check
 		loginAuthServiceUrl: 	'http://auth_nginx/api/login',
@@ -32,6 +41,23 @@ export default {
 		// Users api routes
 		getAllUsers(state) {
 			return state.getAllUsers
+		},
+		specificUser(state) {
+			return state.specificUser
+		},
+
+		// Instat API
+		instatBasic(state) {
+			return state.instatBasic
+		},
+		instatPlayerData(state) {
+			return state.instatPlayerData
+		},
+		instatTeamData(state) {
+			return state.instatTeamData
+		},
+		instatOPtions(state) {
+			return state.instatOPtions
 		},
 
 		// Auth Service routes getters

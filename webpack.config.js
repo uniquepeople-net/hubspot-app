@@ -20,6 +20,7 @@ module.exports = {
     output: {
         filename: "[name].js",
         path: path.resolve(__dirname, "./dist"),
+		publicPath: '/'
     },
     module: {
         rules: [
@@ -83,7 +84,8 @@ module.exports = {
 			chunksSortMode: 'manual', */
         }),
 		new webpack.DefinePlugin({
-			DOMAIN_URL: JSON.stringify('https://ufp-dev-api-gw.uniquekube.uniquepeople.cloud'),
+			//DOMAIN_URL: JSON.stringify('https://ufp-dev-api-gw.uniquekube.uniquepeople.cloud'),
+			DOMAIN_URL: JSON.stringify('http://localhost:80'),
 		}),
         new webpack.HotModuleReplacementPlugin(),
     ],

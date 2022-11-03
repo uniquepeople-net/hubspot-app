@@ -35,9 +35,13 @@ class Helpers {
 				Authorization: 'Bearer ' + token
 			}
 		}).then( response => {
-				if (response.data.user.role_id === 1) {
-					next()
-				} else next({ name: 'dashboard' })			 
+			
+			// check if exists role_id in response object
+			var checkRole = (((response || {}).data || {}).user || {}).role_id;
+			
+			if ( checkRole && checkRole === 1 ) {
+				next()
+			} else next({ name: 'dashboard' }) 		 
 		})			
 	}
 

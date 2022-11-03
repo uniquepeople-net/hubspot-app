@@ -2,6 +2,7 @@ export const sidebarMenu = (checkRole) => [
 	{
 		label: 'Dashboard',
 		icon: 'bi-collection',
+		to:	'/'
 	},
 	{
 		label: 'Instat',

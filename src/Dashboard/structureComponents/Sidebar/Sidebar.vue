@@ -1,6 +1,6 @@
 <template>
 	
-	<Sidebar v-model:visible="visibleLeft" class="sidebar-menu">
+	<Sidebar v-model:visible="visibleLeft" class="sidebar">
 		<template v-slot:header class="sidebar-slot-header">
 			<div class="logo">
 				<a href="https://ufp.sk"><img src="../../../../assets/images/logo/logo.png" alt="Logo" srcset="" /></a>
@@ -45,19 +45,21 @@
  
  
 <style lang='scss'>
-.sidebar-menu {
-	border-radius: 0 50px 50px 0;
-	
-	& .p-sidebar-header {
+.sidebar {
+	border-radius: 0 50px 50px 0;	
+	.p-sidebar-header {
 		justify-content: space-between;
-		& .logo img {
+		.logo img {
 			width: 65px;
-		}	
+		}
 	}
-	& .p-sidebar-content {
+	.p-sidebar-content {
 		& .p-panelmenu.p-component {
 			margin-top: 1rem;
 		}
+	}
+	.p-menuitem-text {
+		font-weight: 400;
 	}
 }
 </style>

@@ -1,11 +1,13 @@
+// Vuex store
 import store from '../VuexStore/store';
 window.store = store;
 
 let userProfileApiGwUrl = store.getters['links/userProfileApiGwUrl']
 
+// User Helpers class
 import User from '../Helpers/User';
 
-
+// Components
 import Login from '../Auth/Login.vue';
 import Logout from '../Auth/Logout.vue';
 import Forget from '../Auth/Forget.vue';

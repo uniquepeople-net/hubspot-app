@@ -35,7 +35,7 @@
 				<div class="form-group position-relative has-icon-left mb-4 p-inputgroup mb-5 col-12">
 					<InputIcon icon="pi pi-lock"></InputIcon>
 					<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
-								name="password" placeholder="Password">
+								name="password" placeholder="Password" :feedback="false">
 					</Password>
 	
 					<InputError :validator="v$.password" :submitted="submitted" replace="Password"></InputError>
