@@ -1,10 +1,10 @@
 <template>
-	<div v-if="show">
+	<div v-if="show" class="dashboard">
 		
 		<Sidebar />
 
-		<div id="main">
-			<NavHeader />	
+		<div id="main" :class="activeSidebar ? 'main-active-sidebar' : ''">
+			<NavHeader class="navbar"/>	
 			<router-view></router-view>
 		</div>
 	</div>
@@ -28,11 +28,12 @@
 		},
 		data() {
 			return{
-				show: false
+				show: false, 
 			}
 		},
 		computed: {
-			...mapGetters({ user: 'user/user' }),
+			...mapGetters({ user: 'user/user',
+							activeSidebar: 'appData/activeSidebar' }),
 		},
 		watch: {
 			user: function (data) {
@@ -47,5 +48,23 @@
  
  
 <style lang='scss' scoped>
-
+.dashboard {
+	min-height: 100vh;
+}
+#main {
+	padding: 1rem 1rem;
+	transition: all .2s ease-in-out;
+	.navbar {
+		display: flex;
+		justify-content: flex-end;
+	}
+}
+@media(min-width: 991px) {
+	#main {
+		padding: 1rem 2rem;
+	}
+	.main-active-sidebar {
+		margin-left: 320px;
+	}
+}
 </style>

@@ -41,12 +41,12 @@
 	#auth #auth-left{padding:5rem 8rem}
 	#auth #auth-left .auth-title{font-size:4rem;margin-bottom:1rem}
 	#auth #auth-left .auth-subtitle{color:#a8aebb;font-size:1.7rem;line-height:2.5rem}
-	#auth #auth-left .auth-logo{margin-bottom:7rem}
-	#auth #auth-left .auth-logo img{height:2rem}
+	#auth #auth-left .auth-logo{margin-bottom:3rem}
+	#auth #auth-left .auth-logo img{height:5rem}
 	@media screen and (max-width:767px) {
 		#auth #auth-left{padding:5rem}
 	}
 	@media screen and (max-width:576px) { 
-		#auth #auth-left{padding:5rem 3rem}
+		#auth #auth-left{padding:4rem 3rem}
 	}
 </style>

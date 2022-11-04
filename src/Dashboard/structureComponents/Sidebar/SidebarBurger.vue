@@ -23,7 +23,7 @@
 <style lang='scss' scoped>
 	.sidebar-x {
 		position: absolute;
-		top: 2.5rem;
+		top: 3rem;
 		left: 1rem;
 		padding: 0rem 1rem;
 		border: 1px solid #6c757d;

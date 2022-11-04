@@ -17,10 +17,7 @@
 
 	<AuthWrapper>
 		<template v-slot:title>
-			<h1 class="auth-title">Log in.</h1>
-			<p class="auth-subtitle mb-5">
-				Log in with your data that you entered during registration.
-			</p>
+			<h1 class="auth-title mb-4">Log in.</h1>
 		</template>
 
 		<template v-slot:body>
@@ -159,5 +156,4 @@ export default {
 .submit-btn {
 	max-width: 25rem;
 }
-
 </style>

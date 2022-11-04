@@ -80,7 +80,7 @@ import Skeleton from 'primevue/skeleton'
 
 import InputIcon from './Dashboard/global/InputIcon.vue';
 import InputError from './Dashboard/global/InputError.vue';
-
+import PasswordSuggestions from './Dashboard/global/PasswordSuggestions.vue'
 
 createApp(App)
 	.use(router)
@@ -105,4 +105,5 @@ createApp(App)
 	.component('Dropdown', Dropdown)
 	.component('Card', Card)
 	.component('Skeleton', Skeleton)
+	.component('PasswordSuggestions', PasswordSuggestions)
 	.mount('#app')

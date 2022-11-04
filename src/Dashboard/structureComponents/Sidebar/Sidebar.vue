@@ -23,7 +23,7 @@
 	export default {
 		mounted() {
 			let windowWidth = window.innerWidth;
-			windowWidth >= 999 ? this.visibleLeft = true : this.visibleLeft = false			
+			windowWidth >= 999 ? this.visibleLeft = true : this.visibleLeft = false		
 		},
 		data() {
 			return {
@@ -34,10 +34,19 @@
 		methods: {
 			showItemByRole() {
 				return this.user.role_id === 1 ? true : false
+			},
+			hide() {
+				console.log('hidden')
+				
 			}
 		},
 		computed: {
 			...mapGetters({ user: 'user/user' }),
+		},
+		watch: {
+			visibleLeft: function(data) {
+				this.$store.dispatch("appData/setActiveSidebar", data)
+			}
 		},
 		components: { SidebarBurger },
 	}

@@ -1,9 +1,15 @@
 <template>	
-	<div class="row">
-		<div class="col-12 col-md-6 mt-3">
+	<div class="row gy-3 mt-3">
+		<div class="col-12 col-xl-6 col-xxl-4">
 			<PersonalCard v-if="instatTeam" :photo="instatUser.photo" :firstname="instatUser.firstname" :lastname="instatUser.lastname" 
 						  :position="instatUser.position1_name" :teamname="instatTeam.name" :teamphoto="instatTeam.photo"/>
-			
+		</div>
+		<div class="col-12 col-xl-6 col-xxl-4">
+			<DataCard />
+		</div>
+
+		<div class="col-12 col-xl-6 col-xxl-4">
+			<ChangePasswordCard />
 		</div>
 	</div>
 </template>
@@ -11,7 +17,9 @@
  
 <script>
 	import { mapGetters } from 'vuex'; 
+	import DataCard from './DataCard.vue';
 	import PersonalCard from './PersonalCard.vue';
+	import ChangePasswordCard from './ChangePasswordCard.vue';
 
 	export default {
 		created() {
@@ -27,7 +35,7 @@
 							instatUser: 'specificUser/instatUser',
 							instatTeam: 'specificUser/instatTeam' }),
 		},
-		components: { PersonalCard },
+		components: { PersonalCard, DataCard, ChangePasswordCard },
 	}
 </script>
  

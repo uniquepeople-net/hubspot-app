@@ -1,14 +1,10 @@
 <template>
-    
-        <Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
+		<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
             <div class="flex align-items-center flex-column pt-6 px-3">
                 <i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
                 <i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
                 <h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
                 <h6 v-if="response.error" v-for="error in response.error" class="mt-3">{{ error[0] }}</h6>
-                <p v-if="response.message" :style="{lineHeight: 1.5}">
-                    Your account is registered under name <b>{{name}}</b> and email: <b>{{email}}</b>.
-                </p>
             </div>
             <template #footer>
                 <div class="flex justify-content-center">
@@ -20,14 +16,14 @@
         
 		<Card class="card">
 			<template #title>
-				<div class="card-header"><h5>Add New User</h5></div>
+				<div class="card-header"><h5>User Data</h5></div>
 			</template>
 			<template #content>
 				<div class="card-body">
 					<form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
 
 						<div class="row">
-							<div class="inputgroup mb-5 col-12 col-lg-6">
+							<div class="inputgroup mb-5 col-12">
 								<InputIcon icon="pi pi-user"></InputIcon>
 								<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
 										name="name" placeholder="Name"/>
@@ -35,7 +31,7 @@
 								<InputError :validator="v$.name" :submitted="submitted" replace="Name"></InputError>
 							</div>
 		
-							<div class="inputgroup mb-5 col-12 col-lg-6">
+							<div class="inputgroup mb-5 col-12">
 								<InputIcon icon="pi pi-envelope"></InputIcon>
 								<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
 											name="email" placeholder="Email"/>
@@ -43,7 +39,7 @@
 								<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
 							</div>
 		
-							<div class="inputgroup mb-5 col-12 col-lg-6">
+							<div class="inputgroup mb-5 col-12">
 								<InputIcon icon="bi bi-bar-chart-fill"></InputIcon>
 								<InputText id="instatId" v-model="v$.instatId.$model" :class="{'p-invalid':v$.instatId.$invalid && submitted}" aria-describedby="email-error"
 											name="instatId" placeholder="Instat ID"/>
@@ -51,37 +47,21 @@
 								<InputError :validator="v$.instatId" :submitted="submitted" replace="Instat ID"></InputError>
 							</div>
 		
-							<div class="inputgroup mb-5 col-12 col-lg-6">
+							<div class="inputgroup mb-5 col-12">
 								<InputIcon icon="pi pi-euro"></InputIcon>
-								<ToggleButton v-model="paid" onLabel="Paid" offLabel="UnPaid" onIcon="pi pi-check" offIcon="pi pi-times" />
+								<ToggleButton v-model="paid" onLabel="Paid" offLabel="UnPaid" onIcon="pi pi-check" offIcon="pi pi-times" :class="paid ? 'p-highlight' : ''"/>
 							</div>
 		
-							<div class="inputgroup mb-5 col-12 col-lg-6">
+							<div class="inputgroup mb-5 col-12">
 								<InputIcon icon="bi bi-person-lines-fill"></InputIcon>
 								<Dropdown v-model="role" :options="roles" optionLabel="name" optionValue="id" placeholder="Select a Role"/>
 								
 								<InputError :validator="v$.role" :submitted="submitted" replace="Role"></InputError>
 							</div>
-		
-							<div class="inputgroup mb-5 col-12 col-lg-6">
-								<InputIcon icon="pi pi-lock"></InputIcon>
-								<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
-										name="password" placeholder="Password">
-									<template #header>
-										<h6>Pick a password</h6>
-									</template>
-									<template #footer="sp">
-										{{sp.level}}
-										<PasswordSuggestions></PasswordSuggestions>
-									</template>
-								</Password>
-				
-								<InputError :validator="v$.password" :submitted="submitted" replace="Password"></InputError>
-							</div>
 							
 						</div>
 
-						<Button type="submit" label="Submit" class="mt-2 submit-btn" />
+						<Button type="submit" label="Update" class="mt-2 submit-btn" />
 					</form>
 				</div>
 			</template>
@@ -94,6 +74,9 @@ import { useVuelidate } from "@vuelidate/core";
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 
+import InputIcon from '../../../global/InputIcon.vue';
+import InputError from '../../../global/InputError.vue';
+
 export default {
     setup: () => ({ v$: useVuelidate() }),
     data() {
@@ -101,13 +84,13 @@ export default {
             name: '',
             email: '',
 			instatId: '',
-            password: '',
             submitted: false,
             showMessage: false,
 			paid: false,
 			role: '',
 			roles: [{ name: 'User', id: 3 }, { name: 'Editor', id: 2 }, { name: 'Admin', id:1 } ],
-			response: null
+			response: null,
+			id: this.$route.params.user_id
         }
     },
     validations() {
@@ -116,7 +99,6 @@ export default {
             email: { required, email },
 			instatId: { numeric },
 			role: { required },
-            password: { required,  minLength: minLength(8)},
         }
     },
     methods: {
@@ -133,13 +115,9 @@ export default {
 				instat_id:this.instatId,
 				role: this.role,
 				fee: this.paid,	
-				password: this.password,
 			}
 
-			this.registerUser( this.registersApiGwUrl, data )
-			
-
-			//this.$store.dispatch("users/registerUser", data).then( res => console.log(res))					
+			this.updateUser( this.specificUserUrl, data )	
         },
         toggleDialog() {
             this.showMessage = !this.showMessage;
@@ -148,40 +126,53 @@ export default {
                 //this.resetForm();
             }
         },
-        resetForm() {
-            this.name = '';
-            this.email = '';
-            this.password = '';
-            this.submitted = false;
-        },
-		async registerUser(url, data) {
+		async updateUser(url, data) {
 			try {
 				await User.refreshedToken();
 
-				const user = await axios.post( url, data, {
+				const user = await axios.post( url + this.id, data, {
 					headers: {
 						Authorization: 'Bearer ' + User.getToken()
 					}
 				}).then(
 					resp => {
+						console.log(resp)
 						this.response = resp.data
-						this.toggleDialog()
+						this.toggleDialog();
 					}				
 				)
 
 			} catch (err) {
-				throw 'Unable to register user'
+				throw 'Unable to update user'
 			}
 		}
     },
 	computed: {
-		...mapGetters({ registersApiGwUrl: 'links/registerApiGwUrl' }),
-	}
+		...mapGetters({ specificUserUrl: 'links/specificUser',
+						specificUser: 'specificUser/user' }),
+	},
+	watch: {
+		specificUser: function(data) {
+			if (data.name) {
+				this.name = data.name
+				this.email = data.email
+				this.instatId = data.instat_id
+				//this.password
+				this.paid = data.fee
+				this.role = data.role_id
+			}
+		}
+	},
+	components: { /* PasswordSuggestions, */ InputIcon, InputError }
 }
 </script>
 
 
 <style lang="scss" scoped>
+.card {
+	margin: auto;
+	//max-width: 576px;
+}
 .inputgroup {
 	position: relative;
 	display: flex;
@@ -198,6 +189,7 @@ export default {
 	:deep(.p-inputtext), :deep(.p-dropdown) {
 		border-radius: 0 6px 6px 0;
 	}
+	 
 }
 .p-togglebutton {
 	background-color: #DC2626;
@@ -213,6 +205,6 @@ export default {
 	}
 }
 .submit-btn {
-	max-width: 25rem;
+	max-width: 100%;
 }
 </style>

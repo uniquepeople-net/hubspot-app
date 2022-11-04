@@ -22,11 +22,8 @@
 			
 		</template>
 		<template #content>
-			
 		</template>
 		<template #footer>
-			<Button icon="pi pi-check" label="Save" />
-			<Button icon="pi pi-times" label="Cancel" class="p-button-secondary" style="margin-left: .5em" />
 		</template>
 	</Card>
 </template>
@@ -49,7 +46,7 @@
 <style lang='scss' scoped>
 .card {
 	margin: auto;
-	max-width: 576px;
+	//max-width: 576px;
 	:deep(.p-card-header) {
 		display: flex;
 		justify-content: center;
