@@ -28,8 +28,7 @@
                     items: [{
                         label: 'My Profile',
                         icon: 'pi pi-user-edit',
-                        command: () => {
-                        }
+						to:	'/my-profile'
                     },
                     {
                         label: 'Wallet',

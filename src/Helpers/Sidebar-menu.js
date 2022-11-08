@@ -1,8 +1,11 @@
-export const sidebarMenu = (checkRole) => [
+export const sidebarMenu = (checkRole, sidebarHide) => {
+	
+	return [
 	{
 		label: 'Dashboard',
 		icon: 'bi-collection',
-		to:	'/'
+		to:	'/',
+		command: () => sidebarHide()
 	},
 	{
 		label: 'Instat',
@@ -10,9 +13,11 @@ export const sidebarMenu = (checkRole) => [
 		items: [
 			{ 
 				label: 'By Match',
+				command: () => sidebarHide()
 			},
 			{
 				label: 'By Season',
+				command: () => sidebarHide()
 			}
 		]
 	},
@@ -23,13 +28,15 @@ export const sidebarMenu = (checkRole) => [
 		items: [
 			{
 				label: 'All Users',
-				to: {name: 'all-users'}
+				to: {name: 'all-users'},
+				command: () => sidebarHide()
 			},
 			{ 
 				label: 'Add New User',
-				to: {name: 'add-new-user'}
+				to: {name: 'add-new-user'},
+				command: () => sidebarHide()				
 			},
 		]
 	}
-]
+]}
 

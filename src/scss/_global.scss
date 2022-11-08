@@ -3,11 +3,18 @@ body {
 	overflow-x: hidden !important;
 }
 
+a {
+	text-decoration: none;
+	color: inherit;
+	&:hover {
+		color: inherit;
+	}
+}
+
 .card {
 	border-radius:12px;
 	overflow: hidden;
 }
-
 
 
 @media( min-width: 992px ) {

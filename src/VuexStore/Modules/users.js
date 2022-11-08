@@ -40,7 +40,7 @@ export default {
 
 	getters: {
 		getUsers(state) {
-			return state.users
+			return JSON.parse(JSON.stringify(state.users))
 		}
 	}
 }

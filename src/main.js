@@ -77,6 +77,7 @@ import ToggleButton from 'primevue/togglebutton';
 import Dropdown from 'primevue/dropdown';
 import Card from 'primevue/card';
 import Skeleton from 'primevue/skeleton'
+import ProgressSpinner from 'primevue/progressspinner';
 
 import InputIcon from './Dashboard/global/InputIcon.vue';
 import InputError from './Dashboard/global/InputError.vue';
@@ -106,4 +107,5 @@ createApp(App)
 	.component('Card', Card)
 	.component('Skeleton', Skeleton)
 	.component('PasswordSuggestions', PasswordSuggestions)
+	.component('ProgressSpinner', ProgressSpinner)
 	.mount('#app')

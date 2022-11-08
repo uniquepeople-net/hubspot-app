@@ -7,7 +7,7 @@
 			</div>
 		</template>
 
-		<PanelMenu :model="items" />
+		<PanelMenu v-if="items" :model="items"/>
 	</Sidebar>
 
 	<SidebarBurger @click="visibleLeft = true"/>
@@ -22,22 +22,24 @@
 
 	export default {
 		mounted() {
-			let windowWidth = window.innerWidth;
-			windowWidth >= 999 ? this.visibleLeft = true : this.visibleLeft = false		
+			this.checkwindowWidth()		
 		},
 		data() {
 			return {
 				visibleLeft: false,
-				items: sidebarMenu( this.showItemByRole )
+				items: sidebarMenu( this.showItemByRole, this.checkwindowWidth  )
 			}
 		},
 		methods: {
 			showItemByRole() {
 				return this.user.role_id === 1 ? true : false
 			},
-			hide() {
-				console.log('hidden')
-				
+			changemenu() {
+				console.log("Awdawd")
+			},
+			checkwindowWidth() {
+				let windowWidth = window.innerWidth;
+				windowWidth >= 991 ? this.visibleLeft = true : this.visibleLeft = false	
 			}
 		},
 		computed: {

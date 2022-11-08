@@ -5,7 +5,7 @@
 						  :position="instatUser.position1_name" :teamname="instatTeam.name" :teamphoto="instatTeam.photo"/>
 		</div>
 		<div class="col-12 col-xl-6 col-xxl-4">
-			<DataCard />
+			<DataCard v-if="specificUser" :userData="specificUser" :userUrl="specificUserUrl"/>
 		</div>
 
 		<div class="col-12 col-xl-6 col-xxl-4">
@@ -31,7 +31,8 @@
 			}
 		},
 		computed: {
-			...mapGetters({ specificUser: 'specificUser/user', 
+			...mapGetters({ specificUser: 'specificUser/user',
+							specificUserUrl: 'links/specificUser', 
 							instatUser: 'specificUser/instatUser',
 							instatTeam: 'specificUser/instatTeam' }),
 		},

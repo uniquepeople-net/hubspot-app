@@ -49,7 +49,7 @@
 		
 							<div class="inputgroup mb-5 col-12">
 								<InputIcon icon="pi pi-euro"></InputIcon>
-								<ToggleButton v-model="paid" onLabel="Paid" offLabel="UnPaid" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${paid ? 'bg-success' : 'bg-danger'} p-togglebutton`"/>
+								<ToggleButton v-model="paid" onLabel="Paid" offLabel="UnPaid" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${paid ? 'bg-success' : 'bg-danger'} p-togglebtn`"/>
 							</div>
 		
 							<div class="inputgroup mb-5 col-12">
@@ -74,23 +74,21 @@ import { useVuelidate } from "@vuelidate/core";
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 
-import InputIcon from '../../../global/InputIcon.vue';
-import InputError from '../../../global/InputError.vue';
-
 export default {
     setup: () => ({ v$: useVuelidate() }),
+	props: ['userData', 'userUrl'],
     data() {
         return {
-            name: '',
-            email: '',
-			instatId: '',
+            name: this.userData.name,
+            email: this.userData.email,
+			instatId: this.userData.instat_id,
             submitted: false,
             showMessage: false,
-			paid: false,
-			role: '',
+			paid: Boolean(this.userData.fee),
+			role: this.userData.role_id,
 			roles: [{ name: 'User', id: 3 }, { name: 'Editor', id: 2 }, { name: 'Admin', id:1 } ],
 			response: null,
-			id: this.$route.params.user_id
+			id: this.$route.params.user_id ? this.$route.params.user_id : this.userData.id
         }
     },
     validations() {
@@ -117,53 +115,44 @@ export default {
 				fee: this.paid,	
 			}
 
-			this.updateUser( this.specificUserUrl, data )	
+			this.updateUser( this.userUrl, this.id, data )	
         },
         toggleDialog() {
             this.showMessage = !this.showMessage;
-        
-            if(!this.showMessage) {
-                //this.resetForm();
-            }
         },
-		async updateUser(url, data) {
+		async updateUser(url, id, data) {
 			try {
 				await User.refreshedToken();
 
-				const user = await axios.post( url + this.id, data, {
+				const user = await axios.post( url + id, data, {
 					headers: {
 						Authorization: 'Bearer ' + User.getToken()
 					}
 				}).then(
 					resp => {
-						console.log(resp)
 						this.response = resp.data
 						this.toggleDialog();
+						if ( !this.$route.params.user_id ) {
+							this.$store.dispatch("user/getUser");
+						}
 					}				
 				)
-
 			} catch (err) {
 				throw 'Unable to update user'
 			}
 		}
     },
-	computed: {
-		...mapGetters({ specificUserUrl: 'links/specificUser',
-						specificUser: 'specificUser/user' }),
-	},
 	watch: {
-		specificUser: function(data) {
+		userData: function(data) {
 			if (data.name) {
 				this.name = data.name
 				this.email = data.email
 				this.instatId = data.instat_id
-				//this.password
-				this.paid = data.fee
+				this.paid = Boolean(data.fee)
 				this.role = data.role_id
 			}
 		}
 	},
-	components: { /* PasswordSuggestions, */ InputIcon, InputError }
 }
 </script>
 
@@ -171,7 +160,6 @@ export default {
 <style lang="scss" scoped>
 .card {
 	margin: auto;
-	//max-width: 576px;
 }
 .inputgroup {
 	position: relative;
@@ -191,9 +179,18 @@ export default {
 	}
 	 
 }
-.p-togglebutton {
+.p-togglebtn {
 	max-width: 10rem;
+	color: #ffffff !important;
+	.p-button-icon-left {
+		color: #ffffff;
+	}
+	
 }
+.p-togglebutton.p-button:not(.p-disabled):not(.p-highlight):hover {
+		background: inherit;
+		color: inherit;
+	}
 .submit-btn {
 	max-width: 100%;
 }

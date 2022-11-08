@@ -78,13 +78,14 @@
 
 	export default {
 		setup: () => ({ v$: useVuelidate() }),
+		props: [ 'userId' ],
 		data() {
 			return {
 				old_password: '',
 				new_password: '',
 				password_confirmation: '',
 				submitted: false,
-				id: this.$route.params.user_id,
+				id: this.$route.params.user_id ? this.$route.params.user_id : this.userId,
 				showMessage: false,
 				response: null
 			}

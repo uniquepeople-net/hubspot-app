@@ -17,7 +17,7 @@ import Users from '../Dashboard/structureComponents/Main/Users/Users.vue'
 import AllUsers from '../Dashboard/structureComponents/Main/Users/AllUsers.vue'
 import AddNewUser from '../Dashboard/structureComponents/Main/Users/AddNewUser.vue'
 import SpecificUser from '../Dashboard/structureComponents/Main/Users/SpecificUser.vue'
-
+import Myprofile from '../Dashboard/structureComponents/Main/Profile/MyProfile.vue';
 
 
 export const routes = [
@@ -42,7 +42,9 @@ export const routes = [
 					}
 				]
 
-			},			
+			},
+			
+			{ path: '/my-profile', component: Myprofile, name: 'my-profile' }
 		],
 	},
 
