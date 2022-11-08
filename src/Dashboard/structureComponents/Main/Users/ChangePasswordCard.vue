@@ -1,4 +1,19 @@
 <template>
+
+	<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
+		<div class="flex align-items-center flex-column pt-6 px-3">
+			<i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
+			<i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
+			<h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
+			<h6 v-if="response.error" class="mt-3">{{ response.error }}</h6>
+		</div>
+		<template #footer>
+			<div class="flex justify-content-center">
+				<Button label="OK" @click="toggleDialog" class="p-button-text" />
+			</div>
+		</template>
+	</Dialog>
+
 	<Card class="card">
 		<template #title>
 			<div class="card-header"><h5>Change Password</h5></div>
@@ -69,7 +84,9 @@
 				new_password: '',
 				password_confirmation: '',
 				submitted: false,
-				id:  this.$route.params.user_id
+				id: this.$route.params.user_id,
+				showMessage: false,
+				response: null
 			}
 		},
 		validations() {
@@ -93,17 +110,28 @@
 					password_confirmation: this.password_confirmation,
 				}
 
-				axios.post( 'http://localhost:80/users/update-password/' + this.id, data, {
+				axios.post( DOMAIN_URL + '/api/users/update-password/' + this.id, data, {
 					headers: {
 						Authorization: 'Bearer ' + User.getToken()
-				}}  ).then( response =>
-					console.log(response)					
-				)
-
-				//this.registerUser( this.registersApiGwUrl, data )
-				
-
-				//this.$store.dispatch("users/registerUser", data).then( res => console.log(res))					
+					}
+				}).then( response => {
+						this.response = response.data
+						this.toggleDialog()
+					}				
+				)					
+			},
+			toggleDialog() {
+				this.showMessage = !this.showMessage;
+			
+				if(!this.showMessage) {
+					//this.resetForm();
+				}
+			},
+			resetForm() {
+				this.new_password = '';
+				this.old_password = '';
+				this.password_confirmation = '';
+				this.submitted = false;
 			},
 		},
 	}

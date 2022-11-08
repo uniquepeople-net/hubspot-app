@@ -49,7 +49,7 @@
 		
 							<div class="inputgroup mb-5 col-12">
 								<InputIcon icon="pi pi-euro"></InputIcon>
-								<ToggleButton v-model="paid" onLabel="Paid" offLabel="UnPaid" onIcon="pi pi-check" offIcon="pi pi-times" :class="paid ? 'p-highlight' : ''"/>
+								<ToggleButton v-model="paid" onLabel="Paid" offLabel="UnPaid" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${paid ? 'bg-success' : 'bg-danger'} p-togglebutton`"/>
 							</div>
 		
 							<div class="inputgroup mb-5 col-12">
@@ -192,17 +192,7 @@ export default {
 	 
 }
 .p-togglebutton {
-	background-color: #DC2626;
-	width: fit-content;
-	&:not(.p-disabled):not(.p-highlight):hover {
-		background-color: #DC2626;
-	}
-	&.p-highlight {
-		background-color: #16A34A;
-		&:hover {
-			background-color: #16A34A;
-		}
-	}
+	max-width: 10rem;
 }
 .submit-btn {
 	max-width: 100%;
