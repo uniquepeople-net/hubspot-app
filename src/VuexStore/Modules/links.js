@@ -16,8 +16,12 @@ export default {
 		instatPlayerData:			'&tpl=11&player_id=',
 		instatTeamData:				'&tpl=12&team_id=',
 		instatOPtions:				'&lang_id=1&lang=en&format=json',
+		instatPlayerMatches:		'&tpl=41&player_id=',
+		instatTournamentSeason:		'&tournament_id=40&season_id=',
+		instatMatch:				'&tpl=37&match_id=',
 
-		//http://service.instatfootball.com/feed.php?id=1098908&key=4VYKAPm0&tpl=12&team_id=772&lang_id=1&lang=en&format=xml
+
+		//http://service.instatfootball.com/feed.php?id=1098908&key=4VYKAPm0&tpl=37&match_id=2234701&lang_id=1&lang=&format=xml
 
 		// Auth service routes for token iss check
 		loginAuthServiceUrl: 	'http://auth_nginx/api/login',
@@ -55,6 +59,15 @@ export default {
 		},
 		instatTeamData(state) {
 			return state.instatTeamData
+		},
+		instatPlayerMatches(state) {
+			return state.instatPlayerMatches
+		},
+		instatMatch(state) {
+			return state.instatMatch
+		},
+		instatTournamentSeason(state) {
+			return state.instatTournamentSeason
 		},
 		instatOPtions(state) {
 			return state.instatOPtions

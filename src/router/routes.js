@@ -18,7 +18,7 @@ import AllUsers from '../Dashboard/structureComponents/Main/Users/AllUsers.vue'
 import AddNewUser from '../Dashboard/structureComponents/Main/Users/AddNewUser.vue'
 import SpecificUser from '../Dashboard/structureComponents/Main/Users/SpecificUser.vue'
 import Myprofile from '../Dashboard/structureComponents/Main/Profile/MyProfile.vue';
-
+import Instat from '../Dashboard/structureComponents/Main/Stats/Instat.vue';
 
 export const routes = [
 
@@ -44,7 +44,9 @@ export const routes = [
 
 			},
 			
-			{ path: '/my-profile', component: Myprofile, name: 'my-profile' }
+			{ path: '/my-profile', component: Myprofile, name: 'my-profile' },
+
+			{ path: '/stats', component: Instat, name: 'instat' },
 		],
 	},
 

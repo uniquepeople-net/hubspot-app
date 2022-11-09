@@ -11,6 +11,7 @@
 			this.$store.commit('users/RESETSTATE')
 			this.$store.commit('appData/RESETSTATE')
 			this.$store.commit('specificUser/RESETSTATE')
+			this.$store.commit('stats/RESETSTATE')
 			Toast.fire({
 				icon: 'success',
 				title: 'Logout successfully'

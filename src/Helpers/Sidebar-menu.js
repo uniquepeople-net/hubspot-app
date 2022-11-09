@@ -13,6 +13,7 @@ export const sidebarMenu = (checkRole, sidebarHide) => {
 		items: [
 			{ 
 				label: 'By Match',
+				to: '/stats',
 				command: () => sidebarHide()
 			},
 			{
