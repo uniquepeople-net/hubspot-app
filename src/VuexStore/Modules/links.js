@@ -20,7 +20,6 @@ export default {
 		instatTournamentSeason:		'&tournament_id=40&season_id=',
 		instatMatch:				'&tpl=37&match_id=',
 
-
 		//http://service.instatfootball.com/feed.php?id=1098908&key=4VYKAPm0&tpl=37&match_id=2234701&lang_id=1&lang=&format=xml
 
 		// Auth service routes for token iss check

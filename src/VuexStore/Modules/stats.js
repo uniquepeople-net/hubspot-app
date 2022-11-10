@@ -3,7 +3,9 @@ export default {
 
 	state: () => ({
 		matches: [],
-		match: {}
+		match: {},
+		team1: {},
+		team2: {},
 	}),
 
 	mutations: {
@@ -12,6 +14,12 @@ export default {
 		},
 		SETMATCH( state, data ) {
 			state.match = data;
+		},
+		SETTEAM1( state, data) {
+			state.team1 = data
+		},
+		SETTEAM2( state, data) {
+			state.team2 = data
 		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
@@ -48,16 +56,35 @@ export default {
 
 			await axios.get(instatBasic + instatMatch + matchId + instatOPtions)
 				.then( response => {
-					console.log(response.data.data.match_info[0])
-					
-					//context.commit("SETMATCH", response.data.data.match)
+					context.commit("SETMATCH", response.data.data.match_info[0])
 				})
+		},
+		async getTeam( context, team ) {
+			let instatBasic = context.rootGetters['links/instatBasic']
+			let instatTeamData = context.rootGetters['links/instatTeamData']
+			let instatOPtions = context.rootGetters['links/instatOPtions']
+
+			await User.refreshedToken();
+			
+			await axios.get(instatBasic + instatTeamData + team.id + instatOPtions)
+				.then( response => {				
+					context.commit("SETTEAM" + team.number , response.data.data.row[0])
+				}) 
 		}
 	},
 
 	getters: {
 		matches(state) {
 			return state.matches
+		},
+		match(state) {
+			return state.match
+		},
+		team1(state) {
+			return state.team1
+		},
+		team2(state) {
+			return state.team2
 		}
 	}
 }

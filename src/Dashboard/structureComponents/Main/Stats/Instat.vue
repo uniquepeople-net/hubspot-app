@@ -1,24 +1,35 @@
 <template>
 
-	<MatchSelects />
+	<MatchSelects class="mb-4"/>
 
-	<StatChart :accurate="50" :inacurate="15" title="Passes" :accColor="getRandom(chartColors)"/>
-	<StatChart :accurate="30" :inacurate="20" title="Shots" :accColor="getRandom(chartColors)"/>
-	<StatChart :accurate="11" :inacurate="3" title="Challenges" :accColor="getRandom(chartColors)"/>
+	<MatchCard />
+
+	<div class="row">
+		<div class="col-6 col-sm-6 col-md-4 col-lg-3">
+			<StatChart :accurate="50" :inacurate="15" title="Passes" :accColor="getRandom(chartColors)" :inaccColor="getRandom(chartColors)"/>
+		</div>
+		<div class="col-6 col-sm-6 col-md-4 col-lg-3">
+			<StatChart :accurate="30" :inacurate="20" title="Shots" :accColor="getRandom(chartColors)" :inaccColor="getRandom(chartColors)"/>
+		</div>
+		<div class="col-6 col-sm-6 col-md-4 col-lg-3">
+			<StatChart :accurate="11" :inacurate="3" title="Challenges" :accColor="getRandom(chartColors)" :inaccColor="getRandom(chartColors)"/>
+		</div>
+	</div>
 
 </template>
  
  
 <script>
+	import MatchSelects from './MatchSelects.vue'
+	import MatchCard from '../../../global/MatchCard.vue'
 	import StatChart from '../../../global/StatChart.vue'
-import MatchSelects from './MatchSelects.vue'
 
 	
 	export default {
-		components: { StatChart, MatchSelects },
+		components: { StatChart, MatchSelects, MatchCard },
 		data() {
 			return {
-				chartColors: ['#EBF5F7', '#5BB0BA', '#B2C4CB', '#F3F3E7', '#96AD90', '#3A4A3D', '#478C5C'  ]
+				chartColors: ['#67595E', '#05445E', '#189AB4', '#211522', '#613659', '#3A4A3D', '#96AD90', '#171515', '#6F5B3E'  ]
 			}
 		},
 		methods: {

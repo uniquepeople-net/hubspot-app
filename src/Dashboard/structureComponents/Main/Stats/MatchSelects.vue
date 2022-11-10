@@ -28,7 +28,7 @@
 
 	export default {
 		created() {
-			this.$store.dispatch( "stats/getMatches" );
+			//this.$store.dispatch( "stats/getMatches" );
 		},
 		data() {
 			return {
@@ -44,7 +44,7 @@
 		},
 		methods: {
 			selectItem(e) {
-				this.$store.dispatch( "stats/getMatches", e.value )				
+				//this.$store.dispatch( "stats/getMatches", e.value )				
 			},
 			fitMatches(data, arr) {
 				if ( data ) {
@@ -65,7 +65,7 @@
 				this.fitMatches( data, this.matchesArr )
 			},
 			selectedMatch: function(data) {
-				this.$store.dispatch( "stats/getMatch", data );				
+				//this.$store.dispatch( "stats/getMatch", data );				
 			}
 		},
 	}
@@ -73,4 +73,9 @@
  
  
 <style lang='scss' scoped>
+.card {
+	:deep(.p-card-content) {
+		padding: 0;
+	}
+}
 </style>
