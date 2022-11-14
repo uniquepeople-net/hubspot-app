@@ -44,7 +44,7 @@
 		},
 		methods: {
 			selectItem(e) {
-				//this.$store.dispatch( "stats/getMatches", e.value )				
+				this.$store.dispatch( "stats/getMatches", e.value )				
 			},
 			fitMatches(data, arr) {
 				if ( data ) {
