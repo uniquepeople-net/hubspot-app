@@ -4,6 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+COPY webpack.k8s.config.js ./webpack.config.js
 RUN npm run build
 
 # production stage
