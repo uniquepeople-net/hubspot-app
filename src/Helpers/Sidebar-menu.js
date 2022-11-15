@@ -38,6 +38,22 @@ export const sidebarMenu = (checkRole, sidebarHide) => {
 				command: () => sidebarHide()				
 			},
 		]
+	},
+	{
+		label: 'Info',
+		icon: 'pi pi-info-circle',
+		items: [
+			{
+				label: 'UFP',
+				to: {name: 'info-ufp'},
+				command: () => sidebarHide()
+			},
+			{ 
+				label: 'other',
+				to: {name: 'info-other'},
+				command: () => sidebarHide()				
+			},
+		]
 	}
 ]}
 

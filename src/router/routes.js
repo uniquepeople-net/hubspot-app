@@ -13,12 +13,20 @@ import Logout from '../Auth/Logout.vue';
 import Forget from '../Auth/Forget.vue';
 
 import Dashboard from '../Dashboard/Dashboard.vue';
+
 import Users from '../Dashboard/structureComponents/Main/Users/Users.vue'
 import AllUsers from '../Dashboard/structureComponents/Main/Users/AllUsers.vue'
 import AddNewUser from '../Dashboard/structureComponents/Main/Users/AddNewUser.vue'
 import SpecificUser from '../Dashboard/structureComponents/Main/Users/SpecificUser.vue'
+
 import Myprofile from '../Dashboard/structureComponents/Main/Profile/MyProfile.vue';
+
 import Instat from '../Dashboard/structureComponents/Main/Stats/Instat.vue';
+
+import Info from '../Dashboard/structureComponents/Main/Info/Info.vue';
+import InfoUfp from '../Dashboard/structureComponents/Main/Info/InfoUfp.vue';
+import InfoOther from '../Dashboard/structureComponents/Main/Info/InfoOther.vue';
+
 
 export const routes = [
 
@@ -47,6 +55,20 @@ export const routes = [
 			{ path: '/my-profile', component: Myprofile, name: 'my-profile' },
 
 			{ path: '/stats', component: Instat, name: 'instat' },
+						
+			{ path: '/info', component: Info, name: 'info',
+
+				children: [
+
+					{ path: 'ufp', component: InfoUfp, name: 'info-ufp' },
+
+					{ path: 'other', component: InfoOther, name: 'info-other' },
+
+				]
+
+			},
+
+
 		],
 	},
 

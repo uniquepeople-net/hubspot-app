@@ -19,7 +19,7 @@
 		</template>
 		<template #loading>
 			
-			<ProgressSpinner strokeWidth="3"/>
+		<ProgressSpinner strokeWidth="3"/>
 			
 		</template>
 		<Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
@@ -104,14 +104,13 @@
 </script>
  
  
-<style lang="scss" scoped>
+<style lang="scss">
 @keyframes p-progress-spinner-color {
 	0% {
-		stroke: #707070;
+		stroke: #b4d4ff;
 	}
 	100% {
 		stroke: #ffffff;
 	}
 }
-
 </style>

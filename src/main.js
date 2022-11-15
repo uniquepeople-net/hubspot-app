@@ -79,6 +79,7 @@ import Card from 'primevue/card';
 import Skeleton from 'primevue/skeleton'
 import ProgressSpinner from 'primevue/progressspinner';
 import Fieldset from 'primevue/fieldset';
+import Textarea from 'primevue/textarea';
 
 import InputIcon from './Dashboard/global/InputIcon.vue';
 import InputError from './Dashboard/global/InputError.vue';
@@ -110,4 +111,5 @@ createApp(App)
 	.component('PasswordSuggestions', PasswordSuggestions)
 	.component('ProgressSpinner', ProgressSpinner)
 	.component('Fieldset', Fieldset)
+	.component('Textarea', Textarea)
 	.mount('#app')

@@ -1,6 +1,6 @@
 <template>
 	
-	<Sidebar v-model:visible="visibleLeft" class="sidebar">
+	<Sidebar v-model:visible="visibleLeft" class="sidebar" :modal="sidebarModal">
 		<template v-slot:header class="sidebar-slot-header">
 			<div class="logo">
 				<a href="https://ufp.sk"><img src="../../../../assets/images/logo/logo.png" alt="Logo" srcset="" /></a>
@@ -27,20 +27,24 @@
 		data() {
 			return {
 				visibleLeft: false,
-				items: sidebarMenu( this.showItemByRole, this.checkwindowWidth  )
+				items: sidebarMenu( this.showItemByRole, this.checkwindowWidth  ),
+				sidebarModal: true
 			}
 		},
 		methods: {
 			showItemByRole() {
 				return this.user.role_id === 1 ? true : false
 			},
-			changemenu() {
-				console.log("Awdawd")
-			},
 			checkwindowWidth() {
 				let windowWidth = window.innerWidth;
-				windowWidth >= 991 ? this.visibleLeft = true : this.visibleLeft = false	
-			}
+				if ( windowWidth >= 991 ) {
+					this.visibleLeft = true
+					this.sidebarModal = false
+				} else {
+					this.visibleLeft = false
+					this.sidebarModal = true
+				}	
+			},
 		},
 		computed: {
 			...mapGetters({ user: 'user/user' }),

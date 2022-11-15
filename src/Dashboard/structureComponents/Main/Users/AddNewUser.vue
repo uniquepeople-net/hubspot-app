@@ -136,16 +136,13 @@ export default {
 				password: this.password,
 			}
 
-			this.registerUser( this.registersApiGwUrl, data )
-			
-
-			//this.$store.dispatch("users/registerUser", data).then( res => console.log(res))					
+			this.registerUser( this.registersApiGwUrl, data )			
         },
         toggleDialog() {
             this.showMessage = !this.showMessage;
         
             if(!this.showMessage) {
-                //this.resetForm();
+                this.resetForm();
             }
         },
         resetForm() {
