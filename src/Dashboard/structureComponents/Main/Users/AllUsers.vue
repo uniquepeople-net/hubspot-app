@@ -104,13 +104,6 @@
 </script>
  
  
-<style lang="scss">
-@keyframes p-progress-spinner-color {
-	0% {
-		stroke: #b4d4ff;
-	}
-	100% {
-		stroke: #ffffff;
-	}
-}
+<style lang="scss" scoped>
+
 </style>

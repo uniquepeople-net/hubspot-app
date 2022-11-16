@@ -25,6 +25,9 @@ export default {
 		// Auth service routes for token iss check
 		loginAuthServiceUrl: 	'http://auth_nginx/api/login',
 		registerAuthServiceUrl: 'http://auth_nginx/api/register',
+
+		// Email service routes
+		sendContactFormEmail: 	DOMAIN_URL + '/api/send-form-email',
 	}),
 
 	getters: {
@@ -78,6 +81,11 @@ export default {
 		},
 		registerAuthServiceUrl(state) {
 			return state.registerAuthServiceUrl
+		},
+
+		// Email Service routes getters
+		sendContactFormEmail(state) {
+			return state.sendContactFormEmail
 		},
 	}
 }

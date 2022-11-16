@@ -29,7 +29,13 @@
 						</div>
 					</div>
 
-					<Button type="submit" label="Send Email" class="mt-2 submit-btn" />
+					<div>
+						<Button type="submit" label="Send Email" class="mt-2 submit-btn" :disabled="disabledBtn"/>
+						<div v-if="spinner" class="spinner-grow" style="width: 3rem; height: 3rem;" role="status"></div>
+						<p v-if="emailResponse">{{ emailResponse }}</p>
+						
+					</div>
+
 				</form>
 			</div>
 		</template>
@@ -49,11 +55,13 @@
 				textArea: '',
 				selectedRecipient: null,
 				recipients: [
-					{name: 'UFP advisor', code: 'ADV'},
-					{name: 'UFP Law advise', code: 'LAW'},
-					{name: 'Technical Support', code: 'TS'},
+					{name: 'UFP advisor', code: 'Miroslav.Viazanko@uniquepeople.net'},
+					{name: 'UFP Law advise', code: 'viazanko@pobox.sk'},
+					{name: 'Technical Support', code: 'viazanko.uniquepeople@gmail.com'},
 				],
 				submitted: false,
+				disabledBtn: false,
+				spinner: false
 			}
 		},
 		validations() {
@@ -65,10 +73,14 @@
 		methods: {
 			handleSubmit(isFormValid) {
 				this.submitted = true;
+				
 
 				if (!isFormValid) {
 					return;
 				}
+
+				this.disabledBtn = true;
+				this.spinner = true;
 
 				let data = {
 					name: this.user.name,
@@ -79,11 +91,16 @@
 
 				//this.registerUser( this.registersApiGwUrl, data )
 				
-				console.log(data)
-				
-				this.resetForm();
+				//console.log(data)
 
-				//this.$store.dispatch("users/registerUser", data).then( res => console.log(res))					
+				this.$store.dispatch("emails/sendEmail", data);
+
+				/* axios.post( 'http://localhost:80/api/send-form-email', data)
+					.then( response => console.log(response)) */
+				
+				//this.resetForm();
+
+							
 			},
 			resetForm() {
 				this.textArea = '';
@@ -91,7 +108,17 @@
 			},
 		},
 		computed: {
-			...mapGetters({ user: 'user/user' }),
+			...mapGetters({ user: 'user/user',
+							emailResponse: 'emails/response' }),
+		},
+		watch: {
+			emailResponse: function(data) {
+				console.log()
+				if ( data ) {
+					this.disabledBtn = false
+					this.spinner = false
+				}
+			}
 		}
 	}
 </script>
