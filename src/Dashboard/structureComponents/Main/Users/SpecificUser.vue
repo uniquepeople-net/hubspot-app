@@ -5,7 +5,8 @@
 						  :position="instatUser.position1_name" :teamname="instatTeam.name" :teamphoto="instatTeam.photo"/>
 		</div>
 		<div class="col-12 col-xl-6 col-xxl-4">
-			<DataCard v-if="specificUser" :userData="specificUser" :userUrl="specificUserUrl"/>
+			<DataCard v-if="specificUser" :userData="specificUser" 
+					  :userUrl="specificUserUrl" :delete="true"/>
 		</div>
 
 		<div class="col-12 col-xl-6 col-xxl-4">

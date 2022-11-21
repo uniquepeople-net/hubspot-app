@@ -12,6 +12,11 @@ a {
 	overflow: hidden;
 }
 
+.center-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
 @media( min-width: 992px ) {
 	.p-sidebar-mask.p-component-overlay {

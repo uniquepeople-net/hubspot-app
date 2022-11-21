@@ -22,15 +22,14 @@ export default {
 		async sendEmail(context, data) {
 			let sendEmailUrl = context.rootGetters['links/sendContactFormEmail']
 
-			//await User.refreshedToken();				
+			await User.refreshedToken();				
 			context.commit("SETRESPONSE", null)
 
 			await axios.post( sendEmailUrl , data, {
 						headers: {
 							Authorization: 'Bearer ' + User.getToken()
 						}
-					})
-						.then( response => {
+					}).then( response => {
 							context.commit("SETRESPONSE", response.data)
 						})
 		},

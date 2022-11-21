@@ -16,7 +16,10 @@
         
 		<Card class="card">
 			<template #title>
-				<div class="card-header"><h5>User Data</h5></div>
+				<div class="card-header">
+					<h5>User Data</h5>
+					<DeleteUser v-if="delete" :delete="delete" :userId="id" :userName="name"></DeleteUser>
+				</div>
 			</template>
 			<template #content>
 				<div class="card-body">
@@ -73,10 +76,11 @@ import { email, required, sameAs, minLength, numeric } from "@vuelidate/validato
 import { useVuelidate } from "@vuelidate/core";
 import axios from 'axios';
 import { mapGetters } from 'vuex';
+import DeleteUser from "./DeleteUser.vue";
 
 export default {
     setup: () => ({ v$: useVuelidate() }),
-	props: ['userData', 'userUrl'],
+	props: ['userData', 'userUrl', 'delete'],
     data() {
         return {
             name: this.userData.name,
@@ -140,7 +144,7 @@ export default {
 			} catch (err) {
 				throw 'Unable to update user'
 			}
-		}
+		},
     },
 	watch: {
 		userData: function(data) {
@@ -148,11 +152,12 @@ export default {
 				this.name = data.name
 				this.email = data.email
 				this.instatId = data.instat_id
-				this.paid = Boolean(data.fee)
+				this.paid = data.fee
 				this.role = data.role_id
 			}
 		}
 	},
+	components: { DeleteUser }
 }
 </script>
 
@@ -160,6 +165,11 @@ export default {
 <style lang="scss" scoped>
 .card {
 	margin: auto;
+	:deep(.card-header) {	
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
 }
 .inputgroup {
 	position: relative;

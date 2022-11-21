@@ -1,4 +1,4 @@
-export const sidebarMenu = (checkRole, sidebarHide) => {
+export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 	
 	return [
 	{
@@ -10,6 +10,7 @@ export const sidebarMenu = (checkRole, sidebarHide) => {
 	{
 		label: 'Instat',
 		icon: 'bi-bar-chart',
+		visible: isInstat,
 		items: [
 			{ 
 				label: 'By Match',

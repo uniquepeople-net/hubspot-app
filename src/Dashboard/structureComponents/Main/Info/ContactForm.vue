@@ -1,4 +1,17 @@
 <template>
+
+	<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
+		<div class="flex align-items-center flex-column pt-6 px-3">
+			<i v-if="emailResponse" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>	
+			<h5 v-if="emailResponse" class="mt-3">{{ emailResponse }}</h5>
+		</div>
+		<template #footer>
+			<div class="flex justify-content-center">
+				<Button label="OK" @click="toggleDialog" class="p-button-text" />
+			</div>
+		</template>
+	</Dialog>
+
 	<Card class="card">
 		<template #content>
 			<div class="card-body">
@@ -29,11 +42,9 @@
 						</div>
 					</div>
 
-					<div>
+					<div class="send-email">
 						<Button type="submit" label="Send Email" class="mt-2 submit-btn" :disabled="disabledBtn"/>
-						<div v-if="spinner" class="spinner-grow" style="width: 3rem; height: 3rem;" role="status"></div>
-						<p v-if="emailResponse">{{ emailResponse }}</p>
-						
+						<div v-if="spinner" class="spinner-grow" style="width: 3rem; height: 3rem;" role="status"></div>						
 					</div>
 
 				</form>
@@ -61,7 +72,8 @@
 				],
 				submitted: false,
 				disabledBtn: false,
-				spinner: false
+				spinner: false,
+				showMessage: false
 			}
 		},
 		validations() {
@@ -74,7 +86,6 @@
 			handleSubmit(isFormValid) {
 				this.submitted = true;
 				
-
 				if (!isFormValid) {
 					return;
 				}
@@ -89,18 +100,16 @@
 					recipient: this.selectedRecipient
 				}
 
-				//this.registerUser( this.registersApiGwUrl, data )
-				
-				//console.log(data)
-
 				this.$store.dispatch("emails/sendEmail", data);
-
-				/* axios.post( 'http://localhost:80/api/send-form-email', data)
-					.then( response => console.log(response)) */
 				
-				//this.resetForm();
-
-							
+				
+			},
+			toggleDialog() {
+				this.showMessage = !this.showMessage;
+			
+				if(!this.showMessage) {
+					this.resetForm();
+				}
 			},
 			resetForm() {
 				this.textArea = '';
@@ -113,10 +122,10 @@
 		},
 		watch: {
 			emailResponse: function(data) {
-				console.log()
 				if ( data ) {
 					this.disabledBtn = false
 					this.spinner = false
+					this.toggleDialog()
 				}
 			}
 		}
@@ -133,7 +142,7 @@
 			border-radius: 0 6px 6px 0;
 		}
 	}
-	.select-rec {
+	::slotted(.select-rec) {
 		display: flex;
 		align-items: center;
 		position: relative;
@@ -148,6 +157,14 @@
 	.submit-btn {
 		background-color: var(--green-600);
 		border: 1px solid var(--green-700);
+	}
+	.send-email {
+		position: relative;
+		.spinner-grow {
+			position: absolute;
+			right: 1rem;
+			bottom: 1px;
+		}
 	}
 }
 </style>

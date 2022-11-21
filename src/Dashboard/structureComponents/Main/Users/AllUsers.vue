@@ -1,18 +1,18 @@
-<template>
-	
+<template>	
 	<DataTable v-if="users" :value="userData" :paginator="true" class="p-datatable-customers card" :rows="10" :loading="loading"
 		dataKey="id" :rowHover="true" v-model:selection="selectedUsers" v-model:filters="filters" filterDisplay="menu" 
 		paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[10,25,50]"
-		currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-		:globalFilterFields="['name']" responsiveLayout="scroll">
+		currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
+		:globalFilterFields="['name', 'fee']" responsiveLayout="scroll">
 		<template #header>
-				<div class="d-flex justify-content-between align-items-center">
-				<h5 class="m-0">Users</h5>
-				<span class="p-input-icon-left">
+			<h5 class="mb-3">Users</h5>			
+			<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
+				<span class="p-input-icon-left mb-3 mb-sm-0">
 					<i class="pi pi-search" />
 					<InputText v-model="filters['global'].value" placeholder="Keyword Search" />
 				</span>
-				</div>
+				<Button type="button" icon="pi pi-filter-slash" label="Clear filters" class="p-button-outlined" @click="clearFilter()"/>
+			</div>
 		</template>
 		<template #empty>
 			No users found.
@@ -32,16 +32,19 @@
 			</template>			
 		</Column>
 		
-		<Column field="fee" header="Fee" sortable :filterMenuStyle="{'width':'8rem'}" style="min-width: 8rem">
+		<Column field="fee" header="Fee" dataType="boolean" sortable :filterMenuStyle="{'width':'8rem'}" style="min-width: 8rem">
 			<template #body="{data}">
-				<span :class="'fee-badge fee-' + data.fee">{{data.fee}}</span>
+				<i class="pi" :class="{'true-icon pi-check-circle': data.fee, 'false-icon pi-times-circle': !data.fee}"></i>
 			</template>
-			
+			<template #filter="{filterModel}">
+				<TriStateCheckbox v-model="filterModel.value" inputId="checkbox" />
+				<label class="ps-3" for="checkbox">{{filterModel.value == null ? '' : statePay(filterModel.value)}}</label>
+			</template>
 		</Column>
 
-		<Column field="is_admin" header="State" sortable :filterMenuStyle="{'width':'8rem'}" style="min-width: 8rem">
+		<Column field="is_admin" header="State" dataType="boolean" sortable :filterMenuStyle="{'width':'8rem'}" style="min-width: 8rem">
 			<template #body="{data}">
-				<span :class="'state-badge state-' + data.is_admin">{{ stateUser(data.is_admin) }}</span>
+				<Badge :value="stateUser(data.is_admin)" :severity="stateBadge(data.is_admin)"/>
 			</template>
 		</Column>
 
@@ -54,40 +57,57 @@
 		</Column>
 
 		<template #footer>
-			<Button label="Add new user" icon="pi pi-user-plus" class="p-button-raised p-button-info" @click="addUserLink"/>
+			<div class="d-flex flex-column flex-sm-row justify-content-between">
+				<BulkActions :selected="selectedUsers"/>
+				<Button label="Add new user" icon="pi pi-user-plus" class="p-button-raised p-button-info" @click="addNewUser"/>
+			</div>
 		</template>
-
 	</DataTable>
-
 </template>
  
  
 <script>
-	import { FilterMatchMode,FilterOperator } from 'primevue/api';
+	import { FilterMatchMode, FilterOperator } from 'primevue/api';
 	import { mapGetters } from 'vuex';
+	import TriStateCheckbox from 'primevue/tristatecheckbox';
+	import BulkActions from './BulkActions.vue';
 
 	export default {
 		created() {
 			this.$store.dispatch("users/getUsers");
+			this.initFilters();
 			this.loading = true
 		},
 		data() {
 			return {
 				selectedUsers: null,
-				filters: {
-					'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
-					'name': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-				},
+				filters: null,
 				loading: false,
 				userData: []
 			}
 		},
 		methods: {
-			addUserLink() {
+			addNewUser() {
 				this.$router.push({name: 'add-new-user'})
 			},
 			stateUser(data) {
-				return data === 1 ? 'admin' : 'user'
+				return data ? 'admin' : 'user'
+			},
+			stateBadge(data) {
+				return data ? 'warning' : 'secondary'
+			},
+			statePay(data) {
+				return data ? 'Paid' : 'Not Paid'
+			},
+			clearFilter() {
+				this.initFilters();
+			},
+			initFilters() {
+				this.filters = {
+					'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
+					'name': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
+					'fee': {value: null, matchMode: FilterMatchMode.EQUALS},
+				}
 			}
 
 		},
@@ -100,10 +120,19 @@
 				this.loading = false
 			},
 		},
+		components: { TriStateCheckbox, BulkActions }
 	}
 </script>
  
  
 <style lang="scss" scoped>
-
+.true-icon, .false-icon {
+	font-size: 1.2rem;
+}
+.true-icon {
+	color: var(--green-700);
+}
+.false-icon {
+	color: var(--red-600)
+}
 </style>

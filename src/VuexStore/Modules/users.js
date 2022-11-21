@@ -1,5 +1,6 @@
 import axios from "axios";
 import User from "../../Helpers/User";
+import user from "./user";
 
 export default {
 	namespaced: true,
@@ -10,6 +11,10 @@ export default {
 	mutations: {
 		SETUSERS( state, data ) {
 			state.users = data;
+			state.users.map( user => {
+				user.fee = Boolean( user.fee )
+				user.is_admin = Boolean( user.is_admin )
+			})
 		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers

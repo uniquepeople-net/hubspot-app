@@ -8,7 +8,8 @@ export default {
 
 	mutations: {
 		SETUSER( state, data ) {
-			state.user = data.user;
+			state.user = {...data.user};
+			state.user.fee = Boolean(state.user.fee)			
 		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers

@@ -18,6 +18,7 @@ import Users from '../Dashboard/structureComponents/Main/Users/Users.vue'
 import AllUsers from '../Dashboard/structureComponents/Main/Users/AllUsers.vue'
 import AddNewUser from '../Dashboard/structureComponents/Main/Users/AddNewUser.vue'
 import SpecificUser from '../Dashboard/structureComponents/Main/Users/SpecificUser.vue'
+import EmailEditor from '../Dashboard/structureComponents/Main/Users/EmailEditor.vue'
 
 import Myprofile from '../Dashboard/structureComponents/Main/Profile/MyProfile.vue';
 
@@ -47,6 +48,10 @@ export const routes = [
 
 					{ path: ':user_id', component: SpecificUser, name: 'specific-user',
 						beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() )
+					},
+
+					{ path: 'send-emails', component: EmailEditor, name: 'send-emails',
+						beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() )
 					}
 				]
 
@@ -75,5 +80,4 @@ export const routes = [
 	{ path: '/login', component: Login, name: 'login' },
     { path: '/logout', component: Logout, name:'logout' },
     { path: '/forget', component: Forget, name:'forget' },
-	//{ path: '/user-profile', component: UserProfile, name:'user-profile' }
 ]
