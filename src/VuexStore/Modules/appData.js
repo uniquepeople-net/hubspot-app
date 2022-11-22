@@ -1,12 +1,18 @@
+import { toRaw  } from 'vue'
+
 export default {
 	namespaced: true,
 	state: () => ({
-		activeSidebar: false
+		activeSidebar: false,
+		choosedEmails: null
 	}),
 
 	mutations: {
 		SETACTIVESIDEBAR( state, data ) {
 			state.activeSidebar = data;
+		},
+		SETEMAILS( state, data ) {
+			state.choosedEmails = data;
 		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
@@ -23,12 +29,19 @@ export default {
 		},
 		setDisabledSidebar(context) {
 			context.commit("SETACTIVESIDEBAR", false)
+		},
+		setChoosedEmails( context, data ) {
+			context.commit("SETEMAILS", data)
 		}
 	},
 
 	getters: {
 		activeSidebar(state) {
 			return state.activeSidebar
+		},
+		getEmails(state) {
+			return toRaw(state.choosedEmails)
 		}
 	}
 }
+

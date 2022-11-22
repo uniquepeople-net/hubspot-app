@@ -50,7 +50,7 @@ export const routes = [
 						beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() )
 					},
 
-					{ path: 'send-emails', component: EmailEditor, name: 'send-emails',
+					{ path: 'send-emails', component: EmailEditor, name: 'send-emails', props: true,
 						beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() )
 					}
 				]

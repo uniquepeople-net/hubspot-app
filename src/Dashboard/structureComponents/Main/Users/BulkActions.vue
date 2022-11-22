@@ -1,8 +1,12 @@
 <template>
-	<div class="d-flex justify-content-between justify-content-sm-start mb-4 mb-sm-0">
-		<Dropdown v-model="selectedAction" :options="actions" optionLabel="name" placeholder="Select an Action" />
-		<Button v-if="selectedAction" :label="selectedAction.name" :icon="selectedAction.icon" 
-				class="p-button-raised p-button-success ms-3" @click="commitAction"/>
+	<div class="mb-4 mb-sm-0">
+		<div class="d-flex justify-content-between justify-content-sm-start">
+			<Dropdown v-model="selectedAction" :options="actions" optionLabel="name" placeholder="Select an Action" />
+			<Button v-if="selectedAction" :label="selectedAction.name" :icon="selectedAction.icon" 
+					class="p-button-raised p-button-success ms-3" @click="commitAction"
+					:disabled="selectedAction && (!selected || selected.length === 0)"/>
+		</div>
+		<small class="error" v-if="selectedAction && (!selected || selected.length === 0)">No users chosen</small>
 	</div>
 </template>
  
@@ -25,11 +29,14 @@
 		methods: {
 			commitAction() {
 				let emailsArr = [] 
-				toRaw(this.selected).map( sel => emailsArr.push(sel.email))
+	
+				if ( this.selected ) {
+					toRaw(this.selected).map( sel => emailsArr.push(sel))
+					this.$store.dispatch("appData/setChoosedEmails", emailsArr);
+					this.$router.push({ name: 'send-emails' })
+				} else {
 
-				//console.log(emailsArr);
-
-				this.$router.push({ name: 'send-emails', params: { emails: 'hey'  } })
+				} 
 			}
 		},
 	}
@@ -37,4 +44,7 @@
  
  
 <style lang='scss' scoped>
+.error {
+	color: var(--red-600);
+}
 </style>
