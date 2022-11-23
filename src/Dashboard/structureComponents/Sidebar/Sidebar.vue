@@ -79,5 +79,12 @@
 	.p-menuitem-text {
 		font-weight: 400;
 	}
+	.pi-chevron-right, .pi-chevron-down {
+		order: 3;
+		margin-left: auto;
+	}
+	.p-panelmenu .p-menuitem-icon {
+		margin-right: 1rem !important;
+	}
 }
 </style>

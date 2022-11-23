@@ -81,7 +81,7 @@ import ProgressSpinner from 'primevue/progressspinner';
 import Fieldset from 'primevue/fieldset';
 import Textarea from 'primevue/textarea';
 import Badge from 'primevue/badge';
-
+import Carousel from 'primevue/carousel';
 
 import InputIcon from './Dashboard/global/InputIcon.vue';
 import InputError from './Dashboard/global/InputError.vue';
@@ -115,4 +115,5 @@ createApp(App)
 	.component('Fieldset', Fieldset)
 	.component('Textarea', Textarea)
 	.component('Badge', Badge)
+	.component('Carousel', Carousel)
 	.mount('#app')

@@ -26,6 +26,9 @@
 			}
 			this.$store.dispatch("user/getUser");
 		},
+		mounted() {
+			this.$router.push({ name: 'my-board' })
+		},
 		data() {
 			return{
 				show: false, 

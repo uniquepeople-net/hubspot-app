@@ -27,7 +27,7 @@
 	export default {
 		data() {
 			return {
-				 value: '<div>Welcome to PrimeVue <b>Editor</b></div><div><br></div>',				
+				 value: '<h2>Create new email</h2>',				
 			}
 		},
 		methods: {

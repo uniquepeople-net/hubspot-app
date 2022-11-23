@@ -2,9 +2,9 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 	
 	return [
 	{
-		label: 'Dashboard',
+		label: 'My board',
 		icon: 'bi-collection',
-		to:	'/',
+		to:	'/my-board',
 		command: () => sidebarHide()
 	},
 	{
@@ -55,6 +55,12 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 				command: () => sidebarHide()				
 			},
 		]
+	},
+	{
+		label: 'Settings',
+		icon: 'bi-collection',
+		to:	'/settings',
+		command: () => sidebarHide()
 	}
 ]}
 

@@ -14,6 +14,8 @@ import Forget from '../Auth/Forget.vue';
 
 import Dashboard from '../Dashboard/Dashboard.vue';
 
+import MyBoard from '../Dashboard/structureComponents/Main/MyBoard/MyBoard.vue';
+
 import Users from '../Dashboard/structureComponents/Main/Users/Users.vue'
 import AllUsers from '../Dashboard/structureComponents/Main/Users/AllUsers.vue'
 import AddNewUser from '../Dashboard/structureComponents/Main/Users/AddNewUser.vue'
@@ -33,6 +35,10 @@ export const routes = [
 
 	{ path: '/', component: Dashboard, name: 'dashboard',
 		children: [
+
+			{ path: '/my-board', component: MyBoard, name: 'my-board' },
+
+			{ path: '/stats', component: Instat, name: 'instat' },
 
 			{ path: '/users', component: Users, name: 'users',
 
@@ -58,8 +64,6 @@ export const routes = [
 			},
 			
 			{ path: '/my-profile', component: Myprofile, name: 'my-profile' },
-
-			{ path: '/stats', component: Instat, name: 'instat' },
 						
 			{ path: '/info', component: Info, name: 'info',
 
@@ -72,6 +76,8 @@ export const routes = [
 				]
 
 			},
+
+			
 
 
 		],
