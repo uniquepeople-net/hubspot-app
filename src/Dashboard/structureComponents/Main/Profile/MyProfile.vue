@@ -5,7 +5,7 @@
 	<div class="row gy-3 mt-3">
 		
 		<div class="col-12 col-xl-6 col-xxl-4">
-			<DataCard :userData="user" :userUrl="specificUserUrl"/>
+			<DataCard :userData="user" :userUrl="profileUser" :myProfile="true"/>
 		</div>
 
 		<div class="col-12 col-xl-6 col-xxl-4">
@@ -31,7 +31,7 @@
 		},
 		computed: {
 			...mapGetters({ user: 'user/user',
-							specificUserUrl: 'links/specificUser' }),
+							profileUser: 'links/profileUser' }),
 		},
 		components: { DataCard, ChangePasswordCard }
 	}

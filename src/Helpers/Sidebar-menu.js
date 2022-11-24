@@ -16,10 +16,6 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 				label: 'By Match',
 				to: '/stats',
 				command: () => sidebarHide()
-			},
-			{
-				label: 'By Season',
-				command: () => sidebarHide()
 			}
 		]
 	},

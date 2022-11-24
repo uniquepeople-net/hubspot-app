@@ -80,7 +80,7 @@ import DeleteUser from "./DeleteUser.vue";
 
 export default {
     setup: () => ({ v$: useVuelidate() }),
-	props: ['userData', 'userUrl', 'delete'],
+	props: ['userData', 'userUrl', 'delete', 'myProfile'],
     data() {
         return {
             name: this.userData.name,
@@ -128,7 +128,9 @@ export default {
 			try {
 				await User.refreshedToken();
 
-				const user = await axios.post( url + id, data, {
+				let updateUrl = this.myProfile ? url : url + id;
+
+				const user = await axios.post( updateUrl, data, {
 					headers: {
 						Authorization: 'Bearer ' + User.getToken()
 					}

@@ -26,7 +26,7 @@
 						<p class="date mt-2">{{ matchDate( match.match_date ) }}</p>
 					</div>
 
-					<Skeleton width="5rem" height="2.5rem" class="result position-absolute"></Skeleton>					
+					<Skeleton v-if="!match" width="5rem" height="2.5rem" class="result position-absolute"></Skeleton>					
 				</div>
 			</template>
 		</Card>  
@@ -67,8 +67,8 @@
 		watch: {
 			match: function (data) {
 				if ( data.id ){
-					//this.$store.dispatch( "stats/getTeam", { id:data.team1_id, number: '1'}  );
-					//this.$store.dispatch( "stats/getTeam", { id:data.team2_id, number: '2'} );
+					this.$store.dispatch( "stats/getTeam", { id:data.team1_id, number: '1'} );
+					this.$store.dispatch( "stats/getTeam", { id:data.team2_id, number: '2'} );
 				}				
 				
 			}
@@ -80,7 +80,7 @@
  
 <style lang='scss' scoped>
 .match-card {
-	max-width: 576px;
+	//max-width: 576px;
 	.team-logo {
 		max-width: 60px;
 	}

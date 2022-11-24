@@ -6,6 +6,7 @@ import users from './Modules/users';
 import specificUser from './Modules/specificUser';
 import appData from './Modules/appData';
 import stats from './Modules/stats';
+import statsData from './Modules/statsData';
 import emails from './Modules/emails';
 
 const store = createStore({
@@ -16,6 +17,7 @@ const store = createStore({
 		specificUser,
 		appData,
 		stats,
+		statsData,
 		emails
 	}
 })

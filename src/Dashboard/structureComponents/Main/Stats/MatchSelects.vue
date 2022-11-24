@@ -28,7 +28,7 @@
 
 	export default {
 		created() {
-			//this.$store.dispatch( "stats/getMatches" );
+			this.$store.dispatch( "stats/getMatches" );
 		},
 		data() {
 			return {
@@ -65,7 +65,7 @@
 				this.fitMatches( data, this.matchesArr )
 			},
 			selectedMatch: function(data) {
-				//this.$store.dispatch( "stats/getMatch", data );				
+				this.$store.dispatch( "stats/getMatch", data );				
 			}
 		},
 	}

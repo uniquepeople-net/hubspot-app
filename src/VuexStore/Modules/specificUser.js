@@ -53,7 +53,7 @@ export default {
 			
 			let instatId = context.getters.instatId
 
-			/* await axios.get(instatBasic + instatPlayerData + instatId + instatOPtions)
+			await axios.get(instatBasic + instatPlayerData + instatId + instatOPtions)
 				.then( response => {
 					context.commit("SETINSTATUSER", response.data)
 				})
@@ -63,7 +63,7 @@ export default {
 			await axios.get( instatBasic + instatTeamData + instatTeamId + instatOPtions )
 				.then( response => {
 					context.commit("SETINSTATTEAM", response.data)
-				}) */
+				})
 		}
 	},
 

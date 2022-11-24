@@ -9,6 +9,7 @@ export default {
 
 		getAllUsers: 			DOMAIN_URL + '/api/users-all',
 		specificUser:			DOMAIN_URL + '/api/users/',
+		profileUser:			DOMAIN_URL + '/api/users/update',
 
 
 		// Instat API
@@ -20,11 +21,12 @@ export default {
 		instatTournamentSeason:		'&tournament_id=40&season_id=',
 		instatMatch:				'&tpl=37&match_id=',
 
-		//http://service.instatfootball.com/feed.php?id=1098908&key=4VYKAPm0&tpl=37&match_id=2234701&lang_id=1&lang=&format=xml
+		// Own Stats API
+		lastMatchPlayerStats:		'https://futbal-data.uniquepeople.sk/api.php?action=get_player_stats_last_match&player_id=',
 
 		// Auth service routes for token iss check
-		loginAuthServiceUrl: 	'http://auth_nginx/api/login',
-		registerAuthServiceUrl: 'http://auth_nginx/api/register',
+		loginAuthServiceUrl: 		'http://auth_nginx/api/login',
+		registerAuthServiceUrl: 	'http://auth_nginx/api/register',
 
 		// Email service routes
 		sendContactFormEmail: 	DOMAIN_URL + '/api/send-form-email',
@@ -51,6 +53,9 @@ export default {
 		specificUser(state) {
 			return state.specificUser
 		},
+		profileUser(state) {
+			return state.profileUser
+		},
 
 		// Instat API
 		instatBasic(state) {
@@ -73,6 +78,11 @@ export default {
 		},
 		instatOPtions(state) {
 			return state.instatOPtions
+		},
+
+		// Own API routes getters
+		lastMatchPlayerStats(state) {
+			return state.lastMatchPlayerStats
 		},
 
 		// Auth Service routes getters

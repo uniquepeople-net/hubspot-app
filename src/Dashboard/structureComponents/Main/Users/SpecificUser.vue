@@ -6,7 +6,7 @@
 		</div>
 		<div class="col-12 col-xl-6 col-xxl-4">
 			<DataCard v-if="specificUser" :userData="specificUser" 
-					  :userUrl="specificUserUrl" :delete="true"/>
+					  :userUrl="specificUserUrl" :delete="true" :myProfile="false"/>
 		</div>
 
 		<div class="col-12 col-xl-6 col-xxl-4">

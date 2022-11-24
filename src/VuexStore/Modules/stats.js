@@ -42,10 +42,10 @@ export default {
 
 			let instatId = context.rootGetters['user/user'].instat_id;				
 
-			await axios.get(instatBasic + instatPlayerMatches + instatId + instatTournamentSeason + season + instatOPtions)
+			/* await axios.get(instatBasic + instatPlayerMatches + instatId + instatTournamentSeason + season + instatOPtions)
 				.then( response => {
 					context.commit("SETMATCHES", response.data.data.match)
-				})
+				}) */
 		},
 		async getMatch( context, matchId ) {
 			let instatBasic = context.rootGetters['links/instatBasic']
@@ -54,10 +54,10 @@ export default {
 
 			await User.refreshedToken();
 
-			await axios.get(instatBasic + instatMatch + matchId + instatOPtions)
+			/* await axios.get(instatBasic + instatMatch + matchId + instatOPtions)
 				.then( response => {
 					context.commit("SETMATCH", response.data.data.match_info[0])
-				})
+				}) */
 		},
 		async getTeam( context, team ) {
 			let instatBasic = context.rootGetters['links/instatBasic']
@@ -66,10 +66,10 @@ export default {
 
 			await User.refreshedToken();
 			
-			await axios.get(instatBasic + instatTeamData + team.id + instatOPtions)
+			/* await axios.get(instatBasic + instatTeamData + team.id + instatOPtions)
 				.then( response => {				
 					context.commit("SETTEAM" + team.number , response.data.data.row[0])
-				}) 
+				}) */ 
 		}
 	},
 
