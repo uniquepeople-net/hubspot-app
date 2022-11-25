@@ -11,7 +11,26 @@
  
 <script>
 	export default {
-		props: ['accurate', 'inacurate', 'title', 'accColor', 'inaccColor', 'dialogStat'],
+		props: {
+			accurate: {
+				default: 0
+			}, 
+			inacurate: {
+				default: 0
+			}, 
+			title: {
+				type: String
+			},
+			accColor: {
+				type: String
+			},
+			inaccColor: {
+				type: String
+			},
+			dialogStat: {
+				type: Boolean
+			}
+		},
 		emits: ['getData'],
 		data() {
 			return {
@@ -39,18 +58,6 @@
 					rotation: '-135',
 					cutout: '60%'
 				},
-				stats: [
-					{ name: 'Passes', value: 65},
-					{ name: 'Passes accurate', value: 50},
-					{ name: 'Passes inaccurate', value: 15},
-					{ name: 'Passes', value: 65},
-					{ name: 'Passes accurate', value: 50},
-					{ name: 'Passes inaccurate', value: 15},
-					{ name: 'Passes', value: 65},
-					{ name: 'Passes accurate', value: 50},
-					{ name: 'Passes inaccurate', value: 15}
-				]
-
 			}
 		}
 	}

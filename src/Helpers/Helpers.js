@@ -45,6 +45,14 @@ class Helpers {
 		})			
 	}
 
+	// Filter params by key 
+	filterParams( params, key, value ) {
+		let result = params.filter( param => param[key] === value )
+		if (result) {
+			return result[0].value
+		} else return 0
+	}
+
 }
 
 export default Helpers = new Helpers();

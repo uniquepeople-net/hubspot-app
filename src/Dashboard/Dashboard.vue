@@ -1,6 +1,5 @@
 <template>
 	<div v-if="show" class="dashboard">
-		
 		<Sidebar />
 
 		<div id="main" :class="activeSidebar ? 'main-active-sidebar' : ''">
@@ -10,24 +9,26 @@
 	</div>
 </template>
  
- 
-<script>
-	
+<script>	
 	import { mapGetters } from 'vuex'; 
 
 	import Sidebar from './structureComponents/Sidebar/Sidebar.vue'
 	import NavHeader from './structureComponents/NavHeader/NavHeader.vue';
-
 
 	export default {
 		created() {
 			if (!User.loggedIn()) {
 				this.$router.push({ name: 'login' })				
 			}
+			
+			let currentRoute = this.$router.currentRoute._value.name;
+			if ( currentRoute === 'dashboard' ) {
+				this.$router.push({ name: 'my-board' })
+			} else {
+				this.$router.push({ name: currentRoute })
+			}
+			
 			this.$store.dispatch("user/getUser");
-		},
-		mounted() {
-			this.$router.push({ name: 'my-board' })
 		},
 		data() {
 			return{
