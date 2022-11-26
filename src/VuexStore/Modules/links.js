@@ -22,7 +22,14 @@ export default {
 		instatMatch:				'&tpl=37&match_id=',
 
 		// Own Stats API
-		lastMatchPlayerStats:		'https://futbal-data.uniquepeople.sk/api.php?action=get_player_stats_last_match&player_id=',
+		statsBasic:					'https://futbal-data.uniquepeople.sk/api.php?action=',
+		lastMatchPlayerStats:		'get_player_stats_last_match&player_id=',
+		matchPlayerStats:			'get_player_stats_by_match&player_id=',
+		seasonsAll:					'get_player_seasons&player_id=',
+		seasonMatches:				'get_player_matches&player_id=',
+		season:						'&season_id=',
+		match:						'&match_id=',
+		team:						'get_team_info&team_id=',
 
 		// Auth service routes for token iss check
 		loginAuthServiceUrl: 		'http://auth_nginx/api/login',
@@ -81,8 +88,29 @@ export default {
 		},
 
 		// Own API routes getters
+		statsBasic(state) {
+			return state.statsBasic
+		},
 		lastMatchPlayerStats(state) {
 			return state.lastMatchPlayerStats
+		},
+		matchPlayerStats(state) {
+			return state.matchPlayerStats
+		},
+		seasonMatches(state) {
+			return state.seasonMatches
+		},
+		seasonsAll(state) {
+			return state.seasonsAll
+		},
+		season(state) {
+			return state.season
+		},
+		match(state) {
+			return state.match
+		},
+		team(state) {
+			return state.team
 		},
 
 		// Auth Service routes getters

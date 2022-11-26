@@ -4,26 +4,32 @@
 				<div class="card-header"><h5>Match Info</h5></div>
 			</template>
 			<template #content>
-				<div class="card-body position-relative">
+				<div v-if="match" class="card-body position-relative">
 					<div class="row">
 						<div class="col-6 collect align-items-start">
 							<h5 class="fw-light mb-md-3">{{ match.team1_name }}</h5>
+							<!-- <h5 class="fw-light mb-md-3">{{ match.team1_name }}</h5> -->
 							<!-- <Skeleton width="5rem" class="mb-2"></Skeleton> -->
-							<img class="team-logo" :src="team1.photo" alt="">
+							<img v-if="team1" class="team-logo" :src="team1.photo ? team1.photo : null" alt="">
+							<!-- <img class="team-logo" src="../../../assets/images/za.png" alt=""> -->
 							<!-- <Skeleton shape="circle" size="2.5rem" class="mr-2"></Skeleton> -->
 						</div>
 
 						<div class="col-6 collect align-items-end">
+							<!-- <h5 class="text-end fw-light mb-md-3">{{ match.team2_name }}</h5> -->
 							<h5 class="text-end fw-light mb-md-3">{{ match.team2_name }}</h5>
 							<!-- <Skeleton width="5rem" class="mb-2"></Skeleton> -->
-							<img class="team-logo" :src="team2.photo" alt="">
+							<img v-if="team2" class="team-logo" :src="team2.photo ? team2.photo : null" alt="">
+							<!-- <img class="team-logo" src="../../../assets/images/st.png" alt=""> -->
 							<!-- <Skeleton shape="circle" size="2.5rem" class="mr-2"></Skeleton> -->
 						</div>
 					</div>
 
 					<div class="result position-absolute">
+						<!-- <span>{{ modifyResult(match.score) }}</span>
+						<p class="date mt-2">{{ matchDate( match.match_date ) }}</p> -->
 						<span>{{ modifyResult(match.score) }}</span>
-						<p class="date mt-2">{{ matchDate( match.match_date ) }}</p>
+						<p class="date mt-2">{{ matchDate(match.match_date) }}</p>
 					</div>
 
 					<Skeleton v-if="!match" width="5rem" height="2.5rem" class="result position-absolute"></Skeleton>					
@@ -60,9 +66,9 @@
 			}
 		},
 		computed: {
-			...mapGetters({ match: 'stats/match',
-							team1: 'stats/team1',
-							team2: 'stats/team2' })
+			...mapGetters({ match: 'statsData/selectedMatch',
+							team1: 'statsData/team1',
+							team2: 'statsData/team2'})
 		},
 		watch: {
 			match: function (data) {

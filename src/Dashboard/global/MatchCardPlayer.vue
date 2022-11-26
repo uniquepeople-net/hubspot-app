@@ -3,10 +3,6 @@
 			<template #title>
 				<div class="card-header d-flex justify-content-between">
 					<h5>Player Info</h5>
-					<div>
-						<h5>Instat Index</h5>
-						<h6 class="text-center">{{}}</h6>
-					</div>
 				</div>
 
 			</template>

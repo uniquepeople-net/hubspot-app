@@ -40,9 +40,6 @@
 
 	export default {
 		props: ['params'],
-		created() {
-			this.$store.dispatch('statsData/getPlayerStats')
-		},
 		data() {
 			return {
 				displayModal: false,

@@ -2,7 +2,7 @@
 
 	<div class="row">
 		<div class="col-12 col-lg-6">
-			<MatchSelects class="mb-4"/>
+			<MatchSelects class="mb-4" :seasons="seasons" :matches="matches"/>
 
 			<MatchCard/>
 		</div>
@@ -12,7 +12,7 @@
 		</div>
 	</div>
 
-	<PlayerStats class="mt-4" :params="params"/>
+	<PlayerStats class="mt-4" :params="params" v-if="show"/>
 
 </template>
  
@@ -25,9 +25,16 @@
 	import MatchCardPlayer from '../../../global/MatchCardPlayer.vue'
 	
 	export default {
+		created() {
+			this.$store.dispatch('statsData/getPlayerStats')
+			this.$store.dispatch('statsData/getPlayerData')
+		},
 		computed: {
 			...mapGetters({ params: 'statsData/params',
-							restParams: 'statsData/restParams'}),
+							restParams: 'statsData/restParams',
+							seasons: 'statsData/seasons',
+							matches: 'statsData/matches',
+							show: 'statsData/playerStatsComponent'}),
 		},
 		components: { MatchSelects, MatchCard, PlayerStats, MatchCardPlayer },
 	}
