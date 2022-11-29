@@ -174,20 +174,24 @@ export default {
 
 			await axios.get( statsBasic + seasonMatches + statId + season + seasonId )
 				.then( response => {
-					response.data.map( resp => {
-						resp.matchData = resp.team1_name + ' - ' + resp.team2_name + ' (' + resp.score + ')'
-					})
-					context.commit("SETMATCHES", response.data )
-					let matchesArr = response.data;
-					context.commit("SETSELECTEDMATCH", matchesArr[0])
-					context.dispatch("getTeam",{id: matchesArr[0].team1_id, teamNum: 1});
-					context.dispatch("getTeam", {id: matchesArr[0].team2_id, teamNum: 2});
+					let data = response.data;
+					if (data.length) {
+						data.map( resp => {
+							resp.matchData = resp.team1_name + ' - ' + resp.team2_name + ' (' + resp.score + ')'
+						})
+						context.commit("SETMATCHES", data )					
+
+						context.commit("SETSELECTEDMATCH", data[0])
+						context.dispatch("getTeam",{id: data[0].team1_id, teamNum: 1});
+						context.dispatch("getTeam", {id: data[0].team2_id, teamNum: 2});
+					}
 				})
 		},
 		async getMatch( context, matchId) {
 			await User.refreshedToken();
 			let matches = context.rootGetters['statsData/matches']
-			matches.map( match => {
+
+			matches && matches.map( match => {
 				if ( match.match_id === matchId ) {
 					context.commit("SETSELECTEDMATCH", match)
 					context.dispatch("getTeam",{id: match.team1_id, teamNum: 1});

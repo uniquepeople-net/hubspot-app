@@ -2,6 +2,10 @@
 	<div :class="`chart ${dialogStat ? 'dialogStatClass' : ''}`" @click="$emit('getData', [this.title, this.accurate, this.inacurate])">
 		<Chart type="doughnut" :data="chartData" :options="options" />
 		<span class="value">{{ accurate + '/' + inacurate }}</span>
+		<span class="icons">
+			<i class="bi bi-check2 mx-sm-1"></i>
+			<i class="bi bi-x mx-sm-1"></i>
+		</span>
 		<Fieldset class="title" :legend="title" :toggleable="dialogStat ? true : false" 
 				  :collapsed="dialogStat ? false : true">
 		</Fieldset>
@@ -31,7 +35,7 @@
 				type: Boolean
 			}
 		},
-		emits: ['getData'],
+		emits: [ 'getData' ],
 		data() {
 			return {
 				chartData: {
@@ -70,7 +74,7 @@
 	max-width: 100%;
 	margin: auto;
 	position: relative;
-	.value, .title {
+	.value, .title, .icons {
 		position: absolute;
 		left: 50%;
 	}
@@ -78,6 +82,17 @@
 		top: calc( 45% + 1.5rem );
 		transform: translate(-50%, -50%);
 		font-size: 1.5rem;
+	}
+	.icons {
+		top: 38%;
+		transform: translateX(-50%);
+		font-size: 1.3rem;
+		.bi-check2 {
+			color: var(--green-600);
+		}
+		.bi-x {
+			color: var(--red-700);
+		}
 	}
 	.title {
 		width: 100%;
@@ -139,6 +154,9 @@
 		.value {
 			font-size: 2rem;
 			top: calc( 45% + 1.75rem );
+		}
+		.icons {
+			font-size: 1.5rem;
 		}
 	}
 }

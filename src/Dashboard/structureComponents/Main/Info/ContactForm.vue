@@ -2,8 +2,10 @@
 
 	<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
 		<div class="flex align-items-center flex-column pt-6 px-3">
-			<i v-if="emailResponse" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>	
-			<h5 v-if="emailResponse" class="mt-3">{{ emailResponse }}</h5>
+			<i v-if="emailResponse.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>	
+			<i v-if="emailResponse.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>	
+			<h5 v-if="emailResponse.error" v-for="error in emailResponse.error" class="mt-3">{{ error[0] }}</h5>
+			<h5 v-if="emailResponse.message" class="mt-3">{{ emailResponse.message }}</h5>
 		</div>
 		<template #footer>
 			<div class="flex justify-content-center">
@@ -44,18 +46,19 @@
 
 					<div class="send-email">
 						<Button type="submit" label="Send Email" class="mt-2 submit-btn" :disabled="disabledBtn"/>
-						<div v-if="spinner" class="spinner-grow" style="width: 3rem; height: 3rem;" role="status"></div>						
+						<div v-if="spinner" class="spinner-grow" style="width: 2.5rem; height: 2.5rem;" role="status"></div>						
 					</div>
 
 				</form>
 			</div>
 		</template>
 	</Card>
+
 </template>
  
  
 <script>
-	import { required, minLength } from "@vuelidate/validators";
+	import { required, email, minLength, maxLength } from "@vuelidate/validators";
 	import { useVuelidate } from "@vuelidate/core";
 	import { mapGetters } from 'vuex'; 
 
@@ -66,9 +69,9 @@
 				textArea: '',
 				selectedRecipient: null,
 				recipients: [
-					{name: 'UFP advisor', code: 'Miroslav.Viazanko@uniquepeople.net'},
-					{name: 'UFP Law advise', code: 'viazanko@pobox.sk'},
-					{name: 'Technical Support', code: 'viazanko.uniquepeople@gmail.com'},
+					{ name: 'UFP advisor', code: 'Miroslav.Viazanko@uniquepeople.net', id: 1 },
+					{ name: 'UFP Law advise', code: 'viazanko@pobox.sk', id: 2 },
+					{ name: 'Technical Support', code: 'viazanko.uniquepeople@gmail.com', id: 3 },
 				],
 				submitted: false,
 				disabledBtn: false,
@@ -78,8 +81,8 @@
 		},
 		validations() {
 			return {
-				textArea: { required, minLength: minLength(3) },
-				selectedRecipient: { required }
+				textArea: { required, minLength: minLength(3), maxLength: maxLength(1000) },
+				selectedRecipient: { required, email }
 			}
 		},
 		methods: {
@@ -95,10 +98,15 @@
 
 				let data = {
 					name: this.user.name,
-					text: this.textArea,
+					body: this.textArea,
 					email: this.user.email,
-					recipient: this.selectedRecipient
+					fromUserId: this.user.id,
+					recipient: this.selectedRecipient,
+					recipientData: this.getName()
 				}
+
+				//console.log(data)
+				
 
 				this.$store.dispatch("emails/sendEmail", data);
 				
@@ -115,6 +123,10 @@
 				this.textArea = '';
 				this.selectedRecipient = null;
 			},
+			getName() {
+				let selected = this.recipients.filter( rec => rec.code === this.selectedRecipient )
+				return selected[0]
+			}
 		},
 		computed: {
 			...mapGetters({ user: 'user/user',

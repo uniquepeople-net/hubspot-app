@@ -30,6 +30,8 @@ import Info from '../Dashboard/structureComponents/Main/Info/Info.vue';
 import InfoUfp from '../Dashboard/structureComponents/Main/Info/InfoUfp.vue';
 import InfoOther from '../Dashboard/structureComponents/Main/Info/InfoOther.vue';
 
+import Settings from '../Dashboard/structureComponents/Main/Settings/Settings.vue';
+
 
 export const routes = [
 
@@ -77,6 +79,7 @@ export const routes = [
 
 			},
 
+			{ path: '/settings', component: Settings, name: 'settings' },
 			
 
 

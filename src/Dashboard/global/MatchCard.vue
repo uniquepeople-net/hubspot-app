@@ -8,7 +8,6 @@
 					<div class="row">
 						<div class="col-6 collect align-items-start">
 							<h5 class="fw-light mb-md-3">{{ match.team1_name }}</h5>
-							<!-- <h5 class="fw-light mb-md-3">{{ match.team1_name }}</h5> -->
 							<!-- <Skeleton width="5rem" class="mb-2"></Skeleton> -->
 							<img v-if="team1" class="team-logo" :src="team1.photo ? team1.photo : null" alt="">
 							<!-- <img class="team-logo" src="../../../assets/images/za.png" alt=""> -->
@@ -70,16 +69,6 @@
 							team1: 'statsData/team1',
 							team2: 'statsData/team2'})
 		},
-		watch: {
-			match: function (data) {
-				if ( data.id ){
-					this.$store.dispatch( "stats/getTeam", { id:data.team1_id, number: '1'} );
-					this.$store.dispatch( "stats/getTeam", { id:data.team2_id, number: '2'} );
-				}				
-				
-			}
-		},
-
 	}
 </script>
  
