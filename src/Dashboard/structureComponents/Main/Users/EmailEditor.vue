@@ -8,7 +8,7 @@
 						@text-change="textChange($event)"/>
 				</template>
 				<template #footer>
-					<FileUploadCard />
+					<FileUploadCard @files="uploadedFiles($event)"/>
 				</template>
 			</Card>
 		</div>
@@ -20,7 +20,7 @@
 				</template>
 				<template #content>
 					<Listbox :options="emails" optionLabel="name" style="width:100%" listStyle="max-height:300px"/>
-					<Button label="Send to all users" icon="bi bi-send-check" class="p-button-raised p-button-info mt-3" @click="sendEmails($event)"/>
+					<Button label="Send to selected users" icon="bi bi-send-check" class="p-button-raised p-button-success mt-3" @click="sendEmails($event)"/>
 				</template>
 			</Card>	
 		</div>		
@@ -30,6 +30,7 @@
  
 <script>
 	import { mapGetters } from 'vuex';
+	import { toRaw } from 'vue';
 	import Editor from 'primevue/editor'
 	import Listbox from 'primevue/listbox';
 	import FileUploadCard from './FileUploadCard.vue';
@@ -37,24 +38,35 @@
 	export default {
 		data() {
 			return {
-				 value: '<h2>Create new email</h2>',				
+				value: '<h2>Create new email</h2>',
+				files: null,			
 			}
 		},
 		methods: {
 			sendEmails() {
-				let data = {
-					content: this.value,
-					recipients: this.emails.map( email => email.email )
-				}
+				const data = new FormData()
 				
+				this.files && this.files.map( file =>  {
+					data.append('files[]', file)
+				})
+
+				data.append('content', this.value)
+
+				this.emails.map( email => {
+					data.append('recipients[]', email.email )
+				})
+
 				axios.post( DOMAIN_URL + '/api/bulk-emails', data, {
-					headers: {
-							Authorization: 'Bearer ' + User.getToken()
+					headers: {							
+							'Content-Type': 'multipart/form-data'							
 					}
 				}).then( response => console.log(response))			
 			},
 			textChange(event) {
-				console.log(event)	
+				//console.log(event)	
+			},
+			uploadedFiles(e) {
+				this.files = e;
 			}
 		},
 		computed: {
