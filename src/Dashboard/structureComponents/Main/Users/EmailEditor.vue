@@ -43,7 +43,7 @@
 			}
 		},
 		methods: {
-			sendEmails() {
+			async sendEmails() {
 				const data = new FormData()
 				
 				this.files && this.files.map( file =>  {
@@ -56,8 +56,11 @@
 					data.append('recipients[]', email.email )
 				})
 
-				axios.post( DOMAIN_URL + '/api/bulk-emails', data, {
-					headers: {							
+				await User.refreshedToken();
+
+				await axios.post( DOMAIN_URL + '/api/bulk-emails', data, {
+					headers: {
+							Authorization: 'Bearer ' + User.getToken(),							
 							'Content-Type': 'multipart/form-data'							
 					}
 				}).then( response => console.log(response))			
