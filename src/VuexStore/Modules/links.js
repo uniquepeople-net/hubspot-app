@@ -37,6 +37,7 @@ export default {
 
 		// Email service routes
 		sendContactFormEmail: 	DOMAIN_URL + '/api/send-form-email',
+		getEmailsUrl: 	DOMAIN_URL + '/api/emails/',
 	}),
 
 	getters: {
@@ -124,6 +125,9 @@ export default {
 		// Email Service routes getters
 		sendContactFormEmail(state) {
 			return state.sendContactFormEmail
+		},
+		getEmailsUrl(state) {
+			return state.getEmailsUrl
 		},
 	}
 }

@@ -69,9 +69,9 @@
 				textArea: '',
 				selectedRecipient: null,
 				recipients: [
-					{ name: 'UFP advisor', code: 'Miroslav.Viazanko@uniquepeople.net', id: 1 },
-					{ name: 'UFP Law advise', code: 'viazanko@pobox.sk', id: 2 },
-					{ name: 'Technical Support', code: 'viazanko.uniquepeople@gmail.com', id: 3 },
+					{ name: 'UFP advisor', code: 'Miroslav.Viazanko@uniquepeople.net', id: 8200 },
+					{ name: 'Technical Support', code: 'viazanko.uniquepeople@gmail.com', id: 8100 },
+					{ name: 'UFP Law advise', code: 'viazanko@pobox.sk', id: 202 },
 				],
 				submitted: false,
 				disabledBtn: false,
@@ -105,12 +105,7 @@
 					recipientData: this.getName()
 				}
 
-				//console.log(data)
-				
-
-				this.$store.dispatch("emails/sendEmail", data);
-				
-				
+				this.$store.dispatch("emails/sendEmail", data);				
 			},
 			toggleDialog() {
 				this.showMessage = !this.showMessage;
@@ -141,6 +136,11 @@
 				}
 			}
 		}
+		/*
+		patrik.abraham336@gmail.com
+		almasi.laci11@gmail.com
+		dragan14kv@gmail.com
+		baezaldo1988@hotmail.com*/
 	}
 </script>
  

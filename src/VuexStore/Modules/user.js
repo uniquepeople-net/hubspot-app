@@ -26,6 +26,7 @@ export default {
 
 			await User.refreshedToken();
 
+			// Get user data
 			await axios.get(userProfileUrl, {
 				headers: {
 					Authorization: 'Bearer ' + User.getToken()
@@ -33,6 +34,9 @@ export default {
 			.then( response => {
 				context.commit("SETUSER", response.data)			 
 			})			
+
+			// Get user emails by user id 
+			await context.dispatch("emails/getEmails", context.rootState.user.user.id, { root: true })
 		}
 	},
 

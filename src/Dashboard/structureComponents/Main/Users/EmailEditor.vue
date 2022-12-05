@@ -20,7 +20,7 @@
 				</template>
 				<template #content>
 					<Listbox :options="emails" optionLabel="name" style="width:100%" listStyle="max-height:300px"/>
-					<Button label="Send to selected users" icon="bi bi-send-check" class="p-button-raised p-button-success mt-3" @click="sendEmails($event)"/>
+					<Button label="Send" icon="bi bi-send-check" class="p-button-raised p-button-success mt-3" @click="sendEmails($event)"/>
 				</template>
 			</Card>	
 		</div>		

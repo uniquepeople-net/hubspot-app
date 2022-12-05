@@ -30,6 +30,9 @@ import Info from '../Dashboard/structureComponents/Main/Info/Info.vue';
 import InfoUfp from '../Dashboard/structureComponents/Main/Info/InfoUfp.vue';
 import InfoOther from '../Dashboard/structureComponents/Main/Info/InfoOther.vue';
 
+import Emails from '../Dashboard/structureComponents/Main/Emails/Emails.vue';
+import Inbox from '../Dashboard/structureComponents/Main/Emails/Inbox.vue';
+
 import Settings from '../Dashboard/structureComponents/Main/Settings/Settings.vue';
 
 
@@ -74,6 +77,16 @@ export const routes = [
 					{ path: 'ufp', component: InfoUfp, name: 'info-ufp' },
 
 					{ path: 'other', component: InfoOther, name: 'info-other' },
+
+				]
+
+			},
+
+			{ path: '/emails', component: Emails, name: 'emails',
+
+				children: [
+
+					{ path: 'inbox', component: Inbox, name: 'inbox' },
 
 				]
 

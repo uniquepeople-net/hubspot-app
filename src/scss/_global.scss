@@ -18,6 +18,10 @@ a {
 	align-items: center;
 }
 
+i {
+	font-style: normal;
+}
+
 @media( min-width: 992px ) {
 	.p-sidebar-mask.p-component-overlay {
 		display: none;

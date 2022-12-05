@@ -23,9 +23,8 @@
 	export default {
 		data() {
 			return {
-				items: [
-                {                    
-                    items: [{
+				items: [                   
+                    {
                         label: 'My Profile',
                         icon: 'pi pi-user-edit',
 						to:	'/my-profile'
@@ -36,21 +35,19 @@
                         command: () => {
                             //this.$toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000});
                         }
-                    }
-                ]},
-                {
-					//label: '━━━━━━━━━━━━━━',
-                    items: [{
+                    },
+					{
+						separator: true,
+					},
+					{
                         label: 'Logout',
                         icon: 'pi pi-sign-out',
-                        to: '/logout'
-                    },
-                ]},
-				{
-					label: '',
-					
-				}
-				]
+                        to: '/logout',
+						/* style: {
+							background: '#fa9c9c',
+						} */
+                    }
+				],
 			}
 		},
 		methods: {

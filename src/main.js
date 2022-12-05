@@ -82,6 +82,7 @@ import Fieldset from 'primevue/fieldset';
 import Textarea from 'primevue/textarea';
 import Badge from 'primevue/badge';
 import Carousel from 'primevue/carousel';
+//import BadgeDirective from 'primevue/badgedirective';
 
 import InputIcon from './Dashboard/global/InputIcon.vue';
 import InputError from './Dashboard/global/InputError.vue';
@@ -116,4 +117,5 @@ createApp(App)
 	.component('Textarea', Textarea)
 	.component('Badge', Badge)
 	.component('Carousel', Carousel)
+	//.directive('badge', BadgeDirective)
 	.mount('#app')
