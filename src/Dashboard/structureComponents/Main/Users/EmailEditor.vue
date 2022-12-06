@@ -51,9 +51,14 @@
 				})
 
 				data.append('content', this.value)
+				data.append('replyName', this.user.name)
+				data.append('replyEmail', this.user.email)
+				data.append('fromUserId', this.user.id)
 
 				this.emails.map( email => {
 					data.append('recipients[]', email.email )
+					data.append('toNames[]', email.name )
+					data.append('toIds[]', email.id )
 				})
 
 				await User.refreshedToken();
@@ -63,7 +68,7 @@
 							Authorization: 'Bearer ' + User.getToken(),							
 							'Content-Type': 'multipart/form-data'							
 					}
-				}).then( response => console.log(response))			
+				}).then( response => console.log(response))
 			},
 			textChange(event) {
 				//console.log(event)	
@@ -73,7 +78,8 @@
 			}
 		},
 		computed: {
-			...mapGetters({ emails: 'appData/getEmails' }),
+			...mapGetters({ emails: 'appData/getEmails',
+							user: 'user/user' }),
 		},
 		components: { Editor, Listbox, FileUploadCard }
 	}

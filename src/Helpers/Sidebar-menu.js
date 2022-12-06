@@ -46,8 +46,8 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 				command: () => sidebarHide()
 			},
 			{ 
-				label: 'other',
-				to: {name: 'info-other'},
+				label: 'Emails',
+				to: {name: 'inbox'},
 				command: () => sidebarHide()				
 			},
 		]

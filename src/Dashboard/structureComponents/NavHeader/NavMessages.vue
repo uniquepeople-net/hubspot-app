@@ -6,18 +6,21 @@
 		</a>
 	</li>
 	<Menu id="overlay_menu" ref="menu" :model="items" :popup="true" class="mt-2 p-0">
-		<template #item>			
-			<h5 class="email-title mb-0">Emails</h5>		
+		<template #item>					
 			<div class="email-menu mx-0 my-2">
 				<ul v-if="unreadEmails">
-					<li v-for="(email, key) in unreadEmails" class="spec-email">{{ email.reply_name }}</li>
+					<router-link v-for="(email, key) in unreadEmails" :to="{name: 'specific-email', params: {email_id: email.id}}">
+						<li class="spec-email fw-bold">{{ email.reply_name }}</li>
+					</router-link>
 				</ul>
 				<div v-if="!unreadEmails.length" class="no-emails">No new emails</div>
 			</div>
 		
+			<Divider  class="mb-0"/>
+
 			<router-link to="/emails/inbox">
 				<div class="email-footer">
-					<h6 class="mb-0">Inbox</h6>
+					<h6 class="mb-0 fw-light">Inbox</h6>
 				</div>
 			</router-link>			
 		</template>
@@ -27,6 +30,7 @@
  
 <script>
 	import { mapGetters } from 'vuex';
+	import Divider from 'primevue/divider';
 
 	export default {
 		data() {
@@ -46,6 +50,7 @@
 							unreadEmails: 'emails/unreadEmails',
 							unreadEmailsCount: 'emails/unreadEmailsCount' }),
 		},
+		components: { Divider }
 	}
 </script>
  
@@ -53,7 +58,6 @@
 <style lang='scss' scoped>
 .email-title, .email-footer {
 	padding: 0.75rem 1rem;
-	background: #dee2e6;
 }
 .email-menu {
 	padding: 0 1rem;

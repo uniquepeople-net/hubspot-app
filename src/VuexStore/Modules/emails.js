@@ -4,6 +4,7 @@ export default {
 	state: () => ({
 		response: null,
 		emails: null,
+		specificEmail: null,
 		unreadEmails: null,
 		unreadEmailsCount: null,
 	}),
@@ -13,6 +14,9 @@ export default {
 			state.response = data;
 		},
 		SETEMAILS( state, data ) {
+			state.emails = data;
+		},
+		SETSPECIFICEMAIL( state, data ) {
 			state.emails = data;
 		},
 		SETUNREADEMAILS( state, data ) {
@@ -43,6 +47,7 @@ export default {
 							Authorization: 'Bearer ' + User.getToken()
 						}
 					}).then( response => {
+						console.log(response);
 						context.commit("SETRESPONSE", response.data)
 					})
 		},
@@ -57,15 +62,20 @@ export default {
 						}
 					})
 					.then( response => {
+						console.log(response)
+						
 						context.commit("SETEMAILS", response.data)
 						if ( response.data ) {
 							let unread = response.data.filter( item => Boolean(item.is_opened) !== true )
 							context.commit("SETUNREADEMAILS", unread);
 							context.commit("SETUNREADEMAILSCOUNT", unread.length);
-
 						}						
 					})
-		}
+		},
+		async getSpecificEmail(context, id) {
+
+
+		} 
 	},
 
 	getters: {
