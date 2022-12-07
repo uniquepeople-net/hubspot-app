@@ -25,7 +25,7 @@
 
 		<Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
 
-		<Column headerStyle="width: 4rem; text-align: center" bodyStyle="text-align: center; overflow: visible">
+		<Column headerStyle="width: 4rem; text-align: center" bodyStyle="text-align: center; overflow: visible" >
 			<template #body="{data}">
 				<router-link :to="{name: 'specific-email', params: {email_id: data.id}}">
 					<Button type="button" icon="pi pi-eye" class="p-button-rounded p-button-warning"></Button>
@@ -35,7 +35,7 @@
 
 		<Column field="reply_name" header="Name" sortable style="min-width: 14rem">
 			<template #body="{data}">
-				<p class="m-0" :class="!Boolean(data.is_opened) && 'fw-bold'">{{data.reply_name}}</p>
+				<p class="m-0" :class="!checkIsReadEmail(data) && 'fw-bold'">{{data.reply_name}}</p>
 			</template>
 			<template #filter="{filterModel}">
 				<InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by name"/>
@@ -44,7 +44,7 @@
 		
 		<Column field="reply_email" header="Address" sortable style="min-width: 8rem">
 			<template #body="{data}">
-				<p class="m-0" :class="!Boolean(data.is_opened) && 'fw-bold'">{{data.reply_email}}</p>
+				<p class="m-0" :class="!checkIsReadEmail(data) && 'fw-bold'">{{data.reply_email}}</p>
 			</template>
 			<template #filter="{filterModel}">
 				<InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by email"/>
@@ -53,7 +53,7 @@
 
 		<Column field="subject" header="Subject" sortable style="min-width: 8rem">
 			<template #body="{data}">
-				<p class="m-0" :class="!Boolean(data.is_opened) && 'fw-bold'">{{data.subject}}</p>
+				<p class="m-0" :class="!checkIsReadEmail(data) && 'fw-bold'">{{data.subject}}</p>
 			</template>
 			<template #filter="{filterModel}">
 				<InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by email"/>
@@ -71,6 +71,7 @@
 
 		
 	</DataTable>
+
 </template>
  
  
@@ -81,9 +82,10 @@
 	import Calendar from 'primevue/calendar';
 
 	export default {
+		props: {
+			emails: Array
+		},
 		created() {
-			let userId = this.$store.getters['user/user'].id
-			this.$store.dispatch("emails/getEmails", userId);
 			this.initFilters();
 			this.loading = true			
 		},
@@ -108,11 +110,11 @@
 					'created_at_formatted': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.DATE_IS}]},
 					//'fee': {value: null, matchMode: FilterMatchMode.EQUALS},
 				}
+			},
+			checkIsReadEmail(data) {
+				return data.recipients[0].is_opened
 			}
-		},
-		computed: {
-			...mapGetters({ emails: 'emails/emails' }),
-		},
+		},		
 		watch: {
 			emails: function (data) {
 				this.userData = data

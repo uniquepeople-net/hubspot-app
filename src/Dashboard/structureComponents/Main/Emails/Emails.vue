@@ -1,16 +1,18 @@
 <template>
-	<router-view></router-view>
+	<router-view :key="$route.fullPath" v-if="emails"></router-view>
 </template>
  
  
 <script>
+	import { mapGetters } from 'vuex';
+
 	export default {
-		data() {
-			return {
-			}
+		created() {
+			let userId = this.$store.getters['user/user'].id
+			this.$store.dispatch("emails/getEmails", userId);
 		},
-		methods: {
- 
+		computed: {
+			...mapGetters({ emails: 'emails/emails' }),
 		},
 	}
 </script>

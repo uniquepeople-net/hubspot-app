@@ -17,7 +17,7 @@ export default {
 			state.emails = data;
 		},
 		SETSPECIFICEMAIL( state, data ) {
-			state.emails = data;
+			state.specificEmail = data;
 		},
 		SETUNREADEMAILS( state, data ) {
 			state.unreadEmails = data;
@@ -47,7 +47,6 @@ export default {
 							Authorization: 'Bearer ' + User.getToken()
 						}
 					}).then( response => {
-						console.log(response);
 						context.commit("SETRESPONSE", response.data)
 					})
 		},
@@ -62,19 +61,34 @@ export default {
 						}
 					})
 					.then( response => {
-						console.log(response)
-						
 						context.commit("SETEMAILS", response.data)
 						if ( response.data ) {
-							let unread = response.data.filter( item => Boolean(item.is_opened) !== true )
+							let unread = response.data.filter( item => Boolean(item.recipients[0].is_opened) !== true )
 							context.commit("SETUNREADEMAILS", unread);
 							context.commit("SETUNREADEMAILSCOUNT", unread.length);
 						}						
 					})
 		},
-		async getSpecificEmail(context, id) {
+		setSpecificEmail(context, id) {
+			let allEmails = context.rootGetters['emails/emails']
 
+			let specificEmail = allEmails.filter( item => item.id === id )
 
+			context.commit("SETSPECIFICEMAIL", specificEmail)
+		},
+		async getSpecificEmail(context, data) {
+			let getSpecificEmail = context.rootGetters['links/getSpecificEmail'];
+
+			console.log(data)
+			
+			await User.refreshedToken();
+
+			await axios.get( getSpecificEmail + data.recipientId + '/' + data.emailId, {
+						headers: {
+							Authorization: 'Bearer ' + User.getToken()
+						}
+					})
+					.then( response => console.log(response))
 		} 
 	},
 
@@ -84,6 +98,9 @@ export default {
 		},
 		emails(state) {
 			return state.emails
+		},
+		specificEmail(state) {
+			return state.specificEmail
 		},
 		unreadEmails(state) {
 			return state.unreadEmails

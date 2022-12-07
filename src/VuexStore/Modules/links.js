@@ -36,8 +36,9 @@ export default {
 		registerAuthServiceUrl: 	'http://auth_nginx/api/register',
 
 		// Email service routes
-		sendContactFormEmail: 	DOMAIN_URL + '/api/send-form-email',
-		getEmailsUrl: 	DOMAIN_URL + '/api/emails/',
+		sendContactFormEmail: 		DOMAIN_URL + '/api/send-form-email',
+		getEmailsUrl: 				DOMAIN_URL + '/api/emails/',
+		getSpecificEmail: 			DOMAIN_URL + '/api/email/'
 	}),
 
 	getters: {
@@ -128,6 +129,9 @@ export default {
 		},
 		getEmailsUrl(state) {
 			return state.getEmailsUrl
+		},
+		getSpecificEmail(state) {
+			return state.getSpecificEmail
 		},
 	}
 }

@@ -83,13 +83,13 @@ export const routes = [
 
 			},
 
-			{ path: '/emails', component: Emails, name: 'emails',
+			{ path: '/emails', component: Emails, name: 'emails', props: true,
 
 				children: [
 
-					{ path: 'inbox', component: Inbox, name: 'inbox' },
+					{ path: 'inbox', component: Inbox, name: 'inbox', props: true },
 
-					{ path: ':email_id', component: SpecificEmail, name: 'specific-email'},
+					{ path: ':email_id', component: SpecificEmail, name: 'specific-email', props: true},
 
 				]
 
