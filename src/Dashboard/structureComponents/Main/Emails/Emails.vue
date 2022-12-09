@@ -1,5 +1,5 @@
 <template>
-	<router-view :key="$route.fullPath" v-if="emails"></router-view>
+	<router-view :key="$route.fullPath" v-if="emails" :emails="emails"></router-view>
 </template>
  
  

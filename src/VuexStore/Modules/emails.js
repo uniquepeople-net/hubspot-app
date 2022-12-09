@@ -73,14 +73,18 @@ export default {
 			let allEmails = context.rootGetters['emails/emails']
 
 			let specificEmail = allEmails.filter( item => item.id === id )
+			
+			specificEmail[0].recipients[0].is_opened = true
+
+			let unread = allEmails.filter( item => Boolean(item.recipients[0].is_opened) !== true )
+			context.commit("SETUNREADEMAILS", unread);
+			context.commit("SETUNREADEMAILSCOUNT", unread.length);
 
 			context.commit("SETSPECIFICEMAIL", specificEmail)
 		},
 		async getSpecificEmail(context, data) {
 			let getSpecificEmail = context.rootGetters['links/getSpecificEmail'];
 
-			console.log(data)
-			
 			await User.refreshedToken();
 
 			await axios.get( getSpecificEmail + data.recipientId + '/' + data.emailId, {
@@ -88,7 +92,7 @@ export default {
 							Authorization: 'Bearer ' + User.getToken()
 						}
 					})
-					.then( response => console.log(response))
+					.then( response => {return true})
 		} 
 	},
 

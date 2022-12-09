@@ -1,9 +1,9 @@
 <template>	
-	<DataTable v-if="emails" :value="emails" :paginator="true" class="p-datatable-customers card" :rows="10" :loading="loading"
+	<DataTable v-if="emails" :value="emails" :paginator="true" class="p-datatable-customers card" :rows="10"
 		dataKey="id" :rowHover="true" v-model:selection="selectedEmail" v-model:filters="filters" filterDisplay="menu" 
 		paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" 
 		:rowsPerPageOptions="[10,25,50,100]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
-		:globalFilterFields="['reply_name', 'reply_email', 'subject']" responsiveLayout="scroll">
+		:globalFilterFields="['reply_name', 'reply_email', 'subject', 'created_at_formatted']" responsiveLayout="scroll" sortField="created_at_formatted" :sortOrder="-1">
 		<template #header>
 			<h5 class="mb-3">Emails</h5>			
 			<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
@@ -65,7 +65,7 @@
 				{{data.created_at_formatted}}
 			</template>
 			<template #filter="{filterModel}">
-				<Calendar v-model="filterModel.value" dateFormat="dd/mm/yy" placeholder="dd/mm/yyyy" />
+				<Calendar v-model="filterModel.value" dateFormat="dd.mm.yy" placeholder="dd.mm.yyyy" />
 			</template>
 		</Column>
 
@@ -86,14 +86,12 @@
 			emails: Array
 		},
 		created() {
-			this.initFilters();
-			this.loading = true			
+			this.initFilters();		
 		},
 		data() {
 			return {
 				selectedEmail: null,
 				filters: null,
-				loading: false,
 				userData: []
 			}
 		},
@@ -118,7 +116,6 @@
 		watch: {
 			emails: function (data) {
 				this.userData = data
-				this.loading = false
 			},
 		},
 		components: { TriStateCheckbox, Calendar }
