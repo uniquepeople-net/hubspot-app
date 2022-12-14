@@ -35,7 +35,7 @@ import Inbox from '../Dashboard/structureComponents/Main/Emails/Inbox.vue';
 import SpecificEmail from '../Dashboard/structureComponents/Main/Emails/SpecificEmail.vue';
 
 import Settings from '../Dashboard/structureComponents/Main/Settings/Settings.vue';
-
+import Payments from '../Dashboard/structureComponents/Main/Settings/Payments.vue';
 
 export const routes = [
 
@@ -95,7 +95,14 @@ export const routes = [
 
 			},
 
-			{ path: '/settings', component: Settings, name: 'settings' },
+			{ path: '/settings', component: Settings, name: 'settings', props: true,
+
+				children: [
+
+					{ path: 'payments', component: Payments, name: 'payments', props: true },
+
+				]
+			},
 			
 
 

@@ -1,5 +1,5 @@
 <template>
-	settings
+	<router-view></router-view>
 </template>
  
  

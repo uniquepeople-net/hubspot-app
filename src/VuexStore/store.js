@@ -8,6 +8,7 @@ import appData from './Modules/appData';
 import stats from './Modules/stats';
 import statsData from './Modules/statsData';
 import emails from './Modules/emails';
+import payments from './Modules/payments';
 
 const store = createStore({
 	modules: {
@@ -18,7 +19,8 @@ const store = createStore({
 		appData,
 		stats,
 		statsData,
-		emails
+		emails,
+		payments
 	}
 })
 

@@ -29,7 +29,11 @@ export default {
 			// Merge rather than replace so we don't lose observers
 			// https://github.com/vuejs/vuex/issues/1118
 			Object.assign(state, {
-				response: null
+				response: null,
+				emails: null,
+				specificEmail: null,
+				unreadEmails: null,
+				unreadEmailsCount: null,
 			})
 		}
 	},

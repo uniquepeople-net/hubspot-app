@@ -55,8 +55,16 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 	{
 		label: 'Settings',
 		icon: 'bi-collection',
-		to:	'/settings',
-		command: () => sidebarHide()
+		visible: checkRole,
+		/* to:	'/settings',
+		command: () => sidebarHide() */
+		items: [
+			{
+				label: 'Payments',
+				to: {name: 'payments'},
+				command: () => sidebarHide()
+			},
+		]
 	}
 ]}
 

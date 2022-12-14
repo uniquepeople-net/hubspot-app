@@ -38,7 +38,10 @@ export default {
 		// Email service routes
 		sendContactFormEmail: 		DOMAIN_URL + '/api/send-form-email',
 		getEmailsUrl: 				DOMAIN_URL + '/api/emails/',
-		getSpecificEmail: 			DOMAIN_URL + '/api/email/'
+		getSpecificEmail: 			DOMAIN_URL + '/api/email/',
+
+		// Payments service routes
+		allProducts:				DOMAIN_URL + '/api/products',		
 	}),
 
 	getters: {
@@ -133,5 +136,10 @@ export default {
 		getSpecificEmail(state) {
 			return state.getSpecificEmail
 		},
+
+		// Payment SErvice routes getters
+		allProducts(state) {
+			return state.allProducts
+		}, 
 	}
 }
