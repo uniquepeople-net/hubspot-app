@@ -19,6 +19,7 @@
  
 <script>
 	import { mapGetters } from 'vuex';
+	import {loadStripe} from '@stripe/stripe-js';
 
 	export default {
 		data() {
@@ -32,6 +33,7 @@
                     {
                         label: 'Wallet',
                         icon: 'pi pi-euro',
+						to: '/wallet',
                         command: () => {
                             //this.$toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000});
                         }

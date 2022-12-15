@@ -24,6 +24,8 @@ import EmailEditor from '../Dashboard/structureComponents/Main/Users/EmailEditor
 
 import Myprofile from '../Dashboard/structureComponents/Main/Profile/MyProfile.vue';
 
+import Wallet from '../Dashboard/structureComponents/Main/Payment/Wallet.vue';
+
 import Instat from '../Dashboard/structureComponents/Main/Stats/Instat.vue';
 
 import Info from '../Dashboard/structureComponents/Main/Info/Info.vue';
@@ -70,6 +72,8 @@ export const routes = [
 			},
 			
 			{ path: '/my-profile', component: Myprofile, name: 'my-profile' },
+
+			{ path: '/wallet', component: Wallet, name: 'wallet' },
 						
 			{ path: '/info', component: Info, name: 'info',
 
