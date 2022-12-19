@@ -42,6 +42,7 @@ export default {
 
 		// Payments service routes
 		allProducts:				DOMAIN_URL + '/api/products',		
+		editProduct:				DOMAIN_URL + '/api/products/',		
 	}),
 
 	getters: {
@@ -140,6 +141,9 @@ export default {
 		// Payment SErvice routes getters
 		allProducts(state) {
 			return state.allProducts
+		}, 
+		editProduct(state) {
+			return state.editProduct
 		}, 
 	}
 }

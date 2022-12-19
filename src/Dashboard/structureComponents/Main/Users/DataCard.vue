@@ -18,7 +18,8 @@
 			<template #title>
 				<div class="card-header">
 					<h5>User Data</h5>
-					<DeleteUser v-if="delete" :delete="delete" :userId="id" :userName="name"></DeleteUser>
+					<DeleteItem v-if="delete" :delete="delete" :itemId="id" :itemName="name" 
+								item="user" url="/api/users/" redirectRoute="all-users"></DeleteItem>
 				</div>
 			</template>
 			<template #content>
@@ -76,7 +77,7 @@ import { email, required, sameAs, minLength, numeric } from "@vuelidate/validato
 import { useVuelidate } from "@vuelidate/core";
 import axios from 'axios';
 import { mapGetters } from 'vuex';
-import DeleteUser from "./DeleteUser.vue";
+import DeleteItem from "./DeleteItem.vue";
 
 export default {
     setup: () => ({ v$: useVuelidate() }),
@@ -159,7 +160,7 @@ export default {
 			}
 		}
 	},
-	components: { DeleteUser }
+	components: { DeleteItem }
 }
 </script>
 

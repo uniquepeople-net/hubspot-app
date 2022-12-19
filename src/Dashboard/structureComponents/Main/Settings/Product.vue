@@ -7,18 +7,20 @@
 			</div>	
 		</template>
 		<template #content>			
-			<h2 class="text-center">{{ product.amount }}<span> €</span></h2>
+			<h2 class="text-center">{{ product.amount_decimal }}<span> €</span></h2>
 			<Divider />
 			<div class="d-flex">
 				<h5 class="fw-light">Description: <span class="fw-normal">{{ product.description }}</span></h5>
 			</div>
 			<Divider />
-			<h5 class="fw-light">Interval: <span class="fw-normal">{{ product.interval }}</span></h5>
+			<h5 class="fw-light">Interval: <span class="fw-normal">{{ product.interval.name }}</span></h5>
 			<Divider />
 		</template>
 		<template #footer>
 			<div class="d-flex justify-content-end edit-icon">
-				<i class="bi bi-pencil-square"></i>
+				<router-link :to="{name: 'specific-product', params: {product_id: product.id}}">
+					<i class="bi bi-pencil-square"></i>
+				</router-link>
 			</div>
 		</template>
 	</Card>

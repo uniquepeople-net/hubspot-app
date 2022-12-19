@@ -38,6 +38,8 @@ import SpecificEmail from '../Dashboard/structureComponents/Main/Emails/Specific
 
 import Settings from '../Dashboard/structureComponents/Main/Settings/Settings.vue';
 import Payments from '../Dashboard/structureComponents/Main/Settings/Payments.vue';
+import ProductsAll from '../Dashboard/structureComponents/Main/Settings/ProductsAll.vue';
+import SpecificProduct from '../Dashboard/structureComponents/Main/Settings/SpecificProduct.vue';
 
 export const routes = [
 
@@ -103,7 +105,17 @@ export const routes = [
 
 				children: [
 
-					{ path: 'payments', component: Payments, name: 'payments', props: true },
+					{ path: 'payments', component: Payments, name: 'payments', props: true,
+					
+						children: [
+
+							{ path: 'products', component: ProductsAll, name: 'products', props: true },
+
+							{ path: 'products/:product_id', component: SpecificProduct, name: 'specific-product', props: true },
+		
+						]
+
+					},
 
 				]
 			},

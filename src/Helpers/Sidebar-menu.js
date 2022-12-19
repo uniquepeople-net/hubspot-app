@@ -61,7 +61,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 		items: [
 			{
 				label: 'Payments',
-				to: {name: 'payments'},
+				to: {name: 'products'},
 				command: () => sidebarHide()
 			},
 		]

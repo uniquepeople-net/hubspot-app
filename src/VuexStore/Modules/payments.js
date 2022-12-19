@@ -30,13 +30,10 @@ export default {
 						headers: {
 							Authorization: 'Bearer ' + User.getToken()
 						}
-					}).then( response => {
-						console.log(response)
-						
+					}).then( response => {					
 						context.commit("SETPRODUCTS", response.data)
 					})
-		},
-		
+		}
 	},
 
 	getters: {
