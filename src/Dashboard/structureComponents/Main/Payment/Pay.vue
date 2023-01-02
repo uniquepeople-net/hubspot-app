@@ -5,7 +5,7 @@
 		v-slot="{ elements }"
 		ref="elms">
 		<StripeElement type="card" :elements="elements" :options="cardOptions"
-					   ref="card" @change="cardChange($event)"/>
+						ref="card" @change="cardChange($event)"/>
 	</StripeElements>
 
 	<Button type="button" @click="pay" label="Pay" class="mt-2 pay-btn" iconPos="right" icon="pi pi-search">
@@ -13,7 +13,6 @@
 		<div v-if="loading" class="spinner-grow" role="status">
 		</div>
 	</Button>
-
 </template>
  
  
@@ -71,9 +70,10 @@
 						console.log(result)
 
 						let data = {
-							amount: 1,
+							amount: 700, // amount should be sent in cents (700 === 7.00 eur)
 							stripeToken: result.token.id,
-							billing_details: { name: 'fero' }
+							billing_details: { name: 'fero' },
+							card: result.token.card.id 
 						}
 
 						axios.post( 'http://localhost:83/api/payment', data, {
@@ -82,7 +82,13 @@
 							}
 						})
 							.then( response => {
-								console.log(response)
+								console.log(response.data)
+								var action = response.data[0].next_action;
+								if (action && action.type === 'redirect_to_url') {
+									console.log(action.redirect_to_url.url)
+									
+									window.location = action.redirect_to_url.url;
+								}
 								this.loading = false
 							})
 							.catch( error => {

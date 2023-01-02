@@ -1,13 +1,15 @@
 <template>
 	
-	<PayStripe :stripeLoaded="stripeLoaded" :stripePubKey="stripePubKey"/>
+	
+
+	<Pay :stripeLoaded="stripeLoaded" :stripePubKey="stripePubKey"/>
 
 	
 </template>
  
  
 <script>
-	import PayStripe from './PayStripe.vue'
+	import Pay from './Pay.vue'
 	import { loadStripe } from '@stripe/stripe-js'
 	import { mapGetters } from 'vuex'
 
@@ -28,7 +30,7 @@
 		computed: {
 			...mapGetters({ stripePubKey: 'payments/stripePubKey' })
 		},
-		components: { PayStripe }
+		components: { Pay }
 	}
 </script>
  

@@ -65,7 +65,7 @@
 									<InputError :validator="v$.description" :submitted="submitted" replace="Description"></InputError>
 								</div>
 								
-								<div class="col-12 col-lg-6">
+								<div class="col-12 col-lg-6 offset-lg-6">
 									<Button type="submit" label="Update" class="mt-2 submit-btn" />
 								</div>
 							</div>
