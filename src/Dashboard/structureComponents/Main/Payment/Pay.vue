@@ -19,6 +19,7 @@
 <script>
 	import { StripeElements, StripeElement } from 'vue-stripe-js'
 	import { loadStripe } from '@stripe/stripe-js'
+	import { mapGetters } from 'vuex'
 
 	export default {
 		props: [ 'stripeLoaded', 'stripePubKey' ],
@@ -55,7 +56,7 @@
 		},
 		methods: {
 			cardChange(e) {
-				console.log(e)
+				//console.log(e)
 			},
 			pay() {
 				const groupComponent = this.$refs.elms
@@ -70,23 +71,22 @@
 						console.log(result)
 
 						let data = {
-							amount: 700, // amount should be sent in cents (700 === 7.00 eur)
+							amount: 950, // amount should be sent in cents (700 === 7.00 eur)
 							stripeToken: result.token.id,
 							billing_details: { name: 'fero' },
 							card: result.token.card.id 
 						}
 
-						axios.post( 'http://localhost:83/api/payment', data, {
+						axios.post( this.paymentUrl , data, {
 							headers: {
-								'Content-Type': 'application/json'
+								'Content-Type': 'application/json',
+								Authorization: 'Bearer ' + User.getToken()
 							}
 						})
 							.then( response => {
-								console.log(response.data)
+								console.log(response)
 								var action = response.data[0].next_action;
 								if (action && action.type === 'redirect_to_url') {
-									console.log(action.redirect_to_url.url)
-									
 									window.location = action.redirect_to_url.url;
 								}
 								this.loading = false
@@ -98,6 +98,9 @@
 							} )
 					})
 			}
+		},
+		computed: {
+			...mapGetters({ paymentUrl: 'links/payment' })
 		},
 		components: { StripeElements, StripeElement }
 	}

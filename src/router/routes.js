@@ -37,9 +37,10 @@ import Inbox from '../Dashboard/structureComponents/Main/Emails/Inbox.vue';
 import SpecificEmail from '../Dashboard/structureComponents/Main/Emails/SpecificEmail.vue';
 
 import Settings from '../Dashboard/structureComponents/Main/Settings/Settings.vue';
-import Payments from '../Dashboard/structureComponents/Main/Settings/Payments.vue';
+import Products from '../Dashboard/structureComponents/Main/Settings/Products.vue';
 import ProductsAll from '../Dashboard/structureComponents/Main/Settings/ProductsAll.vue';
 import SpecificProduct from '../Dashboard/structureComponents/Main/Settings/SpecificProduct.vue';
+import AddNewProduct from '../Dashboard/structureComponents/Main/Settings/AddNewProduct.vue';
 
 export const routes = [
 
@@ -105,13 +106,15 @@ export const routes = [
 
 				children: [
 
-					{ path: 'payments', component: Payments, name: 'payments', props: true,
+					{ path: 'payments', component: Products, name: 'payments', props: true,
 					
 						children: [
 
 							{ path: 'products', component: ProductsAll, name: 'products', props: true },
 
 							{ path: 'products/:product_id', component: SpecificProduct, name: 'specific-product', props: true },
+							
+							{ path: 'products/add-new', component: AddNewProduct, name: 'add-new-product', props: true },
 		
 						]
 

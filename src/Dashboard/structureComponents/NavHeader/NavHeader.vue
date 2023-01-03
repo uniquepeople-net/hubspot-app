@@ -7,11 +7,13 @@
 					<span class="navbar-toggler-icon"></span>
 				</button>
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav ms-auto mb-lg-0">
+					<ul class="navbar-nav ms-auto mb-lg-0 align-items-center">
 						
+						<NavWarning v-if="!user.fee" linkTo="/wallet"/>
+
 						<NavMessages />
 
-						<li class="nav-item dropdown me-3">
+						<!-- <li class="nav-item dropdown me-3">
 							<a class="nav-link active dropdown-toggle text-gray-600" href="#" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
 								<i class="bi bi-bell bi-sub fs-4"></i>
 							</a>
@@ -55,10 +57,13 @@
 									</p>
 								</li>
 							</ul>
-						</li>
+						</li> -->
+
+						<NavProfile />
+
 					</ul>
 					
-					<NavProfile />
+					
 
 				</div>
 			</div>
@@ -70,17 +75,14 @@
 <script>
 	import NavMessages from './NavMessages.vue'
 	import NavProfile from './NavProfile.vue'
+	import NavWarning from './NavWarning.vue'
+	import { mapGetters } from 'vuex'
 
 	export default {
-		data() {
-			return {
-				
-			}
+		computed: {
+			...mapGetters({ user: 'user/user' }),
 		},
-		methods: {
-			
-		},
-		components: { NavProfile, NavMessages },
+		components: { NavProfile, NavMessages, NavWarning },
 	}
 </script>
  

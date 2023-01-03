@@ -22,6 +22,10 @@ i {
 	font-style: normal;
 }
 
+::placeholder {
+	color: rgb(184, 184, 184);
+}
+
 @media( min-width: 992px ) {
 	.p-sidebar-mask.p-component-overlay {
 		display: none;

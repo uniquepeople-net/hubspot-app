@@ -12,7 +12,7 @@
 				</div>
 			</div>
 		</a>
-		<Menu id="overlay_menu" ref="menu" :model="items" :popup="true" class="mt-2"/>
+		<Menu id="overlay_menu" ref="menu" :model="items" :popup="true" class="mt-2 menu-profile"/>
 	</div>
 </template>
  

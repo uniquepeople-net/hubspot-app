@@ -40,9 +40,13 @@ export default {
 		getEmailsUrl: 				DOMAIN_URL + '/api/emails/',
 		getSpecificEmail: 			DOMAIN_URL + '/api/email/',
 
-		// Payments service routes
+		// Products service routes
 		allProducts:				DOMAIN_URL + '/api/products',		
-		editProduct:				DOMAIN_URL + '/api/products/',		
+		editProduct:				DOMAIN_URL + '/api/products/',
+		addProduct:					DOMAIN_URL + '/api/products/store',	
+		
+		// Payment service routes
+		payment:					DOMAIN_URL + '/api/payment', 
 	}),
 
 	getters: {
@@ -138,12 +142,20 @@ export default {
 			return state.getSpecificEmail
 		},
 
-		// Payment SErvice routes getters
+		// Products service routes getters
 		allProducts(state) {
 			return state.allProducts
 		}, 
 		editProduct(state) {
 			return state.editProduct
+		}, 
+		addProduct(state) {
+			return state.addProduct
+		}, 
+
+		// Payment service routes getters
+		payment(state) {
+			return state.payment
 		}, 
 	}
 }

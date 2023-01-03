@@ -1,5 +1,5 @@
 <template>
-	<li class="nav-item dropdown me-1">
+	<li class="nav-item dropdown me-3">
 		<a class="nav-link active dropdown-toggle text-gray-600 position-relative" href="#" data-bs-toggle="dropdown" aria-expanded="false" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu">
 			<i class="bi bi-envelope bi-sub fs-4"></i>
 			<Badge v-if="unreadEmailsCount > 0" :value="unreadEmailsCount" severity="info" class="position-absolute top-0 start-0"/>

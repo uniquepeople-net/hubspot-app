@@ -17,10 +17,7 @@
 		<Card class="card">
 			<template #title>
 				<div class="card-header d-flex justify-content-between align-items-center">
-					<h5><span class="fw-light">Product:</span> {{product.name}}</h5>
-					<DeleteItem v-if="delete" :delete="delete" :itemId="id" 
-								:itemName="name" item="product" url="/api/products/"
-								redirectRoute="products" :callback="'payments/getProducts'"/>
+					<h5><span class="fw-light">Add New Product</span></h5>
 				</div>
 			</template>
 			<template #content>
@@ -66,7 +63,7 @@
 								</div>
 								
 								<div class="col-12 col-lg-6 offset-lg-6">
-									<Button type="submit" label="Update" class="mt-2 submit-btn" />
+									<Button type="submit" label="Add Product" class="mt-2 submit-btn" />
 								</div>
 							</div>
 	
@@ -82,19 +79,8 @@
 	import { mapGetters } from 'vuex';
 	import { required, minLength, numeric } from "@vuelidate/validators";
 	import { useVuelidate } from "@vuelidate/core";
-	import DeleteItem from '../Users/DeleteItem.vue';
 
 	export default {
-		props: {
-			products: Array
-		},
-		mounted() {
-			this.name = this.product.name	
-			this.amount = this.product.amount_decimal
-			this.active = Boolean(this.product.active)	
-			this.description = this.product.description
-			this.interval = this.product.interval.id
-		},
  		setup: () => ({ v$: useVuelidate() }),
 		data() {
 			return {
@@ -133,45 +119,36 @@
 					amount: this.amount,
 					active: this.active,
 					description: this.description,
-					interval: this.interval,
-					id: this.product.id 
+					interval: this.interval
 				}
 
-				this.updateProduct( this.editProductUrl, data );
+				this.addProduct( this.addProductUrl, data );
 
 			},
 			toggleDialog() {
 				this.showMessage = !this.showMessage;
 			},
-			async updateProduct( url, data ) {
+			async addProduct( url, data ) {
 				try {
 					await User.refreshedToken();
 
-					await axios.post( url + data.id, data,  {
+					await axios.post( url, data,  {
 								headers: {
 									Authorization: 'Bearer ' + User.getToken()
 								}
 							}).then( response => {
-								this.response = response.data
-								this.product.name = data.name
-								this.product.amount_decimal = data.amount
-								this.product.active = data.active
-								this.product.description = data.description
-								this.product.interval.name = this.intervals.filter( i => i.id === data.interval )[0].name
+								this.response = response.data								
 								this.toggleDialog();
+								this.$store.dispatch("payments/getProducts");
 							})
 				} catch (err) {
-					throw 'Unable to update user'
+					throw 'Unable to add product'
 				}
 			}
 		},
 		computed: {
-			...mapGetters({ editProductUrl: 'links/editProduct' }),
-			product() {
-				return this.products.filter( prod => prod.id === this.id )[0]
-			}
-		},
-		components: { DeleteItem }
+			...mapGetters({ addProductUrl: 'links/addProduct' })
+		}
 	}
 </script>
  

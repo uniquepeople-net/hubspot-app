@@ -23,7 +23,7 @@
  
 <script>
 	export default {
-		props: ['delete', 'itemId', 'itemName', 'item', 'url', 'redirectRoute'],
+		props: ['delete', 'itemId', 'itemName', 'item', 'url', 'redirectRoute', 'callback'],
 		data() {
 			return {
 				showMessage: false,
@@ -50,6 +50,9 @@
 			},
 			redirect() {
 				this.$router.push({name: this.redirectRoute})
+				if ( this.callback ) {
+					this.$store.dispatch(this.callback);
+				}
 			}
 		},
 	}
