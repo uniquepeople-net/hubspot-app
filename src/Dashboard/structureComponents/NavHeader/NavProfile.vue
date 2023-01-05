@@ -33,7 +33,7 @@
                     {
                         label: 'Wallet',
                         icon: 'pi pi-euro',
-						to: '/wallet',
+						to: '/wallet/wallet-info',
                         command: () => {
                             //this.$toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000});
                         }

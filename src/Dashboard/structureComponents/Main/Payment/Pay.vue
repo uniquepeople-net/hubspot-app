@@ -1,18 +1,29 @@
 <template>
-	<StripeElements
-		v-if="stripeLoaded"
-		:stripe-key="stripePubKey"
-		v-slot="{ elements }"
-		ref="elms">
-		<StripeElement type="card" :elements="elements" :options="cardOptions"
-						ref="card" @change="cardChange($event)"/>
-	</StripeElements>
+	<Card class="card">
+		<template #content>
+			4000 0025 0000 3155
+			4000 0027 6000 3184
+			4000 0082 6000 3178
+			4000 0038 0000 0446
 
-	<Button type="button" @click="pay" label="Pay" class="mt-2 pay-btn" iconPos="right" icon="pi pi-search">
-		Pay
-		<div v-if="loading" class="spinner-grow" role="status">
-		</div>
-	</Button>
+			4242 4242 4242 4242	
+			2223 0031 2200 3222	
+			<StripeElements
+				v-if="stripeLoaded"
+				:stripe-key="stripePubKey"
+				v-slot="{ elements }"
+				ref="elms">
+				<StripeElement type="card" :elements="elements" :options="cardOptions"
+								ref="card" @change="cardChange($event)"/>
+			</StripeElements>
+		
+			<Button type="button" @click="pay" label="Pay" class="mt-4 pay-btn" iconPos="right" icon="pi pi-search">
+				Pay
+				<div v-if="loading" class="spinner-grow" role="status">
+				</div>
+			</Button>
+		</template>
+	</Card>
 </template>
  
  
@@ -22,10 +33,20 @@
 	import { mapGetters } from 'vuex'
 
 	export default {
-		props: [ 'stripeLoaded', 'stripePubKey' ],
+		created() {
+			var stripeKey = this.stripePubKey;
+			const stripePromise = loadStripe(stripeKey)
+			stripePromise.then( response => {
+				this.stripeLoaded = true
+			})
+			if ( !this.payProduct ) {
+				this.$router.push({ name: 'wallet-info' })
+			}			
+		},
 		data() {
 			return {
 				loading: false,
+				stripeLoaded: false,
 				cardOptions: {
                     hidePostalCode: true,
                     style: {
@@ -71,36 +92,43 @@
 						console.log(result)
 
 						let data = {
-							amount: 950, // amount should be sent in cents (700 === 7.00 eur)
+							amount: this.payProduct.amount_decimal * 100, // amount should be sent in cents (700 === 7.00 eur)
 							stripeToken: result.token.id,
 							billing_details: { name: 'fero' },
-							card: result.token.card.id 
+							userId: this.user.id,
+							card: result.token.card.id,
+							//returnUrl: window.location.href,
+							returnUrl: 'http://localhost:5000/wallet/pay-status',
+							productId: this.payProduct.id
 						}
-
+						
 						axios.post( this.paymentUrl , data, {
 							headers: {
 								'Content-Type': 'application/json',
 								Authorization: 'Bearer ' + User.getToken()
 							}
-						})
-							.then( response => {
+						}).then( response => {
 								console.log(response)
-								var action = response.data[0].next_action;
+								var action = response.data.next_action;
 								if (action && action.type === 'redirect_to_url') {
 									window.location = action.redirect_to_url.url;
 								}
 								this.loading = false
 							})
 							.catch( error => {
-								console.log(error)
-								
+								console.log(error)								
 								this.loading = false
 							} )
-					})
+					}).catch( error =>
+						console.log(error)						
+					)
 			}
 		},
 		computed: {
-			...mapGetters({ paymentUrl: 'links/payment' })
+			...mapGetters({ paymentUrl: 'links/payment',
+							stripePubKey: 'payments/stripePubKey',
+							payProduct: 'payments/payProduct',
+							user: 'user/user' })
 		},
 		components: { StripeElements, StripeElement }
 	}
@@ -108,6 +136,9 @@
  
  
 <style lang='scss' scoped>
+.card {
+	max-width: 576px;
+}
 .pay-btn {
 	min-width: 300px;
 	justify-content: center;

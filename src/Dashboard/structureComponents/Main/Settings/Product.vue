@@ -17,11 +17,12 @@
 			<Divider />
 		</template>
 		<template #footer>
-			<div class="d-flex justify-content-end edit-icon">
+			<div v-if="!pay" class="d-flex justify-content-end edit-icon">
 				<router-link :to="{name: 'specific-product', params: {product_id: product.id}}">
 					<i class="bi bi-pencil-square"></i>
 				</router-link>
 			</div>
+			<Button v-if="pay" @click="payProduct">Pay</Button>
 		</template>
 	</Card>
 </template>
@@ -32,11 +33,8 @@
 
 	export default {
 		props: {
-			product: Object
-		},
-		data() {
-			return {
-			}
+			product: Object,
+			pay: Boolean
 		},
 		methods: {
 			activity(data) {
@@ -47,6 +45,9 @@
 			},
 			activityTag(data) {
 				return Boolean(data) === true ? 'success' : 'danger'
+			},
+			payProduct() {
+				this.$emit('product', this.product)
 			}
 		},
 		components: { Tag }

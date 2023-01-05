@@ -1,5 +1,7 @@
 <template>
-	<Carousel :value="posts" :numVisible="3" :numScroll="1" :showNavigators="false" :responsiveOptions="responsiveOptions" class="custom-carousel" :circular="false" :autoplayInterval="7000">
+	<Carousel :value="posts" :numVisible="3" :numScroll="1" :showNavigators="false" 
+			  :responsiveOptions="responsiveOptions" class="custom-carousel" :circular="false" 
+			  :autoplayInterval="7000" :showIndicators="true">
 		<template #header>
 			<h5 class="mb-4">UFP News</h5>
 		</template>

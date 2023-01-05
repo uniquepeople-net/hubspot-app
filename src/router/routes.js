@@ -25,6 +25,9 @@ import EmailEditor from '../Dashboard/structureComponents/Main/Users/EmailEditor
 import Myprofile from '../Dashboard/structureComponents/Main/Profile/MyProfile.vue';
 
 import Wallet from '../Dashboard/structureComponents/Main/Payment/Wallet.vue';
+import WalletInfo from '../Dashboard/structureComponents/Main/Payment/WalletInfo.vue'
+import Pay from '../Dashboard/structureComponents/Main/Payment/Pay.vue'
+import PayStatus from '../Dashboard/structureComponents/Main/Payment/PayStatus.vue'
 
 import Instat from '../Dashboard/structureComponents/Main/Stats/Instat.vue';
 
@@ -51,75 +54,73 @@ export const routes = [
 
 			{ path: '/stats', component: Instat, name: 'instat' },
 
-			{ path: '/users', component: Users, name: 'users',
+			{ path: '/users', component: Users, name: 'users', redirect: { name: 'all-users' },
+				// Check if user has privileges to access this route
+				beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() ),
 
 				children: [
-					{ path: 'all', component: AllUsers, name: 'all-users',
-						// Check if user has privileges to access this route
-						beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() )
-					},
+					{ path: 'all', component: AllUsers, name: 'all-users' },
 
-					{ path: 'add-new-user', component: AddNewUser, name: 'add-new-user',
-						beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() ) 
-					},
+					{ path: 'add-new-user', component: AddNewUser, name: 'add-new-user' },
 
-					{ path: ':user_id', component: SpecificUser, name: 'specific-user',
-						beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() )
-					},
+					{ path: ':user_id', component: SpecificUser, name: 'specific-user' },
 
-					{ path: 'send-emails', component: EmailEditor, name: 'send-emails', props: true,
-						beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() )
-					}
+					{ path: 'send-emails', component: EmailEditor, name: 'send-emails', props: true }
 				]
 
 			},
 			
 			{ path: '/my-profile', component: Myprofile, name: 'my-profile' },
 
-			{ path: '/wallet', component: Wallet, name: 'wallet' },
-						
-			{ path: '/info', component: Info, name: 'info',
+			{ path: '/wallet', component: Wallet, name: 'wallet', redirect: { name: 'wallet-info' },
 
 				children: [
+					{ path: 'wallet-info', component: WalletInfo, name: 'wallet-info' },
 
+					{ path: 'pay', component: Pay, name: 'wallet-pay' },
+					
+					{ path: 'pay-status', component: PayStatus, name: 'wallet-pay-status' },
+				]
+
+			},
+						
+			{ path: '/info', component: Info, name: 'info', redirect: { name: 'info-ufp' },
+
+				children: [
 					{ path: 'ufp', component: InfoUfp, name: 'info-ufp' },
 
 					//{ path: 'other', component: InfoOther, name: 'info-other' },
-
 				]
 
 			},
 
-			{ path: '/emails', component: Emails, name: 'emails', props: true,
+			{ path: '/emails', component: Emails, name: 'emails', props: true, redirect: { name: 'inbox' },
 
 				children: [
-
 					{ path: 'inbox', component: Inbox, name: 'inbox', props: true },
 
 					{ path: ':email_id', component: SpecificEmail, name: 'specific-email', props: true},
-
 				]
 
 			},
 
-			{ path: '/settings', component: Settings, name: 'settings', props: true,
+			{ path: '/settings', component: Settings, name: 'settings', props: true, redirect: { name: 'products' },
+				
+				// Check if user has privileges to access this route
+				beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() ),
 
 				children: [
-
-					{ path: 'payments', component: Products, name: 'payments', props: true,
+					{ path: 'payments', component: Products, name: 'payments', props: true, redirect: { name: 'products' },
 					
 						children: [
-
 							{ path: 'products', component: ProductsAll, name: 'products', props: true },
 
 							{ path: 'products/:product_id', component: SpecificProduct, name: 'specific-product', props: true },
 							
 							{ path: 'products/add-new', component: AddNewProduct, name: 'add-new-product', props: true },
-		
 						]
 
 					},
-
 				]
 			},
 			
