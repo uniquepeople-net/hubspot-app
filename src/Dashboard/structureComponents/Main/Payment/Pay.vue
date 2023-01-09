@@ -17,7 +17,8 @@
 								ref="card" @change="cardChange($event)"/>
 			</StripeElements>
 		
-			<Button type="button" @click="pay" label="Pay" class="mt-4 pay-btn" iconPos="right" icon="pi pi-search">
+			<Button type="button" @click="pay" label="Pay" class="mt-4 pay-btn" 
+			        iconPos="right" icon="pi pi-search" :disabled="disablePay">
 				Pay
 				<div v-if="loading" class="spinner-grow" role="status">
 				</div>
@@ -38,15 +39,20 @@
 			const stripePromise = loadStripe(stripeKey)
 			stripePromise.then( response => {
 				this.stripeLoaded = true
+				this.stripe = response
+
 			})
 			if ( !this.payProduct ) {
 				this.$router.push({ name: 'wallet-info' })
 			}			
+			
 		},
 		data() {
 			return {
+				stripe: null,
 				loading: false,
 				stripeLoaded: false,
+				disablePay: false,
 				cardOptions: {
                     hidePostalCode: true,
                     style: {
@@ -84,7 +90,8 @@
 				const cardComponent = this.$refs.card
 				const cardElement = cardComponent.stripeElement
 
-				this.loading = true;
+				this.loading = true
+				this.disablePay = true
 				// Access instance methods, e.g. createToken()
 				groupComponent.instance.createToken(cardElement)
 					.then( result => {
@@ -92,14 +99,15 @@
 						console.log(result)
 
 						let data = {
-							amount: this.payProduct.amount_decimal * 100, // amount should be sent in cents (700 === 7.00 eur)
+							amount: this.payProduct.amount_decimal,
 							stripeToken: result.token.id,
-							billing_details: { name: 'fero' },
+							//billing_details: { name: 'fero' },
 							userId: this.user.id,
 							card: result.token.card.id,
 							//returnUrl: window.location.href,
-							returnUrl: 'http://localhost:5000/wallet/pay-status',
-							productId: this.payProduct.id
+							returnUrl: window.location.origin + '/wallet/pay-status',
+							productId: this.payProduct.id,
+							description: this.payProduct.description
 						}
 						
 						axios.post( this.paymentUrl , data, {
@@ -109,19 +117,29 @@
 							}
 						}).then( response => {
 								console.log(response)
-								var action = response.data.next_action;
+								
+								window.localStorage.setItem("cs", response.data.charge.client_secret)
+								window.localStorage.setItem("pay-id", response.data.payment_id)
+
+								const action = response.data.charge.next_action;
 								if (action && action.type === 'redirect_to_url') {
 									window.location = action.redirect_to_url.url;
 								}
-								this.loading = false
+
 							})
 							.catch( error => {
 								console.log(error)								
 								this.loading = false
+								this.disablePay = false
 							} )
-					}).catch( error =>
-						console.log(error)						
-					)
+					}).catch( error => {
+						console.log(error)
+						this.loading = false
+						this.disablePay = false						
+					})
+
+					
+
 			}
 		},
 		computed: {

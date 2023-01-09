@@ -39,7 +39,7 @@
 								<div class="inputgroup mb-5 col-12 col-lg-6">
 									<InputIcon icon="bi bi-currency-euro"></InputIcon>
 									<InputText id="amount" v-model="v$.amount.$model" :class="{'p-invalid':v$.amount.$invalid && submitted}" aria-describedby="amount-error"
-												name="amount" placeholder="Amount"/>
+												name="amount" placeholder="Amount (example: 9.99)"/>
 			
 									<InputError :validator="v$.amount" :submitted="submitted" replace="Amount"></InputError>
 								</div>
@@ -80,10 +80,16 @@
  
 <script>
 	import { mapGetters } from 'vuex';
-	import { required, minLength, numeric } from "@vuelidate/validators";
+	import { required, minLength, numeric, decimal, helpers } from "@vuelidate/validators";
 	import { useVuelidate } from "@vuelidate/core";
 	import DeleteItem from '../Users/DeleteItem.vue';
 
+	// Custom decimal validation
+	const customDecimal = {
+		$validator: helpers.regex(/^\d+\.\d{2}$/),
+		$message: 'Amount should have 2 numbers after decimal point (ex: 9.99 )'
+	}
+	
 	export default {
 		props: {
 			products: Array
@@ -94,6 +100,9 @@
 			this.active = Boolean(this.product.active)	
 			this.description = this.product.description
 			this.interval = this.product.interval.id
+
+			var regexp = /^\d+\.\d{2}$/;
+			console.log("'0.7' returns " + regexp.test('0.75'));
 		},
  		setup: () => ({ v$: useVuelidate() }),
 		data() {
@@ -115,7 +124,7 @@
 		validations() {
 			return {
 				name: { required, minLength: minLength(3) },
-				amount: { required, numeric },
+				amount: { required, customDecimal },
 				description: { required, minLength: minLength(3) },
 				interval: { required }
 			}
@@ -185,7 +194,7 @@
 	display: flex;
 	& span.error-msg {
 		position: absolute;
-		bottom: -60%;
+		top: 100%;
 	}
 	& > .p-button {
 		border-radius: 0 4px 4px 0;

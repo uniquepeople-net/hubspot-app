@@ -47,6 +47,7 @@ export default {
 		
 		// Payment service routes
 		payment:					DOMAIN_URL + '/api/payment', 
+		paymentUpdate:				DOMAIN_URL + '/api/payment/', 
 	}),
 
 	getters: {
@@ -156,6 +157,9 @@ export default {
 		// Payment service routes getters
 		payment(state) {
 			return state.payment
+		}, 
+		paymentUpdate(state) {
+			return state.paymentUpdate
 		}, 
 	}
 }

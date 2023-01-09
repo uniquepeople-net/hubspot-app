@@ -53,6 +53,15 @@ class Helpers {
 		} else return 0
 	}
 
+	// Request url through axios
+	/* requestAuthPost( url, data, token ) {
+		axios.post( url, data, {
+			headers: {
+				Authorization: 'Bearer ' + token
+			}
+		})
+	}  */
+
 }
 
 export default Helpers = new Helpers();
