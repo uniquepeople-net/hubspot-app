@@ -43,7 +43,7 @@
 								<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
 							</div>
 		
-							<div class="inputgroup mb-5 col-12">
+							<div class="inputgroup mb-5 col-12" v-if="delete">
 								<InputIcon icon="bi bi-bar-chart-fill"></InputIcon>
 								<InputText id="instatId" v-model="v$.instatId.$model" :class="{'p-invalid':v$.instatId.$invalid && submitted}" aria-describedby="email-error"
 											name="instatId" placeholder="Instat ID"/>
@@ -51,12 +51,12 @@
 								<InputError :validator="v$.instatId" :submitted="submitted" replace="Instat ID"></InputError>
 							</div>
 		
-							<div class="inputgroup mb-5 col-12">
+							<div class="inputgroup mb-5 col-12" v-if="delete">
 								<InputIcon icon="pi pi-euro"></InputIcon>
 								<ToggleButton v-model="paid" onLabel="Paid" offLabel="UnPaid" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${paid ? 'bg-success' : 'bg-danger'} p-togglebtn`"/>
 							</div>
 		
-							<div class="inputgroup mb-5 col-12">
+							<div class="inputgroup mb-5 col-12" v-if="delete">
 								<InputIcon icon="bi bi-person-lines-fill"></InputIcon>
 								<Dropdown v-model="role" :options="roles" optionLabel="name" optionValue="id" placeholder="Select a Role"/>
 								

@@ -1,13 +1,13 @@
 <template>
 	<Card class="card">
 		<template #content>
-			4000 0025 0000 3155
-			4000 0027 6000 3184
-			4000 0082 6000 3178
-			4000 0038 0000 0446
+			<p>4000 0025 0000 3155</p>
+			<p>4000 0027 6000 3184</p>
+			<p>4000 0082 6000 3178</p>
+			<p>4000 0038 0000 0446</p>
 
-			4242 4242 4242 4242	
-			2223 0031 2200 3222	
+			<p>4242 4242 4242 4242</p>	
+			<p>2223 0031 2200 3222</p>	
 			<StripeElements
 				v-if="stripeLoaded"
 				:stripe-key="stripePubKey"
@@ -96,7 +96,6 @@
 				groupComponent.instance.createToken(cardElement)
 					.then( result => {
 					// Handle result.error or result.token
-						console.log(result)
 
 						let data = {
 							amount: this.payProduct.amount_decimal,
@@ -107,17 +106,19 @@
 							//returnUrl: window.location.href,
 							returnUrl: window.location.origin + '/wallet/pay-status',
 							productId: this.payProduct.id,
-							description: this.payProduct.description
+							description: this.payProduct.description,
+							productName: this.payProduct.name
 						}
 						
+						console.log(data.amount)
+						
+
 						axios.post( this.paymentUrl , data, {
 							headers: {
 								'Content-Type': 'application/json',
 								Authorization: 'Bearer ' + User.getToken()
 							}
 						}).then( response => {
-								console.log(response)
-								
 								window.localStorage.setItem("cs", response.data.charge.client_secret)
 								window.localStorage.setItem("pay-id", response.data.payment_id)
 

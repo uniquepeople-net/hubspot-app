@@ -22,7 +22,7 @@
 					<i class="bi bi-pencil-square"></i>
 				</router-link>
 			</div>
-			<Button v-if="pay" @click="payProduct">Pay</Button>
+			<Button v-if="pay" @click="payProduct" class="pay-btn">Pay</Button>
 		</template>
 	</Card>
 </template>
@@ -67,6 +67,10 @@
 .card {
 	:deep(.p-card-footer) {
 		padding: 0;
+	}
+	.pay-btn {
+		width: 100%;
+		justify-content: center;
 	}
 }
 </style>

@@ -14,24 +14,35 @@
 				</div>
 			</div>
 		</template>
+		<template #footer>
+			<Payments v-if="payments" :payments="payments"/>
+		</template>
 	</Card>
 </template>
  
  
 <script>
+	import { mapGetters } from 'vuex'
+	import Payments from './Payments.vue'
+
 	export default {
 		props: ['user'],
+		created() {
+			this.$store.dispatch("payments/getPayments", this.user.id);	
+		},
 		computed: {
+			...mapGetters({ payments: 'payments/payments' }),
 			fee() {
 				return this.user.fee ? 'paid' : 'unpaid'
 			}
-		}
+		},
+		components: { Payments }
 	}
 </script>
  
  
 <style lang='scss' scoped>
 .card {
-	max-width: 576px;
+	max-width: 768px;
 }
 </style>

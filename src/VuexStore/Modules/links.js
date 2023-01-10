@@ -7,9 +7,11 @@ export default {
 		refreshApiGwUrl: 		DOMAIN_URL + '/api/refresh',
 		registerApiGwUrl: 		DOMAIN_URL + '/api/register',
 
+		// Users api routes
 		getAllUsers: 			DOMAIN_URL + '/api/users-all',
 		specificUser:			DOMAIN_URL + '/api/users/',
 		profileUser:			DOMAIN_URL + '/api/users/update',
+		updateFee:				DOMAIN_URL + '/api/users/update-fee/',
 
 
 		// Instat API
@@ -47,7 +49,8 @@ export default {
 		
 		// Payment service routes
 		payment:					DOMAIN_URL + '/api/payment', 
-		paymentUpdate:				DOMAIN_URL + '/api/payment/', 
+		paymentUpdate:				DOMAIN_URL + '/api/payment/',
+		payments:					DOMAIN_URL + '/api/payments' 
 	}),
 
 	getters: {
@@ -73,6 +76,9 @@ export default {
 		},
 		profileUser(state) {
 			return state.profileUser
+		},
+		updateFee(state) {
+			return state.updateFee
 		},
 
 		// Instat API
@@ -160,6 +166,9 @@ export default {
 		}, 
 		paymentUpdate(state) {
 			return state.paymentUpdate
+		}, 
+		payments(state) {
+			return state.payments
 		}, 
 	}
 }

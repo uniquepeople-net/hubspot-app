@@ -4,7 +4,8 @@ export default {
 	state: () => ({
 		stripePubKey: 'pk_test_51MEDDqCf79OEZcUi83xIfRoEvrH9sIa2h2aE2vkcaWjajZv4WfC2Y91HEek2gm2qMIAdD1yXjUjVBqY0TE256ZiA00ZlXgpZjo',
 		products: null,
-		payProduct: null
+		payProduct: null,
+		payments: null
 	}),
 
 	mutations: {
@@ -14,11 +15,16 @@ export default {
 		SETPAYPRODUCT( state, data ) {
 			state.payProduct = data;
 		},
+		SETPAYMENTS( state, data ) {
+			state.payments = data;
+		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
 			// https://github.com/vuejs/vuex/issues/1118
 			Object.assign(state, {
-				products: null
+				products: null,
+				payProduct: null,
+				payments: null
 			})
 		}
 	},
@@ -37,8 +43,26 @@ export default {
 						context.commit("SETPRODUCTS", response.data)
 					})
 		},
+
 		setPayProduct( context, data ) {
 			context.commit("SETPAYPRODUCT", data)
+		},
+
+		async getPayments( context , id) {
+			let paymentsUrl = context.rootGetters['links/payments']
+
+			await User.refreshedToken();
+
+			await axios.get( paymentsUrl + '/' + id,  {
+					headers: {
+						Authorization: 'Bearer ' + User.getToken()
+					}
+				}).then( response => {				
+					context.commit("SETPAYMENTS", response.data)
+				})
+			
+			
+
 		}
 	},
 
@@ -51,6 +75,9 @@ export default {
 		},
 		payProduct(state) {
 			return state.payProduct
+		},
+		payments(state) {
+			return state.payments
 		}
 	}
 }

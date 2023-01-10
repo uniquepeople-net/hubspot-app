@@ -16,50 +16,60 @@
 	import { mapGetters } from 'vuex'
 
 	export default {
-		created(){
-			var stripeKey = this.stripePubKey;
-			const stripePromise = loadStripe(stripeKey)
-			
+		created(){			
 			let clientSecret = window.localStorage.getItem("cs")
 			let paymentId = window.localStorage.getItem("pay-id");
 
-			stripePromise.then( response => {
-				(async () => {
-					
-					const {paymentIntent, error} = await response.retrievePaymentIntent(clientSecret);
-					if (error) {
-						this.status = 'failed'
-					} else if (paymentIntent && paymentIntent.status === 'succeeded') {
-						this.status = paymentIntent.status
-						window.localStorage.removeItem("cs")
+			if ( clientSecret ) {
+				var stripeKey = this.stripePubKey;
+				const stripePromise = loadStripe(stripeKey)
 
-					}
-
-					axios.post( this.paymentUpdateUrl + paymentId, { status: this.status }, {
-							headers: {
-								Authorization: 'Bearer ' + User.getToken()
-							}
-						}).then( response => {
-							console.log(response)							
-						})
+				stripePromise.then( response => {
+					(async () => {
 						
-					//axios.post()
+						const {paymentIntent, error} = await response.retrievePaymentIntent(clientSecret);
+						if (error) {
+							this.status = 'failed'
+						} else if (paymentIntent && paymentIntent.status === 'succeeded') {
+							this.status = paymentIntent.status
+							window.localStorage.removeItem("cs")
 
-				})();
-			})
+							// Update fee when payment is successful
+							axios.post( this.updateFeeUrl + this.user.id, { fee: true }, {
+									headers: {
+										Authorization: 'Bearer ' + User.getToken()
+									}
+								}).then( response => {
+									this.$store.dispatch("user/getUser");
+								})
+						}
+
+						// Update payment status in paymets table depending on commited payment
+						axios.post( this.paymentUpdateUrl + paymentId, { status: this.status }, {
+								headers: {
+									Authorization: 'Bearer ' + User.getToken()
+								}
+							}).then( response => {
+								console.log(response)							
+							})
+
+					})();
+				})
+			} else {					
+				this.$router.push({ name: 'wallet-info' })
+			}
 						
 		},
 		data() {
 			return {
-				status: 'succeeded'
+				status: null
 			}
-		},
-		methods: {
-			
 		},
 		computed: {
 			...mapGetters({ stripePubKey: 'payments/stripePubKey',
-							paymentUpdateUrl: 'links/paymentUpdate' }),
+							user: 'user/user',
+							paymentUpdateUrl: 'links/paymentUpdate',
+							updateFeeUrl: 'links/updateFee' }),
 			statusBool() {
 				return this.status == 'succeeded' ? true : false
 			}
