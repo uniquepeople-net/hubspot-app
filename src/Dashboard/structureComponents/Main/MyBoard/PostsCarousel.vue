@@ -8,16 +8,18 @@
 		<template #item="slotProps">
 			
 				<div class="post-item">
-					<div class="post-item-content text-center">
-						<div class="mb-3">
-							<img class="carousel-img" :src="slotProps.data.yoast_head_json.og_image[0].url" :alt="slotProps.data.title.rendered" />
+					<a :href="slotProps.data.link">
+						<div class="post-item-content text-center">
+							<div class="mb-3">
+								<img class="carousel-img" :src="slotProps.data.yoast_head_json.og_image[0].url" :alt="slotProps.data.title.rendered" />
+							</div>
+							<div>
+								
+									<h5 class="mb-1">{{slotProps.data.title.rendered}}</h5>
+														
+							</div>
 						</div>
-						<div>
-							<a :href="slotProps.data.link">
-								<h5 class="mb-1">{{slotProps.data.title.rendered}}</h5>
-							</a>						
-						</div>
-					</div>
+					</a>
 				</div>
 			
 		</template>

@@ -89,7 +89,7 @@ export default {
 			instatId: this.userData.instat_id,
             submitted: false,
             showMessage: false,
-			paid: Boolean(this.userData.fee),
+			paid: this.userData.fee,
 			role: this.userData.role_id,
 			roles: [{ name: 'User', id: 3 }, { name: 'Editor', id: 2 }, { name: 'Admin', id:1 } ],
 			response: null,

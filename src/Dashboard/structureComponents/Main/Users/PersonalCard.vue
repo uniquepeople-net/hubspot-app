@@ -1,11 +1,11 @@
 <template>
 	<Card class="card">
 		<template #header>
-			<img v-if="photo" alt="user-photo" :src="photo" class="personal-card-img">
-			<Skeleton v-if="!photo" shape="circle" class="img-skeleton" width="230px" height="230px"/>
+			<!-- <img v-if="photo" alt="user-photo" :src="photo" class="personal-card-img">
+			<Skeleton v-if="!photo" shape="circle" class="img-skeleton" width="230px" height="230px"/> -->
 		</template>
 		<template #title>
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-8 col-sm-6 name">
 					<h3 v-if="firstname" class="fw-semibold">{{ firstname + ' ' + lastname }}</h3>
 					<h5 v-if="position" class="fw-light">{{ position }}</h5>
@@ -18,10 +18,18 @@
 					</div>
 					<Skeleton v-if="!teamname" shape="rectangle" class="img-skeleton py-3" width="100%"/>
 				</div>
-			</div>
-			
+			</div> -->
+			{{ user.name }}
 		</template>
 		<template #content>
+			<h5><span class="fw-lighter">Tel. number:&nbsp;</span>{{user.tel_number}}</h5>
+			<h5><span class="fw-lighter">Birth date:&nbsp;</span>{{user.birth_date}}</h5>
+			<h5><span class="fw-lighter">Active member:&nbsp;</span>
+				<i v-if="user.active_member" class="pi pi-check-circle" :style="{fontSize: '1.2rem', color: 'var(--green-400)' }"></i>
+                <i v-if="!user.active_member" class="pi pi-times-circle" :style="{fontSize: '1.2rem', color: 'var(--red-400)' }"></i>
+			</h5>
+			<h5><span class="fw-lighter">Member from:&nbsp;</span>{{user.member_from}}</h5>
+			<h5><span class="fw-lighter">Var. symbol:&nbsp;</span>{{user.var_symbol}}</h5>
 		</template>
 		<template #footer>
 		</template>
@@ -31,14 +39,14 @@
  
 <script>
 	export default {
-		props: [ 'photo', 'firstname', 'lastname', 'position', 'teamname', 'teamphoto' ],
-		data() {
-			return {
-			}
+		props: { 
+			user: Object 
 		},
 		methods: {
- 
-		},
+			activity(data) {
+				return
+			}
+		}
 	}
 </script>
  

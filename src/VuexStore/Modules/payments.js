@@ -61,8 +61,6 @@ export default {
 					context.commit("SETPAYMENTS", response.data)
 				})
 			
-			
-
 		}
 	},
 

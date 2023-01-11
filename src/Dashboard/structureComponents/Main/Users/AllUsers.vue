@@ -3,7 +3,7 @@
 		dataKey="id" :rowHover="true" v-model:selection="selectedUsers" v-model:filters="filters" filterDisplay="menu" 
 		paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[10,25,50]"
 		currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
-		:globalFilterFields="['name', 'fee']" responsiveLayout="scroll">
+		:globalFilterFields="['name', 'fee', 'active_member']" responsiveLayout="scroll">
 		<template #header>
 			<h5 class="mb-3">Users</h5>			
 			<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
@@ -17,10 +17,8 @@
 		<template #empty>
 			No users found.
 		</template>
-		<template #loading>
-			
-		<ProgressSpinner strokeWidth="3"/>
-			
+		<template #loading>			
+			<div class="spinner-grow" role="status"></div>
 		</template>
 		<Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
 		<Column field="name" header="Name" sortable style="min-width: 14rem">
@@ -45,6 +43,16 @@
 		<Column field="is_admin" header="State" dataType="boolean" sortable :filterMenuStyle="{'width':'8rem'}" style="min-width: 8rem">
 			<template #body="{data}">
 				<Badge :value="stateUser(data.is_admin)" :severity="stateBadge(data.is_admin)"/>
+			</template>
+		</Column>
+
+		<Column field="active_member" header="Activity" dataType="boolean" sortable :filterMenuStyle="{'width':'8rem'}" style="min-width: 8rem">
+			<template #body="{data}">
+				<i class="pi" :class="{'true-icon pi-check-circle': data.active_member, 'false-icon pi-times-circle': !data.active_member}"></i>
+			</template>
+			<template #filter="{filterModel}">
+				<TriStateCheckbox v-model="filterModel.value" inputId="checkbox" />
+				<label class="ps-3" for="checkbox">{{filterModel.value == null ? '' : stateActive(filterModel.value)}}</label>
 			</template>
 		</Column>
 
@@ -99,6 +107,9 @@
 			statePay(data) {
 				return data ? 'Paid' : 'Not Paid'
 			},
+			stateActive(data) {
+				return data ? 'Active' : 'Inactive'
+			},
 			clearFilter() {
 				this.initFilters();
 			},
@@ -107,6 +118,7 @@
 					'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
 					'name': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
 					'fee': {value: null, matchMode: FilterMatchMode.EQUALS},
+					'active_member': {value: null, matchMode: FilterMatchMode.EQUALS},
 				}
 			}
 
@@ -135,4 +147,5 @@
 .false-icon {
 	color: var(--red-600)
 }
+
 </style>

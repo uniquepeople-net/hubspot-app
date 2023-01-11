@@ -16,18 +16,7 @@
 	export default {
 		props: {
 			payments: Array
-		},
-		mounted() {
-			console.log(this.payments)
-			
-		},
-		data() {
-			return {
-			}
-		},
-		methods: {
-	
-		},
+		}
 	}
 </script>
  

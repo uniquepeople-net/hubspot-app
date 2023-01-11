@@ -1,8 +1,8 @@
 <template>	
 	<div class="row gy-3 mt-3">
 		<div class="col-12 col-xl-6 col-xxl-4">
-			<PersonalCard v-if="instatTeam" :photo="instatUser.photo" :firstname="instatUser.firstname" :lastname="instatUser.lastname" 
-						  :position="instatUser.position1_name" :teamname="instatTeam.name" :teamphoto="instatTeam.photo"/>
+			<PersonalCard v-if="instatTeam"
+						  :user="specificUser"/>
 		</div>
 		<div class="col-12 col-xl-6 col-xxl-4">
 			<DataCard v-if="specificUser" :userData="specificUser" 

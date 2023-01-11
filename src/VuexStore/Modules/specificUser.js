@@ -48,10 +48,14 @@ export default {
 					Authorization: 'Bearer ' + User.getToken()
 			}})
 				.then( response => {
+					response.data.fee = Boolean(response.data.fee)
+					response.data.is_admin = Boolean(response.data.is_admin)
+					response.data.active_member = Boolean(response.data.active_member)
+					
 					context.commit("SETUSER", response.data)			 
 				})
 			
-			let instatId = context.getters.instatId
+			/* let instatId = context.getters.instatId
 
 			await axios.get(instatBasic + instatPlayerData + instatId + instatOPtions)
 				.then( response => {
@@ -63,7 +67,7 @@ export default {
 			await axios.get( instatBasic + instatTeamData + instatTeamId + instatOPtions )
 				.then( response => {
 					context.commit("SETINSTATTEAM", response.data)
-				})
+				}) */
 		}
 	},
 

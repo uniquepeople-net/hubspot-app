@@ -16,11 +16,11 @@
 		</template>
 
 		<template #empty>
-			No emails found.
+			<div class="my-4 text-center"><i class="bi bi-envelope-open"></i>No emails found.</div>
 		</template>
 
 		<template #loading>			
-			<ProgressSpinner strokeWidth="3"/>			
+			<div class="spinner-grow" role="status"></div>			
 		</template>
 
 		<Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
@@ -111,7 +111,12 @@
 			},
 			checkIsReadEmail(data) {
 				return data.recipients[0].is_opened
-			}
+			},
+			/* emailDate(date) {
+				let properDate = date.getTime()
+  				//properDate = item.intialDateTimeObj.getTime()
+				return properDate;
+			} */
 		},		
 		watch: {
 			emails: function (data) {
