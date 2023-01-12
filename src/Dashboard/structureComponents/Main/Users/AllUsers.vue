@@ -29,6 +29,15 @@
 				<InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by name"/>
 			</template>			
 		</Column>
+
+		<Column field="club" header="Club" sortable style="min-width: 14rem">
+			<template #body="{data}">
+				{{data.club}}
+			</template>
+			<template #filter="{filterModel}">
+				<InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by club"/>
+			</template>			
+		</Column>
 		
 		<Column field="fee" header="Fee" dataType="boolean" sortable :filterMenuStyle="{'width':'8rem'}" style="min-width: 8rem">
 			<template #body="{data}">
@@ -51,8 +60,8 @@
 				<i class="pi" :class="{'true-icon pi-check-circle': data.active_member, 'false-icon pi-times-circle': !data.active_member}"></i>
 			</template>
 			<template #filter="{filterModel}">
-				<TriStateCheckbox v-model="filterModel.value" inputId="checkbox" />
-				<label class="ps-3" for="checkbox">{{filterModel.value == null ? '' : stateActive(filterModel.value)}}</label>
+				<TriStateCheckbox v-model="filterModel.value" inputId="checkbox-a" />
+				<label class="ps-3" for="checkbox-a">{{filterModel.value == null ? '' : stateActive(filterModel.value)}}</label>
 			</template>
 		</Column>
 
@@ -117,6 +126,7 @@
 				this.filters = {
 					'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
 					'name': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
+					'club': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
 					'fee': {value: null, matchMode: FilterMatchMode.EQUALS},
 					'active_member': {value: null, matchMode: FilterMatchMode.EQUALS},
 				}

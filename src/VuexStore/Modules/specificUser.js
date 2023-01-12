@@ -36,10 +36,10 @@ export default {
 	actions: {
 		async getSpecificUser(context, id) {
 			let specificUser = context.rootGetters['links/specificUser']
-			let instatBasic = context.rootGetters['links/instatBasic']
+			/* let instatBasic = context.rootGetters['links/instatBasic']
 			let instatPlayerData = context.rootGetters['links/instatPlayerData']
 			let instatOPtions = context.rootGetters['links/instatOPtions']
-			let instatTeamData = context.rootGetters['links/instatTeamData']
+			let instatTeamData = context.rootGetters['links/instatTeamData'] */
 
 			await User.refreshedToken();
 

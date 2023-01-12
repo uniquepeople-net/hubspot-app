@@ -1,9 +1,9 @@
 <template>
-	<Card class="card">
-		<template #header>
+	<Card class="card mb-4">
+		<!-- <template #header> -->
 			<!-- <img v-if="photo" alt="user-photo" :src="photo" class="personal-card-img">
 			<Skeleton v-if="!photo" shape="circle" class="img-skeleton" width="230px" height="230px"/> -->
-		</template>
+		<!-- </template> -->
 		<template #title>
 			<!-- <div class="row">
 				<div class="col-8 col-sm-6 name">
@@ -20,15 +20,17 @@
 				</div>
 			</div> -->
 			{{ user.name }}
+			<Divider />
 		</template>
 		<template #content>
+			<h5><span class="fw-lighter">Club:&nbsp;</span>{{user.club}}</h5>
 			<h5><span class="fw-lighter">Tel. number:&nbsp;</span>{{user.tel_number}}</h5>
 			<h5><span class="fw-lighter">Birth date:&nbsp;</span>{{user.birth_date}}</h5>
 			<h5><span class="fw-lighter">Active member:&nbsp;</span>
 				<i v-if="user.active_member" class="pi pi-check-circle" :style="{fontSize: '1.2rem', color: 'var(--green-400)' }"></i>
                 <i v-if="!user.active_member" class="pi pi-times-circle" :style="{fontSize: '1.2rem', color: 'var(--red-400)' }"></i>
 			</h5>
-			<h5><span class="fw-lighter">Member from:&nbsp;</span>{{user.member_from}}</h5>
+			<h5><span class="fw-lighter">Member from:&nbsp;</span>{{formatDateToSk(user.member_from)}}</h5>
 			<h5><span class="fw-lighter">Var. symbol:&nbsp;</span>{{user.var_symbol}}</h5>
 		</template>
 		<template #footer>
@@ -45,6 +47,9 @@
 		methods: {
 			activity(data) {
 				return
+			},
+			formatDateToSk(date) {
+				return Helpers.formatDateToSk(date)
 			}
 		}
 	}

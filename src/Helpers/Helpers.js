@@ -62,6 +62,12 @@ class Helpers {
 		})
 	}  */
 
+	// format date
+	formatDateToSk(date) {
+		let newDate = new Date(date)
+		return newDate.toLocaleDateString('sk-SK')
+	}
+
 }
 
 export default Helpers = new Helpers();

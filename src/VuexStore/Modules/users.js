@@ -14,6 +14,7 @@ export default {
 			state.users.map( user => {
 				user.fee = Boolean( user.fee )
 				user.is_admin = Boolean( user.is_admin )
+				user.active_member = Boolean( user.active_member )
 			})
 		},
 		RESETSTATE ( state ) {

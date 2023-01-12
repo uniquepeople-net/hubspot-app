@@ -1,16 +1,18 @@
 <template>	
 	<div class="row gy-3 mt-3">
-		<div class="col-12 col-xl-6 col-xxl-4">
+		<div class="col-12 col-xl-5">
 			<PersonalCard v-if="instatTeam"
 						  :user="specificUser"/>
+
+			<ChangePasswordCard />
 		</div>
-		<div class="col-12 col-xl-6 col-xxl-4">
+		<div class="col-12 col-xl-7">
 			<DataCard v-if="specificUser" :userData="specificUser" 
-					  :userUrl="specificUserUrl" :delete="true" :myProfile="false"/>
+					  :userUrl="specificUserUrl" :admin="true" :myProfile="false"/>
 		</div>
 
 		<div class="col-12 col-xl-6 col-xxl-4">
-			<ChangePasswordCard />
+			
 		</div>
 	</div>
 </template>

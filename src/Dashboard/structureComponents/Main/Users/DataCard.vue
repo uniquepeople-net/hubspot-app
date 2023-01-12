@@ -13,12 +13,11 @@
             </template>
         </Dialog>
 
-        
 		<Card class="card">
 			<template #title>
 				<div class="card-header">
 					<h5>User Data</h5>
-					<DeleteItem v-if="delete" :delete="delete" :itemId="id" :itemName="name" 
+					<DeleteItem v-if="admin" :delete="admin" :itemId="id" :itemName="name" 
 								item="user" url="/api/users/" redirectRoute="all-users"></DeleteItem>
 				</div>
 			</template>
@@ -30,37 +29,71 @@
 							<div class="inputgroup mb-5 col-12">
 								<InputIcon icon="pi pi-user"></InputIcon>
 								<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
-										name="name" placeholder="Name"/>
+										   name="name" placeholder="Name"/>
 							
 								<InputError :validator="v$.name" :submitted="submitted" replace="Name"></InputError>
+							</div>
+
+							<div class="inputgroup mb-5 col-12">
+								<InputIcon icon="bi bi-house"></InputIcon>
+								<InputText id="club" v-model="v$.club.$model" :class="{'p-invalid':v$.club.$invalid && submitted}" 
+										   name="club" placeholder="Club"/>
+							
+								<InputError :validator="v$.club" :submitted="submitted" replace="Club"></InputError>
 							</div>
 		
 							<div class="inputgroup mb-5 col-12">
 								<InputIcon icon="pi pi-envelope"></InputIcon>
 								<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
-											name="email" placeholder="Email"/>
+										   name="email" placeholder="Email"/>
 		
 								<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
 							</div>
+
+							<div class="inputgroup mb-5 col-12" :class="admin && 'col-xl-6'">
+								<InputIcon icon="bi bi-telephone"></InputIcon>
+								<InputText id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
+										   name="phoneNum" placeholder="phoneNum"/>
+							
+								<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
+							</div>
+
+							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
+								<InputIcon icon="bi bi-activity"></InputIcon>
+								<ToggleButton v-model="active" onLabel="Active member" offLabel="Inactive member" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${active ? 'bg-info' : 'bg-warning'} p-togglebtn-active`"/>
+							</div>
+
+							<div class="inputgroup mb-5 col-12 align-items-center">
+								<label for="icon">Member from:&nbsp;</label>
+								<Calendar inputId="icon" v-model="memberFrom" :showIcon="true" dateFormat="dd.mm.yy" class="calendar"/>
+							</div>
 		
-							<div class="inputgroup mb-5 col-12" v-if="delete">
+							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
 								<InputIcon icon="bi bi-bar-chart-fill"></InputIcon>
 								<InputText id="instatId" v-model="v$.instatId.$model" :class="{'p-invalid':v$.instatId.$invalid && submitted}" aria-describedby="email-error"
-											name="instatId" placeholder="Instat ID"/>
+											name="instatId" placeholder="Stat ID"/>
 		
 								<InputError :validator="v$.instatId" :submitted="submitted" replace="Instat ID"></InputError>
 							</div>
 		
-							<div class="inputgroup mb-5 col-12" v-if="delete">
+							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
 								<InputIcon icon="pi pi-euro"></InputIcon>
 								<ToggleButton v-model="paid" onLabel="Paid" offLabel="UnPaid" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${paid ? 'bg-success' : 'bg-danger'} p-togglebtn`"/>
 							</div>
 		
-							<div class="inputgroup mb-5 col-12" v-if="delete">
+							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
 								<InputIcon icon="bi bi-person-lines-fill"></InputIcon>
 								<Dropdown v-model="role" :options="roles" optionLabel="name" optionValue="id" placeholder="Select a Role"/>
 								
 								<InputError :validator="v$.role" :submitted="submitted" replace="Role"></InputError>
+							</div>
+
+							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
+								<InputIcon icon="bi bi-bar-chart-fill"></InputIcon>
+								<InputText id="varSymbol" v-model="v$.varSymbol.$model" :class="{'p-invalid':v$.varSymbol.$invalid && submitted}" aria-describedby="email-error"
+											name="varSymbol" placeholder="Var. symbol"/>
+		
+								<InputError :validator="v$.varSymbol" :submitted="submitted" replace="Var. symbol"></InputError>
 							</div>
 							
 						</div>
@@ -78,18 +111,24 @@ import { useVuelidate } from "@vuelidate/core";
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import DeleteItem from "./DeleteItem.vue";
+import Calendar from 'primevue/calendar'
 
 export default {
     setup: () => ({ v$: useVuelidate() }),
-	props: ['userData', 'userUrl', 'delete', 'myProfile'],
+	props: ['userData', 'userUrl', 'admin', 'myProfile'],
     data() {
         return {
             name: this.userData.name,
             email: this.userData.email,
+			phoneNum: this.userData.tel_number,
+			club: this.userData.club,
+			memberFrom: this.userData.member_from,
+			varSymbol: this.userData.var_symbol,
 			instatId: this.userData.instat_id,
             submitted: false,
             showMessage: false,
 			paid: this.userData.fee,
+			active: this.userData.active_member,
 			role: this.userData.role_id,
 			roles: [{ name: 'User', id: 3 }, { name: 'Editor', id: 2 }, { name: 'Admin', id:1 } ],
 			response: null,
@@ -100,7 +139,10 @@ export default {
         return {
             name: { required, minLength: minLength(3) },
             email: { required, email },
+			phoneNum: { numeric },
+			club: { minLength: minLength(3) },
 			instatId: { numeric },
+			varSymbol: { numeric },
 			role: { required },
         }
     },
@@ -118,6 +160,10 @@ export default {
 				instat_id:this.instatId,
 				role: this.role,
 				fee: this.paid,	
+				phoneNum: this.phoneNum,
+				club: this.club,
+				active: this.active,
+				memberFrom: this.memberFrom
 			}
 
 			this.updateUser( this.userUrl, this.id, data )	
@@ -141,6 +187,8 @@ export default {
 						this.toggleDialog();
 						if ( !this.$route.params.user_id ) {
 							this.$store.dispatch("user/getUser");
+						} else {
+							this.$store.dispatch("specificUser/getSpecificUser", this.id);
 						}
 					}				
 				)
@@ -154,13 +202,18 @@ export default {
 			if (data.name) {
 				this.name = data.name
 				this.email = data.email
+				this.phoneNum = data.tel_number
+				this.club = data.club
 				this.instatId = data.instat_id
 				this.paid = data.fee
 				this.role = data.role_id
+				this.active = data.active_member
+				this.memberFrom = Helpers.formatDateToSk(data.member_from)
+				this.varSymbol = data.var_symbol
 			}
 		}
 	},
-	components: { DeleteItem }
+	components: { DeleteItem, Calendar }
 }
 </script>
 
@@ -193,12 +246,15 @@ export default {
 	 
 }
 .p-togglebtn {
-	max-width: 10rem;
+	max-width: 12rem;
 	color: #ffffff !important;
 	.p-button-icon-left {
 		color: #ffffff;
 	}
 	
+}
+.p-togglebtn-active {
+	max-width: 12rem;
 }
 .p-togglebutton.p-button:not(.p-disabled):not(.p-highlight):hover {
 		background: inherit;
@@ -206,5 +262,14 @@ export default {
 	}
 .submit-btn {
 	max-width: 100%;
+}
+.calendar {
+	:deep(.p-button) {
+		color: #6c757d;
+		background: #e9ecef;
+	}
+	:deep(.p-inputtext) {
+		border-radius: 6px 0 0 6px;
+	}
 }
 </style>
