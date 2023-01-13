@@ -89,8 +89,8 @@
 							</div>
 
 							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
-								<InputIcon icon="bi bi-bar-chart-fill"></InputIcon>
-								<InputText id="varSymbol" v-model="v$.varSymbol.$model" :class="{'p-invalid':v$.varSymbol.$invalid && submitted}" aria-describedby="email-error"
+								<InputIcon icon="bi bi-123"></InputIcon>
+								<InputText id="varSymbol" v-model="v$.varSymbol.$model" :class="{'p-invalid':v$.varSymbol.$invalid && submitted}"
 											name="varSymbol" placeholder="Var. symbol"/>
 		
 								<InputError :validator="v$.varSymbol" :submitted="submitted" replace="Var. symbol"></InputError>
@@ -142,7 +142,7 @@ export default {
 			phoneNum: { numeric },
 			club: { minLength: minLength(3) },
 			instatId: { numeric },
-			varSymbol: { numeric },
+			varSymbol: { required, numeric },
 			role: { required },
         }
     },
@@ -163,7 +163,8 @@ export default {
 				phoneNum: this.phoneNum,
 				club: this.club,
 				active: this.active,
-				memberFrom: this.memberFrom
+				memberFrom: this.memberFrom,
+				varSymbol: this.varSymbol
 			}
 
 			this.updateUser( this.userUrl, this.id, data )	
@@ -263,7 +264,11 @@ export default {
 .submit-btn {
 	max-width: 100%;
 }
-.calendar {
+:deep(.p-calendar) {
+	flex: 1;
+	max-width: 576px;
+}
+.calendar {	
 	:deep(.p-button) {
 		color: #6c757d;
 		background: #e9ecef;
