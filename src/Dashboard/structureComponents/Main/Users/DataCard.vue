@@ -63,7 +63,7 @@
 								<ToggleButton v-model="active" onLabel="Active member" offLabel="Inactive member" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${active ? 'bg-info' : 'bg-warning'} p-togglebtn-active`"/>
 							</div>
 
-							<div class="inputgroup mb-5 col-12 align-items-center">
+							<div class="inputgroup mb-5 col-12 align-items-center" v-if="admin">
 								<label for="icon">Member from:&nbsp;</label>
 								<Calendar inputId="icon" v-model="memberFrom" :showIcon="true" dateFormat="dd.mm.yy" class="calendar"/>
 							</div>
@@ -132,7 +132,7 @@ export default {
 			role: this.userData.role_id,
 			roles: [{ name: 'User', id: 3 }, { name: 'Editor', id: 2 }, { name: 'Admin', id:1 } ],
 			response: null,
-			id: this.$route.params.user_id ? this.$route.params.user_id : this.userData.id
+			id: this.$route.params.user_id ? this.$route.params.user_id : this.userData.id,
         }
     },
     validations() {
@@ -142,7 +142,7 @@ export default {
 			phoneNum: { numeric },
 			club: { minLength: minLength(3) },
 			instatId: { numeric },
-			varSymbol: { required, numeric },
+			varSymbol: { numeric },
 			role: { required },
         }
     },
@@ -210,7 +210,7 @@ export default {
 				this.role = data.role_id
 				this.active = data.active_member
 				this.memberFrom = Helpers.formatDateToSk(data.member_from)
-				this.varSymbol = data.var_symbol
+				this.varSymbol = data.var_symbol 
 			}
 		}
 	},
