@@ -16,7 +16,8 @@
 		</template>
 
 		<template #empty>
-			<div class="my-4 text-center"><i class="bi bi-envelope-open"></i>No emails found.</div>
+			<div class="my-4 text-center">
+				<i class="bi bi-envelope-open me-3"></i>No emails found.</div>
 		</template>
 
 		<template #loading>			

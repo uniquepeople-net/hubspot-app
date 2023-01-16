@@ -5,7 +5,7 @@
                 <i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
                 <i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
                 <h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
-                <h6 v-if="response.error" v-for="error in response.error" class="mt-3">{{ error[0] }}</h6>
+                <h6 v-if="response.error" v-for="(error, index) in response.error" class="mt-3">{{ index + ': ' + error[0] }}</h6>
                 <p v-if="response.message" :style="{lineHeight: 1.5}">
                     Your account is registered under name <b>{{name}}</b> and email: <b>{{email}}</b>.
                 </p>
@@ -67,6 +67,7 @@
 							<div class="inputgroup mb-5 col-12 align-items-center col-lg-6">
 								<label for="icon">Member from:&nbsp;</label>
 								<Calendar inputId="icon" v-model="memberFrom" :showIcon="true" dateFormat="dd.mm.yy" class="calendar"/>
+								<InputError :validator="v$.memberFrom" :submitted="submitted" replace="Member from date"></InputError>
 							</div>
 
 							<div class="inputgroup mb-5 col-12 col-lg-6">
@@ -158,13 +159,14 @@ export default {
     validations() {
         return {
             name: { required, minLength: minLength(3) },
-            email: { required, email },
+            email: {  required, email },
 			phoneNum: { numeric },
 			club: { minLength: minLength(3) },
 			instatId: { numeric },
 			role: { required },
             password: { required,  minLength: minLength(8)},
-			varSymbol: { numeric },
+			varSymbol: { numeric, required },
+			memberFrom: { required },
         }
     },
     methods: {
@@ -233,37 +235,7 @@ export default {
 			}
 		},
 		generatePswd() {
-			const string = "abcdefghijklmnopqrstuvwxyz";
-			const numeric = "0123456789";
-			const punctuation = "!@#$%^&*()_+~`|}{[]:;?><,./-=";
-			const length = 16
-
-			let character = "";
-			let password = "";
-			while (password.length < length) {
-				const entity1 = Math.ceil(
-				string.length * Math.random() * Math.random()
-				);
-				const entity2 = Math.ceil(
-				numeric.length * Math.random() * Math.random()
-				);
-				const entity3 = Math.ceil(
-				punctuation.length * Math.random() * Math.random()
-				);
-				let hold = string.charAt(entity1);
-				hold = password.length % 2 === 0 ? hold.toUpperCase() : hold;
-				character += hold;
-				character += numeric.charAt(entity2);
-				character += punctuation.charAt(entity3);
-				password = character;
-			}
-			password = password
-				.split("")
-				.sort(() => {
-				return 0.5 - Math.random();
-				})
-				.join("");
-			this.password = password.substr(0, length);
+			this.password = Helpers.generatePasswd(12)
 		}
     },
 	computed: {

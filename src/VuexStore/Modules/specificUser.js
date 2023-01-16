@@ -51,7 +51,7 @@ export default {
 					response.data.fee = Boolean(response.data.fee)
 					response.data.is_admin = Boolean(response.data.is_admin)
 					response.data.active_member = Boolean(response.data.active_member)
-					
+
 					context.commit("SETUSER", response.data)			 
 				})
 			

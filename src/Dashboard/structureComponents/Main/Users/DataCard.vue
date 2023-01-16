@@ -53,7 +53,7 @@
 							<div class="inputgroup mb-5 col-12" :class="admin && 'col-xl-6'">
 								<InputIcon icon="bi bi-telephone"></InputIcon>
 								<InputText id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
-										   name="phoneNum" placeholder="phoneNum"/>
+										   name="phoneNum" placeholder="Phone number"/>
 							
 								<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
 							</div>
@@ -166,6 +166,9 @@ export default {
 				memberFrom: this.memberFrom,
 				varSymbol: this.varSymbol
 			}
+			
+			console.log(data)
+			
 
 			this.updateUser( this.userUrl, this.id, data )	
         },
@@ -209,7 +212,7 @@ export default {
 				this.paid = data.fee
 				this.role = data.role_id
 				this.active = data.active_member
-				this.memberFrom = Helpers.formatDateToSk(data.member_from)
+				this.memberFrom = data.member_from
 				this.varSymbol = data.var_symbol 
 			}
 		}

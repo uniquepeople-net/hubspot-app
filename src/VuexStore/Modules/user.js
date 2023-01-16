@@ -32,6 +32,8 @@ export default {
 					Authorization: 'Bearer ' + User.getToken()
 			}})
 			.then( response => {
+				console.log(response)
+				
 				context.commit("SETUSER", response.data)			 
 			})			
 
