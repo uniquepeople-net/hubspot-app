@@ -39,6 +39,8 @@ import Emails from '../Dashboard/structureComponents/Main/Emails/Emails.vue';
 import Inbox from '../Dashboard/structureComponents/Main/Emails/Inbox.vue';
 import SpecificEmail from '../Dashboard/structureComponents/Main/Emails/SpecificEmail.vue';
 
+import NewsRumors from '../Dashboard/structureComponents/Main/FootballNews/NewsRumors.vue';
+
 import Settings from '../Dashboard/structureComponents/Main/Settings/Settings.vue';
 import Products from '../Dashboard/structureComponents/Main/Settings/Products.vue';
 import ProductsAll from '../Dashboard/structureComponents/Main/Settings/ProductsAll.vue';
@@ -103,6 +105,8 @@ export const routes = [
 				]
 
 			},
+
+			{ path: '/news', component: NewsRumors, name: 'news-rumors' },
 
 			{ path: '/settings', component: Settings, name: 'settings', props: true, redirect: { name: 'products' },
 				

@@ -50,7 +50,11 @@ export default {
 		// Payment service routes
 		payment:					DOMAIN_URL + '/api/payment', 
 		paymentUpdate:				DOMAIN_URL + '/api/payment/',
-		payments:					DOMAIN_URL + '/api/payments' 
+		payments:					DOMAIN_URL + '/api/payments', 
+	
+		// News links
+		redditSoccer:				'https://www.reddit.com/r/soccer/'
+
 	}),
 
 	getters: {
@@ -170,5 +174,10 @@ export default {
 		payments(state) {
 			return state.payments
 		}, 
+
+		// News routes
+		redditSoccer(state) {
+			return state.redditSoccer
+		}
 	}
 }

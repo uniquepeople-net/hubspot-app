@@ -53,6 +53,17 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 		]
 	},
 	{
+		label: 'Football news',
+		icon: 'bi bi-cup-hot',
+		items: [
+			{
+				label: 'News & Rumors ',
+				to: {name: 'news-rumors'},
+				command: () => sidebarHide()
+			},
+		]
+	},
+	{
 		label: 'Settings',
 		icon: 'bi-collection',
 		visible: checkRole,
