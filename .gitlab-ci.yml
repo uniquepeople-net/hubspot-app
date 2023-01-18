@@ -34,6 +34,7 @@ deploy_test:
   script:
     - apk add --no-cache --update nodejs npm rsync openssh sshpass
     - npm install
+    - cp webpack.k8s.config.js webpack.config.js
     - npm run build
     - sshpass -p $SSH_PASS rsync -ae "ssh -o StrictHostKeyChecking=no -p 28918" dist/  uid1120160@shellserver-4.websupport.sk:~/uniquepeople.cloud/sub/ufp/
   rules:
