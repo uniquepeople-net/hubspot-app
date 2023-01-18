@@ -26,14 +26,13 @@ export default {
 
 			await axios.get(redditNewsLink + param + '.json')
 				.then( response => {
-					
-					let news = response.data.data.children.filter( n => n.data.author !== '2soccer2bot' ) 
-
-					console.log(news)
-					
-					
+					let news = response.data.data.children.filter( n => n.data.author !== '2soccer2bot' && n.data.author !== 'AutoModerator') 
+										
 					context.commit("SETREDDITNEWS", news)
 				})
+		},
+		resetNews(context) {
+			context.commit("RESETSTATE")
 		}
 	},
 

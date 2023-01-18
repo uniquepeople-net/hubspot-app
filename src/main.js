@@ -88,6 +88,7 @@ import InputIcon from './Dashboard/global/InputIcon.vue';
 import InputError from './Dashboard/global/InputError.vue';
 import PasswordSuggestions from './Dashboard/global/PasswordSuggestions.vue'
 
+
 createApp(App)
 	.use(router)
 	.use(store)

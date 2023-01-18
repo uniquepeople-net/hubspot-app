@@ -28,6 +28,9 @@
 				this.$router.push({ name: currentRoute })
 			}
 			
+			console.log('login', User.loggedIn())
+			
+
 			this.$store.dispatch("user/getUser");
 		},
 		data() {

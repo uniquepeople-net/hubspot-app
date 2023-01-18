@@ -108,9 +108,10 @@ export default {
 						this.$router.push('/');							
 					}
 				}
-			).catch( response =>
+			).catch( response => {
 				console.error(response)
-			)
+				this.$router.push({ name: 'logout' })
+			})
         },
         toggleDialog() {
             this.showMessage = !this.showMessage;
