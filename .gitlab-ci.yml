@@ -32,8 +32,8 @@ deploy_test:
   image: alpine
   stage: deploy
   script:
-    - npm run build
     - apk add --no-cache --update nodejs nodejs-npm rsync openssh sshpass
+    - npm run build
     - sshpass -p $SSH_PASS rsync -ae "ssh -p 28918" dist/  uid1120160@shellserver-4.websupport.sk:~/uniquepeople.cloud/sub/ufp/
   rules:
   - if: $CI_COMMIT_BRANCH == "test"
