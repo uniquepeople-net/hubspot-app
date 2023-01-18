@@ -28,3 +28,14 @@ deploy_develop:
   tags:
     - kube-runner 
 
+deploy_test:
+  image: alpine
+  stage: deploy
+  script:
+    - apk add --no-cache --update nodejs npm rsync openssh sshpass
+    - npm install
+    - npm run build
+    - sshpass -p $SSH_PASS rsync -ae "ssh -o StrictHostKeyChecking=no -p 28918" dist/  uid1120160@shellserver-4.websupport.sk:~/uniquepeople.cloud/sub/ufp/
+  rules:
+  - if: $CI_COMMIT_BRANCH == "test"
+
