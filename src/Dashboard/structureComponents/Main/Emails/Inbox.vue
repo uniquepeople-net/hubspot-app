@@ -3,7 +3,7 @@
 		dataKey="id" :rowHover="true" v-model:selection="selectedEmail" v-model:filters="filters" filterDisplay="menu" 
 		paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" 
 		:rowsPerPageOptions="[10,25,50,100]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
-		:globalFilterFields="['reply_name', 'reply_email', 'subject', 'created_at_formatted']" responsiveLayout="scroll" sortField="created_at_formatted" :sortOrder="-1">
+		:globalFilterFields="['reply_name', 'reply_email', 'subject', 'created_at']" responsiveLayout="scroll" sortField="created_at" :sortOrder="-1">
 		<template #header>
 			<h5 class="mb-3">Emails</h5>			
 			<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
@@ -16,7 +16,8 @@
 		</template>
 
 		<template #empty>
-			<div class="my-4 text-center"><i class="bi bi-envelope-open"></i>No emails found.</div>
+			<div class="my-4 text-center">
+				<i class="bi bi-envelope-open me-3"></i>No emails found.</div>
 		</template>
 
 		<template #loading>			
@@ -60,14 +61,24 @@
 			</template>
 		</Column>
 
-		<Column field="created_at_formatted" header="Date" sortable dataType="date" style="min-width: 8rem">
+		<!-- <Column field="created_at" header="Date" sortable dataType="date" style="min-width: 8rem">
 			<template #body="{data}">
-				{{data.created_at_formatted}}
+				{{ formatDate(data.created_at) }}
 			</template>
 			<template #filter="{filterModel}">
 				<Calendar v-model="filterModel.value" dateFormat="dd.mm.yy" placeholder="dd.mm.yyyy" />
+				<Calendar v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" />
 			</template>
-		</Column>
+		</Column> -->
+
+		<Column field="created_at" header="Date" sortable dataType="date" style="min-width: 8rem">
+                <template #body="{data}">
+                    {{formatDate(data.created_at)}}
+                </template>
+                <template #filter="{filterModel}">
+                    <Calendar v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" />
+                </template>
+            </Column>
 
 		
 	</DataTable>
@@ -105,18 +116,22 @@
 					'reply_name': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
 					'reply_email': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
 					'subject': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
-					'created_at_formatted': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.DATE_IS}]},
-					//'fee': {value: null, matchMode: FilterMatchMode.EQUALS},
+					'created_at': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.DATE_IS}]},
 				}
 			},
 			checkIsReadEmail(data) {
 				return data.recipients[0].is_opened
 			},
-			/* emailDate(date) {
-				let properDate = date.getTime()
-  				//properDate = item.intialDateTimeObj.getTime()
-				return properDate;
-			} */
+			formatDate(value) {
+				return new Date(value).toLocaleDateString('sk-SK', {
+					day: '2-digit',
+					month: '2-digit',
+					year: 'numeric',
+					/* hour12: false,
+					hour: '2-digit',
+					minute: '2-digit', */
+            });
+        },
 		},		
 		watch: {
 			emails: function (data) {

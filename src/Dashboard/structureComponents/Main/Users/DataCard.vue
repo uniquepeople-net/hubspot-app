@@ -53,7 +53,7 @@
 							<div class="inputgroup mb-5 col-12" :class="admin && 'col-xl-6'">
 								<InputIcon icon="bi bi-telephone"></InputIcon>
 								<InputText id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
-										   name="phoneNum" placeholder="phoneNum"/>
+										   name="phoneNum" placeholder="Phone number"/>
 							
 								<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
 							</div>
@@ -63,7 +63,7 @@
 								<ToggleButton v-model="active" onLabel="Active member" offLabel="Inactive member" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${active ? 'bg-info' : 'bg-warning'} p-togglebtn-active`"/>
 							</div>
 
-							<div class="inputgroup mb-5 col-12 align-items-center">
+							<div class="inputgroup mb-5 col-12 align-items-center" v-if="admin">
 								<label for="icon">Member from:&nbsp;</label>
 								<Calendar inputId="icon" v-model="memberFrom" :showIcon="true" dateFormat="dd.mm.yy" class="calendar"/>
 							</div>
@@ -132,7 +132,7 @@ export default {
 			role: this.userData.role_id,
 			roles: [{ name: 'User', id: 3 }, { name: 'Editor', id: 2 }, { name: 'Admin', id:1 } ],
 			response: null,
-			id: this.$route.params.user_id ? this.$route.params.user_id : this.userData.id
+			id: this.$route.params.user_id ? this.$route.params.user_id : this.userData.id,
         }
     },
     validations() {
@@ -142,7 +142,7 @@ export default {
 			phoneNum: { numeric },
 			club: { minLength: minLength(3) },
 			instatId: { numeric },
-			varSymbol: { required, numeric },
+			varSymbol: { numeric },
 			role: { required },
         }
     },
@@ -166,6 +166,9 @@ export default {
 				memberFrom: this.memberFrom,
 				varSymbol: this.varSymbol
 			}
+			
+			console.log(data)
+			
 
 			this.updateUser( this.userUrl, this.id, data )	
         },
@@ -209,8 +212,8 @@ export default {
 				this.paid = data.fee
 				this.role = data.role_id
 				this.active = data.active_member
-				this.memberFrom = Helpers.formatDateToSk(data.member_from)
-				this.varSymbol = data.var_symbol
+				this.memberFrom = data.member_from
+				this.varSymbol = data.var_symbol 
 			}
 		}
 	},

@@ -5,7 +5,7 @@
                 <i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
                 <i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
                 <h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
-                <h6 v-if="response.error" v-for="error in response.error" class="mt-3">{{ error[0] }}</h6>
+                <h6 v-if="response.error" v-for="(error, index) in response.error" class="mt-3">{{ index + ': ' + error[0] }}</h6>
                 <p v-if="response.message" :style="{lineHeight: 1.5}">
                     Your account is registered under name <b>{{name}}</b> and email: <b>{{email}}</b>.
                 </p>
@@ -36,13 +36,40 @@
 							</div>
 		
 							<div class="inputgroup mb-5 col-12 col-lg-6">
+								<InputIcon icon="bi bi-house"></InputIcon>
+								<InputText id="club" v-model="v$.club.$model" :class="{'p-invalid':v$.club.$invalid && submitted}" 
+										   name="club" placeholder="Club"/>
+							
+								<InputError :validator="v$.club" :submitted="submitted" replace="Club"></InputError>
+							</div>
+
+							<div class="inputgroup mb-5 col-12 col-lg-6">
 								<InputIcon icon="pi pi-envelope"></InputIcon>
 								<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
 											name="email" placeholder="Email"/>
 		
 								<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
 							</div>
+
+							<div class="inputgroup mb-5 col-12 col-lg-6">
+								<InputIcon icon="bi bi-telephone"></InputIcon>
+								<InputText id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
+										   name="phoneNum" placeholder="phoneNum"/>
+							
+								<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
+							</div>
+
+							<div class="inputgroup mb-5 col-12 col-lg-6">
+								<InputIcon icon="bi bi-activity"></InputIcon>
+								<ToggleButton v-model="active" onLabel="Active member" offLabel="Inactive member" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${active ? 'bg-info' : 'bg-warning'} p-togglebtn-active`"/>
+							</div>
 		
+							<div class="inputgroup mb-5 col-12 align-items-center col-lg-6">
+								<label for="icon">Member from:&nbsp;</label>
+								<Calendar inputId="icon" v-model="memberFrom" :showIcon="true" dateFormat="dd.mm.yy" class="calendar"/>
+								<InputError :validator="v$.memberFrom" :submitted="submitted" replace="Member from date"></InputError>
+							</div>
+
 							<div class="inputgroup mb-5 col-12 col-lg-6">
 								<InputIcon icon="bi bi-bar-chart-fill"></InputIcon>
 								<InputText id="instatId" v-model="v$.instatId.$model" :class="{'p-invalid':v$.instatId.$invalid && submitted}" aria-describedby="email-error"
@@ -64,6 +91,14 @@
 							</div>
 		
 							<div class="inputgroup mb-5 col-12 col-lg-6">
+								<InputIcon icon="bi bi-123"></InputIcon>
+								<InputText id="varSymbol" v-model="v$.varSymbol.$model" :class="{'p-invalid':v$.varSymbol.$invalid && submitted}"
+											name="varSymbol" placeholder="Var. symbol"/>
+		
+								<InputError :validator="v$.varSymbol" :submitted="submitted" replace="Var. symbol"></InputError>
+							</div>
+
+							<div class="inputgroup mb-5 col-12 col-xxl-6">
 								<InputIcon icon="pi pi-lock"></InputIcon>
 								<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
 										name="password" placeholder="Password">
@@ -75,10 +110,15 @@
 										<PasswordSuggestions></PasswordSuggestions>
 									</template>
 								</Password>
+								<Button label="Generate" @click="generatePswd" class="p-button-secondary"/> 
 				
 								<InputError :validator="v$.password" :submitted="submitted" replace="Password"></InputError>
 							</div>
 							
+							
+								
+							
+
 						</div>
 
 						<Button type="submit" label="Submit" class="mt-2 submit-btn" />
@@ -93,6 +133,7 @@ import { email, required, sameAs, minLength, numeric } from "@vuelidate/validato
 import { useVuelidate } from "@vuelidate/core";
 import axios from 'axios';
 import { mapGetters } from 'vuex';
+import Calendar from 'primevue/calendar';
 
 export default {
     setup: () => ({ v$: useVuelidate() }),
@@ -100,6 +141,11 @@ export default {
         return {
             name: '',
             email: '',
+			phoneNum: '',
+			club: '',
+			memberFrom: '',
+			varSymbol: '',
+			active: true,
 			instatId: '',
             password: '',
             submitted: false,
@@ -113,10 +159,14 @@ export default {
     validations() {
         return {
             name: { required, minLength: minLength(3) },
-            email: { required, email },
+            email: {  required, email },
+			phoneNum: { numeric },
+			club: { minLength: minLength(3) },
 			instatId: { numeric },
 			role: { required },
             password: { required,  minLength: minLength(8)},
+			varSymbol: { numeric, required },
+			memberFrom: { required },
         }
     },
     methods: {
@@ -133,6 +183,11 @@ export default {
 				instat_id:this.instatId,
 				role: this.role,
 				fee: this.paid,	
+				phoneNum: this.phoneNum,
+				club: this.club,
+				active: this.active,
+				memberFrom: this.memberFrom,
+				varSymbol: this.varSymbol,
 				password: this.password,
 			}
 
@@ -142,12 +197,20 @@ export default {
             this.showMessage = !this.showMessage;
         
             if(!this.showMessage) {
-                this.resetForm();
+                //this.resetForm();
             }
         },
         resetForm() {
             this.name = '';
             this.email = '';
+			this.instat_id = '';
+			this.phoneNum = '';
+			this.varSymbol = '';
+			this.memberFrom = '';
+			this.club = '';
+			this.role = '';
+			this.fee = false;
+			this.active = true;
             this.password = '';
             this.submitted = false;
         },
@@ -162,6 +225,7 @@ export default {
 				}).then(
 					resp => {
 						this.response = resp.data
+						//this.resetForm()
 						this.toggleDialog()
 					}				
 				)
@@ -169,11 +233,15 @@ export default {
 			} catch (err) {
 				throw 'Unable to register user'
 			}
+		},
+		generatePswd() {
+			this.password = Helpers.generatePasswd(12)
 		}
     },
 	computed: {
 		...mapGetters({ registersApiGwUrl: 'links/registerApiGwUrl' }),
-	}
+	},
+	components: { Calendar }
 }
 </script>
 
@@ -197,9 +265,28 @@ export default {
 	}
 }
 .p-togglebutton {
-	max-width: 10rem;
+	max-width: 12rem;
 }
 .submit-btn {
 	max-width: 25rem;
+}
+.p-button-secondary {
+	max-width: 6rem !important;
+}
+.p-togglebtn-active {
+	max-width: 12rem;
+}
+:deep(.p-calendar) {
+	flex: 1;
+	max-width: 576px;
+}
+.calendar {	
+	:deep(.p-button) {
+		color: #6c757d;
+		background: #e9ecef;
+	}
+	:deep(.p-inputtext) {
+		border-radius: 6px 0 0 6px;
+	}
 }
 </style>
