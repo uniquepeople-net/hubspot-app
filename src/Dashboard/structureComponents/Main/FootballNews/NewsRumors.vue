@@ -22,7 +22,7 @@
 					
 					<img class="news-img" :src="news.data.url" alt="">
 
-					<Tweet v-if="checkOembedExists(news.data.secure_media)" :tweet-id="tweetId(news.data.secure_media.oembed.url)" cards="visible" class="tweet">
+					<Tweet v-if="checkTwitterExists(news.data.secure_media)" :tweet-id="tweetId(news.data.secure_media.oembed.url)" cards="visible" class="tweet">
 						<template v-slot:loading>
 							<div class="spinner-grow" role="status"></div>
 						</template>
@@ -77,8 +77,8 @@
 				var check = (data || {}).reddit_video;
 				return check
 			},
-			checkOembedExists(data) {
-				var check = (data || {}).oembed;
+			checkTwitterExists(data) {
+				var check = ((data || {}).oembed|| {}).provider_name === 'Twitter' ? true : false;
 				return check
 			},
 			tweetId(url) {
