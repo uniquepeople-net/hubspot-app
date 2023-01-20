@@ -27,7 +27,7 @@
 			} else {
 				this.$router.push({ name: currentRoute })
 			}
-			
+	
 			this.$store.dispatch("user/getUser");
 		},
 		data() {
@@ -36,7 +36,8 @@
 			}
 		},
 		computed: {
-			...mapGetters({ user: 'user/user',
+			...mapGetters({ unAuth: 'user/unAuth',
+							user: 'user/user',
 							activeSidebar: 'appData/activeSidebar' }),
 		},
 		watch: {
@@ -45,6 +46,11 @@
 					this.show = true
 				}
 			},
+			unAuth: function(data) {
+				if ( data ) {
+					this.$router.push({ name: 'logout' })
+				}
+			}
 		},
 		components: { NavHeader, Sidebar }
 	}

@@ -17,7 +17,7 @@
 
 	<AuthWrapper>
 		<template v-slot:title>
-			<h1 class="auth-title mb-4">Log in.</h1>
+			<h1 class="auth-title mb-4">Log in</h1>
 		</template>
 
 		<template v-slot:body>
@@ -37,19 +37,19 @@
 	
 					<InputError :validator="v$.password" :submitted="submitted" replace="Password"></InputError>
 				</div>
-				<div class="form-check form-check-lg d-flex align-items-end">
+				<!-- <div class="form-check form-check-lg d-flex align-items-end">
 					<input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault" />
 					<label class="form-check-label text-gray-600" for="flexCheckDefault">
 						Keep me logged in
 					</label>
-				</div>
+				</div> -->
 				<Button type="submit" label="Submit" class="mt-2 submit-btn btn btn-primary btn-block btn-lg shadow-lg mt-5" />
 			</form>
-			<div class="text-center mt-5 text-lg fs-4">
+			<!-- <div class="text-center mt-5 text-lg fs-4">
 				<p>
 					<a class="font-bold" href="auth-forgot-password.html">Forgot password ?</a>
 				</p>
-			</div>
+			</div> -->
 		</template>
 
 	</AuthWrapper>
@@ -108,9 +108,10 @@ export default {
 						this.$router.push('/');							
 					}
 				}
-			).catch( response =>
+			).catch( response => {
 				console.error(response)
-			)
+				this.$router.push({ name: 'logout' })
+			})
         },
         toggleDialog() {
             this.showMessage = !this.showMessage;

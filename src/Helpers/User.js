@@ -16,6 +16,7 @@ class User {
 
 	hasToken() {
 		const storeToken = this.getToken();
+
 		if (storeToken) {
 			return Token.isValid(storeToken) ? true : false
 		}
