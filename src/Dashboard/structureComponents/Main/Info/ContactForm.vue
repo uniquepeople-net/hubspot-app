@@ -69,8 +69,8 @@
 				textArea: '',
 				selectedRecipient: null,
 				recipients: [
-					{ name: 'UFP advisor', code: 'Miroslav.Viazanko@uniquepeople.net', id: 8200 },
-					{ name: 'Technical Support', code: 'viazanko.uniquepeople@gmail.com', id: 8100 },
+					{ name: 'UFP advisor', code: 'branobolech@gmail.com', id: 8405 },
+					{ name: 'Technical Support', code: 'Miroslav.Viazanko@uniquepeople.net', id: 8200 },
 					{ name: 'UFP Law advise', code: 'viazanko@pobox.sk', id: 202 },
 				],
 				submitted: false,
