@@ -10,6 +10,7 @@ import statsData from './Modules/statsData';
 import emails from './Modules/emails';
 import payments from './Modules/payments';
 import news from './Modules/news'
+import groups from './Modules/groups'
 
 const store = createStore({
 	modules: {
@@ -22,7 +23,8 @@ const store = createStore({
 		statsData,
 		emails,
 		payments,
-		news
+		news,
+		groups
 	}
 })
 

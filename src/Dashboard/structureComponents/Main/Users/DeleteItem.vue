@@ -49,6 +49,7 @@
 					)
 			},
 			redirect() {
+				this.deleteDialog
 				this.$router.push({name: this.redirectRoute})
 				if ( this.callback ) {
 					this.$store.dispatch(this.callback);

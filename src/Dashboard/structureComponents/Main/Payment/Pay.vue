@@ -109,10 +109,7 @@
 							description: this.payProduct.description,
 							productName: this.payProduct.name
 						}
-						
-						console.log(data.amount)
-						
-
+					
 						axios.post( this.paymentUrl , data, {
 							headers: {
 								'Content-Type': 'application/json',

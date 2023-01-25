@@ -21,6 +21,7 @@ import AllUsers from '../Dashboard/structureComponents/Main/Users/AllUsers.vue'
 import AddNewUser from '../Dashboard/structureComponents/Main/Users/AddNewUser.vue'
 import SpecificUser from '../Dashboard/structureComponents/Main/Users/SpecificUser.vue'
 import EmailEditor from '../Dashboard/structureComponents/Main/Users/EmailEditor.vue'
+import AssignGroup from '../Dashboard/structureComponents/Main/Users/AssignGroup.vue'
 
 import Myprofile from '../Dashboard/structureComponents/Main/Profile/MyProfile.vue';
 
@@ -39,6 +40,7 @@ import Emails from '../Dashboard/structureComponents/Main/Emails/Emails.vue';
 import Inbox from '../Dashboard/structureComponents/Main/Emails/Inbox.vue';
 import SpecificEmail from '../Dashboard/structureComponents/Main/Emails/SpecificEmail.vue';
 
+
 import NewsRumors from '../Dashboard/structureComponents/Main/FootballNews/NewsRumors.vue';
 
 import Settings from '../Dashboard/structureComponents/Main/Settings/Settings.vue';
@@ -46,6 +48,10 @@ import Products from '../Dashboard/structureComponents/Main/Settings/Products.vu
 import ProductsAll from '../Dashboard/structureComponents/Main/Settings/ProductsAll.vue';
 import SpecificProduct from '../Dashboard/structureComponents/Main/Settings/SpecificProduct.vue';
 import AddNewProduct from '../Dashboard/structureComponents/Main/Settings/AddNewProduct.vue';
+import Groups from '../Dashboard/structureComponents/Main/Settings/Groups.vue';
+import GroupsAll from '../Dashboard/structureComponents/Main/Settings/GroupsAll.vue';
+import AddNewGroup from '../Dashboard/structureComponents/Main/Settings/AddNewGroup.vue';
+
 
 export const routes = [
 
@@ -67,7 +73,9 @@ export const routes = [
 
 					{ path: ':user_id', component: SpecificUser, name: 'specific-user' },
 
-					{ path: 'send-emails', component: EmailEditor, name: 'send-emails', props: true }
+					{ path: 'send-emails', component: EmailEditor, name: 'send-emails', props: true },
+
+					{ path: 'assign-group', component: AssignGroup, name: 'assign-group', props: true }
 				]
 
 			},
@@ -122,6 +130,18 @@ export const routes = [
 							{ path: 'products/:product_id', component: SpecificProduct, name: 'specific-product', props: true },
 							
 							{ path: 'products/add-new', component: AddNewProduct, name: 'add-new-product', props: true },
+						]
+
+					},
+
+					{ path: 'groups', component: Groups, name: 'groups', props: true, redirect: { name: 'groups-all' },
+					
+						children: [
+							{ path: 'all', component: GroupsAll, name: 'groups-all', props: true },
+
+							/* { path: 'products/:product_id', component: SpecificProduct, name: 'specific-product', props: true },*/
+							
+							//{ path: 'add-new', component: AddNewGroup, name: 'add-new-group', props: true },
 						]
 
 					},

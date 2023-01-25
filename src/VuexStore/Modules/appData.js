@@ -4,15 +4,15 @@ export default {
 	namespaced: true,
 	state: () => ({
 		activeSidebar: false,
-		choosedEmails: null
+		choosedUsers: null
 	}),
 
 	mutations: {
 		SETACTIVESIDEBAR( state, data ) {
 			state.activeSidebar = data;
 		},
-		SETEMAILS( state, data ) {
-			state.choosedEmails = data;
+		SETUSERS( state, data ) {
+			state.choosedUsers = data;
 		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
@@ -30,8 +30,8 @@ export default {
 		setDisabledSidebar(context) {
 			context.commit("SETACTIVESIDEBAR", false)
 		},
-		setChoosedEmails( context, data ) {
-			context.commit("SETEMAILS", data)
+		setChoosedUsers( context, data ) {
+			context.commit("SETUSERS", data)
 		}
 	},
 
@@ -39,8 +39,8 @@ export default {
 		activeSidebar(state) {
 			return state.activeSidebar
 		},
-		getEmails(state) {
-			return toRaw(state.choosedEmails)
+		getUsers(state) {
+			return toRaw(state.choosedUsers)
 		}
 	}
 }
