@@ -29,16 +29,44 @@ export default {
 	actions: {
 		async getUsers(context) {
 			let url = context.rootGetters['links/getAllUsers']
+			let groupUserUrl = context.rootGetters['links/groupUser']
 
 			await User.refreshedToken();
 
 			await axios.get(url, {
 				headers: {
 					Authorization: 'Bearer ' + User.getToken()
-			}})
-			.then( response => {
-
+				}
+			}).then( response => {
 				context.commit("SETUSERS", response.data)			 
+			})
+
+			await axios.get( groupUserUrl, {
+				headers: {
+					Authorization: 'Bearer ' + User.getToken()
+				}
+			}).then( response => {
+				let users = context.rootGetters['users/getUsers']
+				let groupUser = response.data
+				console.log(context.rootGetters['users/getUsers'])
+				console.log(response)
+
+				
+				groupUser.map( group => {
+					users.find( f => {
+						
+						if (f.id === group.user_id) {
+							if ( f.groups === undefined || f.groups.length == 0) {
+								f.groups = []
+							}
+							f.groups.push(group.group.name)
+							console.log(f)									
+						}
+					})
+				})
+
+				context.commit("SETUSERS", users)
+					
 			})
 			
 		},

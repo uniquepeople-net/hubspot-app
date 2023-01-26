@@ -1,4 +1,18 @@
 <template>
+	<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
+		<div class="flex align-items-center flex-column pt-6 px-3">
+			<i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
+			<i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
+			<h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
+			<h6 v-if="response.error" v-for="(error, index) in response.error" class="mt-3">{{ index + ': ' + error[0] }}</h6>
+		</div>
+		<template #footer>
+			<div class="flex justify-content-center">
+				<Button label="OK" @click="toggleDialog" class="p-button-text" />
+			</div>
+		</template>
+    </Dialog>
+
 	<div class="row">
 		<div class="col-12 col-md-6 col-xl-4">
 			<Card class="card">
@@ -23,7 +37,7 @@
 				</template>
 				<template #content>
 					<Listbox :options="users" optionLabel="name" style="width:100%" listStyle="max-height:300px"/>
-					<Button label="Assign" icon="bi bi-tags" class="p-button-raised p-button-success mt-3" @click=""/>
+					<Button label="Assign" icon="bi bi-tags" class="p-button-raised p-button-success mt-3" @click="submitAssign"/>
 				</template>
 			</Card>	
 		</div>	
@@ -43,14 +57,37 @@
 		data() {
 			return {
 				selectedGroups: null,
+				showMessage: false,
+				response: null
 			}
 		},
 		methods: {
- 
+			submitAssign() {
+				let data = {
+					users: this.users,
+					groups: this.selectedGroups
+				}
+
+				//if ( this.selectedGroups && this.users ) {
+					axios.post( this.assignGroupsUrl, data, {
+							headers: {
+								Authorization: 'Bearer ' + User.getToken()
+							}
+						}).then( response => {
+							console.log(response)
+							this.response = response.data
+							this.toggleDialog()							
+						})
+				//}
+			},
+			toggleDialog() {
+				this.showMessage = !this.showMessage;
+        	},
 		},
 		computed: {
 			...mapGetters({ users: 'appData/getUsers',
-							groups: 'groups/groups' })
+							groups: 'groups/groups',
+							assignGroupsUrl: 'links/assignGroups' })
 		},
 		components: { Listbox, MultiSelect }
 	}

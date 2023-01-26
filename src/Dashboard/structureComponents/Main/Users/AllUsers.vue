@@ -1,8 +1,8 @@
 <template>	
 	<DataTable v-if="users" :value="userData" :paginator="true" class="p-datatable-customers card" :rows="10" :loading="loading"
 		dataKey="id" :rowHover="true" v-model:selection="selectedUsers" v-model:filters="filters" filterDisplay="menu" 
-		paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[10,25,50]"
-		currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
+		paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" 
+		:rowsPerPageOptions="[10,25,50]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
 		:globalFilterFields="['name', 'fee', 'active_member']" responsiveLayout="scroll">
 		<template #header>
 			<h5 class="mb-3">Users</h5>			
@@ -63,6 +63,15 @@
 				<TriStateCheckbox v-model="filterModel.value" inputId="checkbox-a" />
 				<label class="ps-3" for="checkbox-a">{{filterModel.value == null ? '' : stateActive(filterModel.value)}}</label>
 			</template>
+		</Column>
+
+		<Column field="groups" header="Groups" sortable style="min-width: 14rem">
+			<template #body="{data}">
+				{{data.groups}}
+			</template>
+			<template #filter="{filterModel}">
+				<InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by groups"/>
+			</template>			
 		</Column>
 
 		<Column headerStyle="width: 4rem; text-align: center" bodyStyle="text-align: center; overflow: visible">
@@ -129,9 +138,12 @@
 					'club': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
 					'fee': {value: null, matchMode: FilterMatchMode.EQUALS},
 					'active_member': {value: null, matchMode: FilterMatchMode.EQUALS},
+					'groups': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
 				}
+			},
+			formatGroups(groups) {
+				return groups && groups.sort().join(', ')			
 			}
-
 		},
 		computed: {
 			...mapGetters({ users: 'users/getUsers' }),
