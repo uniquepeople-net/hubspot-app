@@ -53,8 +53,11 @@
 
 							<div class="inputgroup mb-5 col-12 col-lg-6">
 								<InputIcon icon="bi bi-telephone"></InputIcon>
-								<InputText id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
-										   name="phoneNum" placeholder="phoneNum"/>
+								<InputMask id="preset" v-model="v$.preset.$model" :class="{'p-invalid':v$.preset.$invalid && submitted}" 
+										   name="preset" placeholder="+9999" mask="+99?99"/>
+								<InputError :validator="v$.preset" :submitted="submitted" replace="Preset"></InputError>
+								<InputMask id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
+										   name="phoneNum" placeholder="999 999 999" mask="999999999" autoClear/>
 							
 								<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
 							</div>
@@ -129,18 +132,29 @@
 </template>
 
 <script>
-import { email, required, sameAs, minLength, numeric } from "@vuelidate/validators";
+import { email, required, sameAs, minLength, numeric, helpers, alphaNum } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import Calendar from 'primevue/calendar';
+import InputMask from 'primevue/inputmask'
+
+// Custom decimal validation
+const customCountryCode = {
+	$validator: helpers.regex(/^([0|\+[0-9]{1,5})/),
+	$message: 'Country code should be in format +99x'
+}
 
 export default {
     setup: () => ({ v$: useVuelidate() }),
+	mounted() {
+		let regexp = /^([0|\+[0-9]{1,5})/
+	},
     data() {
         return {
             name: '',
             email: '',
+			preset: '',
 			phoneNum: '',
 			club: '',
 			memberFrom: '',
@@ -160,6 +174,7 @@ export default {
         return {
             name: { required, minLength: minLength(3) },
             email: {  required, email },
+			preset: { customCountryCode },
 			phoneNum: { numeric },
 			club: { minLength: minLength(3) },
 			instatId: { numeric },
@@ -183,7 +198,7 @@ export default {
 				instat_id:this.instatId,
 				role: this.role,
 				fee: this.paid,	
-				phoneNum: this.phoneNum,
+				phoneNum: this.preset + this.phoneNum,
 				club: this.club,
 				active: this.active,
 				memberFrom: this.memberFrom,
@@ -191,7 +206,10 @@ export default {
 				password: this.password,
 			}
 
-			this.registerUser( this.registersApiGwUrl, data )			
+			console.log(data)
+			
+
+			//this.registerUser( this.registersApiGwUrl, data )			
         },
         toggleDialog() {
             this.showMessage = !this.showMessage;
@@ -201,18 +219,19 @@ export default {
             }
         },
         resetForm() {
-            this.name = '';
-            this.email = '';
-			this.instat_id = '';
-			this.phoneNum = '';
-			this.varSymbol = '';
-			this.memberFrom = '';
-			this.club = '';
-			this.role = '';
-			this.fee = false;
-			this.active = true;
-            this.password = '';
-            this.submitted = false;
+            this.name = ''
+            this.email = ''
+			this.instat_id = ''
+			this.preset = ''
+			this.phoneNum = ''
+			this.varSymbol = ''
+			this.memberFrom = ''
+			this.club = ''
+			this.role = ''
+			this.fee = false
+			this.active = true
+            this.password = ''
+            this.submitted = false
         },
 		async registerUser(url, data) {
 			try {
@@ -246,7 +265,7 @@ export default {
 	computed: {
 		...mapGetters({ registersApiGwUrl: 'links/registerApiGwUrl' }),
 	},
-	components: { Calendar }
+	components: { Calendar, InputMask }
 }
 </script>
 
@@ -265,7 +284,7 @@ export default {
 	:deep(.p-dropdown) {
 		width: 100%;
 	}
-	:deep(.p-inputtext), :deep(.p-dropdown) {
+	:deep(.p-inputtext):not(#preset), :deep(.p-dropdown) {
 		border-radius: 0 6px 6px 0;
 	}
 }
@@ -293,5 +312,8 @@ export default {
 	:deep(.p-inputtext) {
 		border-radius: 6px 0 0 6px;
 	}
+}
+#preset {
+	max-width: 6rem;
 }
 </style>
