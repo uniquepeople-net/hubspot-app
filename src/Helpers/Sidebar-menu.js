@@ -40,11 +40,6 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 		label: 'Info',
 		icon: 'pi pi-info-circle',
 		items: [
-			{
-				label: 'UFP',
-				to: {name: 'info-ufp'},
-				command: () => sidebarHide()
-			},
 			{ 
 				label: 'Emails',
 				to: {name: 'inbox'},
@@ -65,7 +60,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 	},
 	{
 		label: 'Settings',
-		icon: 'bi-collection',
+		icon: 'bi-gear-wide-connected',
 		visible: checkRole,
 		/* to:	'/settings',
 		command: () => sidebarHide() */
@@ -73,6 +68,24 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 			{
 				label: 'Payments',
 				to: {name: 'products'},
+				command: () => sidebarHide()
+			},
+			{
+				label: 'Groups',
+				to: {name: 'groups-all'},
+				command: () => sidebarHide()
+			},
+		]
+	},
+	{
+		label: 'Contact',
+		icon: 'bi-phone',
+		/* to:	'/settings',
+		command: () => sidebarHide() */
+		items: [
+			{
+				label: 'UFP',
+				to: {name: 'info-ufp'},
 				command: () => sidebarHide()
 			},
 		]

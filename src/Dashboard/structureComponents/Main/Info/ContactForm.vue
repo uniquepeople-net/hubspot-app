@@ -32,7 +32,7 @@
 
 						<div class="mb-5 col-12">
 							<Textarea :autoResize="true" rows="5" cols="30" v-model="v$.textArea.$model" 
-									  :class="{'p-invalid':v$.textArea.$invalid && submitted}"/>
+									  :class="{'p-invalid':v$.textArea.$invalid && submitted}" placeholder="Insert message"/>
 							<InputError :validator="v$.textArea" :submitted="submitted" replace="Text"></InputError>
 						</div>
 

@@ -86,6 +86,7 @@ module.exports = {
 		new webpack.DefinePlugin({
 			//DOMAIN_URL: JSON.stringify('https://ufp-dev-api-gw.uniquekube.uniquepeople.cloud'),
 			DOMAIN_URL: JSON.stringify('http://localhost:80'),
+			//DOMAIN_URL: JSON.stringify('https://ufp-apigw.uniquepeople.cloud'),
 		}),
         new webpack.HotModuleReplacementPlugin(),
     ],

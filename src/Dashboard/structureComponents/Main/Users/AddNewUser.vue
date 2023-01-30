@@ -231,6 +231,11 @@ export default {
 				)
 
 			} catch (err) {
+				Toast.fire({
+					icon: 'error',
+					timer: 5000,
+					title: "Unable to register user"
+				})
 				throw 'Unable to register user'
 			}
 		},

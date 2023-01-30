@@ -142,6 +142,11 @@
 								this.$store.dispatch("payments/getProducts");
 							})
 				} catch (err) {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to add product"
+					})
 					throw 'Unable to add product'
 				}
 			}

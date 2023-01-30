@@ -103,7 +103,7 @@
 			}
 		},
 		computed: {
-			...mapGetters({ emails: 'appData/getEmails',
+			...mapGetters({ emails: 'appData/getUsers',
 							user: 'user/user' }),
 		},
 		components: { Editor, Listbox, FileUploadCard }

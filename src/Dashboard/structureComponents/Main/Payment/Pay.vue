@@ -109,10 +109,7 @@
 							description: this.payProduct.description,
 							productName: this.payProduct.name
 						}
-						
-						console.log(data.amount)
-						
-
+					
 						axios.post( this.paymentUrl , data, {
 							headers: {
 								'Content-Type': 'application/json',
@@ -129,12 +126,20 @@
 
 							})
 							.catch( error => {
-								console.log(error)								
+								Toast.fire({
+									icon: 'error',
+									timer: 5000,
+									title: "Couldn't connect Pay service"
+								})								
 								this.loading = false
 								this.disablePay = false
 							} )
 					}).catch( error => {
-						console.log(error)
+						Toast.fire({
+							icon: 'error',
+							timer: 5000,
+							title: "Couldn't connect Pay service"
+						})
 						this.loading = false
 						this.disablePay = false						
 					})

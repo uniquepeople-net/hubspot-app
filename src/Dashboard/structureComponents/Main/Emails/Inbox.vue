@@ -3,7 +3,7 @@
 		dataKey="id" :rowHover="true" v-model:selection="selectedEmail" v-model:filters="filters" filterDisplay="menu" 
 		paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" 
 		:rowsPerPageOptions="[10,25,50,100]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
-		:globalFilterFields="['reply_name', 'reply_email', 'subject', 'created_at']" responsiveLayout="scroll" sortField="created_at" :sortOrder="-1">
+		:globalFilterFields="['reply_name', 'reply_email', 'subject', 'created_at']" responsiveLayout="scroll">
 		<template #header>
 			<h5 class="mb-3">Emails</h5>			
 			<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
@@ -127,11 +127,11 @@
 					day: '2-digit',
 					month: '2-digit',
 					year: 'numeric',
-					/* hour12: false,
+					//hour12: false,
 					hour: '2-digit',
-					minute: '2-digit', */
-            });
-        },
+					minute: '2-digit',
+            	});
+        	},
 		},		
 		watch: {
 			emails: function (data) {

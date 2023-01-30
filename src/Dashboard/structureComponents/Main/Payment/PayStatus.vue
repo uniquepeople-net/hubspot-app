@@ -41,6 +41,12 @@
 									}
 								}).then( response => {
 									this.$store.dispatch("user/getUser");
+								}).catch( error => {
+									Toast.fire({
+										icon: 'error',
+										timer: 5000,
+										title: "Couldn't update your fee status"
+									})
 								})
 						}
 
@@ -50,7 +56,13 @@
 									Authorization: 'Bearer ' + User.getToken()
 								}
 							}).then( response => {
-								console.log(response)							
+								//console.log(response)							
+							}).catch( error => {
+								Toast.fire({
+									icon: 'error',
+									timer: 5000,
+									title: "Couldn't update Payment status"
+								})
 							})
 
 					})();

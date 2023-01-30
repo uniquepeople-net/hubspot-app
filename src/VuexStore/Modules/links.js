@@ -53,7 +53,15 @@ export default {
 		payments:					DOMAIN_URL + '/api/payments', 
 	
 		// News links
-		redditSoccer:				'https://www.reddit.com/r/soccer/'
+		redditSoccer:				'https://www.reddit.com/r/soccer/',
+
+		// Groups links
+		groups:						DOMAIN_URL + '/api/groups',
+		editGroup:					DOMAIN_URL + '/api/groups/',
+		addGroup:					DOMAIN_URL + '/api/groups/store',
+		assignGroups:				DOMAIN_URL + '/api/group-user/store',
+		detachGroups:				DOMAIN_URL + '/api/group-user/detach',
+		groupUser:					DOMAIN_URL + '/api/group-user',
 
 	}),
 
@@ -178,6 +186,26 @@ export default {
 		// News routes
 		redditSoccer(state) {
 			return state.redditSoccer
-		}
+		},
+
+		// Groups routes
+		groups(state) {
+			return state.groups
+		},
+		editGroup(state) {
+			return state.editGroup
+		},
+		addGroup(state) {
+			return state.addGroup
+		},
+		assignGroups(state) {
+			return state.assignGroups
+		},
+		groupUser(state) {
+			return state.groupUser
+		},
+		detachGroups(state) {
+			return state.detachGroups
+		},
 	}
 }

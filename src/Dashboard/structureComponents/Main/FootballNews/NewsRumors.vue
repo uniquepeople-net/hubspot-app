@@ -10,7 +10,7 @@
 			</template>
 			<template #title>
 				<h5>{{ news.data.title }}</h5>
-				<span class="news-link fw-lighter"><a :href="news.data.url">{{ linkToNews(news.data.url) }} <i class="bi bi-box-arrow-up-right"></i></a></span>
+				<span class="news-link fw-lighter"><a :href="news.data.url">{{ linkToNews(news.data.url) }} <i v-if="linkToNews(news.data.url)" class="bi bi-box-arrow-up-right"></i></a></span>
 			</template>
 			<template #content>
 				<div class="media-wrapper">
@@ -69,9 +69,11 @@
 				return returnTime
 			},
 			linkToNews(link) {
-				let url = new URL(link)
-				let truncatedUrl = (url.hostname + url.pathname).slice(0, 25) + '...'		
-				return truncatedUrl
+				if (Helpers.isValidHttpUrl(link)) {
+					let url = new URL(link)
+					let truncatedUrl = (url.hostname + url.pathname).slice(0, 25) + '...'		
+					return truncatedUrl
+				} else return ''
 			},
 			checkVideoExists(data) {
 				var check = (data || {}).reddit_video;
