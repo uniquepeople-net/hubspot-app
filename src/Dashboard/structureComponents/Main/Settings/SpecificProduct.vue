@@ -102,7 +102,6 @@
 			this.interval = this.product.interval.id
 
 			var regexp = /^\d+\.\d{2}$/;
-			console.log("'0.7' returns " + regexp.test('0.75'));
 		},
  		setup: () => ({ v$: useVuelidate() }),
 		data() {

@@ -11,6 +11,7 @@ import User from '../Helpers/User';
 import Login from '../Auth/Login.vue';
 import Logout from '../Auth/Logout.vue';
 import Forget from '../Auth/Forget.vue';
+import UpdatePassword	from '../Auth/UpdatePassword.vue';
 
 import Dashboard from '../Dashboard/Dashboard.vue';
 
@@ -158,5 +159,6 @@ export const routes = [
 
 	{ path: '/login', component: Login, name: 'login' },
     { path: '/logout', component: Logout, name:'logout' },
-    { path: '/forget', component: Forget, name:'forget' },
+    { path: '/forgot', component: Forget, name:'forgot' },
+    { path: '/update-password', component: UpdatePassword, name:'update-password' },
 ]

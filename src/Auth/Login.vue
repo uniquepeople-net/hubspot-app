@@ -3,9 +3,7 @@
             <div class="flex align-items-center flex-column pt-6 px-3">
                 <i class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
                 <h5 class="mt-3">{{ error }}</h5>
-                <p :style="{lineHeight: 1.5}">
-                    Login data are not correct.
-                </p>
+
             </div>
             <template #footer>
                 <div class="flex justify-content-center">
@@ -43,16 +41,16 @@
 						Keep me logged in
 					</label>
 				</div> -->
-				<div class="position-relative  mt-5">
+				<div class="position-relative text-center mt-5">
 					<Button type="submit" label="Submit" class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg" />
 					<div v-if="loading" class="spinner-grow position-absolute" role="status"></div>
 				</div>
 			</form>
-			<!-- <div class="text-center mt-5 text-lg fs-4">
-				<p>
-					<a class="font-bold" href="auth-forgot-password.html">Forgot password ?</a>
-				</p>
-			</div> -->
+			<div class="text-center mt-5 text-lg fs-4">
+				<Button label="Forgot password ?" 
+						class="font-bold p-button-raised p-button-secondary p-button-text"
+						@click="redirectForgot"></Button>
+			</div>
 		</template>
 
 	</AuthWrapper>
@@ -103,7 +101,7 @@ export default {
 					this.toggleDialog();
 					this.loading = false
 					let data = response.data
-					response.data.status === 'error' ? this.error = response.data.message : null
+					this.error = response.data.message
 
 					if ( data.authorisation ) {
 						User.responseAfterLogin(data.authorisation.token)
@@ -134,7 +132,10 @@ export default {
             this.email = '';
             this.password = '';
             this.submitted = false;
-        }
+        },
+		redirectForgot() {
+			this.$router.push({name: 'forgot'})
+		}
     },
 	components: { AuthWrapper }
 }
@@ -152,7 +153,7 @@ export default {
 		border-radius: 0 4px 4px 0;
 	} 
 }
-.p-togglebutton {
+/* .p-togglebutton {
 	background-color: #DC2626;
 	&:not(.p-disabled):not(.p-highlight):hover {
 		background-color: #DC2626;
@@ -163,7 +164,7 @@ export default {
 			background-color: #16A34A;
 		}
 	}
-}
+} */
 .submit-btn {
 	max-width: 25rem;
 }
@@ -171,6 +172,6 @@ export default {
 	top: 0;
 	bottom: 0;
 	margin: auto;
-	margin-left: 1rem;
+	margin-left: .5rem;
 }
 </style>

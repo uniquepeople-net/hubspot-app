@@ -6,6 +6,8 @@ export default {
 		userProfileApiGwUrl: 	DOMAIN_URL + '/api/user-profile',
 		refreshApiGwUrl: 		DOMAIN_URL + '/api/refresh',
 		registerApiGwUrl: 		DOMAIN_URL + '/api/register',
+		reqPassForget:			DOMAIN_URL + '/api/req-password-reset',
+		updatePassword:			DOMAIN_URL + '/api/update-password',
 
 		// Users api routes
 		getAllUsers: 			DOMAIN_URL + '/api/users-all',
@@ -79,6 +81,13 @@ export default {
 		registerApiGwUrl(state) {
 			return state.registerApiGwUrl
 		},
+		reqPassForget(state) {
+			return state.reqPassForget
+		},
+		updatePassword(state) {
+			return state.updatePassword
+		},
+		
 		// Users api routes
 		getAllUsers(state) {
 			return state.getAllUsers

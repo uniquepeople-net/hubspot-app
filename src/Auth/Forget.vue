@@ -1,18 +1,17 @@
 <template>
 	<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
-            <div class="flex align-items-center flex-column pt-6 px-3">
-                <i class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
-                <h5 class="mt-3">{{ error }}</h5>
-                <p :style="{lineHeight: 1.5}">
-                    Login data are not correct.
-                </p>
-            </div>
-            <template #footer>
-                <div class="flex justify-content-center">
-                    <Button label="OK" @click="toggleDialog" class="p-button-text" />
-                </div>
-            </template>
-    </Dialog>
+		<div class="flex align-items-center flex-column pt-6 px-3">
+			<i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
+			<i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
+			<h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
+			<h6 v-if="response.error" v-for="(error, index) in response.error" class="mt-3">{{ index + ': ' + error[0].replace('validation.', 'faulty ') }}</h6>
+		</div>
+		<template #footer>
+			<div class="flex justify-content-center">
+				<Button label="OK" @click="toggleDialog" class="p-button-text" />
+			</div>
+		</template>
+	</Dialog>
 
 	<AuthWrapper>
 		<template v-slot:title>
@@ -30,7 +29,11 @@
 					<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
 				</div>
 				
-				<Button type="submit" label="Submit" class="mt-2 submit-btn btn btn-primary btn-block btn-lg shadow-lg mt-5" />
+				<div class="position-relative text-center mt-5">
+					<Button type="submit" label="Submit" class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg" />
+					<div v-if="loading" class="spinner-grow position-absolute" role="status"></div>
+				</div>
+
 			</form>
 		</template>
 
@@ -50,6 +53,8 @@
 				email: '',
 				submitted: false,
 				showMessage: false,
+				loading: false,
+				response: null
 			}
 		},
 		validations() {
@@ -65,39 +70,23 @@
 					return;
 				}
 
-				this.toggleDialog()
+				this.loading = true
 
-				/* let apiGwloginUrl = this.$store.getters['links/loginApiGwUrl'];
+				let reqPassForgetUrl = this.$store.getters['links/reqPassForget'];
 
-				axios.post( apiGwloginUrl , { 
-								email: this.email,
-								password: this.password,										  
-				}).then(
-					response => {										
-						this.toggleDialog();
-						let data = response.data
-						response.data.status === 'error' ? this.error = response.data.message : null
-
-						if ( data.authorisation ) {
-							User.responseAfterLogin(data.authorisation.token)
-							Toast.fire({
-								icon: 'success',
-								title: 'Signed in successfully'
-							})
-							this.$router.push('/');							
+				axios.post( reqPassForgetUrl, { email: this.email })
+					.then(
+						response => {
+							this.loading = false
+							this.response = response.data										
+							this.toggleDialog();					
 						}
-					}
-				).catch( response => {
-					console.error(response)
-					this.$router.push({ name: 'logout' })
-				}) */
+					).catch( response => {
+						this.loading = false
+					})
 			},
 			toggleDialog() {
 				this.showMessage = !this.showMessage;
-			
-				if(!this.showMessage) {
-					this.resetForm();
-				}
 			},
 		},
 		components: { AuthWrapper }
@@ -115,5 +104,11 @@
 	& > .p-button {
 		border-radius: 0 4px 4px 0;
 	} 
+}
+.spinner-grow {
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	margin-left: .5rem;
 }
 </style>
