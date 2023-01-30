@@ -170,7 +170,12 @@
 								this.toggleDialog();
 							})
 				} catch (err) {
-					throw 'Unable to update user'
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to update product"
+					})
+					throw 'Unable to update product'
 				}
 			}
 		},

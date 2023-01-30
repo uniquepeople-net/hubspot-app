@@ -126,12 +126,20 @@
 
 							})
 							.catch( error => {
-								console.log(error)								
+								Toast.fire({
+									icon: 'error',
+									timer: 5000,
+									title: "Couldn't connect Pay service"
+								})								
 								this.loading = false
 								this.disablePay = false
 							} )
 					}).catch( error => {
-						console.log(error)
+						Toast.fire({
+							icon: 'error',
+							timer: 5000,
+							title: "Couldn't connect Pay service"
+						})
 						this.loading = false
 						this.disablePay = false						
 					})

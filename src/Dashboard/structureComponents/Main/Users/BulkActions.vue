@@ -24,7 +24,8 @@
 				selectedAction: null,
 				actions: [
 					{ name: 'Send Email', code: 'email', icon: 'bi bi-envelope', route: 'send-emails' },
-					{ name: 'Assign Group', code: 'group', icon: 'bi bi-tags', route: 'assign-group' }
+					{ name: 'Assign Group', code: 'a-group', icon: 'bi bi-tags', route: 'assign-group' },
+					{ name: 'Detach Group', code: 'd-group', icon: 'bi bi-x-circle', route: 'detach-group' },
 				]
 			}
 		},

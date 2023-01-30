@@ -20,7 +20,7 @@
 					<h5 class="card-header">Groups</h5>
 				</template>
 				<template #content>
-					<MultiSelect v-model="selectedGroups" :options="groups" class="multi-select" 
+					<MultiSelect v-model="selectedGroups" :options="groupsToDeatch(users)" class="multi-select" 
 								 optionLabel="name" placeholder="Select Group"/>
 				</template>
 				<template #footer>
@@ -38,7 +38,7 @@
 				<template #content>
 					<Listbox :options="users" optionLabel="name" style="width:100%" listStyle="max-height:300px"/>
 					<div class="mt-3">
-						<Button label="Assign" icon="bi bi-tags" class="p-button-raised p-button-success" 
+						<Button label="Detach" icon="bi bi-tags" class="p-button-raised p-button-success" 
 						        @click="submitAssign" :disabled="loading"/>
 						<div v-if="loading" class="spinner-grow position-absolute" role="status"></div>
 					</div>
@@ -76,7 +76,7 @@
 
 				if ( this.selectedGroups && this.users ) {
 					this.loading = true
-					axios.post( this.assignGroupsUrl, data, {
+					axios.post( this.detachGroupsUrl, data, {
 							headers: {
 								Authorization: 'Bearer ' + User.getToken()
 							}
@@ -89,7 +89,7 @@
 							Toast.fire({
 								icon: 'error',
 								timer: 5000,
-								title: "Unable to assign group(s)"
+								title: "Unable to detach group(s)"
 							})
 						})
 				} else {
@@ -103,11 +103,22 @@
 			toggleDialog() {
 				this.showMessage = !this.showMessage;
         	},
+			groupsToDeatch(users) {
+				let userGroups = []
+				users && users.map( user => {
+					user.groups.map( group => {
+						let existsItem = userGroups.some( g => g.name === group.name )
+						if ( !existsItem ) {
+							userGroups.push({...group})
+						}
+					})
+				})
+				return userGroups
+			}
 		},
 		computed: {
 			...mapGetters({ users: 'appData/getUsers',
-							groups: 'groups/groups',
-							assignGroupsUrl: 'links/assignGroups' })
+							detachGroupsUrl: 'links/detachGroups' })
 		},
 		components: { Listbox, MultiSelect }
 	}

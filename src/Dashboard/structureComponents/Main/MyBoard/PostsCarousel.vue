@@ -32,6 +32,13 @@
 		created() {
 			axios.get('https://ufp.sk/wp-json/wp/v2/posts')
 				.then( response => this.posts = response.data )
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Couldn't load UPF feed"
+					})
+				} )
 		},
 		data() {
 			return {

@@ -67,7 +67,7 @@
 
 		<Column field="groups" header="Groups" sortable style="min-width: 14rem">
 			<template #body="{data}">
-				{{data.groups}}
+				{{formatGroups(data.groups)}}
 			</template>
 			<template #filter="{filterModel}">
 				<InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by groups"/>
@@ -138,11 +138,15 @@
 					'club': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
 					'fee': {value: null, matchMode: FilterMatchMode.EQUALS},
 					'active_member': {value: null, matchMode: FilterMatchMode.EQUALS},
-					'groups': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
+					'groups': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.CONTAINS}]},
 				}
 			},
-			formatGroups(groups) {
-				return groups && groups.sort().join(', ')			
+			formatGroups(groups) {				
+				let groupsArr = []
+				groups && groups.map( group => {
+					groupsArr.push(group.name)
+				})
+				return groups && groupsArr.sort().join(', ')			
 			}
 		},
 		computed: {

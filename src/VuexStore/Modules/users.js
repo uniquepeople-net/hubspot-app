@@ -48,9 +48,6 @@ export default {
 			}).then( response => {
 				let users = context.rootGetters['users/getUsers']
 				let groupUser = response.data
-				console.log(context.rootGetters['users/getUsers'])
-				console.log(response)
-
 				
 				groupUser.map( group => {
 					users.find( f => {
@@ -59,8 +56,7 @@ export default {
 							if ( f.groups === undefined || f.groups.length == 0) {
 								f.groups = []
 							}
-							f.groups.push(group.group.name)
-							console.log(f)									
+							f.groups.push(group.group)									
 						}
 					})
 				})

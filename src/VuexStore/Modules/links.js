@@ -60,6 +60,7 @@ export default {
 		editGroup:					DOMAIN_URL + '/api/groups/',
 		addGroup:					DOMAIN_URL + '/api/groups/store',
 		assignGroups:				DOMAIN_URL + '/api/group-user/store',
+		detachGroups:				DOMAIN_URL + '/api/group-user/detach',
 		groupUser:					DOMAIN_URL + '/api/group-user',
 
 	}),
@@ -202,6 +203,9 @@ export default {
 		},
 		groupUser(state) {
 			return state.groupUser
+		},
+		detachGroups(state) {
+			return state.detachGroups
 		},
 	}
 }

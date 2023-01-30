@@ -105,7 +105,12 @@
 								this.$store.dispatch("groups/getGroups");
 							})
 				} catch (err) {
-					throw 'Unable to add product'
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to add group"
+					})
+					throw 'Unable to add group'
 				}
 			}
 		},

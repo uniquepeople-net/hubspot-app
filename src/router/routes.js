@@ -22,6 +22,7 @@ import AddNewUser from '../Dashboard/structureComponents/Main/Users/AddNewUser.v
 import SpecificUser from '../Dashboard/structureComponents/Main/Users/SpecificUser.vue'
 import EmailEditor from '../Dashboard/structureComponents/Main/Users/EmailEditor.vue'
 import AssignGroup from '../Dashboard/structureComponents/Main/Users/AssignGroup.vue'
+import DetachGroup from '../Dashboard/structureComponents/Main/Users/DetachGroup.vue'
 
 import Myprofile from '../Dashboard/structureComponents/Main/Profile/MyProfile.vue';
 
@@ -75,7 +76,9 @@ export const routes = [
 
 					{ path: 'send-emails', component: EmailEditor, name: 'send-emails', props: true },
 
-					{ path: 'assign-group', component: AssignGroup, name: 'assign-group', props: true }
+					{ path: 'assign-group', component: AssignGroup, name: 'assign-group', props: true },
+
+					{ path: 'detach-group', component: DetachGroup, name: 'detach-group', props: true }
 				]
 
 			},

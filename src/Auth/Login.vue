@@ -43,7 +43,10 @@
 						Keep me logged in
 					</label>
 				</div> -->
-				<Button type="submit" label="Submit" class="mt-2 submit-btn btn btn-primary btn-block btn-lg shadow-lg mt-5" />
+				<div class="position-relative  mt-5">
+					<Button type="submit" label="Submit" class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg" />
+					<div v-if="loading" class="spinner-grow position-absolute" role="status"></div>
+				</div>
 			</form>
 			<!-- <div class="text-center mt-5 text-lg fs-4">
 				<p>
@@ -71,6 +74,7 @@ export default {
 			submitted: false,
             showMessage: false,
 			error: null,
+			loading: false
         }
     },
     validations() {
@@ -87,6 +91,7 @@ export default {
             if (!isFormValid) {
                 return;
             }
+			this.loading = true
 
 			let apiGwloginUrl = this.$store.getters['links/loginApiGwUrl'];
 
@@ -96,6 +101,7 @@ export default {
 			}).then(
 				response => {										
 					this.toggleDialog();
+					this.loading = false
 					let data = response.data
 					response.data.status === 'error' ? this.error = response.data.message : null
 
@@ -108,9 +114,13 @@ export default {
 						this.$router.push('/');							
 					}
 				}
-			).catch( response => {
-				console.error(response)
-				this.$router.push({ name: 'logout' })
+			).catch( error => {
+				this.loading = false
+				Toast.fire({
+					icon: 'error',
+					title: 'Something is wrong, try again later'
+				})
+				this.$router.push({ name: 'login' })
 			})
         },
         toggleDialog() {
@@ -156,5 +166,11 @@ export default {
 }
 .submit-btn {
 	max-width: 25rem;
+}
+.spinner-grow {
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	margin-left: 1rem;
 }
 </style>
