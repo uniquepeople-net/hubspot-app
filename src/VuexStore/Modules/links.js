@@ -43,6 +43,7 @@ export default {
 		sendContactFormEmail: 		DOMAIN_URL + '/api/send-form-email',
 		getEmailsUrl: 				DOMAIN_URL + '/api/emails/',
 		getSpecificEmail: 			DOMAIN_URL + '/api/email/',
+		deleteEmails:				DOMAIN_URL + '/api/delete-emails',
 
 		// Products service routes
 		allProducts:				DOMAIN_URL + '/api/products',		
@@ -168,6 +169,9 @@ export default {
 		},
 		getSpecificEmail(state) {
 			return state.getSpecificEmail
+		},
+		deleteEmails(state) {
+			return state.deleteEmails
 		},
 
 		// Products service routes getters

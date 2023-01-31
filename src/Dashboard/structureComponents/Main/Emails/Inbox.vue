@@ -1,6 +1,6 @@
 <template>	
 	<DataTable v-if="emails" :value="emails" :paginator="true" class="p-datatable-customers card" :rows="10"
-		dataKey="id" :rowHover="true" v-model:selection="selectedEmail" v-model:filters="filters" filterDisplay="menu" 
+		dataKey="id" :rowHover="true" v-model:selection="selectedEmails" v-model:filters="filters" filterDisplay="menu" 
 		paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" 
 		:rowsPerPageOptions="[10,25,50,100]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
 		:globalFilterFields="['reply_name', 'reply_email', 'subject', 'created_at']" responsiveLayout="scroll">
@@ -72,15 +72,20 @@
 		</Column> -->
 
 		<Column field="created_at" header="Date" sortable dataType="date" style="min-width: 8rem">
-                <template #body="{data}">
-                    {{formatDate(data.created_at)}}
-                </template>
-                <template #filter="{filterModel}">
-                    <Calendar v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" />
-                </template>
-            </Column>
+			<template #body="{data}">
+				{{formatDate(data.created_at)}}
+			</template>
+			<template #filter="{filterModel}">
+				<Calendar v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" />
+			</template>
+		</Column>
 
-		
+		<template #footer>
+			<div class="d-flex flex-column flex-sm-row justify-content-between">
+				<BulkActions :selected="selectedEmails" @resetSelected="resetSelected($event)"/>
+			</div>
+		</template>
+
 	</DataTable>
 
 </template>
@@ -91,6 +96,7 @@
 	import { mapGetters } from 'vuex';
 	import TriStateCheckbox from 'primevue/tristatecheckbox';
 	import Calendar from 'primevue/calendar';
+	import BulkActions from './BulkActions.vue';
 
 	export default {
 		props: {
@@ -101,9 +107,9 @@
 		},
 		data() {
 			return {
-				selectedEmail: null,
+				selectedEmails: null,
 				filters: null,
-				userData: []
+				userData: [],
 			}
 		},
 		methods: {
@@ -132,13 +138,16 @@
 					minute: '2-digit',
             	});
         	},
+			resetSelected(event) {
+				this.selectedEmails = null
+			}
 		},		
 		watch: {
 			emails: function (data) {
 				this.userData = data
 			},
 		},
-		components: { TriStateCheckbox, Calendar }
+		components: { TriStateCheckbox, Calendar, BulkActions }
 	}
 </script>
  
