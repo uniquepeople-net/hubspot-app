@@ -74,7 +74,12 @@
 
 				let reqPassForgetUrl = this.$store.getters['links/reqPassForget'];
 
-				axios.post( reqPassForgetUrl, { email: this.email })
+				let data = {
+					email: this.email, 
+					url: window.location.origin
+				}
+
+				axios.post( reqPassForgetUrl, data )
 					.then(
 						response => {
 							this.loading = false
