@@ -24,7 +24,11 @@
 		</template>
 		<template #content>
 			<h5><span class="fw-lighter">Club:&nbsp;</span>{{user.club}}</h5>
-			<h5><span class="fw-lighter">Tel. number:&nbsp;</span>{{user.tel_number}}</h5>
+			<h5><span class="fw-lighter">Tel. number:&nbsp;</span>
+					<span v-if="user.country_code">
+						{{user.country_code + ' ' }}
+					</span>{{user.tel_number}}
+			</h5>
 			<h5><span class="fw-lighter">Birth date:&nbsp;</span>{{user.birth_date}}</h5>
 			<h5><span class="fw-lighter">Active member:&nbsp;</span>
 				<i v-if="user.active_member" class="pi pi-check-circle" :style="{fontSize: '1.2rem', color: 'var(--green-400)' }"></i>

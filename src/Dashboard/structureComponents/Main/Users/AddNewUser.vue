@@ -5,7 +5,7 @@
                 <i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
                 <i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
                 <h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
-                <h6 v-if="response.error" v-for="(error, index) in response.error" class="mt-3">{{ index + ': ' + error[0] }}</h6>
+                <h6 v-if="response.error" v-for="(error, index) in response.error" class="mt-3">{{ index + ': ' + error[0].replace('validation.', '') }}</h6>
                 <p v-if="response.message" :style="{lineHeight: 1.5}">
                     Your account is registered under name <b>{{name}}</b> and email: <b>{{email}}</b>.
                 </p>
@@ -53,9 +53,9 @@
 
 							<div class="inputgroup mb-5 col-12 col-lg-6">
 								<InputIcon icon="bi bi-telephone"></InputIcon>
-								<InputMask id="preset" v-model="v$.preset.$model" :class="{'p-invalid':v$.preset.$invalid && submitted}" 
-										   name="preset" placeholder="+9999" mask="+99?99"/>
-								<InputError :validator="v$.preset" :submitted="submitted" replace="Preset"></InputError>
+								<InputMask id="countryCode" v-model="v$.countryCode.$model" :class="{'p-invalid':v$.countryCode.$invalid && submitted}" 
+										   name="countryCode" placeholder="+9999" mask="+99?99"/>
+								<InputError :validator="v$.countryCode" :submitted="submitted" replace="countryCode"></InputError>
 								<InputMask id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
 										   name="phoneNum" placeholder="999 999 999" mask="999999999" autoClear/>
 							
@@ -117,14 +117,14 @@
 				
 								<InputError :validator="v$.password" :submitted="submitted" replace="Password"></InputError>
 							</div>
-							
-							
-								
-							
-
 						</div>
 
-						<Button type="submit" label="Submit" class="mt-2 submit-btn" />
+						<div class="position-relative text-center mt-2">
+							<Button type="submit" label="Submit" class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg" />
+							<div v-if="loading" class="spinner-grow position-absolute" role="status"></div>
+						</div>
+
+						<!-- <Button type="submit" label="Submit" class="mt-2 submit-btn" /> -->
 					</form>
 				</div>
 			</template>
@@ -154,7 +154,7 @@ export default {
         return {
             name: '',
             email: '',
-			preset: '',
+			countryCode: '',
 			phoneNum: '',
 			club: '',
 			memberFrom: '',
@@ -167,14 +167,15 @@ export default {
 			paid: false,
 			role: '',
 			roles: [{ name: 'User', id: 3 }, { name: 'Editor', id: 2 }, { name: 'Admin', id:1 } ],
-			response: null
+			response: null,
+			loading: false
         }
     },
     validations() {
         return {
             name: { required, minLength: minLength(3) },
             email: {  required, email },
-			preset: { customCountryCode },
+			countryCode: { customCountryCode },
 			phoneNum: { numeric },
 			club: { minLength: minLength(3) },
 			instatId: { numeric },
@@ -192,13 +193,16 @@ export default {
                 return;
             }
 
+			this.loading = true
+
 			let data = {
 				name: this.name,
 				email: this.email,
 				instat_id:this.instatId,
 				role: this.role,
 				fee: this.paid,	
-				phoneNum: this.preset + this.phoneNum,
+				countryCode: this.countryCode,
+				phoneNum: this.phoneNum,
 				club: this.club,
 				active: this.active,
 				memberFrom: this.memberFrom,
@@ -206,10 +210,7 @@ export default {
 				password: this.password,
 			}
 
-			console.log(data)
-			
-
-			//this.registerUser( this.registersApiGwUrl, data )			
+			this.registerUser( this.registersApiGwUrl, data )			
         },
         toggleDialog() {
             this.showMessage = !this.showMessage;
@@ -222,7 +223,7 @@ export default {
             this.name = ''
             this.email = ''
 			this.instat_id = ''
-			this.preset = ''
+			this.countryCode = ''
 			this.phoneNum = ''
 			this.varSymbol = ''
 			this.memberFrom = ''
@@ -246,6 +247,7 @@ export default {
 						this.response = resp.data
 						//this.resetForm()
 						this.toggleDialog()
+						this.loading = false
 					}				
 				)
 
@@ -255,6 +257,7 @@ export default {
 					timer: 5000,
 					title: "Unable to register user"
 				})
+				this.loading = false
 				throw 'Unable to register user'
 			}
 		},
@@ -284,7 +287,7 @@ export default {
 	:deep(.p-dropdown) {
 		width: 100%;
 	}
-	:deep(.p-inputtext):not(#preset), :deep(.p-dropdown) {
+	:deep(.p-inputtext):not(#countryCode), :deep(.p-dropdown) {
 		border-radius: 0 6px 6px 0;
 	}
 }
@@ -313,7 +316,13 @@ export default {
 		border-radius: 6px 0 0 6px;
 	}
 }
-#preset {
+.spinner-grow {
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	margin-left: .5rem;
+}
+#countryCode {
 	max-width: 6rem;
 }
 </style>

@@ -52,10 +52,21 @@
 								<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
 							</div>
 
-							<div class="inputgroup mb-5 col-12" :class="admin && 'col-xl-6'">
+							<!-- <div class="inputgroup mb-5 col-12" :class="admin && 'col-xl-6'">
 								<InputIcon icon="bi bi-telephone"></InputIcon>
 								<InputText id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
 										   name="phoneNum" placeholder="Phone number"/>
+							
+								<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
+							</div> -->
+
+							<div class="inputgroup mb-5 col-12" :class="admin && 'col-xl-6'">
+								<InputIcon icon="bi bi-telephone"></InputIcon>
+								<InputMask id="countryCode" v-model="v$.countryCode.$model" :class="{'p-invalid':v$.countryCode.$invalid && submitted}" 
+										   name="countryCode" placeholder="+9999" mask="+99?99"/>
+								<InputError :validator="v$.countryCode" :submitted="submitted" replace="countryCode"></InputError>
+								<InputMask id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
+										   name="phoneNum" placeholder="999 999 999" mask="999999999?999999" autoClear/>
 							
 								<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
 							</div>
@@ -108,20 +119,31 @@
 </template>
 
 <script>
-import { email, required, sameAs, minLength, numeric } from "@vuelidate/validators";
+import { email, required, sameAs, minLength, numeric, helpers } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import DeleteItem from "./DeleteItem.vue";
 import Calendar from 'primevue/calendar'
+import InputMask from 'primevue/inputmask'
+
+// Custom decimal validation
+const customCountryCode = {
+	$validator: helpers.regex(/^([0|\+[0-9]{1,5})/),
+	$message: 'Country code should be in format +99x'
+}
 
 export default {
     setup: () => ({ v$: useVuelidate() }),
 	props: ['userData', 'userUrl', 'admin', 'myProfile'],
+	mounted() {
+		let regexp = /^([0|\+[0-9]{1,5})/
+	},
     data() {
         return {
             name: this.userData.name,
             email: this.userData.email,
+			countryCode: this.userData.country_code,
 			phoneNum: this.userData.tel_number,
 			club: this.userData.club,
 			memberFrom: this.userData.member_from,
@@ -141,6 +163,7 @@ export default {
         return {
             name: { required, minLength: minLength(3) },
             email: { required, email },
+			countryCode: { customCountryCode },
 			phoneNum: { numeric },
 			club: { minLength: minLength(3) },
 			instatId: { numeric },
@@ -161,7 +184,8 @@ export default {
 				email: this.email,
 				instat_id:this.instatId,
 				role: this.role,
-				fee: this.paid,	
+				fee: this.paid,
+				countryCode: this.countryCode,	
 				phoneNum: this.phoneNum,
 				club: this.club,
 				active: this.active,
@@ -205,6 +229,7 @@ export default {
 			if (data.name) {
 				this.name = data.name
 				this.email = data.email
+				this.countryCode = data.country_code
 				this.phoneNum = data.tel_number
 				this.club = data.club
 				this.instatId = data.instat_id
@@ -216,7 +241,7 @@ export default {
 			}
 		}
 	},
-	components: { DeleteItem, Calendar }
+	components: { DeleteItem, Calendar, InputMask }
 }
 </script>
 
@@ -278,5 +303,8 @@ export default {
 	:deep(.p-inputtext) {
 		border-radius: 6px 0 0 6px;
 	}
+}
+#countryCode {
+	max-width: 6rem;
 }
 </style>
