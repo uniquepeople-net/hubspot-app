@@ -30,44 +30,62 @@
 						<div class="row">
 							<div class="inputgroup mb-5 col-12">
 								<InputIcon icon="pi pi-user"></InputIcon>
-								<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
-										   name="name" placeholder="Name"/>
+								<span class="p-float-label w-100">
+									<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
+											name="name" placeholder="Name"/>
+									<label for="name">Name</label>
+								</span>
 							
 								<InputError :validator="v$.name" :submitted="submitted" replace="Name"></InputError>
 							</div>
 
 							<div class="inputgroup mb-5 col-12">
+								<InputIcon icon="pi pi-user"></InputIcon>
+								<span class="p-float-label w-100">
+									<InputText id="surname" v-model="v$.surname.$model" :class="{'p-invalid':v$.surname.$invalid && submitted}" 
+										   name="surname" placeholder="Surname"/>
+									<label for="surname">Surname</label>
+								</span>
+							
+								<InputError :validator="v$.surname" :submitted="submitted" replace="Surname"></InputError>
+							</div>
+
+							<div class="inputgroup mb-5 col-12">
 								<InputIcon icon="bi bi-house"></InputIcon>
-								<InputText id="club" v-model="v$.club.$model" :class="{'p-invalid':v$.club.$invalid && submitted}" 
-										   name="club" placeholder="Club"/>
+								<span class="p-float-label w-100">
+									<InputText id="club" v-model="v$.club.$model" :class="{'p-invalid':v$.club.$invalid && submitted}" 
+											name="club" placeholder="Club"/>
+									<label for="club">Club</label>
+								</span>	
 							
 								<InputError :validator="v$.club" :submitted="submitted" replace="Club"></InputError>
 							</div>
 		
 							<div class="inputgroup mb-5 col-12">
 								<InputIcon icon="pi pi-envelope"></InputIcon>
-								<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
-										   name="email" placeholder="Email"/>
+								<span class="p-float-label w-100">
+									<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
+										   		name="email" placeholder="Email"/>
+									<label for="email">Email</label>
+								</span>	
 		
 								<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
 							</div>
 
-							<!-- <div class="inputgroup mb-5 col-12" :class="admin && 'col-xl-6'">
-								<InputIcon icon="bi bi-telephone"></InputIcon>
-								<InputText id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
-										   name="phoneNum" placeholder="Phone number"/>
-							
-								<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
-							</div> -->
-
 							<div class="inputgroup mb-5 col-12" :class="admin && 'col-xl-6'">
 								<InputIcon icon="bi bi-telephone"></InputIcon>
-								<InputMask id="countryCode" v-model="v$.countryCode.$model" :class="{'p-invalid':v$.countryCode.$invalid && submitted}" 
-										   name="countryCode" placeholder="+9999" mask="+99?99"/>
+								<span class="p-float-label">
+									<InputMask id="countryCode" v-model="v$.countryCode.$model" :class="{'p-invalid':v$.countryCode.$invalid && submitted}" 
+											   name="countryCode" placeholder="+9999" mask="+99?99"/>
+									<label for="countryCode">Code</label>
+								</span>
 								<InputError :validator="v$.countryCode" :submitted="submitted" replace="countryCode"></InputError>
-								<InputMask id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
-										   name="phoneNum" placeholder="999 999 999" mask="999999999?999999" autoClear/>
-							
+								<span class="p-float-label">
+									<InputMask id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
+										   	   name="phoneNum" placeholder="999 999 999" mask="999 999 999? 999999" autoClear/>
+									<label for="phoneNum">Phone number</label>
+								</span>
+
 								<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
 							</div>
 
@@ -77,15 +95,19 @@
 							</div>
 
 							<div class="inputgroup mb-5 col-12 align-items-center" v-if="admin">
-								<label for="icon">Member from:&nbsp;</label>
-								<Calendar inputId="icon" v-model="memberFrom" :showIcon="true" dateFormat="dd.mm.yy" class="calendar"/>
+								<span class="p-float-label w-100">
+									<Calendar name="calendar" inputId="icon" v-model="memberFrom" :showIcon="true" dateFormat="dd.mm.yy" class="calendar"/>
+									<label for="calendar">Member from</label>
+								</span>
 							</div>
 		
 							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
 								<InputIcon icon="bi bi-bar-chart-fill"></InputIcon>
-								<InputText id="instatId" v-model="v$.instatId.$model" :class="{'p-invalid':v$.instatId.$invalid && submitted}" aria-describedby="email-error"
-											name="instatId" placeholder="Stat ID"/>
-		
+								<span class="p-float-label w-100">
+									<InputText id="instatId" v-model="v$.instatId.$model" :class="{'p-invalid':v$.instatId.$invalid && submitted}" aria-describedby="email-error"
+												name="instatId" placeholder="Stat ID"/>
+										<label for="instatId">Stat ID</label>
+								</span>		
 								<InputError :validator="v$.instatId" :submitted="submitted" replace="Instat ID"></InputError>
 							</div>
 		
@@ -96,22 +118,30 @@
 		
 							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
 								<InputIcon icon="bi bi-person-lines-fill"></InputIcon>
-								<Dropdown v-model="role" :options="roles" optionLabel="name" optionValue="id" placeholder="Select a Role"/>
-								
+								<span class="p-float-label w-100">
+									<Dropdown name="dropdown" v-model="role" :options="roles" optionLabel="name" optionValue="id" placeholder="Select a Role"/>
+									<label for="dropdown">User Role</label>
+								</span>	
 								<InputError :validator="v$.role" :submitted="submitted" replace="Role"></InputError>
 							</div>
 
 							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
 								<InputIcon icon="bi bi-123"></InputIcon>
-								<InputText id="varSymbol" v-model="v$.varSymbol.$model" :class="{'p-invalid':v$.varSymbol.$invalid && submitted}"
-											name="varSymbol" placeholder="Var. symbol"/>
-		
+								<span class="p-float-label w-100">
+									<InputText id="varSymbol" v-model="v$.varSymbol.$model" :class="{'p-invalid':v$.varSymbol.$invalid && submitted}"
+												name="varSymbol" placeholder="Var. symbol"/>
+									<label for="varSymbol">Var. symbol</label>
+								</span>	
 								<InputError :validator="v$.varSymbol" :submitted="submitted" replace="Var. symbol"></InputError>
 							</div>
 							
 						</div>
 
-						<Button type="submit" label="Update" class="mt-2 submit-btn" />
+						<div class="position-relative text-center mt-2">
+							<Button type="submit" label="Submit" class="submit-btn btn btn-primary btn-block btn-lg shadow-lg" :disabled="loading"/>
+							<div v-if="loading" class="spinner-grow position-absolute" role="status"></div>
+						</div>
+
 					</form>
 				</div>
 			</template>
@@ -133,15 +163,19 @@ const customCountryCode = {
 	$message: 'Country code should be in format +99x'
 }
 
+// Custom tel_number validation
+const customTelNumber = {
+	$validator: helpers.regex(/^(?=.*\d)[\d ]+$/),
+	$message: 'Tel. number should be in format 999 999 999'
+}
+
 export default {
     setup: () => ({ v$: useVuelidate() }),
 	props: ['userData', 'userUrl', 'admin', 'myProfile'],
-	mounted() {
-		let regexp = /^([0|\+[0-9]{1,5})/
-	},
     data() {
         return {
             name: this.userData.name,
+            surname: this.userData.surname,
             email: this.userData.email,
 			countryCode: this.userData.country_code,
 			phoneNum: this.userData.tel_number,
@@ -151,6 +185,7 @@ export default {
 			instatId: this.userData.instat_id,
             submitted: false,
             showMessage: false,
+			loading: false,
 			paid: this.userData.fee,
 			active: this.userData.active_member,
 			role: this.userData.role_id,
@@ -162,9 +197,10 @@ export default {
     validations() {
         return {
             name: { required, minLength: minLength(3) },
+            surname: { required, minLength: minLength(3) },
             email: { required, email },
 			countryCode: { customCountryCode },
-			phoneNum: { numeric },
+			phoneNum: { customTelNumber },
 			club: { minLength: minLength(3) },
 			instatId: { numeric },
 			varSymbol: { numeric },
@@ -179,8 +215,11 @@ export default {
                 return;
             }
 
+			this.loading = true
+
 			let data = {
 				name: this.name,
+				surname: this.surname,
 				email: this.email,
 				instat_id:this.instatId,
 				role: this.role,
@@ -212,6 +251,7 @@ export default {
 					resp => {
 						this.response = resp.data
 						this.toggleDialog();
+						this.loading = false
 						if ( !this.$route.params.user_id ) {
 							this.$store.dispatch("user/getUser");
 						} else {
@@ -221,6 +261,7 @@ export default {
 				)
 			} catch (err) {
 				throw 'Unable to update user'
+				this.loading = false
 			}
 		},
     },
@@ -228,6 +269,7 @@ export default {
 		userData: function(data) {
 			if (data.name) {
 				this.name = data.name
+				this.surname = data.surname
 				this.email = data.email
 				this.countryCode = data.country_code
 				this.phoneNum = data.tel_number
@@ -293,7 +335,7 @@ export default {
 }
 :deep(.p-calendar) {
 	flex: 1;
-	max-width: 576px;
+	max-width: 320px;
 }
 .calendar {	
 	:deep(.p-button) {
@@ -305,6 +347,12 @@ export default {
 	}
 }
 #countryCode {
-	max-width: 6rem;
+	max-width: 7rem;
+}
+.spinner-grow {
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	margin-left: .5rem;
 }
 </style>

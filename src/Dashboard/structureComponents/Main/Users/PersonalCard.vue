@@ -19,7 +19,7 @@
 					<Skeleton v-if="!teamname" shape="rectangle" class="img-skeleton py-3" width="100%"/>
 				</div>
 			</div> -->
-			{{ user.name }}
+			{{ user.name + ' ' + user.surname }}
 			<Divider />
 		</template>
 		<template #content>
