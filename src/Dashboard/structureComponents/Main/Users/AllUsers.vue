@@ -3,7 +3,7 @@
 		dataKey="id" :rowHover="true" v-model:selection="selectedUsers" v-model:filters="filters" filterDisplay="menu" 
 		paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" 
 		:rowsPerPageOptions="[10,25,50]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
-		:globalFilterFields="['name', 'fee', 'active_member']" responsiveLayout="scroll">
+		:globalFilterFields="['surname', 'fee', 'active_member']" responsiveLayout="scroll">
 		<template #header>
 			<h5 class="mb-3">Users</h5>			
 			<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
@@ -21,9 +21,9 @@
 			<div class="spinner-grow" role="status"></div>
 		</template>
 		<Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-		<Column field="name" header="Name" sortable style="min-width: 14rem">
+		<Column field="surname" header="Surname" sortable style="min-width: 14rem">
 			<template #body="{data}">
-				{{data.name}}
+				{{data.surname}}
 			</template>
 			<template #filter="{filterModel}">
 				<InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by name"/>

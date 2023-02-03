@@ -34,6 +34,14 @@
 							
 								<InputError :validator="v$.name" :submitted="submitted" replace="Name"></InputError>
 							</div>
+
+							<div class="inputgroup mb-5 col-12 col-lg-6">
+								<InputIcon icon="pi pi-user"></InputIcon>
+								<InputText id="surname" v-model="v$.surname.$model" :class="{'p-invalid':v$.surname.$invalid && submitted}" 
+										name="surname" placeholder="Surname"/>
+							
+								<InputError :validator="v$.surname" :submitted="submitted" replace="Surname"></InputError>
+							</div>
 		
 							<div class="inputgroup mb-5 col-12 col-lg-6">
 								<InputIcon icon="bi bi-house"></InputIcon>
@@ -76,7 +84,7 @@
 							<div class="inputgroup mb-5 col-12 col-lg-6">
 								<InputIcon icon="bi bi-bar-chart-fill"></InputIcon>
 								<InputText id="instatId" v-model="v$.instatId.$model" :class="{'p-invalid':v$.instatId.$invalid && submitted}" aria-describedby="email-error"
-											name="instatId" placeholder="Instat ID"/>
+											name="instatId" placeholder="Stat ID"/>
 		
 								<InputError :validator="v$.instatId" :submitted="submitted" replace="Instat ID"></InputError>
 							</div>
@@ -124,7 +132,6 @@
 							<div v-if="loading" class="spinner-grow position-absolute" role="status"></div>
 						</div>
 
-						<!-- <Button type="submit" label="Submit" class="mt-2 submit-btn" /> -->
 					</form>
 				</div>
 			</template>
@@ -153,6 +160,7 @@ export default {
     data() {
         return {
             name: '',
+            surname: '',
             email: '',
 			countryCode: '',
 			phoneNum: '',
@@ -174,6 +182,7 @@ export default {
     validations() {
         return {
             name: { required, minLength: minLength(3) },
+            surname: { required, minLength: minLength(3) },
             email: {  required, email },
 			countryCode: { customCountryCode },
 			phoneNum: { numeric },
@@ -197,6 +206,7 @@ export default {
 
 			let data = {
 				name: this.name,
+				surname: this.surname,
 				email: this.email,
 				instat_id:this.instatId,
 				role: this.role,
@@ -221,6 +231,7 @@ export default {
         },
         resetForm() {
             this.name = ''
+            this.surname = ''
             this.email = ''
 			this.instat_id = ''
 			this.countryCode = ''
