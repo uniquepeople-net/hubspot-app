@@ -86,8 +86,8 @@ import Carousel from 'primevue/carousel';
 
 import InputIcon from './Dashboard/global/InputIcon.vue';
 import InputError from './Dashboard/global/InputError.vue';
-import PasswordSuggestions from './Dashboard/global/PasswordSuggestions.vue'
-
+import PasswordSuggestions from './Dashboard/global/PasswordSuggestions.vue';
+import LoadingIcon from './Dashboard/global/LoadingIcon.vue';
 
 createApp(App)
 	.use(router)
@@ -118,5 +118,5 @@ createApp(App)
 	.component('Textarea', Textarea)
 	.component('Badge', Badge)
 	.component('Carousel', Carousel)
-	//.directive('badge', BadgeDirective)
+	.component('LoadingIcon', LoadingIcon)
 	.mount('#app')

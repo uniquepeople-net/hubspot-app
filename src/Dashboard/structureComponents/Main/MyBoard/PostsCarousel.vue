@@ -24,6 +24,9 @@
 			
 		</template>
 	</Carousel>
+
+	<LoadingIcon v-if="!posts"/>
+
 </template>
  
  

@@ -1,18 +1,22 @@
 <template>
-	<Card v-if="email" class="card spec-email">
-		<template #title>
-			<div class="card-header">
-				<h5><span class="subhead">Subject:</span> {{email.subject}}</h5>
-				<h5><span class="subhead">From:</span> {{email.reply_name}}</h5>
-				<h5><span class="subhead">From (email):</span> {{email.reply_email}}</h5>
-				<h6><span class="subhead">Date:</span> {{email.created_at_formatted}}</h6>
-			</div>
-		</template>
-		<template #content>
-			<div v-html="email.body"></div>
-		</template>
-		<div>specific email {{ emailId }}</div>
-	</Card>
+	<div>
+		<Card v-if="email" class="card spec-email">
+			<template #title>
+				<div class="card-header">
+					<h5><span class="subhead">Subject:</span> {{email.subject}}</h5>
+					<h5><span class="subhead">From:</span> {{email.reply_name}}</h5>
+					<h5><span class="subhead">From (email):</span> {{email.reply_email}}</h5>
+					<h6><span class="subhead">Date:</span> {{email.created_at_formatted}}</h6>
+				</div>
+			</template>
+			<template #content>
+				<div v-html="email.body"></div>
+			</template>
+			<div>specific email {{ emailId }}</div>
+		</Card>  
+
+		<LoadingIcon v-if="!email"/>
+	</div>
 </template>
  
  
@@ -46,7 +50,8 @@
  
 <style lang='scss' scoped>
 .spec-email {
-	max-width: 1200px;
+	max-width: 1400px;
+	margin: auto;
 }
 .subhead {
 	font-weight: 300;

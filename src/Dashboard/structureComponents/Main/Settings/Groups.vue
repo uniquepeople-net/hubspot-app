@@ -1,5 +1,6 @@
 <template>
 		<router-view :key="$route.fullPath" v-if="groups" :groups="groups"></router-view>
+		<LoadingIcon v-if="!groups"/>
 </template>
  
  

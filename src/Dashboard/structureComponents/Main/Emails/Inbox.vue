@@ -21,7 +21,7 @@
 		</template>
 
 		<template #loading>			
-			<div class="spinner-grow" role="status"></div>			
+			<LoadingIcon />			
 		</template>
 
 		<Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
@@ -61,16 +61,6 @@
 			</template>
 		</Column>
 
-		<!-- <Column field="created_at" header="Date" sortable dataType="date" style="min-width: 8rem">
-			<template #body="{data}">
-				{{ formatDate(data.created_at) }}
-			</template>
-			<template #filter="{filterModel}">
-				<Calendar v-model="filterModel.value" dateFormat="dd.mm.yy" placeholder="dd.mm.yyyy" />
-				<Calendar v-model="filterModel.value" dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" />
-			</template>
-		</Column> -->
-
 		<Column field="created_at" header="Date" sortable dataType="date" style="min-width: 8rem">
 			<template #body="{data}">
 				{{formatDate(data.created_at)}}
@@ -87,6 +77,8 @@
 		</template>
 
 	</DataTable>
+
+
 
 </template>
  

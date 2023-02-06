@@ -18,7 +18,7 @@
 			No users found.
 		</template>
 		<template #loading>			
-			<div class="spinner-grow" role="status"></div>
+			<LoadingIcon />
 		</template>
 		<Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
 		<Column field="surname" header="Surname" sortable style="min-width: 14rem">
