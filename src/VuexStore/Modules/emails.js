@@ -71,6 +71,11 @@ export default {
 							context.commit("SETUNREADEMAILS", unread);
 							context.commit("SETUNREADEMAILSCOUNT", unread.length);
 						}						
+					}).catch( error => {
+						Toast.fire({
+							icon: 'error',
+							title: 'Unable to load emails'
+						})						
 					})
 		},
 		setSpecificEmail(context, id) {

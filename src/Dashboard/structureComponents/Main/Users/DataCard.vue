@@ -5,7 +5,7 @@
                 <i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
                 <h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
                 <h6 v-if="response.error" v-for="(error, key) in response.error" class="mt-3">
-					{{ key + ': ' +  error[0].replace('validation.', '') }}
+					{{ error[0].replace('validation.', '') }}
 				</h6>
             </div>
             <template #footer>
@@ -156,6 +156,7 @@ import { mapGetters } from 'vuex';
 import DeleteItem from "./DeleteItem.vue";
 import Calendar from 'primevue/calendar'
 import InputMask from 'primevue/inputmask'
+import LoadingIcon from '../../../global/LoadingIcon.vue';
 
 // Custom decimal validation
 const customCountryCode = {
@@ -196,8 +197,8 @@ export default {
     },
     validations() {
         return {
-            name: { required, minLength: minLength(3) },
-            surname: { required, minLength: minLength(3) },
+            name: { required, minLength: minLength(2) },
+            surname: { required, minLength: minLength(2) },
             email: { required, email },
 			countryCode: { customCountryCode },
 			phoneNum: { customTelNumber },
@@ -244,21 +245,23 @@ export default {
 				let updateUrl = this.myProfile ? url : url + id;
 
 				const user = await axios.post( updateUrl, data, {
-					headers: {
-						Authorization: 'Bearer ' + User.getToken()
-					}
-				}).then(
-					resp => {
-						this.response = resp.data
-						this.toggleDialog();
-						this.loading = false
-						if ( !this.$route.params.user_id ) {
-							this.$store.dispatch("user/getUser");
-						} else {
-							this.$store.dispatch("specificUser/getSpecificUser", this.id);
+						headers: {
+							Authorization: 'Bearer ' + User.getToken(),
 						}
-					}				
-				)
+					}).then(
+						resp => {
+							this.response = resp.data
+							this.toggleDialog();
+							this.loading = false
+							if ( !this.$route.params.user_id ) {
+								this.$store.dispatch("user/getUser");
+							} else {
+								this.$store.dispatch("specificUser/getSpecificUser", this.id);
+							}
+						}				
+					).catch( error => {
+						this.loading = false					
+					})
 			} catch (err) {
 				throw 'Unable to update user'
 				this.loading = false
@@ -283,7 +286,7 @@ export default {
 			}
 		}
 	},
-	components: { DeleteItem, Calendar, InputMask }
+	components: { DeleteItem, Calendar, InputMask, LoadingIcon }
 }
 </script>
 
@@ -354,5 +357,13 @@ export default {
 	bottom: 0;
 	margin: auto;
 	margin-left: .5rem;
+}
+.p-float-label {
+	& label {
+		opacity: 0;
+	}
+	input:focus ~ label, input.p-filled ~ label {
+		opacity: 1;
+	}
 }
 </style>

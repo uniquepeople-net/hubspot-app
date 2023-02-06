@@ -2,8 +2,6 @@
 	<div class="news">
 		<TabMenu class="mb-4"/>
 	
-		
-
 		<Card v-if="redditNews" class="mb-1" v-for="news in redditNews">
 			<template #header>
 				<span class="ms-3 fw-light">{{ timeBeforePosted(news.data.created_utc) }}  ago</span>
@@ -26,11 +24,14 @@
 						<template v-slot:loading>
 							<div class="spinner-grow" role="status"></div>
 						</template>
+
 					</Tweet>				
 				</div>
 				
 			</template>
 		</Card>
+
+		<LoadingIcon v-if="!redditNews"/>
 		
 	</div>
 </template>
