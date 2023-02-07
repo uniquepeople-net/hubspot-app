@@ -43,7 +43,6 @@ export default {
 					context.commit("SETUSER", response.data)			 
 				})
 				.catch( error => {
-					console.log(error, 'error')
 					context.commit("SETUNAUTH", true)
 				})			
 

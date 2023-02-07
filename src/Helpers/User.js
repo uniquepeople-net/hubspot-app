@@ -49,14 +49,35 @@ class User {
 			headers: {
 				Authorization: 'Bearer ' + this.getToken()
 		}})
-		.then( (response) => {
-			if ( response.data.message === 'Unauthenticated.' ) {
+		.then( (response) => {			
+			/* if ( response.data.message === 'Unauthenticated.' ) {
+				this.clearStorage()
+				console.log(this.getToken)
+				
 				router.push('/login')
-			}
+			} */
 			if ( response.data.authorisation ) {
 				let newToken = response.data.authorisation.token
 				AppStorage.store(newToken)
 			}			
+		}).catch( error =>  {
+			if ( error.response.status >= 400 && error.response.status < 500 ) {
+				Toast.fire({
+					icon: 'error',
+					timer: 7000,
+					title: 'Expired token, Log In again'
+				})
+				this.clearStorage()
+				router.push('/login')
+			} else {
+				Toast.fire({
+					icon: 'error',
+					timer: 7000,
+					title: 'Server error'
+				})
+				this.clearStorage()
+				router.push('/login')
+			}
 		})
 	}
 }
