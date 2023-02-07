@@ -1,3 +1,5 @@
+import { router } from '../main'
+
 class Helpers {
 
 	// add script file function in vue component
@@ -28,21 +30,39 @@ class Helpers {
 		return originString
 	}
 
-	// check if user is admin ( admin = 1, editor = 2, user = 3 )
+	/**
+	 *	Check if user is admin ( admin = 1, editor = 2, user = 3 ) 
+	 *	
+	 */
 	checkAdmin(to, from, next, url, token) {
 		axios.get(url, {
 			headers: {
 				Authorization: 'Bearer ' + token
 			}
 		}).then( response => {
-			
 			// check if exists role_id in response object
 			var checkRole = (((response || {}).data || {}).user || {}).role_id;
 			
 			if ( checkRole && checkRole === 1 ) {
 				next()
 			} else next({ name: 'dashboard' }) 		 
-		})			
+		}).catch( error => {
+			if ( error.response.status >= 400 && error.response.status < 500 ) {
+				Toast.fire({
+					icon: 'error',
+					timer: 7000,
+					title: 'Expired token, Log In again'
+				})
+				router.push('/login')
+			} else {
+				Toast.fire({
+					icon: 'error',
+					timer: 7000,
+					title: 'Server error'
+				})
+				router.push('/login')
+			}
+		})		
 	}
 
 	// Filter params by key 

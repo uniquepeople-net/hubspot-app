@@ -53,7 +53,7 @@
 
 							<div class="inputgroup mb-5 col-12 col-lg-6">
 								<InputIcon icon="pi pi-envelope"></InputIcon>
-								<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
+								<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}"
 											name="email" placeholder="Email"/>
 		
 								<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
@@ -83,7 +83,7 @@
 
 							<div class="inputgroup mb-5 col-12 col-lg-6">
 								<InputIcon icon="bi bi-bar-chart-fill"></InputIcon>
-								<InputText id="instatId" v-model="v$.instatId.$model" :class="{'p-invalid':v$.instatId.$invalid && submitted}" aria-describedby="email-error"
+								<InputText id="instatId" v-model="v$.instatId.$model" :class="{'p-invalid':v$.instatId.$invalid && submitted}" 
 											name="instatId" placeholder="Stat ID"/>
 		
 								<InputError :validator="v$.instatId" :submitted="submitted" replace="Instat ID"></InputError>
@@ -161,7 +161,7 @@ export default {
         return {
             name: '',
             surname: '',
-            email: '',
+            email: '@',
 			countryCode: '',
 			phoneNum: '',
 			club: '',

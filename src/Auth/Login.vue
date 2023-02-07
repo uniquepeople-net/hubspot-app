@@ -1,5 +1,5 @@
 <template>
-	<Dialog v-if="error" v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
+	<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
             <div class="flex align-items-center flex-column pt-6 px-3">
                 <i class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
                 <h5 class="mt-3">{{ error }}</h5>
@@ -96,30 +96,38 @@ export default {
 			axios.post( apiGwloginUrl , { 
 							email: this.email,
 							password: this.password,										  
-			}).then(
-				response => {										
-					this.toggleDialog();
-					this.loading = false
-					let data = response.data
-					this.error = response.data.message
+				}).then(
+					response => {										
+						this.toggleDialog();
+						this.loading = false
+						let data = response.data
+						this.error = response.data.message
 
-					if ( data.authorisation ) {
-						User.responseAfterLogin(data.authorisation.token)
-						Toast.fire({
-							icon: 'success',
-							title: 'Signed in successfully'
-						})
-						this.$router.push('/');							
+						if ( data.authorisation ) {
+							User.responseAfterLogin(data.authorisation.token)
+							Toast.fire({
+								icon: 'success',
+								title: 'Signed in successfully'
+							})
+							this.$router.push('/');							
+						}
 					}
-				}
-			).catch( error => {
-				this.loading = false
-				Toast.fire({
-					icon: 'error',
-					title: 'Something is wrong, try again later'
+				).catch( error => {
+					if ( error.response.status >= 400 && error.response.status < 500 ) {
+						this.toggleDialog();
+						this.loading = false
+						let data = error.response.data
+						this.error = data.message
+					} else {
+						this.loading = false
+						Toast.fire({
+							icon: 'error',
+							timer: 7000,
+							title: 'Server error, try again later'
+						}) 
+						//this.$router.push({ name: 'login' })
+					}
 				})
-				this.$router.push({ name: 'login' })
-			})
         },
         toggleDialog() {
             this.showMessage = !this.showMessage;
