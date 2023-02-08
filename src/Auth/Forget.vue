@@ -4,7 +4,9 @@
 			<i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
 			<i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
 			<h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
-			<h6 v-if="response.error" v-for="(error, index) in response.error" class="mt-3">{{ index + ': ' + error[0].replace('validation.', 'faulty ') }}</h6>
+			<h6 v-if="response.error" v-for="(error, index) in response.error" class="mt-3">
+				{{ error[0].replace('validation.', 'faulty ') }}
+			</h6>
 		</div>
 		<template #footer>
 			<div class="flex justify-content-center">
@@ -80,14 +82,24 @@
 				}
 
 				axios.post( reqPassForgetUrl, data )
-					.then(
-						response => {
+					.then( response => {
 							this.loading = false
 							this.response = response.data										
 							this.toggleDialog();					
-						}
-					).catch( response => {
+					})
+					.catch( error => {						
 						this.loading = false
+						
+						if ( error.response.status >= 400 && error.response.status < 500 ) {
+							this.response = error.response.data
+							this.toggleDialog();
+						} else {
+							Toast.fire({
+								icon: 'error',
+								timer: 7000,
+								title: 'Server error, try again later'
+							}) 
+						}
 					})
 			},
 			toggleDialog() {

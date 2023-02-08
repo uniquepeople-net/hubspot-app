@@ -52,6 +52,11 @@ export default {
 						}
 					}).then( response => {
 						context.commit("SETRESPONSE", response.data)
+					}).catch( error => {
+						Toast.fire({
+							icon: 'error',
+							title: 'Unable to send email(s)'
+						})
 					})
 		},
 		async getEmails(context, id) {
@@ -74,7 +79,7 @@ export default {
 					}).catch( error => {
 						Toast.fire({
 							icon: 'error',
-							title: 'Unable to load emails'
+							title: 'Unable to load email(s)'
 						})						
 					})
 		},
@@ -102,6 +107,12 @@ export default {
 						}
 					})
 					.then( response => {return true})
+					.catch( error =>  {
+						Toast.fire({
+							icon: 'error',
+							title: 'Unable to get email'
+						})
+					})
 		} 
 	},
 

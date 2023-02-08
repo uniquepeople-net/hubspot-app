@@ -17,18 +17,19 @@
 
 	export default {
 		created() {
+	
 			if (!User.loggedIn()) {
 				this.$router.push({ name: 'login' })				
+			} else {			
+				let currentRoute = this.$router.currentRoute._value.name;
+				if ( currentRoute === 'dashboard' ) {
+					this.$router.push({ name: 'my-board' })
+				} else {
+					this.$router.push({ name: currentRoute })
+				}
+		
+				this.$store.dispatch("user/getUser");
 			}
-			
-			let currentRoute = this.$router.currentRoute._value.name;
-			if ( currentRoute === 'dashboard' ) {
-				this.$router.push({ name: 'my-board' })
-			} else {
-				this.$router.push({ name: currentRoute })
-			}
-	
-			this.$store.dispatch("user/getUser");
 		},
 		data() {
 			return{

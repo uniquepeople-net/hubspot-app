@@ -113,19 +113,17 @@ export default {
 						}
 					}
 				).catch( error => {
+					this.loading = false
 					if ( error.response.status >= 400 && error.response.status < 500 ) {
 						this.toggleDialog();
-						this.loading = false
 						let data = error.response.data
 						this.error = data.message
 					} else {
-						this.loading = false
 						Toast.fire({
 							icon: 'error',
 							timer: 7000,
 							title: 'Server error, try again later'
 						}) 
-						//this.$router.push({ name: 'login' })
 					}
 				})
         },

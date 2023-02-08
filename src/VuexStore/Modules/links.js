@@ -3,6 +3,7 @@ export default {
 	state: () => ({		
 		// API GW routes
 		loginApiGwUrl: 			DOMAIN_URL + '/api/login',
+		logoutApiGwUrl: 		DOMAIN_URL + '/api/logout',
 		userProfileApiGwUrl: 	DOMAIN_URL + '/api/user-profile',
 		refreshApiGwUrl: 		DOMAIN_URL + '/api/refresh',
 		registerApiGwUrl: 		DOMAIN_URL + '/api/register',
@@ -72,6 +73,9 @@ export default {
 		// Api Gw routes getters
 		loginApiGwUrl(state) {
 			return state.loginApiGwUrl
+		},
+		logoutApiGwUrl(state) {
+			return state.logoutApiGwUrl
 		},
 		userProfileApiGwUrl(state) {
 			return state.userProfileApiGwUrl
