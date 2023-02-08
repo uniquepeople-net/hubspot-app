@@ -8,15 +8,18 @@
 				<h5 v-if="deleteMessage" class="mt-3 ms-4">{{ deleteMessage }}: {{ itemName }}</h5>
 			</div>
 			<template #footer>
-				<div :class="`d-flex justify-content-between ${deleteMessage ? 'justify-content-end' : ''}`">
-					<Button v-if="!deleteMessage" label="DELETE" @click="deleteUser" class="p-button-raised p-button-danger" />
+				<div :class="`d-flex justify-content-between position-relative ${deleteMessage ? 'justify-content-end' : ''}`">
+					<div class="position-relative">
+						<Button v-if="!deleteMessage" label="DELETE" @click="deleteUser" class="p-button-raised p-button-danger" />
+						<div v-if="loading" class="spinner-grow position absolute" role="status"></div>
+					</div>
 					<Button v-if="!deleteMessage" label="Cancel" @click="toggleDialog" class="p-button-raised p-button-warning" />
 					<Button v-if="deleteMessage" label="OK" @click="redirect" class="p-button-raised p-button-secondary" />
 				</div>
 			</template>
 		</Dialog>
 	
-		<i v-if="delete" class="bi bi-trash" @click="deleteDialog"></i>
+		<i v-if="delete" class="bi bi-trash" @click="toggleDialog"></i>
 	</div>	
 </template>
  
@@ -27,33 +30,42 @@
 		data() {
 			return {
 				showMessage: false,
-				deleteMessage: null
+				deleteMessage: null,
+				loading: false
 			}
 		},
 		methods: {
-			deleteDialog() {
-				this.toggleDialog()
-			},
 			toggleDialog() {
 				this.showMessage = !this.showMessage;
 			},
-			deleteUser() {				
+			deleteUser() {
+				this.loading = true				
 				axios.delete( DOMAIN_URL + this.url + this.itemId, {
 						headers: {
 							Authorization: 'Bearer ' + User.getToken()
 						}
 					}).then( response => {
 						this.deleteMessage = response.data.message
-					}).catch( error =>
-						console.log(error)						
-					)
+						this.loading = false
+					}).catch( error => {
+						this.toggleDialog()
+						this.loading = false
+						Toast.fire({
+							icon: 'error',
+							timer: 5000,
+							title: "Unable to delete " + this.item
+						})						
+					})
 			},
 			redirect() {
-				this.deleteDialog
-				this.$router.push({name: this.redirectRoute})
 				if ( this.callback ) {
 					this.$store.dispatch(this.callback);
 				}
+				if ( this.redirectRoute ) {
+					this.$router.push({name: this.redirectRoute})
+				}
+				this.toggleDialog()
+				this.deleteMessage = null
 			}
 		},
 	}

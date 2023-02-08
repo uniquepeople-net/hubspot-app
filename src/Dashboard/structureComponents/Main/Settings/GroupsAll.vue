@@ -66,6 +66,7 @@
 				submitted: false,
 				delete: true,
 				showMessage: false,
+				response: null
 			}
 		},
 		validations() {
@@ -100,7 +101,7 @@
 									Authorization: 'Bearer ' + User.getToken()
 								}
 							}).then( response => {
-								this.response = response.data								
+								this.response = response.data
 								this.toggleDialog();
 								this.$store.dispatch("groups/getGroups");
 							})

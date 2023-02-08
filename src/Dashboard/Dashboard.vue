@@ -16,8 +16,7 @@
 	import NavHeader from './structureComponents/NavHeader/NavHeader.vue';
 
 	export default {
-		created() {
-	
+		created() {	
 			if (!User.loggedIn()) {
 				this.$router.push({ name: 'login' })				
 			} else {			
