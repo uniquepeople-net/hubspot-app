@@ -158,7 +158,7 @@ import Calendar from 'primevue/calendar'
 import InputMask from 'primevue/inputmask'
 import LoadingIcon from '../../../global/LoadingIcon.vue';
 
-// Custom decimal validation
+// Custom country code validation
 const customCountryCode = {
 	$validator: helpers.regex(/^([0|\+[0-9]{1,5})/),
 	$message: 'Country code should be in format +99x'

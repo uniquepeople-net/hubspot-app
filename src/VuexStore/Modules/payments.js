@@ -39,7 +39,7 @@ export default {
 						headers: {
 							Authorization: 'Bearer ' + User.getToken()
 						}
-					}).then( response => {					
+					}).then( response => {
 						context.commit("SETPRODUCTS", response.data)
 					})
 		},

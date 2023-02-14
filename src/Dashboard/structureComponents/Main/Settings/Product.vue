@@ -7,13 +7,13 @@
 			</div>	
 		</template>
 		<template #content>			
-			<h2 class="text-center">{{ product.amount_decimal }}<span> €</span></h2>
+			<h2 class="text-center">{{ formatPrice(product.price.unit_amount) }}</h2>
 			<Divider />
 			<div class="d-flex">
 				<h5 class="fw-light">Description: <span class="fw-normal">{{ product.description }}</span></h5>
 			</div>
 			<Divider />
-			<h5 class="fw-light">Interval: <span class="fw-normal">{{ product.interval.name }}</span></h5>
+			<h5 class="fw-light">Interval: <span class="fw-normal">{{ checkInterval(product.price) }}</span></h5>
 			<Divider />
 		</template>
 		<template #footer>
@@ -48,6 +48,12 @@
 			},
 			payProduct() {
 				this.$emit('product', this.product)
+			},
+			checkInterval(price) {
+				return price.recurring === null ? 'one-time' : price.recurring.interval
+			},
+			formatPrice(price) {
+				return Helpers.formatPrice(price)
 			}
 		},
 		components: { Tag }

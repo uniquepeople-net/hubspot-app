@@ -18,9 +18,9 @@
 			<template #title>
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h5><span class="fw-light">Product:</span> {{product.name}}</h5>
-					<DeleteItem v-if="delete" :delete="delete" :itemId="id" 
-								:itemName="name" item="product" url="/api/products/"
-								redirectRoute="products" :callback="'payments/getProducts'"/>
+					<!-- <DeleteItem v-if="delete" :delete="delete" :itemId="id" 
+								:itemName="name" item="product" url="/api/product/"
+								redirectRoute="products" :callback="'payments/getProducts'"/> -->
 				</div>
 			</template>
 			<template #content>
@@ -28,6 +28,22 @@
 						<form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
 	
 							<div class="row">
+
+								<div class="inputgroup mb-5 col-12 col-lg-6">
+									<InputIcon icon="bi bi-calendar2-event"></InputIcon>
+									<Dropdown v-model="interval" :options="intervals" optionLabel="name" optionValue="id" placeholder="Select an Interval" disabled/>
+									
+									<InputError :validator="v$.interval" :submitted="submitted" replace="interval"></InputError>
+								</div>
+
+								<div class="inputgroup mb-5 col-12 col-lg-6">
+									<InputIcon icon="bi bi-currency-euro"></InputIcon>
+									<InputText id="amount" v-model="v$.amount.$model" :class="{'p-invalid':v$.amount.$invalid && submitted}" disabled
+												name="amount" placeholder="Amount (example: 9.99)"/>
+			
+									<InputError :validator="v$.amount" :submitted="submitted" replace="Amount"></InputError>
+								</div>
+
 								<div class="inputgroup mb-5 col-12 col-lg-6">
 									<InputIcon icon="bi bi-pencil"></InputIcon>
 									<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
@@ -36,20 +52,6 @@
 									<InputError :validator="v$.name" :submitted="submitted" replace="Name"></InputError>
 								</div>
 			
-								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-currency-euro"></InputIcon>
-									<InputText id="amount" v-model="v$.amount.$model" :class="{'p-invalid':v$.amount.$invalid && submitted}" aria-describedby="amount-error"
-												name="amount" placeholder="Amount (example: 9.99)"/>
-			
-									<InputError :validator="v$.amount" :submitted="submitted" replace="Amount"></InputError>
-								</div>
-	
-								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-calendar2-event"></InputIcon>
-									<Dropdown v-model="interval" :options="intervals" optionLabel="name" optionValue="id" placeholder="Select an Interval"/>
-									
-									<InputError :validator="v$.interval" :submitted="submitted" replace="interval"></InputError>
-								</div>
 
 								<div class="inputgroup mb-5 col-12 col-lg-6">
 									<InputIcon v-if="!active" icon="bi bi-toggle-off"></InputIcon>
@@ -96,24 +98,22 @@
 		},
 		mounted() {
 			this.name = this.product.name	
-			this.amount = this.product.amount_decimal
+			this.amount = (this.product.price.unit_amount/100).toFixed(2)
 			this.active = Boolean(this.product.active)	
 			this.description = this.product.description
-			this.interval = this.product.interval.id
-
-			var regexp = /^\d+\.\d{2}$/;
+			this.interval = this.product.price.recurring ? this.product.price.recurring.interval : this.product.price.type
 		},
  		setup: () => ({ v$: useVuelidate() }),
 		data() {
 			return {
-				id: parseInt(this.$route.params.product_id),
+				id: this.$route.params.product_id,
 				name: '',
 				amount: '',
 				active: false,
 				currency: 'EUR',
 				description: '',
 				interval: '',
-				intervals: [{ name: 'one-time', id: 1 }, { name: 'yearly', id: 2 }, { name: 'monthly', id: 3 } ],
+				intervals: [{ name: 'one-time', id: 'one_time' }, { name: 'yearly', id: 'year' }, { name: 'monthly', id: 'month' }, { name: 'weekly', id: 'week' } ],
 				submitted: false,
 				showMessage: false,
 				response: null,
@@ -142,7 +142,8 @@
 					active: this.active,
 					description: this.description,
 					interval: this.interval,
-					id: this.product.id 
+					id: this.product.id,
+					price_id: this.product.default_price
 				}
 
 				this.updateProduct( this.editProductUrl, data );
@@ -152,30 +153,29 @@
 				this.showMessage = !this.showMessage;
 			},
 			async updateProduct( url, data ) {
-				try {
-					await User.refreshedToken();
+				
+				await User.refreshedToken();
 
-					await axios.post( url + data.id, data,  {
-								headers: {
-									Authorization: 'Bearer ' + User.getToken()
-								}
-							}).then( response => {
-								this.response = response.data
-								this.product.name = data.name
-								this.product.amount_decimal = data.amount
-								this.product.active = data.active
-								this.product.description = data.description
-								this.product.interval.name = this.intervals.filter( i => i.id === data.interval )[0].name
-								this.toggleDialog();
+				await axios.post( url + data.id, data,  {
+							headers: {
+								Authorization: 'Bearer ' + User.getToken()
+							}
+						}).then( response => {
+							this.response = response.data
+							this.product.name = data.name
+							this.product.active = data.active
+							this.product.description = data.description
+							this.toggleDialog();
+						}).catch( error =>  {
+							Toast.fire({
+								icon: 'error',
+								timer: 5000,
+								title: "Unable to update product"
 							})
-				} catch (err) {
-					Toast.fire({
-						icon: 'error',
-						timer: 5000,
-						title: "Unable to update product"
-					})
-					throw 'Unable to update product'
-				}
+						})
+			},
+			formatPrice(price) {
+				return Helpers.formatPrice(price)
 			}
 		},
 		computed: {

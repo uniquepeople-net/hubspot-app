@@ -41,7 +41,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 	},
 	{
 		label: 'Info',
-		icon: 'pi pi-info-circle',
+		icon: 'bi bi-info-circle',
 		class: 'info-t',		// for testing purpose
 		items: [
 			{ 

@@ -16,6 +16,7 @@
 		</template>
 		<template #footer>
 			<Payments v-if="payments" :payments="payments"/>
+			<Skeleton v-if="!payments" height="2rem" class="mb-2"></Skeleton>
 		</template>
 	</Card>
 </template>
