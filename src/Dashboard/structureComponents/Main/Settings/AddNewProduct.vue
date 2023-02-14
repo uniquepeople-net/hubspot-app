@@ -5,7 +5,7 @@
 				<i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
 				<i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
 				<h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
-				<h6 v-if="response.error" v-for="error in response.error" class="mt-3">{{ error[0] }}</h6>
+				<h6 v-if="response.error" v-for="(error, key) in response.error" class="mt-3">{{ key + ': ' + error[0] }}</h6>
 			</div>
 			<template #footer>
 				<div class="flex justify-content-center">
@@ -35,17 +35,18 @@
 			
 								<div class="inputgroup mb-5 col-12 col-lg-6">
 									<InputIcon icon="bi bi-currency-euro"></InputIcon>
-									<InputText id="amount" v-model="v$.amount.$model" :class="{'p-invalid':v$.amount.$invalid && submitted}" aria-describedby="amount-error"
-												name="amount" placeholder="Amount"/>
+									<InputText id="amount" v-model="v$.amount.$model" :class="{'p-invalid':v$.amount.$invalid && submitted}"
+												name="amount" placeholder="Amount with two decimals 99.99"/>
 			
 									<InputError :validator="v$.amount" :submitted="submitted" replace="Amount"></InputError>
 								</div>
 	
 								<div class="inputgroup mb-5 col-12 col-lg-6">
 									<InputIcon icon="bi bi-calendar2-event"></InputIcon>
-									<Dropdown v-model="interval" :options="intervals" optionLabel="name" optionValue="id" placeholder="Select an Interval"/>
+									<Dropdown v-model="v$.interval.$model" :options="intervals" :class="{'p-invalid':v$.interval.$invalid && submitted}"
+											  optionLabel="name" optionValue="id" placeholder="Select an Interval"/>
 									
-									<InputError :validator="v$.interval" :submitted="submitted" replace="interval"></InputError>
+									<InputError :validator="v$.interval" :submitted="submitted" replace="Interval"></InputError>
 								</div>
 
 								<div class="inputgroup mb-5 col-12 col-lg-6">
@@ -77,21 +78,26 @@
  
 <script>
 	import { mapGetters } from 'vuex';
-	import { required, minLength, numeric } from "@vuelidate/validators";
+	import { required, minLength, numeric, helpers } from "@vuelidate/validators";
 	import { useVuelidate } from "@vuelidate/core";
+
+	// Custom decimal validation
+	const customDecimal = {
+		$validator: helpers.regex(/^\d+\.\d{2}$/),
+		$message: 'Amount should have 2 numbers after decimal point (ex: 9.99 )'
+	}
 
 	export default {
  		setup: () => ({ v$: useVuelidate() }),
 		data() {
 			return {
-				id: parseInt(this.$route.params.product_id),
 				name: '',
 				amount: '',
 				active: false,
 				currency: 'EUR',
 				description: '',
 				interval: '',
-				intervals: [{ name: 'one-time', id: 1 }, { name: 'yearly', id: 2 }, { name: 'monthly', id: 3 } ],
+				intervals: [{ name: 'one-time', id: 'one_time' }, { name: 'yearly', id: 'year' }, { name: 'monthly', id: 'month' }, { name: 'weekly', id: 'week' } ],
 				submitted: false,
 				showMessage: false,
 				response: null,
@@ -101,7 +107,7 @@
 		validations() {
 			return {
 				name: { required, minLength: minLength(3) },
-				amount: { required, numeric },
+				amount: { required, customDecimal },
 				description: { required, minLength: minLength(3) },
 				interval: { required }
 			}

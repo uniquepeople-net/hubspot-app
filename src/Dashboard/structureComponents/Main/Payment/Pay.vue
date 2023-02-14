@@ -1,6 +1,14 @@
 <template>
-	<Card class="card">
+	<Card class="card" v-if="payProduct">
+		<template #title>
+			<h5><span class="fw-light">Title: </span>{{ payProduct.name }}</h5>
+			<h5><span class="fw-light">Description: </span>{{ payProduct.description }}</h5>
+			<Divider />
+			<h5 class="text-center text-success">{{ formatPrice(payProduct.price.unit_amount) }}</h5>
+			<Divider />
+		</template>
 		<template #content>
+			
 			<p>4000 0025 0000 3155</p>
 			<p>4000 0027 6000 3184</p>
 			<p>4000 0082 6000 3178</p>
@@ -8,6 +16,7 @@
 
 			<p>4242 4242 4242 4242</p>	
 			<p>2223 0031 2200 3222</p>	
+
 			<StripeElements
 				v-if="stripeLoaded"
 				:stripe-key="stripePubKey"
@@ -61,7 +70,7 @@
                             color: '#454D54',
                             fontWeight: '400',
                             fontFamily: 'Inter, Calibri, sans-serif',
-                            fontSize: '16px',
+                            fontSize: '1.3rem',
                             fontSmoothing: 'antialiased',
 
                             ':-webkit-autofill': {
@@ -92,22 +101,23 @@
 
 				this.loading = true
 				this.disablePay = true
+
 				// Access instance methods, e.g. createToken()
 				groupComponent.instance.createToken(cardElement)
 					.then( result => {
 					// Handle result.error or result.token
-
 						let data = {
-							amount: this.payProduct.amount_decimal,
-							stripeToken: result.token.id,
-							//billing_details: { name: 'fero' },
-							userId: this.user.id,
-							card: result.token.card.id,
-							//returnUrl: window.location.href,
 							returnUrl: window.location.origin + '/wallet/pay-status',
 							productId: this.payProduct.id,
-							description: this.payProduct.description,
-							productName: this.payProduct.name
+							priceId: this.payProduct.default_price,
+							description: this.payProduct.name,
+							userId: this.user.id,
+							productName: this.payProduct.name 
+							/* amount: this.payProduct.amount_decimal,
+							stripeToken: result.token.id,
+							//billing_details: { name: 'fero' },
+							card: result.token.card.id,
+							//returnUrl: window.location.href,*/
 						}
 					
 						axios.post( this.paymentUrl , data, {
@@ -143,9 +153,9 @@
 						this.loading = false
 						this.disablePay = false						
 					})
-
-					
-
+			},
+			formatPrice(price) {
+				return Helpers.formatPrice(price)
 			}
 		},
 		computed: {

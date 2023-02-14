@@ -75,7 +75,7 @@
 		padding: 1rem 2rem;
 	}
 	.main-active-sidebar {
-		margin-left: 320px;
+		margin-left: 12rem;
 	}
 }
 </style>

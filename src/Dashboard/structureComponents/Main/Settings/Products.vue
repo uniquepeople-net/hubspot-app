@@ -1,6 +1,8 @@
 <template>
-	<router-view :key="$route.fullPath" v-if="products" :products="products"></router-view>
-	<LoadingIcon v-if="!products"/>
+	<div>
+		<router-view :key="$route.fullPath" v-if="products" :products="products"></router-view>
+		<LoadingIcon v-if="!products"/>
+	</div>
 </template>
  
  

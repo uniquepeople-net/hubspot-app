@@ -137,6 +137,15 @@ class Helpers {
 		);
 		return pattern.test(str);
 	  }
+
+	// Format price from cents to eur with two decimals
+	formatPrice(price) {
+		let formatter = new Intl.NumberFormat('sk-SK', {
+			style: 'currency',
+			currency: 'EUR',
+		});
+		return formatter.format(price/100)
+	} 
 }
 
 export default Helpers = new Helpers();

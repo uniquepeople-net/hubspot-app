@@ -47,9 +47,10 @@ export default {
 		deleteEmails:				DOMAIN_URL + '/api/delete-emails',
 
 		// Products service routes
-		allProducts:				DOMAIN_URL + '/api/products',		
-		editProduct:				DOMAIN_URL + '/api/products/',
-		addProduct:					DOMAIN_URL + '/api/products/store',	
+		allProducts:				DOMAIN_URL + '/api/product',		
+		addProduct:					DOMAIN_URL + '/api/product',	
+		editProduct:				DOMAIN_URL + '/api/product/',
+		//deleteProduct:				DOMAIN_URL + '/api/product/',	
 		
 		// Payment service routes
 		payment:					DOMAIN_URL + '/api/payment', 

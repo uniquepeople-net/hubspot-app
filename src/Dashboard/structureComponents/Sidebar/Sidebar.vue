@@ -64,7 +64,8 @@
  
 <style lang='scss'>
 .sidebar {
-	border-radius: 0 50px 50px 0;	
+	width: 12rem !important;
+	border-radius: 0 50px 0 0;	
 	.p-sidebar-header {
 		justify-content: space-between;
 		.logo img {
@@ -75,16 +76,30 @@
 		& .p-panelmenu.p-component {
 			margin-top: 1rem;
 		}
+		& .p-panelmenu-header-link {
+			position: relative;
+			flex-direction: column;
+			& .p-menuitem-icon {
+				font-size: 1.7rem;
+				margin: 0;
+			}
+			& .p-panelmenu-icon {
+				position: absolute;
+				right: .5rem;
+				top: 0;
+				bottom: 0;
+				margin: auto;
+				display: flex;
+				align-items: center;
+			}
+		}
 	}
 	.p-menuitem-text {
-		font-weight: 400;
+		font-weight: 100;
 	}
 	.pi-chevron-right, .pi-chevron-down {
 		order: 3;
 		margin-left: auto;
-	}
-	.p-panelmenu .p-menuitem-icon {
-		margin-right: 1rem !important;
 	}
 }
 </style>

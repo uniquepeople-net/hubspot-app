@@ -1,10 +1,10 @@
 <template>
 	<Fieldset legend="Payments history" :toggleable="true" class="fieldset" :collapsed="true">		
 		<div class="row align-items-center" v-for="(payment, index) in payments" :style="index % 2 === 0 ? 'background: var(--gray-100)' : '' ">
+			<div class="col-4 column-list">{{payment.created_at_formatted}}</div>
 			<div class="col-3 column-list col-r-border">{{payment.product_name}}</div>
-			<div class="col-2 column-list col-r-border">{{payment.amount_decimal + ' ' + payment.currency}}</div>
-			<div class="col-4 column-list col-r-border">{{payment.status}}</div>
-			<div class="col-3 column-list">{{payment.created_at_formatted}}</div>
+			<div class="col-3 column-list col-r-border">{{formatPrice(payment.amount_decimal * 100)}}</div>
+			<div class="col-2 column-list col-r-border">{{payment.status}}</div>
 		</div>
 	
 		<p v-if="!payments.length">No payments</p>
@@ -16,6 +16,11 @@
 	export default {
 		props: {
 			payments: Array
+		},
+		methods: {
+			formatPrice(price) {
+				return Helpers.formatPrice(price)
+			}
 		}
 	}
 </script>

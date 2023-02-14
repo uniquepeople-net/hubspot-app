@@ -3,12 +3,14 @@
 	
 	<div class="row g-4 mb-4" v-if="products">			
 		<div class="col-12 col-sm-6 col-xl-4 mb-3 mb-sm-0" 
-			 v-for="(product, key) in products.filter(prod => prod.active === 1)">
+			 v-for="(product, key) in products.filter(prod => prod.active === true)">
 			
-			<Product :product="product" :pay="true" @product="getProduct($event)"/>
-		
+			<Product :product="product" :pay="true" @product="getProduct($event)"/>		
 		</div>
 	</div>
+	
+	<LoadingIcon v-if="!products"/>
+
 </template>
  
  

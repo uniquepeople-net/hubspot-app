@@ -139,14 +139,14 @@
 </template>
 
 <script>
-import { email, required, sameAs, minLength, numeric, helpers, alphaNum } from "@vuelidate/validators";
+import { email, required, sameAs, minLength, numeric, helpers } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 import Calendar from 'primevue/calendar';
 import InputMask from 'primevue/inputmask'
 
-// Custom decimal validation
+// Custom country code validation
 const customCountryCode = {
 	$validator: helpers.regex(/^([0|\+[0-9]{1,5})/),
 	$message: 'Country code should be in format +99x'
