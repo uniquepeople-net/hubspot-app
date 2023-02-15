@@ -68,6 +68,9 @@ export default {
 		detachGroups:				DOMAIN_URL + '/api/group-user/detach',
 		groupUser:					DOMAIN_URL + '/api/group-user',
 
+		// Surveys links
+		addSurvey:					DOMAIN_URL + '/api/surveys'
+
 	}),
 
 	getters: {
@@ -225,5 +228,10 @@ export default {
 		detachGroups(state) {
 			return state.detachGroups
 		},
+
+		// Surveys routes
+		addSurvey(state) {
+			return state.addSurvey
+		}
 	}
 }

@@ -1,0 +1,260 @@
+<template>
+	<div>
+		<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
+			<div class="flex align-items-center flex-column pt-6 px-3">
+				<i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
+				<i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
+				<h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
+				<h6 v-if="response.error" v-for="(error, key) in response.error" class="mt-3">{{ key + ': ' + error[0] }}</h6>
+			</div>
+			<template #footer>
+				<div class="flex justify-content-center">
+					<Button label="OK" @click="toggleDialog" class="p-button-text" />
+				</div>
+			</template>
+		</Dialog>
+	
+		<Card class="card">
+			<template #title>
+				<div class="card-header d-flex justify-content-between align-items-center">
+					<h5><span class="fw-light">Add New Survey</span></h5>
+				</div>
+			</template>
+			<template #content>
+					<div class="card-body">
+						<form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
+	
+							<div class="row">
+								<div class="inputgroup mb-5 col-12 col-lg-6">
+									<InputIcon icon="bi bi-pencil"></InputIcon>
+									<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
+											name="name" placeholder="Name"/>
+								
+									<InputError :validator="v$.name" :submitted="submitted" replace="Name"></InputError>
+								</div>
+
+								<div class="inputgroup mb-5 col-12 col-lg-6">
+									<InputIcon icon="bi bi-pencil"></InputIcon>
+									<InputText id="description" v-model="v$.description.$model" :class="{'p-invalid':v$.description.$invalid && submitted}" 
+											name="description" placeholder="Description"/>
+								
+									<InputError :validator="v$.description" :submitted="submitted" replace="Description"></InputError>
+								</div>
+
+								<div class="inputgroup mb-5 col-12 align-items-center col-lg-6">
+									<label for="start">Start date:&nbsp;</label>
+									<Calendar inputId="start" v-model="v$.startDate.$model" :showIcon="true" dateFormat="dd.mm.yy" class="calendar" :class="{'p-invalid':v$.startDate.$invalid && submitted}"/>
+									<InputError :validator="v$.startDate" :submitted="submitted" replace="Start date"></InputError>
+								</div>
+
+								<div class="inputgroup mb-5 col-12 align-items-center col-lg-6">
+									<label for="finish">Finish date:&nbsp;</label>
+									<Calendar inputId="finish" v-model="v$.finishDate.$model" :showIcon="true" dateFormat="dd.mm.yy" class="calendar" :class="{'p-invalid':v$.finishDate.$invalid && submitted}"/>
+									<InputError :validator="v$.finishDate" :submitted="submitted" replace="Finish date"></InputError>
+								</div>
+			
+								<!-- <div class="inputgroup mb-5 col-12 col-lg-6">
+									<InputIcon icon="bi bi-currency-euro"></InputIcon>
+									<InputText id="amount" v-model="v$.amount.$model" :class="{'p-invalid':v$.amount.$invalid && submitted}"
+												name="amount" placeholder="Amount with two decimals 99.99"/>
+			
+									<InputError :validator="v$.amount" :submitted="submitted" replace="Amount"></InputError>
+								</div>
+	
+								<div class="inputgroup mb-5 col-12 col-lg-6">
+									<InputIcon icon="bi bi-calendar2-event"></InputIcon>
+									<Dropdown v-model="v$.interval.$model" :options="intervals" :class="{'p-invalid':v$.interval.$invalid && submitted}"
+											  optionLabel="name" optionValue="id" placeholder="Select an Interval"/>
+									
+									<InputError :validator="v$.interval" :submitted="submitted" replace="Interval"></InputError>
+								</div>
+
+								<div class="inputgroup mb-5 col-12 col-lg-6">
+									<InputIcon v-if="!active" icon="bi bi-toggle-off"></InputIcon>
+									<InputIcon v-if="active" icon="bi bi-toggle-on"></InputIcon>
+									<ToggleButton v-model="active" onLabel="Active" offLabel="Inactive" :class="`${active ? 'bg-success' : 'bg-danger'} p-togglebutton`"/>
+								</div>
+	
+								<div class="inputgroup mb-5 col-12 col-lg-6">
+									<InputIcon icon="bi bi-info-circle"></InputIcon>
+									<Textarea id="description" v-model="v$.description.$model" :class="{'p-invalid':v$.description.$invalid && submitted}" 
+											name="description" placeholder="Description"/>
+								
+									<InputError :validator="v$.description" :submitted="submitted" replace="Description"></InputError>
+								</div>
+								 -->
+								<div class="col-12 col-lg-6 offset-lg-6">
+									<Button type="submit" label="Add Product" class="mt-2 submit-btn" />
+								</div>
+							</div>
+	
+						</form>
+					</div>
+				</template>
+		</Card>
+	</div>  
+</template>
+ 
+ 
+<script>
+	import { mapGetters } from 'vuex';
+	import { required, minLength, minValue, helpers } from "@vuelidate/validators";
+	import { useVuelidate } from "@vuelidate/core";
+	import Calendar from 'primevue/calendar';
+
+	// Custom decimal validation
+	const customDecimal = {
+		$message: 'Amount should have 2 numbers after decimal point (ex: 9.99 )'
+	}
+
+	export default {
+ 		setup: () => ({ v$: useVuelidate() }),
+		data() {
+			return {
+				name: '',
+				description: '',
+				startDate: '',
+				finishDate: '',
+				currentDate: this.theDayHour(new Date, 0),
+				submitted: false,
+				showMessage: false,
+				response: null,
+				/* amount: '',
+				active: false,
+				currency: 'EUR',
+				description: '',
+				interval: '',
+				intervals: [{ name: 'one-time', id: 'one_time' }, { name: 'yearly', id: 'year' }, { name: 'monthly', id: 'month' }, { name: 'weekly', id: 'week' } ],
+				delete: true */
+			}
+		},
+		validations() {
+			return {
+				name: { required, minLength: minLength(3) },
+				description: { required, minLength: minLength(3) },
+				startDate: { 
+					minValue: helpers.withMessage(
+						({$params}) => `Minimum date should be ${this.dateFormatted( $params.min )}`,
+						minValue(this.currentDate)
+					),
+					required
+				},
+				finishDate: { 
+					minValue: helpers.withMessage(
+						({$params}) => `Minimum date should be ${this.dateFormatted( $params.min )}`,
+						minValue(this.startDate)
+					),
+					required
+				},
+				/* amount: { required, customDecimal },
+				description: { required, minLength: minLength(3) },
+				interval: { required } */
+			}
+		},
+		methods: {
+			dateFormatted(date) {
+				if ( date ) {
+					let currentDate = date
+					return currentDate.toLocaleDateString('sk-SK', {
+						day: '2-digit',month: '2-digit',year: 'numeric'})
+				} else return date
+			},
+			theDayHour(date, hour, minutes = 0, seconds = 0) {
+				let newDate  = date
+				newDate ? newDate.setHours(hour, minutes, seconds,0) : newDate
+				return newDate
+			},
+			handleSubmit(isFormValid) {
+				this.submitted = true;
+
+				if (!isFormValid) {
+					return;
+				}
+				
+				let data = {
+					name: this.name,
+					description: this.description,
+					start_date: this.startDate,
+					finish_date: this.finishDate,
+				}
+
+				this.addSurvey( this.addSurveyUrl, data );
+
+			},
+			toggleDialog() {
+				this.showMessage = !this.showMessage;
+			},
+			async addSurvey( url, data ) {
+				
+				await User.refreshedToken();
+
+				await axios.post( url, data,  {
+						headers: {
+							Authorization: 'Bearer ' + User.getToken()
+						}
+					}).then( response => {
+						console.log(response)
+						
+						this.response = response.data								
+						this.toggleDialog();
+						//this.$store.dispatch("payments/getProducts");
+					}).catch( error => {
+						Toast.fire({
+							icon: 'error',
+							timer: 5000,
+							title: "Unable to add survey"
+						})
+					})
+			}
+			
+		},
+		computed: {
+			...mapGetters({ addSurveyUrl: 'links/addSurvey' }),
+		},
+		components: { Calendar }
+	}
+</script>
+ 
+ 
+<style lang='scss' scoped>
+.card {
+	max-width: 1200px;
+}
+.inputgroup {
+	position: relative;
+	display: flex;
+	& span.error-msg {
+		position: absolute;
+		bottom: -60%;
+	}
+	& > .p-button {
+		border-radius: 0 4px 4px 0;
+	} 
+	:deep(.p-dropdown) {
+		width: 100%;
+	}
+	:deep(.p-inputtext), :deep(.p-dropdown) {
+		border-radius: 0 6px 6px 0;
+	}
+}
+:deep(.p-calendar) {
+	flex: 1;
+	max-width: 576px;
+}
+.calendar {	
+	:deep(.p-button) {
+		color: #6c757d;
+		background: #e9ecef;
+	}
+	:deep(.p-inputtext) {
+		border-radius: 6px 0 0 6px;
+	}
+}
+.p-togglebutton {
+	color: var(--gray-50);
+	max-width: 10rem;
+}
+.submit-btn {
+	max-width: 25rem;
+}
+</style>
