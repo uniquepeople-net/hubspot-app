@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<!-- <router-view :key="$route.fullPath" v-if="surveys" :products="surveys"></router-view> -->
-		<router-view :key="$route.fullPath"></router-view>
+		<router-view :key="$route.fullPath" v-if="surveys" :surveys="surveys"></router-view>
+		<!-- <router-view :key="$route.fullPath"></router-view> -->
 		<LoadingIcon v-if="!surveys"/>
 	</div>
 </template>
@@ -12,10 +12,10 @@ import { mapGetters } from 'vuex'
 
 export default {
 	created() {
-		//this.$store.dispatch("payments/getProducts");
+		this.$store.dispatch("surveys/getSurveys");
 	},
 	computed: {
-		//...mapGetters({ products: 'payments/products' })
+		...mapGetters({ surveys: 'surveys/surveys' })
 	}
 }
 </script>

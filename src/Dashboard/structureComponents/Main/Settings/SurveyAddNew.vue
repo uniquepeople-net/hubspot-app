@@ -83,11 +83,11 @@
 									<InputError :validator="v$.description" :submitted="submitted" replace="Description"></InputError>
 								</div>
 								 -->
-								<div class="col-12 col-lg-6 offset-lg-6">
-									<Button type="submit" label="Add Product" class="mt-2 submit-btn" />
-								</div>
 							</div>
 	
+							<div class="d-flex justify-content-end">
+								<Button type="submit" label="Add Survey" class="mt-2 submit-btn" />
+							</div>
 						</form>
 					</div>
 				</template>
@@ -197,7 +197,7 @@
 						
 						this.response = response.data								
 						this.toggleDialog();
-						//this.$store.dispatch("payments/getProducts");
+						this.$store.dispatch("surveys/getSurveys");
 					}).catch( error => {
 						Toast.fire({
 							icon: 'error',

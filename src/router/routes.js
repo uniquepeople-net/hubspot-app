@@ -58,7 +58,8 @@ import SurveyBest11 from '../Outside/SurveyBest11.vue';
 
 import Surveys from '../Dashboard/structureComponents/Main/Settings/Surveys.vue';
 import SurveysAll from '../Dashboard/structureComponents/Main/Settings/SurveysAll.vue';
-import AddNewSurvey from '../Dashboard/structureComponents/Main/Settings/AddNewSurvey.vue';
+import SurveyAddNew from '../Dashboard/structureComponents/Main/Settings/SurveyAddNew.vue';
+import SurveySpecific from '../Dashboard/structureComponents/Main/Settings/SurveySpecific.vue';
 
 
 export const routes = [
@@ -157,7 +158,9 @@ export const routes = [
 						children: [
 							{ path: 'all', component: SurveysAll, name: 'surveys-all', props: true },
 
-							{ path: 'add-new', component: AddNewSurvey, name: 'add-new-survey', props: true },
+							{ path: ':survey_id', component: SurveySpecific, name: 'specific-survey', props: true },
+
+							{ path: 'add-new', component: SurveyAddNew, name: 'add-new-survey', props: true },
 						]
 
 					},

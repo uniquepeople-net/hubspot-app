@@ -69,7 +69,8 @@ export default {
 		groupUser:					DOMAIN_URL + '/api/group-user',
 
 		// Surveys links
-		addSurvey:					DOMAIN_URL + '/api/surveys'
+		surveys:					DOMAIN_URL + '/api/surveys',
+		addSurvey:					DOMAIN_URL + '/api/surveys',
 
 	}),
 
@@ -232,6 +233,9 @@ export default {
 		// Surveys routes
 		addSurvey(state) {
 			return state.addSurvey
-		}
+		},
+		surveys(state) {
+			return state.surveys
+		},
 	}
 }

@@ -95,7 +95,7 @@
 		}
 	}
 	.p-menuitem-text {
-		font-weight: 100;
+		font-weight: 500;
 	}
 	.pi-chevron-right, .pi-chevron-down {
 		order: 3;
