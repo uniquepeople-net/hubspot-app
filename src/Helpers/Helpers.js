@@ -89,6 +89,15 @@ class Helpers {
 			day: '2-digit',month: '2-digit',year: 'numeric'})
 	}
 
+	// Get difference days between two dates
+	getDiffDays(startDate, finishDate) {
+		let startDateObj = new Date(startDate)
+		let finishDateObj = new Date(finishDate)
+		const convertConst = 1000*60*60*24
+
+		return (finishDateObj - startDateObj) / convertConst
+	}
+
 	// generate password
 	generatePasswd(len) {
 		const string = "abcdefghijklmnopqrstuvwxyz";

@@ -24,6 +24,7 @@
 						this.$store.commit('emails/RESETSTATE')
 						this.$store.commit('payments/RESETSTATE')
 						this.$store.commit('groups/RESETSTATE')
+						this.$store.commit('surveys/RESETSTATE')
 						Toast.fire({
 							icon: 'success',
 							title: response.data.message

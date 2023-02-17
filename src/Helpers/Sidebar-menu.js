@@ -72,13 +72,18 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 		command: () => sidebarHide() */
 		items: [
 			{
-				label: 'Payments',
-				to: {name: 'products'},
+				label: 'Groups',
+				to: {name: 'groups-all'},
 				command: () => sidebarHide()
 			},
 			{
-				label: 'Groups',
-				to: {name: 'groups-all'},
+				label: 'Products',
+				to: {name: 'products-all'},
+				command: () => sidebarHide()
+			},
+			{
+				label: 'Surveys',
+				to: {name: 'surveys-all'},
 				command: () => sidebarHide()
 			},
 		]

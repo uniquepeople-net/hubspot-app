@@ -54,6 +54,13 @@ import Groups from '../Dashboard/structureComponents/Main/Settings/Groups.vue';
 import GroupsAll from '../Dashboard/structureComponents/Main/Settings/GroupsAll.vue';
 import AddNewGroup from '../Dashboard/structureComponents/Main/Settings/AddNewGroup.vue';
 
+import SurveyBest11 from '../Outside/SurveyBest11.vue';
+
+import Surveys from '../Dashboard/structureComponents/Main/Settings/Surveys.vue';
+import SurveysAll from '../Dashboard/structureComponents/Main/Settings/SurveysAll.vue';
+import SurveyAddNew from '../Dashboard/structureComponents/Main/Settings/SurveyAddNew.vue';
+import SurveySpecific from '../Dashboard/structureComponents/Main/Settings/SurveySpecific.vue';
+
 
 export const routes = [
 
@@ -126,14 +133,14 @@ export const routes = [
 				beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() ),
 
 				children: [
-					{ path: 'payments', component: Products, name: 'payments', props: true, redirect: { name: 'products' },
+					{ path: 'products', component: Products, name: 'products', props: true, redirect: { name: 'products' },
 					
 						children: [
-							{ path: 'products', component: ProductsAll, name: 'products', props: true },
+							{ path: 'all', component: ProductsAll, name: 'products-all', props: true },
 
-							{ path: 'products/:product_id', component: SpecificProduct, name: 'specific-product', props: true },
+							{ path: ':product_id', component: SpecificProduct, name: 'specific-product', props: true },
 							
-							{ path: 'products/add-new', component: AddNewProduct, name: 'add-new-product', props: true },
+							{ path: 'add-new', component: AddNewProduct, name: 'add-new-product', props: true },
 						]
 
 					},
@@ -142,10 +149,18 @@ export const routes = [
 					
 						children: [
 							{ path: 'all', component: GroupsAll, name: 'groups-all', props: true },
+						]
 
-							/* { path: 'products/:product_id', component: SpecificProduct, name: 'specific-product', props: true },*/
-							
-							//{ path: 'add-new', component: AddNewGroup, name: 'add-new-group', props: true },
+					},
+
+					{ path: 'surveys', component: Surveys, name: 'surveys', props: true, redirect: { name: 'surveys-all' },
+					
+						children: [
+							{ path: 'all', component: SurveysAll, name: 'surveys-all', props: true },
+
+							{ path: ':survey_id', component: SurveySpecific, name: 'specific-survey', props: true },
+
+							{ path: 'add-new', component: SurveyAddNew, name: 'add-new-survey', props: true },
 						]
 
 					},
@@ -161,4 +176,6 @@ export const routes = [
     { path: '/logout', component: Logout, name:'logout' },
     { path: '/forgot', component: Forget, name:'forgot' },
     { path: '/update-password', component: UpdatePassword, name:'update-password' },
+
+	{ path: '/survey-best-11', component: SurveyBest11, name:'survey-best-11' }
 ]

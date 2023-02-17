@@ -256,7 +256,7 @@ export default {
 				}).then(
 					resp => {
 						this.response = resp.data
-						//this.resetForm()
+						this.resetForm()
 						this.toggleDialog()
 						this.loading = false
 					}				
