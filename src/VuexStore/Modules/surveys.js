@@ -1,13 +1,19 @@
+import axios from "axios";
+
 export default {
 	namespaced: true,
 
 	state: () => ({
 		surveys: null,
+		questionTypes: null
 	}),
 
 	mutations: {
 		SETSURVEYS( state, data ) {
 			state.surveys = data;
+		},
+		SETQUESTTYPES( state, data ) {
+			state.questionTypes = data
 		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
@@ -29,17 +35,42 @@ export default {
 						Authorization: 'Bearer ' + User.getToken()
 				}})
 				.then( response => {
-					console.log(response)
-					
-					//let news = response.data.data.children.filter( n => n.data.author !== '2soccer2bot' && n.data.author !== 'AutoModerator') 
 					context.commit("SETSURVEYS", response.data)
 				})
+				.catch( error =>  {
+					Toast.fire({
+						icon: 'error',
+						title: 'Unable to load surveys'
+					})
+				})
 		},
+		async getQuestTypes( context ) {
+			let questTypesLink = context.rootGetters['links/questionTypes']
+			
+			await User.refreshedToken();
+			
+			await axios.get( questTypesLink, {
+						headers: {
+							Authorization: 'Bearer ' + User.getToken()
+					}})
+					.then( response =>  {
+						context.commit("SETQUESTTYPES", response.data)	
+					})
+					.catch( error => {
+						Toast.fire({
+							icon: 'error',
+							title: 'Unable to load question types'
+						})
+					})
+		}
 	},
 
 	getters: {
 		surveys(state) {
 			return state.surveys
+		},
+		questionTypes(state) {
+			return state.questionTypes
 		}
 	}
 }

@@ -53,38 +53,16 @@
 									<InputError :validator="v$.finishDate" :submitted="submitted" replace="Finish date"></InputError>
 								</div>
 			
-								<!-- <div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-currency-euro"></InputIcon>
-									<InputText id="amount" v-model="v$.amount.$model" :class="{'p-invalid':v$.amount.$invalid && submitted}"
-												name="amount" placeholder="Amount with two decimals 99.99"/>
-			
-									<InputError :validator="v$.amount" :submitted="submitted" replace="Amount"></InputError>
-								</div>
-	
-								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-calendar2-event"></InputIcon>
-									<Dropdown v-model="v$.interval.$model" :options="intervals" :class="{'p-invalid':v$.interval.$invalid && submitted}"
-											  optionLabel="name" optionValue="id" placeholder="Select an Interval"/>
-									
-									<InputError :validator="v$.interval" :submitted="submitted" replace="Interval"></InputError>
-								</div>
+							</div>
 
-								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon v-if="!active" icon="bi bi-toggle-off"></InputIcon>
-									<InputIcon v-if="active" icon="bi bi-toggle-on"></InputIcon>
-									<ToggleButton v-model="active" onLabel="Active" offLabel="Inactive" :class="`${active ? 'bg-success' : 'bg-danger'} p-togglebutton`"/>
-								</div>
-	
-								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-info-circle"></InputIcon>
-									<Textarea id="description" v-model="v$.description.$model" :class="{'p-invalid':v$.description.$invalid && submitted}" 
-											name="description" placeholder="Description"/>
-								
-									<InputError :validator="v$.description" :submitted="submitted" replace="Description"></InputError>
-								</div>
-								 -->
+							<Divider />
+
+							<div>
+								<SurveyQuestions />
 							</div>
 	
+							<Divider />
+
 							<div class="d-flex justify-content-end">
 								<Button type="submit" label="Add Survey" class="mt-2 submit-btn" />
 							</div>
@@ -101,6 +79,7 @@
 	import { required, minLength, minValue, helpers } from "@vuelidate/validators";
 	import { useVuelidate } from "@vuelidate/core";
 	import Calendar from 'primevue/calendar';
+	import SurveyQuestions from './SurveyQuestions.vue';
 
 	// Custom decimal validation
 	const customDecimal = {
@@ -211,7 +190,7 @@
 		computed: {
 			...mapGetters({ addSurveyUrl: 'links/addSurvey' }),
 		},
-		components: { Calendar }
+		components: { Calendar, SurveyQuestions }
 	}
 </script>
  

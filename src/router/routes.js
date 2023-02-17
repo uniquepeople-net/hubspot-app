@@ -56,10 +56,10 @@ import AddNewGroup from '../Dashboard/structureComponents/Main/Settings/AddNewGr
 
 import SurveyBest11 from '../Outside/SurveyBest11.vue';
 
-import Surveys from '../Dashboard/structureComponents/Main/Settings/Surveys.vue';
-import SurveysAll from '../Dashboard/structureComponents/Main/Settings/SurveysAll.vue';
-import SurveyAddNew from '../Dashboard/structureComponents/Main/Settings/SurveyAddNew.vue';
-import SurveySpecific from '../Dashboard/structureComponents/Main/Settings/SurveySpecific.vue';
+import Surveys from '../Dashboard/structureComponents/Main/Settings/Surveys/Surveys.vue';
+import SurveysAll from '../Dashboard/structureComponents/Main/Settings/Surveys/SurveysAll.vue';
+import SurveyAddNew from '../Dashboard/structureComponents/Main/Settings/Surveys/SurveyAddNew.vue';
+import SurveySpecific from '../Dashboard/structureComponents/Main/Settings/Surveys/SurveySpecific.vue';
 
 
 export const routes = [

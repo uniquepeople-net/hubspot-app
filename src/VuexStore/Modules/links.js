@@ -71,6 +71,7 @@ export default {
 		// Surveys links
 		surveys:					DOMAIN_URL + '/api/surveys',
 		addSurvey:					DOMAIN_URL + '/api/surveys',
+		questionTypes:				DOMAIN_URL + '/api/question-types'
 
 	}),
 
@@ -237,5 +238,8 @@ export default {
 		surveys(state) {
 			return state.surveys
 		},
+		questionTypes(state) {
+			return state.questionTypes
+		}
 	}
 }
