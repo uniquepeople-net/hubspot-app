@@ -197,7 +197,7 @@
  
 <style lang='scss' scoped>
 .card {
-	max-width: 1200px;
+	max-width: 1400px;
 }
 .inputgroup {
 	position: relative;

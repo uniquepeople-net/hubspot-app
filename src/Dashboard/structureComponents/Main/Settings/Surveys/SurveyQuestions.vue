@@ -2,10 +2,10 @@
 	<div>
 		<h5 class="text-center mb-4">Questions</h5>
 		
-		<SurveyQuestionComp :key="question.qId" v-for="(question) in questions" :question="question" 
-							:types="types" @deleteItem="deleteItem" :qId="question.qId"/>
+		<SurveyQuestionComp :key="question.qId" v-for="(question, index) in questions" :question="question" 
+							:types="types" @deleteItem="deleteItem" :qId="question.qId" :index="index"/>
 		
-		<div class="d-flex justify-content-center">
+		<div class="d-flex justify-content-center my-5">
 			<Button label="Add Question" class="mt-2 submit-btn p-button-raised p-button-secondary p-button-text" 
 					@click="addComponent()" />
 		</div>
@@ -30,11 +30,17 @@
 		},
 		methods: {
 			addComponent() {
-				let newObj = { title: '', type_id: null, qId: uniqueId() }
-				this.questions = [...this.questions, newObj] 
+				let newObj = { title: '', index: null, qId: uniqueId() }
+				this.questions = [...this.questions, newObj]
+				this.questions.map( (question, index) => {	
+					question.index = index
+				}) 
 			},
 			deleteItem(qId) {
-				this.questions = this.questions.filter( q => q.qId !== qId )				
+				this.questions = this.questions.filter( q => q.qId !== qId )
+				this.questions.map( (question, index) => {
+					question.index = index
+				}) 			
 			}
 		},
 		computed: {

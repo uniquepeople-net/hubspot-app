@@ -5,7 +5,8 @@ export default {
 
 	state: () => ({
 		surveys: null,
-		questionTypes: null
+		questionTypes: null,
+		newSurvey: null
 	}),
 
 	mutations: {
@@ -14,6 +15,9 @@ export default {
 		},
 		SETQUESTTYPES( state, data ) {
 			state.questionTypes = data
+		},
+		SETNEWSURVEY( state, data ) {
+			state.newSurvey = data
 		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
@@ -62,6 +66,9 @@ export default {
 							title: 'Unable to load question types'
 						})
 					})
+		},
+		setNewSurvey( context, data ) {
+			
 		}
 	},
 

@@ -1,19 +1,21 @@
 <template>
 	<div class="row">
 
-
 		<div class="inputgroup my-3 col-12 col-lg-6">
 			
-			<InputIcon icon="bi bi-question"></InputIcon>
+			<span class="p-inputgroup-addon">
+				{{ questionNum() }}
+			</span>
 			<InputText id="title" v-model="v$.title.$model" :class="{'p-invalid':v$.title.$invalid && submitted}" 
-						name="title" :placeholder="'Question'"/>
+						name="title" :placeholder="'Question ' + questionNum()"/>
 		
 			<InputError :validator="v$.title" :submitted="submitted" replace="Question"></InputError>
 		</div>
 
 		<div class="inputgroup my-3 col-11 col-lg-5">
 			<InputIcon icon="bi bi-justify"></InputIcon>
-			<Dropdown v-model="type" :options="types" optionLabel="type" optionValue="id" placeholder="Select a Type"/>
+			<Dropdown v-model="type" :options="types" optionLabel="type" optionValue="id" 
+					  placeholder="Select a Type" @change="selectType" />
 			
 			<InputError :validator="v$.type" :submitted="submitted" replace="Type"></InputError>
 		</div>
@@ -40,7 +42,8 @@
 	export default {
 		props: {
 			types: Object,
-			qId: String
+			qId: String,
+			index: Number
 		},
 		setup: () => ({ v$: useVuelidate() }),
 		data() {
@@ -60,6 +63,12 @@
 		methods: {
 			deleteItem() {
 				this.$emit('deleteItem', this.qId)
+			},
+			selectType() {
+				this.questionType = true;
+			},
+			questionNum() {
+				return (this.index + 1).toString()
 			}
 		},
 		components: { QuestionType }
