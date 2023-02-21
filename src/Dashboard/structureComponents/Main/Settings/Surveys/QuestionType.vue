@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<QuestionTypeOpen v-if="type === 1" />
-		<QuestionTypeClosed v-if="type === 2" />
-		<QuestionTypeMulti v-if="type === 3 || type === 4 || type === 5" :type="type"/>
+		<QuestionTypeOpen v-if="type === 1" :id="qId" />
+		<QuestionTypeClosed v-if="type === 2" :id="qId"/>
+		<QuestionTypeMulti v-if="type === 3 || type === 4 || type === 5" :type="type" :id="qId"/>
 	</div>
 </template>
  
@@ -14,14 +14,7 @@
 	import QuestionTypeMulti from './QuestionTypeMulti.vue';
 
 	export default {
-		props: [ 'type' ],
-		data() {
-			return {
-				}
-		},
-		methods: {
-			
-		},
+		props: [ 'type', 'qId' ],
 		components: { QuestionTypeOpen, QuestionTypeClosed, QuestionTypeMulti },
 	}
 </script>

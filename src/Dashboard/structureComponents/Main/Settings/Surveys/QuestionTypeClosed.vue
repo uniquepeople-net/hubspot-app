@@ -3,14 +3,14 @@
 		<div class="row my-4 mx-auto">
 			<div class="col-12 col-lg-6">
 				<span class="p-float-label">
-					<InputText id="value1" v-model="options[0]" />
+					<InputText id="value1" v-model="options[0]" :change="handleInput()"/>
 					<label for="value1">Value "true"</label>
 				</span>
 			</div>
 
 			<div class="col-12 col-lg-6 mt-4 mt-lg-0">
 				<span class="p-float-label">
-					<InputText id="value2" v-model="options[1]" />
+					<InputText id="value2" v-model="options[1]" :change="handleInput()"/>
 					<label for="value2">Value "false"</label>
 				</span>
 			</div>
@@ -22,9 +22,11 @@
  
 
 <script>
+	import { debounce } from 'lodash';
 	import SelectButton from 'primevue/selectbutton';
 
 	export default {
+		props: [ 'id' ],
 		data() {
 			return {
 				valueDefault: '',
@@ -32,7 +34,12 @@
 			}
 		},
 		methods: {
- 
+			handleInput() {
+				this.updateValue()
+			},
+			updateValue: debounce(function () {
+				this.$store.dispatch("surveys/setNewSurvey", { options: this.options, value_default: this.valueDefault, qId: this.id })
+			}, 100),
 		},
 		components: { SelectButton }
 	}

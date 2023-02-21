@@ -164,16 +164,19 @@
 				this.showMessage = !this.showMessage;
 			},
 			async addSurvey( url, data ) {
-				
+			
+				let dataObj = {
+					survey_data: data,
+					...this.newSurvey
+				}
+
 				await User.refreshedToken();
 
-				await axios.post( url, data,  {
+				await axios.post( url, dataObj,  {
 						headers: {
 							Authorization: 'Bearer ' + User.getToken()
 						}
-					}).then( response => {
-						console.log(response)
-						
+					}).then( response => {						
 						this.response = response.data								
 						this.toggleDialog();
 						this.$store.dispatch("surveys/getSurveys");
@@ -183,12 +186,13 @@
 							timer: 5000,
 							title: "Unable to add survey"
 						})
-					})
+					}) 
 			}
 			
 		},
 		computed: {
-			...mapGetters({ addSurveyUrl: 'links/addSurvey' }),
+			...mapGetters({ addSurveyUrl: 'links/addSurvey',
+							newSurvey: 'surveys/newSurvey' }),
 		},
 		components: { Calendar, SurveyQuestions }
 	}

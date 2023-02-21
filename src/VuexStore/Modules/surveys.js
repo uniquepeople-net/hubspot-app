@@ -6,7 +6,7 @@ export default {
 	state: () => ({
 		surveys: null,
 		questionTypes: null,
-		newSurvey: null
+		newSurvey: {}
 	}),
 
 	mutations: {
@@ -24,6 +24,8 @@ export default {
 			// https://github.com/vuejs/vuex/issues/1118
 			Object.assign(state, { 
 				surveys: null,
+				questionTypes: null,
+				newSurvey: {}
 			})
 		}
 	},
@@ -68,7 +70,63 @@ export default {
 					})
 		},
 		setNewSurvey( context, data ) {
-			
+			let newSurvey = context.rootGetters['surveys/newSurvey']			
+
+			if ( 'questions' in data ) {
+				context.commit("SETNEWSURVEY", {...newSurvey, ...data })
+
+			} else if ( 'title' in data ) {
+				newSurvey.questions.map( quest => {
+					if (quest.qId === data.qId)  {						  
+						quest.title = data.title
+						quest.type = data.type
+					}					
+				})
+				
+				context.commit("SETNEWSURVEY", { ...newSurvey })
+
+			} else if ( 'open_value' in data ) {
+				newSurvey.questions.map( quest => {
+					if (quest.qId === data.qId)  {	 
+						quest.open_value = data.open_value
+					}					
+				})
+				
+				context.commit("SETNEWSURVEY", { ...newSurvey })
+
+			} else if ( 'options' in data ) {
+
+				newSurvey.questions.map( quest => {
+					if (quest.qId === data.qId)  {				  
+						quest.options = data.options
+						quest.value_default = data.value_default
+					}					
+				})
+				
+				context.commit("SETNEWSURVEY", { ...newSurvey })
+
+			} else if ( 'multi_values' in data ) {
+				
+				newSurvey.questions.map( quest => {
+					if (quest.qId === data.qId)  {				  
+						quest.multi_values = data.multi_values
+						quest.max_choosed = data.max_choosed
+					}					
+				})
+				
+				context.commit("SETNEWSURVEY", { ...newSurvey })
+
+			} else if ( 'levels' in data ) {
+				
+				newSurvey.questions.map( quest => {
+					if (quest.qId === data.qId)  {				  
+						quest.levels = data.levels
+					}					
+				})
+				
+				context.commit("SETNEWSURVEY", { ...newSurvey })
+			}
+
 		}
 	},
 
@@ -78,6 +136,9 @@ export default {
 		},
 		questionTypes(state) {
 			return state.questionTypes
+		},
+		newSurvey( state ) {
+			return state.newSurvey
 		}
 	}
 }

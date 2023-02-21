@@ -1,13 +1,11 @@
 <template>
-	<div class="row">
-
-		<div class="inputgroup my-3 col-12 col-lg-6">
-			
+	<div :class="`row pb-3 ${ index % 2 == 0 ? 'bgGrey' : 'bgBlue' }`">
+		<div class="inputgroup my-3 col-12 col-lg-6">			
 			<span class="p-inputgroup-addon">
 				{{ questionNum() }}
 			</span>
 			<InputText id="title" v-model="v$.title.$model" :class="{'p-invalid':v$.title.$invalid && submitted}" 
-						name="title" :placeholder="'Question ' + questionNum()"/>
+						name="title" :placeholder="'Question ' + questionNum()" :change="handleQuestionTitle()"/>
 		
 			<InputError :validator="v$.title" :submitted="submitted" replace="Question"></InputError>
 		</div>
@@ -24,17 +22,13 @@
 			<i class="bi bi-trash" @click="deleteItem(qId)"></i>
 		</div>
 
-		<QuestionType v-show="questionType" :type="type"/>
-
-		<Divider />
-
-
-		
+		<QuestionType v-if="questionType" :type="type" :qId="qId"/>
 	</div>
 </template>
  
  
 <script>
+	import { debounce } from 'lodash';
 	import { required, minLength, maxLength } from "@vuelidate/validators";
 	import { useVuelidate } from "@vuelidate/core";
 	import QuestionType from './QuestionType.vue';
@@ -69,7 +63,14 @@
 			},
 			questionNum() {
 				return (this.index + 1).toString()
-			}
+			},
+			handleQuestionTitle() {	
+				this.updateValue()
+			},
+			updateValue: debounce(function () {
+				this.$store.dispatch("surveys/setNewSurvey", { title: this.title, type: this.type, qId: this.qId })
+			}, 100),
+
 		},
 		components: { QuestionType }
 	}
@@ -104,5 +105,11 @@
 		padding: .3rem .5rem;
 		cursor: pointer;
 	}
+}
+.bgGrey {
+	background: var(--green-50);
+}
+.bgBlue {
+	background: var(--yellow-50);
 }
 </style>

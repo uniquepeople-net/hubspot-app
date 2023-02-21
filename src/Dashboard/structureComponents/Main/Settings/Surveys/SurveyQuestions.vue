@@ -34,13 +34,15 @@
 				this.questions = [...this.questions, newObj]
 				this.questions.map( (question, index) => {	
 					question.index = index
-				}) 
+				})
+				this.$store.dispatch("surveys/setNewSurvey", { questions: [...this.questions] }); 
 			},
 			deleteItem(qId) {
 				this.questions = this.questions.filter( q => q.qId !== qId )
 				this.questions.map( (question, index) => {
 					question.index = index
-				}) 			
+				})
+				this.$store.dispatch("surveys/setNewSurvey", { questions: [...this.questions] });	
 			}
 		},
 		computed: {
