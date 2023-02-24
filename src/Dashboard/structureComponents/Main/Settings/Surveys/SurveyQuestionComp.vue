@@ -37,7 +37,8 @@
 		props: {
 			types: Object,
 			qId: String,
-			index: Number
+			index: Number,
+			submitted: Boolean
 		},
 		setup: () => ({ v$: useVuelidate() }),
 		data() {
@@ -45,7 +46,6 @@
 				title: '',
 				type: null,
 				questionType: false,
-				submitted: false,
 			}
 		},
 		validations() {

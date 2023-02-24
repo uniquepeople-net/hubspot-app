@@ -3,7 +3,8 @@
 		<h5 class="text-center mb-4">Questions</h5>
 		
 		<SurveyQuestionComp :key="question.qId" v-for="(question, index) in questions" :question="question" 
-							:types="types" @deleteItem="deleteItem" :qId="question.qId" :index="index"/>
+							:types="types" @deleteItem="deleteItem" :qId="question.qId" :index="index"
+							:submitted="submitted"/>
 		
 		<div class="d-flex justify-content-center my-5">
 			<Button label="Add Question" class="mt-2 submit-btn p-button-raised p-button-secondary p-button-text" 
@@ -22,7 +23,7 @@
 		created() {
 			this.$store.dispatch("surveys/getQuestTypes");
 		},
-		
+		props: [ 'submitted' ],
 		data() {
 			return {
 				questions: []

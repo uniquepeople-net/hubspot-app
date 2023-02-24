@@ -54,13 +54,13 @@ import Groups from '../Dashboard/structureComponents/Main/Settings/Groups.vue';
 import GroupsAll from '../Dashboard/structureComponents/Main/Settings/GroupsAll.vue';
 import AddNewGroup from '../Dashboard/structureComponents/Main/Settings/AddNewGroup.vue';
 
-import SurveyBest11 from '../Outside/SurveyBest11.vue';
+import Survey from '../Outside/Survey.vue';
 
 import Surveys from '../Dashboard/structureComponents/Main/Settings/Surveys/Surveys.vue';
 import SurveysAll from '../Dashboard/structureComponents/Main/Settings/Surveys/SurveysAll.vue';
 import SurveyAddNew from '../Dashboard/structureComponents/Main/Settings/Surveys/SurveyAddNew.vue';
 import SurveySpecific from '../Dashboard/structureComponents/Main/Settings/Surveys/SurveySpecific.vue';
-
+import AnswerStep from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/AnswerStep.vue';
 
 export const routes = [
 
@@ -166,8 +166,6 @@ export const routes = [
 					},
 				]
 			},
-			
-
 
 		],
 	},
@@ -177,5 +175,11 @@ export const routes = [
     { path: '/forgot', component: Forget, name:'forgot' },
     { path: '/update-password', component: UpdatePassword, name:'update-password' },
 
-	{ path: '/survey-best-11', component: SurveyBest11, name:'survey-best-11' }
+	{ path: '/survey/:slug', component: Survey, name:'survey', props: true ,
+	
+		children: [
+			{ path: 'step/:step', component: AnswerStep, name:'step', props: true }
+		]
+
+	},
 ]

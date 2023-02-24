@@ -6,7 +6,9 @@ export default {
 	state: () => ({
 		surveys: null,
 		questionTypes: null,
-		newSurvey: {}
+		newSurvey: {},
+		specificSurvey: null,
+		specificSurveyBySlug: null
 	}),
 
 	mutations: {
@@ -19,13 +21,23 @@ export default {
 		SETNEWSURVEY( state, data ) {
 			state.newSurvey = data
 		},
+		RESETNEWSURVEY( state, data ) {
+			state.newSurvey = data
+		},
+		SETSPECIFICSURVEY( state, data ) {
+			state.specificSurvey = data
+		},
+		SETSPECIFICSURVEYBYSLUG( state, data ) {
+			state.specificSurveyBySlug = data
+		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
 			// https://github.com/vuejs/vuex/issues/1118
 			Object.assign(state, { 
 				surveys: null,
 				questionTypes: null,
-				newSurvey: {}
+				newSurvey: {},
+				specificSurvey: null
 			})
 		}
 	},
@@ -127,6 +139,47 @@ export default {
 				context.commit("SETNEWSURVEY", { ...newSurvey })
 			}
 
+		},
+		resetNewSurvey( context ) {
+			context.commit("RESETNEWSURVEY", {} )
+		},
+		async specificSurvey( context, id ) {
+			let specificSurveyUrl = context.rootGetters['links/specificSurvey']
+
+			await User.refreshedToken();
+			
+			await axios.get( specificSurveyUrl + id, {
+						headers: {
+							Authorization: 'Bearer ' + User.getToken()
+					}})
+					.then( response =>  {
+						context.commit("SETSPECIFICSURVEY", response.data)	
+					})
+					.catch( error => {
+						Toast.fire({
+							icon: 'error',
+							title: 'Unable to load survey'
+						})
+					})
+		},
+		async specificSurveyBySlug( context, slug ) {
+			let specificSurveyUrl = context.rootGetters['links/showSurvey']
+
+			//await User.refreshedToken();
+			
+			await axios.get( specificSurveyUrl + slug, {
+						headers: {
+							Authorization: 'Bearer ' + User.getToken()
+					}})
+					.then( response =>  {
+						context.commit("SETSPECIFICSURVEYBYSLUG", response.data[0])	
+					})
+					.catch( error => {
+						Toast.fire({
+							icon: 'error',
+							title: 'Unable to load survey'
+						})
+					})
 		}
 	},
 
@@ -139,6 +192,12 @@ export default {
 		},
 		newSurvey( state ) {
 			return state.newSurvey
-		}
+		},
+		specificSurvey( state ) {
+			return state.specificSurvey
+		},
+		specificSurveyBySlug( state ) {
+			return state.specificSurveyBySlug
+		},
 	}
 }
