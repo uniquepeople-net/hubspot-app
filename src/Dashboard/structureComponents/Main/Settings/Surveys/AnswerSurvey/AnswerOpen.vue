@@ -1,8 +1,8 @@
 <template>
 	<div class="row">
-		<h5 v-if="!onlyInputs" class="mb-5">{{question.title}}</h5>
+		<h5 class="mb-5">{{question.title}}</h5>
 		<div v-for="(input, index) in question.opened_answers" class="col-12 mb-4">
-			<h6 v-if="!onlyInputs">Answer {{ index + 1 }}</h6>
+			<h6>Answer {{ index + 1 }}</h6>
 			<InputText class="w-100" v-model="inputItems[index]"/>
 		</div>
 	</div>
@@ -13,7 +13,6 @@
 	export default {
 		props: {
 			question: Object,
-			onlyInputs: Boolean
 		},
 		data() {
 			return {

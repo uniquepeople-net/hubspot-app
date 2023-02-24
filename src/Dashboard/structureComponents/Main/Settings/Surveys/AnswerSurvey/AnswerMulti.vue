@@ -7,11 +7,13 @@
 			<div class="field-checkbox my-2" v-for="(item, index) in items">
 	            <Checkbox :inputId="item" :name="item" :value="item" v-model="selectedValues" 
 						  :disabled="checkMaxChoosed(item)"/>
-	            <label :for="item" class="ms-2">{{item}}</label>
+	            <label :for="item" :class="`ms-2 ${checkMaxChoosed() ? 'opacity-50' : ''}`">{{item}}</label>
 	        </div>
 		</div>
 
-		<AnswerOpen v-if="question.type_id === 4" :question="question" :onlyInputs="true"/>
+		<div v-for="(input, index) in question.opened_answers" class="col-12 mb-4" :key="index">
+			<InputText class="w-100" v-model="selectedInputs[index]" :disabled="checkMaxChoosed(selectedInputs[index])" :key="index"/>
+		</div>
 
 	</div>
 </template>
@@ -27,14 +29,34 @@
 		},
 		data() {
 			return {
-				selectedValues: []
+				selectedValues: [],
+				selectedInputs: []
 			}
 		},
 		methods: {
 			checkMaxChoosed(item) {
-				if ( this.selectedValues.length === this.question.max_to_choose ) {
-					return !this.selectedValues.includes(item) ? true : false
+				let checkArr = []
+				let checkboxes = this.selectedValues
+				let inputs = this.selectedInputs.filter( f => { return true })
+				checkArr = [ ...checkboxes, ...inputs ]
+
+				if ( this.question.type_id === 4 && (checkArr.length === this.question.max_to_choose) ) {
+					console.log(checkArr, item)
+
+					if ( !checkArr.includes(item) ) {
+						return true
+					} else {
+						return false
+					}
 				}
+
+				if ( checkboxes.length === this.question.max_to_choose ) {
+					return !checkboxes.includes(item) ? true : false
+				}
+
+			},
+			handleChangeInput(event) {
+				console.log(event, 'this.selectedValues')
 			}
 		},
 		computed: {
@@ -46,16 +68,17 @@
 				return items 
 			},
 			inputItems() {
-				let inputs = Array.from(Array(this.question.opened_answers))
+				let inputs = [...Array(this.question.opened_answers).fill('')]
 				return inputs
 			}
 		},
 		watch: {
-			selectedValues: function (data) {
-				if (data.length === 3 ) {
-					console.log(this.selectedValues)	
-				}
-			},
+			selectedInputs: {
+				handler: function(data) {
+
+				},
+				deep: true
+			}
 		},
 		components: { Checkbox, AnswerOpen },
 	}
@@ -68,5 +91,8 @@
 		width: 25px;
 		height: 25px;
 	}
+}
+.opacity-60 {
+	opacity: .6;
 }
 </style>

@@ -2,25 +2,27 @@
 	<Card class="card mx-3 mx-auto">
 		<template #title>
 			<div class="card-header">{{ survey.name }}</div>
-			<Button v-if="!started" label="Start" class="ms-auto mt-2 submit-btn" @click="startSurvey()"/>
+			<div class="text-center p-5" v-if="!started">
+				<Button  label="Start Survey" class="ms-auto mt-2 submit-btn" @click="startSurvey()"/>
+			</div>
 		</template>	
 
 		<template #content v-if="started">
 			<Steps :model="items" :readonly="true" aria-label="Form Steps"/>
-			
+
 			
 			<div class="my-5">
-				<router-view :key="$route.fullPath" v-slot="{Component}"  @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete">
-					<keep-alive>
-						<component :is="Component" :survey="survey"/>
-					</keep-alive>
+				<router-view v-slot="{Component}"  @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete">
+					<KeepAlive>
+						<component :is="Component" :survey="survey" :key="$route.fullPath"/>
+					</KeepAlive>
 				</router-view>	
 			</div>
 
 			<div class="d-flex justify-content-between mt-5">
 				<Button label="Previous" class="p-button-raised p-button-secondary p-button-text me-auto mt-2 submit-btn" @click="prevPage($event)" v-show="checkPrev()"/>
 				<Button label="Next" class="p-button-raised p-button-secondary p-button-text ms-auto mt-2 submit-btn " @click="nextPage($event)" v-show="checkNext()"/>
-				<Button label="Finish" class="p-button-raised p-button-success ms-auto mt-2 submit-btn" @click="" v-show="checkFinish()"/>
+				<Button label="Send survey" class="p-button-raised p-button-success ms-auto mt-2 submit-btn" @click="" v-show="checkFinish()"/>
 			</div>
 		</template>
 	</Card>
