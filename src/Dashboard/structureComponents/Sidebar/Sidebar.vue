@@ -1,6 +1,6 @@
 <template>
 	
-	<Sidebar v-model:visible="visibleLeft" class="sidebar" :modal="sidebarModal">
+	<Sidebar v-model:visible="visibleLeft" class="sidebar" :modal="sidebarModal" :dismissable="sidebarModal">
 		<template v-slot:header class="sidebar-slot-header">
 			<div class="logo">
 				<a href="https://ufp.sk"><img src="../../../../assets/images/logo/logo.png" alt="Logo" srcset="" /></a>
@@ -66,24 +66,24 @@
 .sidebar {
 	width: 12rem !important;
 	border-radius: 0 50px 0 0;	
-	.p-sidebar-header {
+	& .p-sidebar-header {
 		justify-content: space-between;
 		.logo img {
 			width: 65px;
 		}
 	}
-	.p-sidebar-content {
+	& .p-sidebar-content {
 		& .p-panelmenu.p-component {
 			margin-top: 1rem;
 		}
-		& .p-panelmenu-header-link {
+		.p-panelmenu-header-action {
 			position: relative;
 			flex-direction: column;
 			& .p-menuitem-icon {
 				font-size: 1.7rem;
 				margin: 0;
 			}
-			& .p-panelmenu-icon {
+			& .p-submenu-icon {
 				position: absolute;
 				right: .5rem;
 				top: 0;
@@ -91,6 +91,11 @@
 				margin: auto;
 				display: flex;
 				align-items: center;
+			}
+		}
+		& .p-submenu-list {
+			& .p-menuitem-text {
+				font-weight: 400;
 			}
 		}
 	}

@@ -95,7 +95,7 @@ class Helpers {
 		let finishDateObj = new Date(finishDate)
 		const convertConst = 1000*60*60*24
 
-		return (finishDateObj - startDateObj) / convertConst
+		return Math.round((finishDateObj - startDateObj) / convertConst)
 	}
 
 	// generate password

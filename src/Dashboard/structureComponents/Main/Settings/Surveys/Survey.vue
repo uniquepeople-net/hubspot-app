@@ -14,7 +14,7 @@
 					<h5 class="fw-light">Finish date: <span class="fw-normal d-block">{{ formatDateToSk(survey.finish_date) }}</span></h5>
 				</div>
 				<div class="col-5 d-flex align-items-center justify-content-center">
-					<h5>Length:<span class="fw-normal d-block text-center">{{ getDiffDate( survey.start_date, survey.finish_date ) }} days</span></h5>
+					<h5>Length:<span class="fw-normal d-block text-center">{{ getDiffDate( survey.start_date, survey.finish_date ) }}</span></h5>
 				</div>
 			</div>
 			<Divider />
@@ -54,7 +54,8 @@
 				return Helpers.formatDateToSk(date)
 			},
 			getDiffDate( startDate, finishDate ) {
-				return Helpers.getDiffDays(startDate, finishDate)
+				let length = Helpers.getDiffDays(startDate, finishDate)
+				return length > 1 ? length + ' days' : length + ' day'
 			}
 		},
 		components: { Tag }

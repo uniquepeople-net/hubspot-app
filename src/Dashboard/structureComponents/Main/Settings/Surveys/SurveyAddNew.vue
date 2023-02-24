@@ -9,7 +9,7 @@
 			</div>
 			<template #footer>
 				<div class="flex justify-content-center">
-					<Button label="OK" @click="toggleDialog" class="p-button-text" />
+					<Button label="OK" @click="toggleDialog(); redirect();" class="p-button-text" />
 				</div>
 			</template>
 		</Dialog>
@@ -52,39 +52,27 @@
 									<Calendar inputId="finish" v-model="v$.finishDate.$model" :showIcon="true" dateFormat="dd.mm.yy" class="calendar" :class="{'p-invalid':v$.finishDate.$invalid && submitted}"/>
 									<InputError :validator="v$.finishDate" :submitted="submitted" replace="Finish date"></InputError>
 								</div>
-			
-								<!-- <div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-currency-euro"></InputIcon>
-									<InputText id="amount" v-model="v$.amount.$model" :class="{'p-invalid':v$.amount.$invalid && submitted}"
-												name="amount" placeholder="Amount with two decimals 99.99"/>
-			
-									<InputError :validator="v$.amount" :submitted="submitted" replace="Amount"></InputError>
-								</div>
-	
-								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-calendar2-event"></InputIcon>
-									<Dropdown v-model="v$.interval.$model" :options="intervals" :class="{'p-invalid':v$.interval.$invalid && submitted}"
-											  optionLabel="name" optionValue="id" placeholder="Select an Interval"/>
-									
-									<InputError :validator="v$.interval" :submitted="submitted" replace="Interval"></InputError>
+
+								<div class="inputgroup mb-5 col-12 col-lg-6 justify-content-center">
+									<InputIcon icon="bi bi-activity"></InputIcon>
+									<ToggleButton v-model="active" onLabel="Active" offLabel="Inactive" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${active ? 'bg-success' : 'bg-danger'} p-togglebtn-active`"/>
 								</div>
 
-								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon v-if="!active" icon="bi bi-toggle-off"></InputIcon>
-									<InputIcon v-if="active" icon="bi bi-toggle-on"></InputIcon>
-									<ToggleButton v-model="active" onLabel="Active" offLabel="Inactive" :class="`${active ? 'bg-success' : 'bg-danger'} p-togglebutton`"/>
+								<div class="inputgroup mb-5 col-12 col-lg-6 justify-content-center">
+									<InputIcon icon="bi bi-key"></InputIcon>
+									<ToggleButton v-model="public" onLabel="Public" offLabel="Private" onIcon="bi bi-unlock" offIcon="bi bi-lock" :class="`${public ? 'bg-warning' : 'bg-info'} p-togglebtn-active`"/>
 								</div>
-	
-								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-info-circle"></InputIcon>
-									<Textarea id="description" v-model="v$.description.$model" :class="{'p-invalid':v$.description.$invalid && submitted}" 
-											name="description" placeholder="Description"/>
-								
-									<InputError :validator="v$.description" :submitted="submitted" replace="Description"></InputError>
-								</div>
-								 -->
+			
+							</div>
+
+							<Divider />
+
+							<div>
+								<SurveyQuestions :submitted="submitted"/>
 							</div>
 	
+							<Divider />
+
 							<div class="d-flex justify-content-end">
 								<Button type="submit" label="Add Survey" class="mt-2 submit-btn" />
 							</div>
@@ -101,11 +89,7 @@
 	import { required, minLength, minValue, helpers } from "@vuelidate/validators";
 	import { useVuelidate } from "@vuelidate/core";
 	import Calendar from 'primevue/calendar';
-
-	// Custom decimal validation
-	const customDecimal = {
-		$message: 'Amount should have 2 numbers after decimal point (ex: 9.99 )'
-	}
+	import SurveyQuestions from './SurveyQuestions.vue';
 
 	export default {
  		setup: () => ({ v$: useVuelidate() }),
@@ -115,23 +99,20 @@
 				description: '',
 				startDate: '',
 				finishDate: '',
+				active: true,
+				public: false,
 				currentDate: this.theDayHour(new Date, 0),
 				submitted: false,
 				showMessage: false,
 				response: null,
-				/* amount: '',
-				active: false,
-				currency: 'EUR',
-				description: '',
-				interval: '',
-				intervals: [{ name: 'one-time', id: 'one_time' }, { name: 'yearly', id: 'year' }, { name: 'monthly', id: 'month' }, { name: 'weekly', id: 'week' } ],
-				delete: true */
 			}
 		},
 		validations() {
 			return {
 				name: { required, minLength: minLength(3) },
 				description: { required, minLength: minLength(3) },
+				/* active: { required },
+				public: { required }, */
 				startDate: { 
 					minValue: helpers.withMessage(
 						({$params}) => `Minimum date should be ${this.dateFormatted( $params.min )}`,
@@ -146,9 +127,6 @@
 					),
 					required
 				},
-				/* amount: { required, customDecimal },
-				description: { required, minLength: minLength(3) },
-				interval: { required } */
 			}
 		},
 		methods: {
@@ -176,6 +154,8 @@
 					description: this.description,
 					start_date: this.startDate,
 					finish_date: this.finishDate,
+					active: this.active,
+					public: this.public
 				}
 
 				this.addSurvey( this.addSurveyUrl, data );
@@ -184,41 +164,51 @@
 			toggleDialog() {
 				this.showMessage = !this.showMessage;
 			},
+			redirect() {
+				if ( !this.response.error ) {
+					this.$store.dispatch("surveys/getSurveys");
+					this.$store.dispatch("surveys/resetNewSurvey");
+					this.$router.push({ name: 'surveys' });
+				}
+			},
 			async addSurvey( url, data ) {
-				
+
+				let dataObj = {
+					survey_data: data,
+					...this.newSurvey
+				}
+
 				await User.refreshedToken();
 
-				await axios.post( url, data,  {
+				await axios.post( url, dataObj,  {
 						headers: {
 							Authorization: 'Bearer ' + User.getToken()
 						}
-					}).then( response => {
-						console.log(response)
-						
+					}).then( response => {						
 						this.response = response.data								
-						this.toggleDialog();
-						this.$store.dispatch("surveys/getSurveys");
+						this.toggleDialog();						
 					}).catch( error => {
 						Toast.fire({
 							icon: 'error',
 							timer: 5000,
 							title: "Unable to add survey"
 						})
-					})
+					}) 
 			}
 			
 		},
 		computed: {
-			...mapGetters({ addSurveyUrl: 'links/addSurvey' }),
+			...mapGetters({ addSurveyUrl: 'links/addSurvey',
+							newSurvey: 'surveys/newSurvey' }),
 		},
-		components: { Calendar }
+		components: { Calendar, SurveyQuestions }
 	}
 </script>
  
  
 <style lang='scss' scoped>
 .card {
-	max-width: 1200px;
+	max-width: 1400px;
 }
 .inputgroup {
 	position: relative;

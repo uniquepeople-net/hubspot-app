@@ -181,8 +181,8 @@ export default {
     },
     validations() {
         return {
-            name: { required, minLength: minLength(3) },
-            surname: { required, minLength: minLength(3) },
+            name: { required, minLength: minLength(2) },
+            surname: { required, minLength: minLength(2) },
             email: {  required, email },
 			countryCode: { customCountryCode },
 			phoneNum: { numeric },
