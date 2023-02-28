@@ -62,6 +62,8 @@ import SurveyAddNew from '../Dashboard/structureComponents/Main/Settings/Surveys
 import SurveySpecific from '../Dashboard/structureComponents/Main/Settings/Surveys/SurveySpecific.vue';
 import AnswerStep from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/AnswerStep.vue';
 
+import NotFound from '../Dashboard/global/NotFound.vue';
+
 export const routes = [
 
 	{ path: '/', component: Dashboard, name: 'dashboard',
@@ -178,8 +180,13 @@ export const routes = [
 	{ path: '/survey/:slug', component: Survey, name:'survey', props: true ,
 	
 		children: [
-			{ path: 'step/:step', component: AnswerStep, name:'step', props: true }
-		]
-
+			{ path: 'step/:step', component: AnswerStep, name:'step', props: true },
+		],
+		
 	},
+	
+	
+	{ path: '/:pathMatch(.*)*', component: NotFound},
+	
+	//{ path: '/survey/:slug(.*)', component: NotFound },
 ]

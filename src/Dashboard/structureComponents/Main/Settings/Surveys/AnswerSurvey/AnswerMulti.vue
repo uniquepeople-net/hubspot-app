@@ -7,7 +7,7 @@
 			<div class="field-checkbox my-2" v-for="(item, index) in items">
 	            <Checkbox :inputId="item" :name="item" :value="item" v-model="selectedValues" 
 						  :disabled="checkMaxChoosed(item)"/>
-	            <label :for="item" :class="`ms-2 ${checkMaxChoosed() ? 'opacity-50' : ''}`">{{item}}</label>
+	            <label :for="item" :class="`ms-2 ${checkMaxChoosed(item) ? 'opacity-35' : ''}`">{{item}}</label>
 	        </div>
 		</div>
 
@@ -20,6 +20,7 @@
  
  
 <script>
+	import { debounce } from 'lodash';
 	import Checkbox from 'primevue/checkbox';
 	import AnswerOpen from './AnswerOpen.vue';
 
@@ -29,19 +30,25 @@
 		},
 		data() {
 			return {
+				items: [],
 				selectedValues: [],
-				selectedInputs: []
+				selectedInputs: [],
 			}
+		},
+		created() {
+			this.question.multi_answers.map( (q , index) =>  {
+				this.items.push(q) 
+			})
 		},
 		methods: {
 			checkMaxChoosed(item) {
 				let checkArr = []
 				let checkboxes = this.selectedValues
-				let inputs = this.selectedInputs.filter( f => { return true })
+				let inputs = this.selectedInputs.filter( f => f )
+
 				checkArr = [ ...checkboxes, ...inputs ]
 
 				if ( this.question.type_id === 4 && (checkArr.length === this.question.max_to_choose) ) {
-					console.log(checkArr, item)
 
 					if ( !checkArr.includes(item) ) {
 						return true
@@ -53,29 +60,25 @@
 				if ( checkboxes.length === this.question.max_to_choose ) {
 					return !checkboxes.includes(item) ? true : false
 				}
+			},
+			handleChange() {
+				this.updateValue()
+			},
+			updateValue: debounce(function () {
+				this.$store.dispatch("surveys/setFulfilledSurvey", { value: [...this.selectedInputs, ...this.selectedValues], question: this.question })
+			}, 100),
 
-			},
-			handleChangeInput(event) {
-				console.log(event, 'this.selectedValues')
-			}
-		},
-		computed: {
-			items() {
-				let items = []
-				this.question.multi_answers.map( (q , index) =>  {
-					items.push(q) 
-				})
-				return items 
-			},
-			inputItems() {
-				let inputs = [...Array(this.question.opened_answers).fill('')]
-				return inputs
-			}
 		},
 		watch: {
 			selectedInputs: {
 				handler: function(data) {
-
+					this.handleChange()
+				},
+				deep: true
+			},
+			selectedValues: {
+				handler: function( data ) {
+					this.handleChange()
 				},
 				deep: true
 			}
@@ -92,7 +95,7 @@
 		height: 25px;
 	}
 }
-.opacity-60 {
-	opacity: .6;
+.opacity-35 {
+	opacity: .35;
 }
 </style>

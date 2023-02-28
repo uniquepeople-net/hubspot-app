@@ -35,12 +35,6 @@
 	
 					<InputError :validator="v$.password" :submitted="submitted" replace="Password"></InputError>
 				</div>
-				<!-- <div class="form-check form-check-lg d-flex align-items-end">
-					<input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault" />
-					<label class="form-check-label text-gray-600" for="flexCheckDefault">
-						Keep me logged in
-					</label>
-				</div> -->
 				<div class="position-relative text-center mt-5">
 					<Button type="submit" label="Submit" class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg" />
 					<div v-if="loading" class="spinner-grow position-absolute" role="status"></div>
@@ -109,6 +103,7 @@ export default {
 								icon: 'success',
 								title: 'Signed in successfully'
 							})
+							//this.$router.go(-1)
 							this.$router.push('/');							
 						}
 					}

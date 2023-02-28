@@ -22,8 +22,13 @@
 				],
 			}
 		},
-		methods: {
- 
+		mounted() {
+			this.$store.dispatch("surveys/setFulfilledSurvey", { closed_value: this.value, question: this.question })
+		},
+		watch: {
+			value: function(data) {
+				this.$store.dispatch("surveys/setFulfilledSurvey", { closed_value: this.value, question: this.question })	
+			}
 		},
 		components: { SelectButton }
 	}

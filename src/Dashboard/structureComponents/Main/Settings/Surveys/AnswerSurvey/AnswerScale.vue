@@ -21,6 +21,11 @@
 		methods: {
  
 		},
+		watch: {
+			value: function(data) {
+				this.$store.dispatch("surveys/setFulfilledSurvey", { scale_value: this.value, question: this.question })	
+			}
+		},
 		components: { Rating }
 	}
 </script>

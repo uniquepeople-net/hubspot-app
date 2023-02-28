@@ -67,6 +67,10 @@
 
 							<Divider />
 
+								<Hashes />
+
+							<Divider />
+
 							<div>
 								<SurveyQuestions :submitted="submitted"/>
 							</div>
@@ -90,6 +94,7 @@
 	import { useVuelidate } from "@vuelidate/core";
 	import Calendar from 'primevue/calendar';
 	import SurveyQuestions from './SurveyQuestions.vue';
+	import Hashes from './Hashes.vue';
 
 	export default {
  		setup: () => ({ v$: useVuelidate() }),
@@ -201,7 +206,7 @@
 			...mapGetters({ addSurveyUrl: 'links/addSurvey',
 							newSurvey: 'surveys/newSurvey' }),
 		},
-		components: { Calendar, SurveyQuestions }
+		components: { Calendar, SurveyQuestions, Hashes }
 	}
 </script>
  
