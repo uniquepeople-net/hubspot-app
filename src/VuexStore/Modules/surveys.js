@@ -8,7 +8,8 @@ export default {
 		questionTypes: null,
 		newSurvey: {},
 		specificSurvey: null,
-		specificSurveyBySlug: null
+		specificSurveyBySlug: null,
+		fulfilledSurvey: []
 	}),
 
 	mutations: {
@@ -30,6 +31,9 @@ export default {
 		SETSPECIFICSURVEYBYSLUG( state, data ) {
 			state.specificSurveyBySlug = data
 		},
+		SETFULFILLEDSURVEY( state, data ) {
+			state.fulfilledSurvey = data
+		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
 			// https://github.com/vuejs/vuex/issues/1118
@@ -37,7 +41,9 @@ export default {
 				surveys: null,
 				questionTypes: null,
 				newSurvey: {},
-				specificSurvey: null
+				specificSurvey: null,
+				specificSurveyBySlug: null,
+				fulfilledSurvey: []
 			})
 		}
 	},
@@ -143,6 +149,22 @@ export default {
 		resetNewSurvey( context ) {
 			context.commit("RESETNEWSURVEY", {} )
 		},
+		setFulfilledSurvey( context, data ) {
+			let fulfilled = context.rootGetters['surveys/fulfilledSurvey']
+			
+			if ( !fulfilled.length ) 
+				return context.commit("SETFULFILLEDSURVEY", [ data ] )
+			
+			if ( !fulfilled.some( answer => answer.question.id === data.question.id )) 
+				return context.commit("SETFULFILLEDSURVEY", [ ...fulfilled, data ])
+			
+			fulfilled.map( (item, index) => {
+				if (item.question.id === data.question.id)  {
+					fulfilled[index] = data
+					context.commit("SETFULFILLEDSURVEY",  [ ...fulfilled ] )
+				}
+			})
+		},
 		async specificSurvey( context, id ) {
 			let specificSurveyUrl = context.rootGetters['links/specificSurvey']
 
@@ -180,7 +202,28 @@ export default {
 							title: 'Unable to load survey'
 						})
 					})
+		},
+		async sendSurvey( context, id ) {
+			let saveSurveyUrl = context.rootGetters['links/saveSurvey']
+
+			await User.refreshedToken();
+			
+			await axios.get( saveSurveyUrl + id, {
+						headers: {
+							Authorization: 'Bearer ' + User.getToken()
+					}})
+					.then( response =>  {
+						context.commit("SETSPECIFICSURVEY", response.data)	
+					})
+					.catch( error => {
+						Toast.fire({
+							icon: 'error',
+							title: 'Unable to load survey'
+						})
+					})
 		}
+		
+
 	},
 
 	getters: {
@@ -198,6 +241,9 @@ export default {
 		},
 		specificSurveyBySlug( state ) {
 			return state.specificSurveyBySlug
+		},
+		fulfilledSurvey( state ) {
+			return state.fulfilledSurvey
 		},
 	}
 }

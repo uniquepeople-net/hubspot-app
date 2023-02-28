@@ -1,10 +1,10 @@
 <template>
 	<div class="survey-content">
-		<AnswerOpen v-if="checkQuestionType(1)" :question="questionData()" :onlyInputs="false" />
-		<AnswerClosed v-if="checkQuestionType(2)" :question="questionData()" />
-		<AnswerMulti v-if="checkQuestionType(3)" :question="questionData()" />
-		<AnswerMulti v-if="checkQuestionType(4)" :question="questionData()" />
-		<AnswerScale v-if="checkQuestionType(5)" :question="questionData()" />
+		<AnswerOpen 	v-if="checkQuestionType(1)" :question="questionData()" />
+		<AnswerClosed 	v-if="checkQuestionType(2)" :question="questionData()" />
+		<AnswerMulti 	v-if="checkQuestionType(3)" :question="questionData()" />
+		<AnswerMulti 	v-if="checkQuestionType(4)" :question="questionData()" />
+		<AnswerScale 	v-if="checkQuestionType(5)" :question="questionData()" />
 	</div>
 </template>
  

@@ -22,10 +22,15 @@
 				<h5 class="fw-light">Description: <span class="fw-normal">{{ survey.description }}</span></h5>
 			</div>
 			<Divider />
+
+			
 			
 		</template>
 		<template #footer>
-			<div class="d-flex justify-content-end edit-icon">
+			<div class="d-flex justify-content-between edit-icon">
+				<div>
+					<a class="link-survey" :href="stringToSlug(survey.name)"><i class="bi bi-box-arrow-up-right"></i></a>
+				</div>
 				<router-link :to="{name: 'specific-survey', params: {survey_id: survey.id}}">
 					<i class="bi bi-pencil-square"></i>
 				</router-link>
@@ -56,6 +61,13 @@
 			getDiffDate( startDate, finishDate ) {
 				let length = Helpers.getDiffDays(startDate, finishDate)
 				return length > 1 ? length + ' days' : length + ' day'
+			},
+			stringToSlug(data) {
+				let path = window.location.origin + '/survey/' + Helpers.stringToSlug(data)
+				return path
+			},
+			surveyLink() {
+				this.$router.push(stringToSlug(survey.name))
 			}
 		},
 		components: { Tag }
@@ -83,5 +95,10 @@
 }
 .col-r-border {
 	border-right: 1px solid var(--gray-300);
+}
+.link-survey {
+	padding: .5rem 1.5rem;
+	box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
+	border-radius: 6px;
 }
 </style>

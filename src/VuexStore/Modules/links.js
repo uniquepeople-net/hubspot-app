@@ -73,7 +73,8 @@ export default {
 		addSurvey:					DOMAIN_URL + '/api/surveys',
 		questionTypes:				DOMAIN_URL + '/api/question-types',
 		specificSurvey:				DOMAIN_URL + '/api/surveys/',
-		showSurvey:					DOMAIN_URL + '/api/survey/'
+		showSurvey:					DOMAIN_URL + '/api/survey/',
+		saveSurvey:					DOMAIN_URL + '/api/survey/',
 
 	}),
 
@@ -248,6 +249,9 @@ export default {
 		},
 		showSurvey(state) {
 			return state.showSurvey
+		},
+		saveSurvey(state) {
+			return state.saveSurvey
 		},
 	}
 }

@@ -155,6 +155,15 @@ class Helpers {
 		});
 		return formatter.format(price/100)
 	} 
+
+	// Format string to slug
+	stringToSlug(str) {
+  		return str.toLowerCase()
+				  .trim()
+				  .replace(/[^\w\s-]/g, '')
+				  .replace(/[\s_-]+/g, '-')
+				  .replace(/^-+|-+$/g, '');
+	}
 }
 
 export default Helpers = new Helpers();
