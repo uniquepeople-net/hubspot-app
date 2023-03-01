@@ -1,4 +1,5 @@
 import { router } from '../main'
+import CryptoJS from 'crypto-js'
 
 class Helpers {
 
@@ -21,12 +22,12 @@ class Helpers {
 	} */
 
 	encryptAes(string, secretKey) {
-		let phrase = CryptoJs.AES.encrypt(string, secretKey).toString()
+		let phrase = CryptoJS.AES.encrypt(string, secretKey).toString()
 		return phrase;
 	}
 
 	decryptAes( phrase, secretKey ) {
-		let originString = CryptoJs.AES.decrypt(phrase, secretKey).toString(CryptoJs.enc.Utf8)
+		let originString = CryptoJS.AES.decrypt(phrase, secretKey).toString(CryptoJs.enc.Utf8)
 		return originString
 	}
 
@@ -73,14 +74,6 @@ class Helpers {
 		} else return 0
 	}
 
-	// Request url through axios
-	/* requestAuthPost( url, data, token ) {
-		axios.post( url, data, {
-			headers: {
-				Authorization: 'Bearer ' + token
-			}
-		})
-	}  */
 
 	// format date
 	formatDateToSk(date) {
@@ -164,6 +157,29 @@ class Helpers {
 				  .replace(/[\s_-]+/g, '-')
 				  .replace(/^-+|-+$/g, '');
 	}
+
+	// Check existence of keys in nested object
+	hasNestedKey(obj, key) {
+		if (!obj || !key) {
+		  return false;
+		}
+	  
+		const keys = key.split('.');
+		let currentObj = obj;
+	  
+		for (let i = 0; i < keys.length; i++) {
+		  const currentKey = keys[i];
+	  
+		  if (!currentObj.hasOwnProperty(currentKey)) {
+			return false;
+		  }
+	  
+		  currentObj = currentObj[currentKey];
+		}
+	  
+		return true;
+	  }
+	  
 }
 
 export default Helpers = new Helpers();

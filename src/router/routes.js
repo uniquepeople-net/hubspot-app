@@ -188,5 +188,5 @@ export const routes = [
 	
 	{ path: '/:pathMatch(.*)*', component: NotFound},
 	
-	//{ path: '/survey/:slug(.*)', component: NotFound },
+	{ path: '/404', component: NotFound, name: '404' },
 ]

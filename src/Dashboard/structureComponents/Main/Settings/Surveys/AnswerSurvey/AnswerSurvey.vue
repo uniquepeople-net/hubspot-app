@@ -23,7 +23,6 @@
 
 		<template #content v-if="started">
 			<Steps :model="items" :readonly="true" aria-label="Form Steps"/>
-
 			
 			<div class="my-5">
 				<router-view v-slot="{Component}"  @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete">
@@ -124,6 +123,9 @@
 		watch: {
 			'$route.params.step': {
 				handler: function(data) {
+					if ( !data ) {
+						this.started = false
+					}
 					this.step = Number(data)
 				}
 			}

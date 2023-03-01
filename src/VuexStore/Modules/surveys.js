@@ -28,6 +28,9 @@ export default {
 		SETSPECIFICSURVEY( state, data ) {
 			state.specificSurvey = data
 		},
+		RESETSPECIFICSURVEY( state ) {
+			state.specificSurvey = null
+		},
 		SETSPECIFICSURVEYBYSLUG( state, data ) {
 			state.specificSurveyBySlug = data
 		},
@@ -165,6 +168,11 @@ export default {
 				}
 			})
 		},
+		setHashes( context, data ) {
+			let newSurvey = context.rootGetters['surveys/newSurvey']
+
+			context.commit("SETNEWSURVEY", {...newSurvey, ...data })
+		},
 		async specificSurvey( context, id ) {
 			let specificSurveyUrl = context.rootGetters['links/specificSurvey']
 
@@ -221,6 +229,9 @@ export default {
 							title: 'Unable to load survey'
 						})
 					})
+		},
+		resetSpecificSurvey( context ) {
+			context.commit("RESETSPECIFICSURVEY")
 		}
 		
 

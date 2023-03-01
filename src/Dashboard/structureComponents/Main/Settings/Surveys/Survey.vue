@@ -22,10 +22,8 @@
 				<h5 class="fw-light">Description: <span class="fw-normal">{{ survey.description }}</span></h5>
 			</div>
 			<Divider />
-
-			
-			
 		</template>
+		
 		<template #footer>
 			<div class="d-flex justify-content-between edit-icon">
 				<div>
