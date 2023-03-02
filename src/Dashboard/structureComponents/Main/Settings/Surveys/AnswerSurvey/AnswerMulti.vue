@@ -40,6 +40,9 @@
 				this.items.push(q) 
 			})
 		},
+		mounted() {
+			this.$store.dispatch("surveys/setFulfilledSurvey", { value: [...this.selectedInputs, ...this.selectedValues], question: this.question })
+		},	
 		methods: {
 			checkMaxChoosed(item) {
 				let checkArr = []

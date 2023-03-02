@@ -2,6 +2,11 @@
 	<div>
 		<h5 class="text-center mb-4">Hashes</h5>
 		<div>
+			<div class="limit my-4">
+				<label for="limit">Survey limit for one hash:</label>
+				<InputNumber inputId="limit" v-model="limit" showButtons mode="decimal" :max="200"/>
+			</div>
+
 			<div class="row gy-2">
 				<div v-for="(input, index) in inputs" class="col-12 col-md-6 d-flex align-items-center">
 					<InputText v-model="input.value" placeholder="Value" class="d-inline"/>
@@ -11,7 +16,7 @@
 			</div>
 			
 			
-			<div class="d-flex my-4 align-items-center ">
+			<div class="d-flex my-4 align-items-center">
 				<div class="d-flex flex-column add-item">
 					<Button icon="bi bi-plus-lg" class="p-button-rounded p-button-success p-button-outlined" 
 							@click="addItem"/>
@@ -20,6 +25,7 @@
 					<Button icon="bi bi-hash" label="Generate links" 
 							class="p-button-outlined p-button-secondary" @click="generateUrl()"/>
 				</div>
+				
 			</div>
 			
 			<div v-for="( input, index ) in inputs" v-show="showHashes" class="mt-3 generated">
@@ -35,6 +41,7 @@
  
 <script>
 	import uniqueId from 'lodash/uniqueId';
+	import InputNumber from 'primevue/inputnumber';
 
 	export default {
 		props: [ 'name' ],
@@ -42,7 +49,8 @@
 			return {
 				inputs: [],
 				hashes: [],
-				showHashes: false
+				showHashes: false,
+				limit: 25
 			}
 		},
 		methods: {
@@ -75,9 +83,10 @@
 					}
 				})
 
-				this.$store.dispatch( "surveys/setHashes", { hashes: this.hashes } )
+				this.$store.dispatch( "surveys/setHashes", { hashes: this.hashes, limit: this.limit } )
 			},
 		},
+		components: { InputNumber }
 	}
 </script>
  
@@ -102,5 +111,8 @@
 	.gen-item {
 		background: var(--bluegray-50);
 	}
+}
+.limit {
+	max-width: 12rem;
 }
 </style>

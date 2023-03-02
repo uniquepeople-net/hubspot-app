@@ -1,27 +1,33 @@
 <template>
 	<div>
-		<AnswerSurvey v-if="showSurvey || checkSurveyAcces()" :survey="survey"/>
+		<AnswerSurveyInfo v-if="survey" :survey="survey" :hash="queryHash"/>
+		<Message v-if="message" :message="message" />
+		<AnswerSurvey v-if="showSurvey || checkSurveyAcces()" :survey="survey" :hash="queryHash"/>
 		<LoadingIcon v-if="!survey" />
-		<div >{{message}}</div>
 	</div>
 </template>
  
  
 <script>
-import { helpers } from '@vuelidate/validators'
 	import { mapGetters } from 'vuex'
-	import LoadingIcon from '../Dashboard/global/LoadingIcon.vue'
-	import AnswerSurvey from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/AnswerSurvey.vue'
+	import LoadingIcon from '../../../../../global/LoadingIcon.vue'
+	import AnswerSurvey from './AnswerSurvey.vue'
+	import AnswerSurveyInfo from './AnswerSurveyInfo.vue'
+	import Message from './Message.vue'
 
 	export default {
-		created() {
+		beforeCreate() {
+			localStorage.removeItem('hash')
+		},
+		created() {		
 			this.$store.dispatch("surveys/specificSurveyBySlug", this.slug)			
 		},
 		data() {
 			return {
 				slug: this.$route.params.slug,
 				showSurvey: false,
-				message: ''
+				message: '',
+				queryHash: this.$route.query.hash ? this.$route.query.hash : localStorage.getItem('hash')
 			}
 		},
 		methods: {
@@ -31,7 +37,6 @@ import { helpers } from '@vuelidate/validators'
 		
 					let isActive = this.survey.active
 					let isPublic = this.survey.public
-					let queryHash = this.$route.query.hash ? this.$route.query.hash : localStorage.getItem('hash');
 					
 					if ( !isActive ) {
 						this.$router.push({ name: '404' })
@@ -46,8 +51,15 @@ import { helpers } from '@vuelidate/validators'
 					if ( this.survey.hashes.length ) {
 						let hashesArr = this.survey.hashes
 
-						if ( hashesArr.some( hash => queryHash === hash.hash ) ) {
-							localStorage.setItem('hash', queryHash)
+						for ( const hash of hashesArr ) {
+							if ( this.queryHash === hash.hash && hash.count >= hash.max_limit ) {								
+								this.message = 'You are over limit to do this survey'
+								return false
+							}
+						}
+
+						if ( hashesArr.some( hash => this.queryHash === hash.hash ) ) {
+							localStorage.setItem('hash', this.queryHash)
 							this.showSurvey = true
 							return true
 						}
@@ -65,7 +77,7 @@ import { helpers } from '@vuelidate/validators'
 		computed: {
 			...mapGetters({ survey: 'surveys/specificSurveyBySlug' })
 		},
-		components: { AnswerSurvey, LoadingIcon },
+		components: { AnswerSurvey, LoadingIcon, Message, AnswerSurveyInfo },
 	}
 </script>
  

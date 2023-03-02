@@ -54,7 +54,7 @@ import Groups from '../Dashboard/structureComponents/Main/Settings/Groups.vue';
 import GroupsAll from '../Dashboard/structureComponents/Main/Settings/GroupsAll.vue';
 import AddNewGroup from '../Dashboard/structureComponents/Main/Settings/AddNewGroup.vue';
 
-import Survey from '../Outside/Survey.vue';
+import Survey from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/Survey.vue';
 
 import Surveys from '../Dashboard/structureComponents/Main/Settings/Surveys/Surveys.vue';
 import SurveysAll from '../Dashboard/structureComponents/Main/Settings/Surveys/SurveysAll.vue';

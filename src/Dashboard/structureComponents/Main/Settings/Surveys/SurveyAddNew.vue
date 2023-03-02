@@ -5,7 +5,7 @@
 				<i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
 				<i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
 				<h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
-				<h6 v-if="response.error" v-for="(error, key) in response.error" class="mt-3">{{ key + ': ' + error[0] }}</h6>
+				<h6 v-if="response.error" v-for="(error, key) in response.error" class="mt-3" :key="key">{{ key + ': ' + error[0] }}</h6>
 			</div>
 			<template #footer>
 				<div class="flex justify-content-center">

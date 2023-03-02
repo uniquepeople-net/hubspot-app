@@ -13,12 +13,15 @@
 		</template>
 	</Dialog>
 
+
 	<Card class="card mx-3 mx-auto">
 		<template #title>
 			<div class="card-header">{{ survey.name }}</div>
 			<div class="text-center p-5" v-if="!started">
 				<Button  label="Start Survey" class="ms-auto mt-2 submit-btn" @click="startSurvey()"/>
 			</div>
+			<h6 class="fw-normal mt-3 desc"> {{ survey.description }} </h6>
+
 		</template>	
 
 		<template #content v-if="started">
@@ -37,8 +40,13 @@
 						@click="prevPage($event)" v-show="checkPrev()"/>
 				<Button label="Next" class="p-button-raised p-button-secondary p-button-text ms-auto mt-2 submit-btn " 
 						@click="nextPage($event)" v-show="checkNext()"/>
-				<Button label="Send survey" class="p-button-raised p-button-success ms-auto mt-2 submit-btn" 
-						@click="sendSurvey(saveSurveyLink, fulfilledSurvey)" v-show="checkFinish()"/>
+					
+				<div class="position-relative text-center d-flex justify-content-end w-100">
+					<Button label="Send survey" class="p-button-raised p-button-success ms-auto submit-btn" 
+						@click="sendSurvey(saveSurveyLink, fulfilledSurvey)" v-show="checkFinish()" :disabled="disabledBtn"/>
+						<div v-if="loading" class="spinner-grow position-absolute" role="status"></div>
+				</div>
+
 			</div>
 		</template>
 	</Card>
@@ -52,13 +60,16 @@
 	export default {
 		props: {
 			survey: Object,
+			hash: String,
 		},
 		data() {
 			return {
 				step: Number(this.$route.params.step),
 				started: false,
 				response: null,
-				showMessage: false
+				showMessage: false,
+				loading: false,
+				disabledBtn: false
 			}
 		},
 		methods: {
@@ -85,13 +96,22 @@
 
 				await User.refreshedToken();
 
-				await axios.post( url + this.survey.id, data,  {
+				let obj = {
+					data: data,
+					hash: this.hash
+				}
+				
+				this.loading = true
+				this.disabledBtn = true
+
+				await axios.post( url + this.survey.id, obj,  {
 						headers: {
 							Authorization: 'Bearer ' + User.getToken()
 						}
 					}).then( response => {
 						this.response = response.data								
-						this.toggleDialog();						
+						this.toggleDialog();
+						this.loading  = false						
 					}).catch( error => {
 						Toast.fire({
 							icon: 'error',
@@ -144,4 +164,11 @@
 	margin: auto;
 	margin-top: 3rem;
 }
+.spinner-grow {
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	margin-left: .5rem;
+}
+
 </style>

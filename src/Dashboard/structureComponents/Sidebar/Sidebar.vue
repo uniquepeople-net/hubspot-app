@@ -81,7 +81,7 @@
 			flex-direction: column;
 			& .p-menuitem-icon {
 				font-size: 1.7rem;
-				margin: 0;
+				margin: 0 !important;
 			}
 			& .p-submenu-icon {
 				position: absolute;
@@ -105,6 +105,29 @@
 	.pi-chevron-right, .pi-chevron-down {
 		order: 3;
 		margin-left: auto;
+	}
+}
+@media ( max-width: 576px ) {
+	.p-sidebar {
+		& .p-sidebar-content {
+			& .p-panelmenu.p-component {
+				margin-top: 0rem;
+			}
+			.p-panelmenu-header-action { 
+				padding: .8rem !important;
+				.p-menuitem-icon {
+					font-size: 1.2rem;
+				}
+				.p-menuitem-text {
+					font-size: .8rem;
+				}
+
+			}
+			.p-menuitem-link {
+				font-size: .8rem;
+			}
+		}
+		
 	}
 }
 </style>
