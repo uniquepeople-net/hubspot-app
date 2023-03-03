@@ -38,7 +38,21 @@
 	import InputNumber from 'primevue/inputnumber'
 
 	export default {
-		props: [ 'type', 'id' ],
+		props: { 
+			id: String,
+			type: Number,
+			question: Object 
+		},
+		mounted() {
+			if ( this.question ) {
+				this.question.multi_answers && this.question.multi_answers.map( answ => {
+					this.values.push( { value: answ, id: uniqueId() } )
+				})
+				this.maxChoosed = this.question.max_to_choose
+				this.levels = this.question.opinion_sc_levels
+			}
+			this.$store.dispatch("surveys/setNewSurvey",  { multi_values: this.values, max_choosed: this.maxChoosed } )
+		},
 		data() {
 			return {
 				values: [],

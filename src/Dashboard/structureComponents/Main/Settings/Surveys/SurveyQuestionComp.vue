@@ -22,7 +22,7 @@
 			<i class="bi bi-trash" @click="deleteItem(qId)"></i>
 		</div>
 
-		<QuestionType v-if="questionType" :type="type" :qId="qId"/>
+		<QuestionType v-if="questionType" :type="type" :qId="qId" :question="question ? question : null"/>
 	</div>
 </template>
  
@@ -38,7 +38,15 @@
 			types: Object,
 			qId: String,
 			index: Number,
-			submitted: Boolean
+			submitted: Boolean,
+			question: Object
+		},
+		mounted() {
+			if ( this.question ) {
+				this.title = this.question.title
+				this.type = this.question.type_id
+				this.questionType = true
+			}			
 		},
 		setup: () => ({ v$: useVuelidate() }),
 		data() {

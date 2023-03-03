@@ -13,8 +13,14 @@
 	import InputNumber from 'primevue/inputnumber'
 
 	export default {
-		props: [ 'id' ],
+		props: { 
+			id: String,
+			question: Object 
+		},
 		mounted() {
+			if ( this.question ) {
+				this.value = this.question.opened_answers
+			}
 			this.$store.dispatch("surveys/setNewSurvey", { open_value: this.value, id: this.id })
 		},
 		data() {
