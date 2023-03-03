@@ -21,6 +21,9 @@
 				selectedInputs: []
 			}
 		},
+		mounted() {
+			this.$store.dispatch("surveys/setFulfilledSurvey", { value: [ ...this.selectedInputs ], question: this.question })
+		},
 		created () {
 			if ( this.question.opened_answers ) {
 				for (let index = 0; index < this.question.opened_answers; index++) {

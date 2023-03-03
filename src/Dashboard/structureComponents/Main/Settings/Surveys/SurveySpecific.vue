@@ -1,21 +1,29 @@
 <template>
-	<div>{{ this.$route.params.survey_id }}</div>
+	<div>
+		<SurveySpecificData v-if="survey" :survey="survey" />
+		<LoadingIcon v-if="!survey"/>
+	</div>
 </template>
  
  
 <script>
+	import { mapGetters } from 'vuex';
+	import SurveySpecificData from './SurveySpecificData.vue';
 
 	export default {
-		created() {
+		created() {			
+			this.$store.dispatch("surveys/resetSpecificSurvey")
 			this.$store.dispatch("surveys/specificSurvey", this.id)
 		},
 		data() {
 			return {
-				id: this.$route.params.survey_id
+				id: this.$route.params.survey_id,
 			}
 		},
-		methods: {
+		computed: {
+			...mapGetters({ survey: 'surveys/specificSurvey' })
 		},
+		components: { SurveySpecificData }
 	}
 </script>
  

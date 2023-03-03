@@ -13,13 +13,13 @@
 		props: {
 			question: Object
 		},
+		mounted() {
+			this.$store.dispatch("surveys/setFulfilledSurvey", { scale_value: this.value, question: this.question })	
+		},	
 		data() {
 			return {
 				value: null
 			}
-		},
-		methods: {
- 
 		},
 		watch: {
 			value: function(data) {
