@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<SurveySpecificData v-if="survey" :survey="survey" />
+		<SurveySpecificData v-if="survey" :survey="survey" :id="id"/>
 		<LoadingIcon v-if="!survey"/>
 	</div>
 </template>

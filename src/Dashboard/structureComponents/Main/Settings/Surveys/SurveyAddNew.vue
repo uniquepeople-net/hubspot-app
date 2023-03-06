@@ -69,6 +69,7 @@
 
 							<div>
 								<SurveyQuestions :submitted="submitted"/>
+								<p v-if="!newSurvey.questions || !newSurvey.questions.length" class="text-danger text-center">No questions added</p>
 							</div>
 	
 							<Divider />
@@ -148,7 +149,7 @@
 			handleSubmit(isFormValid) {
 				this.submitted = true;
 
-				if (!isFormValid) {
+				if (!isFormValid || ( !this.newSurvey.questions || !this.newSurvey.questions.length )) {
 					return;
 				}
 				
@@ -160,6 +161,8 @@
 					active: this.active,
 					public: this.public
 				}
+
+				console.log(this.newSurvey.questions.length);
 
 				this.addSurvey( this.addSurveyUrl, data );
 

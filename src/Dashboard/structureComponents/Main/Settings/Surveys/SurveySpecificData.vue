@@ -18,6 +18,9 @@
 			<template #title>
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h5><span class="fw-light">Update Survey</span></h5>
+					<DeleteItem :delete="true" :itemId="id" 
+								:itemName="name" item="survey" url="/api/surveys/"
+								redirectRoute="surveys" :callback="'surveys/getSurveys'"/>
 				</div>
 			</template>
 			<template #content>
@@ -95,8 +98,11 @@
 	import Calendar from 'primevue/calendar';
 	import SurveyQuestions from './SurveyQuestions.vue';
 	import Hashes from './Hashes.vue';
+	import DeleteItem from '../../Users/DeleteItem.vue';
+
 
 	export default {
+		props: ['id'],
 		setup: () => ({ v$: useVuelidate() }),
 		mounted() {
 			this.name = this.survey.name
@@ -210,7 +216,7 @@
 		computed: {
 			...mapGetters({ survey: 'surveys/specificSurvey' })
 		},
-		components: { Calendar, SurveyQuestions, Hashes }
+		components: { Calendar, SurveyQuestions, Hashes, DeleteItem }
 	}
 </script>
  
