@@ -70,7 +70,7 @@ export default {
 
 		// Surveys links
 		surveys:					DOMAIN_URL + '/api/surveys',
-		addSurvey:					DOMAIN_URL + '/api/surveys',
+		addSurvey:					DOMAIN_URL + '/api/surveys/store',
 		questionTypes:				DOMAIN_URL + '/api/question-types',
 		specificSurvey:				DOMAIN_URL + '/api/surveys/',
 		showSurvey:					DOMAIN_URL + '/api/survey/',
