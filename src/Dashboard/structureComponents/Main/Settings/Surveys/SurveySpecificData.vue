@@ -68,7 +68,7 @@
 							<Divider />
 
 							<div>
-								<SurveyQuestions :submitted="submitted"/>
+								<SurveyQuestions :submitted="submitted" :specSurvey="survey ? survey : null"/>
 							</div>
 	
 							<Divider />
@@ -99,9 +99,6 @@
 	export default {
 		setup: () => ({ v$: useVuelidate() }),
 		mounted() {
-			console.log(this.survey)
-			
-
 			this.name = this.survey.name
 			this.description = this.survey.description
 			this.startDate = this.survey.start_date

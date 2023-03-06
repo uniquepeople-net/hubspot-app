@@ -26,7 +26,16 @@
 	import SelectButton from 'primevue/selectbutton';
 
 	export default {
-		props: [ 'id' ],
+		props: { 
+			id: String,
+			question: Object 
+		},
+		mounted() {
+			if ( this.question ) {				
+				this.options = this.question.closed_answers
+				this.valueDefault = this.question.closed_answs_default
+			}
+			this.$store.dispatch("surveys/setNewSurvey", { options: this.options, value_default: this.valueDefault, qId: this.id })		},
 		data() {
 			return {
 				valueDefault: '',
