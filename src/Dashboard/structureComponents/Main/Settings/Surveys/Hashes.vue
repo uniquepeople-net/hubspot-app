@@ -4,8 +4,9 @@
 		<div>
 			<div class="limit my-4">
 				<label for="limit">Survey limit for one hash:</label>
-				<InputNumber inputId="limit" v-model="limit" showButtons mode="decimal" :max="200"/>
+				<InputNumber inputId="limit" v-model="limit" showButtons mode="decimal" :max="200" :change="handleLimit()"/>
 			</div>
+
 
 			<div class="row gy-2">
 				<div v-for="(input, index) in inputs" class="col-12 col-md-6 d-flex align-items-center">
@@ -27,13 +28,30 @@
 				</div>
 				
 			</div>
-			
+
 			<div v-for="( input, index ) in inputs" v-show="showHashes" class="mt-3 generated">
 				<div class="row gen-item" v-if="input.value && input.hash">
 					<span class="col-auto">{{ decrypt(input.hash, 'ufp') }}</span>
-					<span class="col-auto">{{ input.link }}</span>
+					<i class="col-auto bi bi-arrow-right"></i>
+					<span class="col-auto text-decoration-underline">{{ trimString(input.link, 40) }}</span>
+					<Button icon="bi bi-clipboard" severity="secondary" class="copy p-button-secondary p-button-raised p-button-outlined" 
+								aria-label="Copy" :label="copyText" @click="copyToClipboard(input.link, $event)" />
 				</div>
 			</div>
+
+			<div v-if="existedHashes.length">
+				<h6 class="mt-3">Existed hashes:</h6>
+				<div v-for="( hash, index ) in existedHashes" class="mt-3 generated">
+					<div class="row gen-item align-items-center">
+						<span class="col-auto">{{ decrypt(hash.hash, 'ufp') }}</span>
+						<i class="col-auto bi bi-arrow-right"></i>
+						<span class="col-auto text-decoration-underline">{{ trimString(hash.link, 40) }}</span>
+						<Button icon="bi bi-clipboard" severity="secondary" class="copy p-button-secondary p-button-raised p-button-outlined" 
+								aria-label="Copy" :label="copyText" @click="copyToClipboard(hash.link, $event)" />
+					</div>
+				</div>
+			</div>
+
 		</div>
 	</div>
 </template>
@@ -41,16 +59,38 @@
  
 <script>
 	import uniqueId from 'lodash/uniqueId';
+	import { debounce } from 'lodash';
 	import InputNumber from 'primevue/inputnumber';
 
 	export default {
-		props: [ 'name' ],
+		props: { 
+			name: String,
+			hashesArr: Array
+		},
+		mounted() {
+			if ( this.hashesArr.length ) {
+				this.hashesArr.map( h => {
+					this.existedHashes.push({
+						value: this.decrypt(h.hash, 'ufp'),
+						id: uniqueId(),
+						hash: h.hash,
+						link: this.generateExistedUrl(h.hash)
+					})
+					this.existedHashesArr.push(h.hash)
+				})
+				this.limit = this.hashesArr[0].max_limit
+				this.$store.dispatch( "surveys/setHashes", { hashes: this.hashes, limit: this.limit, existedHashes: this.existedHashesArr } )
+			}
+		},
 		data() {
 			return {
+				existedHashes: [],
+				existedHashesArr: [],
 				inputs: [],
 				hashes: [],
 				showHashes: false,
-				limit: 25
+				limit: 25,
+				copyText: 'Copy',
 			}
 		},
 		methods: {
@@ -62,6 +102,12 @@
 				this.inputs = this.inputs.filter( q => q.id !== index )
 				this.generateUrl()
 			},
+			handleLimit() {
+				this.updateValue()
+			},
+			updateValue: debounce(function () {
+				this.$store.dispatch( "surveys/setHashes", { limit: this.limit } )
+			}, 100),
 			encrypt(string, secretKey) {
 				return Helpers.encryptAes(string, secretKey)
 			},
@@ -83,8 +129,38 @@
 					}
 				})
 
-				this.$store.dispatch( "surveys/setHashes", { hashes: this.hashes, limit: this.limit } )
+				this.$store.dispatch( "surveys/setHashes", { hashes: this.hashes, limit: this.limit, existedHashes: this.existedHashesArr } )
 			},
+			generateExistedUrl(hash) {
+				let url = window.location.origin + '/survey/' + Helpers.stringToSlug(this.name) 
+				return url + '?hash=' + hash
+			},
+			copyToClipboard(text, event) {
+				this.copiedText(event)
+				Helpers.copyToClipboard(text)
+			},
+			copiedText(event) {
+				if ( !event.target.classList.contains('copy') ) {				
+						event.target.textContent ='Copied' 
+						setTimeout(function() {
+							event.target.textContent = 'Copy'
+						}, 1000);
+				} else {
+					console.log(event.target.querySelector('.p-button-label'))
+					
+					event.target.querySelector('.p-button-label').textContent = 'Copied'
+					setTimeout(function() {
+						event.target.querySelector('.p-button-label').textContent = 'Copy'
+					}, 1000);
+				}
+				
+				
+			},
+			
+			trimString(str, maxLength) {
+				return Helpers.trimString(str, maxLength)
+			},
+
 		},
 		components: { InputNumber }
 	}
@@ -107,10 +183,10 @@
 		cursor: pointer;
 	}
 }
-.generated:nth-child(odd) {
-	.gen-item {
-		background: var(--bluegray-50);
-	}
+.copy {
+	width:auto;
+	padding: .15rem .25rem;
+	margin: 0 .5rem;
 }
 .limit {
 	max-width: 12rem;

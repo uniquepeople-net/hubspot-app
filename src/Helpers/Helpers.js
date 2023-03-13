@@ -179,6 +179,34 @@ class Helpers {
 	  
 		return true;
 	  }
+
+	// Copy to clipboard 
+	copyToClipboard(text) {
+		navigator.clipboard.writeText(text)
+		  .then(() => {
+			// Success message	
+			return 'Text copied to clipboard';
+		  })
+		  .catch((error) => {
+			// Error message
+			return "Error copying text to clipboard:" + error;
+		  });
+	  }
+	  
+	  
+	// Trim string to return start of string, three dots, end of string
+	// example: "Lorem ipsum ... dolor sit amet"
+	trimString(str, maxLength) {
+		if (str.length <= maxLength) {
+		  return str;
+		}
+	  
+		const diff = str.length - maxLength;
+		const start = str.substr(0, Math.ceil(diff / 2));
+		const end = str.substr(str.length - Math.floor(diff / 2));
+		return `${start} . . . ${end}`;
+	}
+	  
 	  
 }
 
