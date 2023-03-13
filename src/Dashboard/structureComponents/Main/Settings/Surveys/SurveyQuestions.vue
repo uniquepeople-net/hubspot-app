@@ -46,7 +46,9 @@
 						...(q.opened_answers && { open_value: q.opened_answers } ),
 						...(q.closed_answers && { options: q.closed_answers }),
 						...(q.closed_answs_default && { value_default: q.closed_answs_default }),
-						...(q.multi_answers && { multi_values: q.multi_answers }),
+						...(q.multi_answers && { multi_values: q.multi_answers.map( val =>{ 
+							return {value: val, id: uniqueId()} }
+						)}),
 						...(q.max_to_choose && { max_choosed: q.max_to_choose }),
 						...(q.opinion_sc_levels && { levels: q.opinion_sc_levels }),
 					} )

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<!-- <Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
+		<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
 			<div class="flex align-items-center flex-column pt-6 px-3">
 				<i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
 				<i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
@@ -12,7 +12,7 @@
 					<Button label="OK" @click="toggleDialog(); redirect();" class="p-button-text" />
 				</div>
 			</template>
-		</Dialog> -->
+		</Dialog>
 
 		<Card class="card">
 			<template #title>
@@ -76,12 +76,12 @@
 	
 							<Divider />
 
-								<Hashes :name="name"/>
+								<Hashes :name="name" :hashesArr="survey ? survey.hashes : null"/>
 
 							<Divider />
 
 							<div class="d-flex justify-content-end">
-								<Button type="submit" label="Add Survey" class="mt-2 submit-btn" />
+								<Button type="submit" label="Update Survey" class="mt-2 submit-btn" />
 							</div>
 						</form>
 					</div>
@@ -107,8 +107,8 @@
 		mounted() {
 			this.name = this.survey.name
 			this.description = this.survey.description
-			this.startDate = this.survey.start_date
-			this.finishDate = this.survey.finish_date
+			this.startDate = new Date(this.survey.start_date)
+			this.finishDate = new Date(this.survey.finish_date)
 			this.active = Boolean(this.survey.active)
 			this.public = Boolean(this.survey.public)
 		},
@@ -131,17 +131,17 @@
 				name: { required, minLength: minLength(3) },
 				description: { required, minLength: minLength(3) },
 				startDate: { 
-					minValue: helpers.withMessage(
+					/* minValue: helpers.withMessage(
 						({$params}) => `Minimum date should be ${this.dateFormatted( $params.min )}`,
 						minValue(this.currentDate)
-					),
+					), */
 					required
 				},
 				finishDate: { 
-					minValue: helpers.withMessage(
+					/* minValue: helpers.withMessage(
 						({$params}) => `Minimum date should be ${this.dateFormatted( $params.min )}`,
 						minValue(this.startDate)
-					),
+					), */
 					required
 				},
 			}
@@ -175,7 +175,7 @@
 					public: this.public
 				}
 
-				this.addSurvey( this.addSurveyUrl, data );
+				this.addSurvey( this.updateSurveyUrl, data );
 
 			},
 			toggleDialog() {
@@ -197,7 +197,7 @@
 
 				await User.refreshedToken();
 
-				await axios.post( url, dataObj,  {
+				await axios.post( url + this.id, dataObj,  {
 						headers: {
 							Authorization: 'Bearer ' + User.getToken()
 						}
@@ -214,7 +214,9 @@
 			}
 		},
 		computed: {
-			...mapGetters({ survey: 'surveys/specificSurvey' })
+			...mapGetters({ updateSurveyUrl: 'links/updateSurvey',
+							survey: 'surveys/specificSurvey',
+							newSurvey: 'surveys/newSurvey' })
 		},
 		components: { Calendar, SurveyQuestions, Hashes, DeleteItem }
 	}

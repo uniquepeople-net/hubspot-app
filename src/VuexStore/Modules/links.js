@@ -71,6 +71,7 @@ export default {
 		// Surveys links
 		surveys:					DOMAIN_URL + '/api/surveys',
 		addSurvey:					DOMAIN_URL + '/api/surveys/store',
+		updateSurvey:				DOMAIN_URL + '/api/surveys/',
 		questionTypes:				DOMAIN_URL + '/api/question-types',
 		specificSurvey:				DOMAIN_URL + '/api/surveys/',
 		showSurvey:					DOMAIN_URL + '/api/survey/',
@@ -237,6 +238,9 @@ export default {
 		// Surveys routes
 		addSurvey(state) {
 			return state.addSurvey
+		},
+		updateSurvey(state) {
+			return state.updateSurvey
 		},
 		surveys(state) {
 			return state.surveys
