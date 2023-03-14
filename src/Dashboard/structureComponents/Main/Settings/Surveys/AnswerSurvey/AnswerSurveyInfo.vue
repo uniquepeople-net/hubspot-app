@@ -5,8 +5,8 @@
         </a>
         
         <div class="mt-4 text-center">
-            <h4>{{ survey.name }}</h4>
             <h3>{{  decodedHash(hash)  }}</h3>
+            <h4>{{ survey.name }}</h4>
         </div>
     </div>
 </template>

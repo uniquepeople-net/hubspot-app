@@ -6,6 +6,9 @@
                 <span class="mx-3">{{ message }}</span >
                 <i class="bi bi-exclamation-triangle-fill"></i>
             </h4>
+			<div class="d-flex justify-content-center mt-5">
+				<slot name="button"></slot>
+			</div>
         </template>
     </Card>
 </template>

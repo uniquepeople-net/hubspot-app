@@ -76,7 +76,7 @@
 	
 							<Divider />
 
-								<Hashes :name="name" :hashesArr="survey ? survey.hashes : null"/>
+								<Hashes :name="survey.name" :hashesArr="survey ? survey.hashes : null"/>
 
 							<Divider />
 

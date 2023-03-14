@@ -15,6 +15,7 @@
 	export default {
 		props: {
 			question: Object,
+			step: Number
 		},
 		data() {
 			return {
@@ -22,7 +23,7 @@
 			}
 		},
 		mounted() {
-			this.$store.dispatch("surveys/setFulfilledSurvey", { value: [ ...this.selectedInputs ], question: this.question })
+			this.$store.dispatch("surveys/setFulfilledSurvey", { value: [ ...this.selectedInputs ], question: this.question, step: this.step })
 		},
 		created () {
 			if ( this.question.opened_answers ) {
@@ -36,7 +37,7 @@
 				this.updateValue()
 			},
 			updateValue: debounce(function () {
-				this.$store.dispatch("surveys/setFulfilledSurvey", { value: [ ...this.selectedInputs ], question: this.question })
+				this.$store.dispatch("surveys/setFulfilledSurvey", { value: [ ...this.selectedInputs ], question: this.question, step: this.step })
 			}, 100),
 		}
 	}

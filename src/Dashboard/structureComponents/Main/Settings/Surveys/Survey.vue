@@ -10,16 +10,16 @@
 			
 			<div class="row">
 				<div class="col-7 col-r-border">
-					<h5 class="fw-light">Start date: <span class="fw-normal d-block">{{ formatDateToSk(survey.start_date) }}</span></h5>
-					<h5 class="fw-light">Finish date: <span class="fw-normal d-block">{{ formatDateToSk(survey.finish_date) }}</span></h5>
+					<h6 class="fw-light">Start date: <span class="fw-normal d-block">{{ formatDateToSk(survey.start_date) }}</span></h6>
+					<h6 class="fw-light">Finish date: <span class="fw-normal d-block">{{ formatDateToSk(survey.finish_date) }}</span></h6>
 				</div>
 				<div class="col-5 d-flex align-items-center justify-content-center">
-					<h5>Length:<span class="fw-normal d-block text-center">{{ getDiffDate( survey.start_date, survey.finish_date ) }}</span></h5>
+					<h6>Length:<span class="fw-normal d-block text-center">{{ getDiffDate( survey.start_date, survey.finish_date ) }}</span></h6>
 				</div>
 			</div>
 			<Divider />
 			<div class="d-flex">
-				<h5 class="fw-light">Description: <span class="fw-normal">{{ survey.description }}</span></h5>
+				<h6 class="fw-light">Description: <span class="fw-normal">{{ survey.description }}</span></h6>
 			</div>
 			<Divider />
 		</template>

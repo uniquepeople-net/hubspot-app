@@ -11,7 +11,8 @@
 
 	export default {
 		props: {
-			question: Object
+			question: Object,
+			step: Number
 		},
 		data() {
 			return {
@@ -23,11 +24,11 @@
 			}
 		},
 		mounted() {
-			this.$store.dispatch("surveys/setFulfilledSurvey", { closed_value: this.value, question: this.question })
+			this.$store.dispatch("surveys/setFulfilledSurvey", { closed_value: this.value, question: this.question, step: this.step })
 		},
 		watch: {
 			value: function(data) {
-				this.$store.dispatch("surveys/setFulfilledSurvey", { closed_value: this.value, question: this.question })	
+				this.$store.dispatch("surveys/setFulfilledSurvey", { closed_value: this.value, question: this.question, step: this.step })	
 			}
 		},
 		components: { SelectButton }
