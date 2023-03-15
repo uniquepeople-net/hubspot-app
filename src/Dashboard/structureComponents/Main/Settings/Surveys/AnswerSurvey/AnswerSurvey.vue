@@ -46,7 +46,7 @@
 			<div class="position-relative text-center d-flex flex-column align-items-center w-100 mt-5">
 				<Button label="Send survey" class="p-button-raised p-button-success submit-btn" :loading="loading"
 						@click="sendSurvey(saveSurveyLink, fulfilledSurvey)" v-if="checkFinish()" :disabled="disabledBtn"/>
-				<small class="warning mt-3" v-if="unfilledQuestions">Questions {{unfilledQuestions}} are not correctly filled.</small>
+				<small class="warning mt-3" v-if="unfilledQuestions && showError">Questions {{unfilledQuestions}} are not correctly filled.</small>
 			</div>
 		</template>
 	</Card>
@@ -108,19 +108,13 @@
 				const errors = this.checkCorrectAnswers(obj.data)
 
 				if ( errors ) {
+					this.showError = true
 					this.unfilledQuestions = unfilled.filter(value => value !== null).sort().toString()
 				} else {
 					this.loading = true
-					this.disabledBtn = true
-				
-					//console.log(unfilled.toString(), unfilled.some( item => item !== null ))
-					
+					this.disabledBtn = true				
 
-					//if ( unfilled.some( item => item  ) )
-
-					
-
-					/* await axios.post( url + this.survey.id, obj,  {
+					await axios.post( url + this.survey.id, obj,  {
 							headers: {
 								Authorization: 'Bearer ' + User.getToken()
 							}
@@ -134,7 +128,7 @@
 								timer: 5000,
 								title: "Unable to save survey"
 							})
-						})  */
+						})
 
 					//this.$store.dispatch("surveys/sendSurvey", survey.id)
 				

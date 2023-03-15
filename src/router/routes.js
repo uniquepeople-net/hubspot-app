@@ -61,6 +61,7 @@ import SurveysAll from '../Dashboard/structureComponents/Main/Settings/Surveys/S
 import SurveyAddNew from '../Dashboard/structureComponents/Main/Settings/Surveys/SurveyAddNew.vue';
 import SurveySpecific from '../Dashboard/structureComponents/Main/Settings/Surveys/SurveySpecific.vue';
 import AnswerStep from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/AnswerStep.vue';
+import AnswerResults from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/AnswerResults.vue';
 
 import NotFound from '../Dashboard/global/NotFound.vue';
 
@@ -163,6 +164,8 @@ export const routes = [
 							{ path: ':survey_id', component: SurveySpecific, name: 'specific-survey', props: true },
 
 							{ path: 'add-new', component: SurveyAddNew, name: 'add-new-survey', props: true },
+
+							{ path: 'results/:survey_id', component: AnswerResults, name: 'answer-results', props: true },
 						]
 
 					},

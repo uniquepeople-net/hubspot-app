@@ -9,7 +9,8 @@ export default {
 		newSurvey: {},
 		specificSurvey: null,
 		specificSurveyBySlug: null,
-		fulfilledSurvey: []
+		fulfilledSurvey: [],
+		specificResults: null
 	}),
 
 	mutations: {
@@ -36,6 +37,9 @@ export default {
 		},
 		SETFULFILLEDSURVEY( state, data ) {
 			state.fulfilledSurvey = data
+		},
+		SETSPECIFICRESULTS( state, data ) {
+			state.specificResults = data
 		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
@@ -232,6 +236,26 @@ export default {
 		},
 		resetSpecificSurvey( context ) {
 			context.commit("RESETSPECIFICSURVEY")
+		},
+		async getResults( context, id ) {
+			let resultsUrl = context.rootGetters['links/results']
+
+			await User.refreshedToken();
+
+			await axios.get( resultsUrl + id, {
+				headers: {
+					Authorization: 'Bearer ' + User.getToken()
+				}})
+				.then( response => {
+					context.commit("SETSPECIFICRESULTS", response.data)
+				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						title: 'Unable to load results'
+					})
+				})
+
 		}
 		
 
@@ -255,6 +279,9 @@ export default {
 		},
 		fulfilledSurvey( state ) {
 			return state.fulfilledSurvey
+		},
+		specificResults( state ) {
+			return state.specificResults
 		},
 	}
 }
