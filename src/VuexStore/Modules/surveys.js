@@ -41,6 +41,9 @@ export default {
 		SETSPECIFICRESULTS( state, data ) {
 			state.specificResults = data
 		},
+		RESETSPECIFICRESULTS( state, data ) {
+			state.specificResults = null
+		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
 			// https://github.com/vuejs/vuex/issues/1118
@@ -255,10 +258,10 @@ export default {
 						title: 'Unable to load results'
 					})
 				})
-
+		},
+		resetSpecificResults(context) {
+			context.commit("RESETSPECIFICRESULTS")
 		}
-		
-
 	},
 
 	getters: {

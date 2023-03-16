@@ -24,7 +24,7 @@ export default {
     },
     methods: {
         decodedHash(hash) {
-            return hash ? Helpers.decryptAes(hash, 'ufp') : null
+            return hash ? Helpers.decryptAes(hash) : null
         }
     },
 }

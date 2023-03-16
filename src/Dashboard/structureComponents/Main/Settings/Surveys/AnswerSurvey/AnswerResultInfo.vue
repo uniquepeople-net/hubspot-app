@@ -6,6 +6,11 @@
 					<h5><span class="fw-normal">{{survey.name}}</span></h5>
 				</div>
 			</template>
+			<template #content>
+				<div v-for="group in survey.hashes">
+					{{ decrypt(group.hash) + ' - ' + group.count  + ' / ' + group.max_limit}}
+				</div>
+			</template>
 		</Card>
 	</div>
 </template>
@@ -21,7 +26,9 @@
 			}
 		},
 		methods: {
- 
+			decrypt(phrase) {
+				return Helpers.decryptAes(phrase)
+			},
 		},
 	}
 </script>

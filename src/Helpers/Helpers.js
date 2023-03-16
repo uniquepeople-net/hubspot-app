@@ -21,13 +21,13 @@ class Helpers {
 			})			
 	} */
 
-	encryptAes(string, secretKey) {
+	encryptAes(string, secretKey = 'ufp') {
 		const encrypted = CryptoJS.AES.encrypt(string, secretKey);
 		const encoded = encodeURIComponent(encrypted);
 		return encoded
 	}
 
-	decryptAes( phrase, secretKey ) {
+	decryptAes( phrase, secretKey = 'ufp' ) {
 		const decoded = decodeURIComponent(phrase);
 		const decrypted = CryptoJS.AES.decrypt(decoded, secretKey);
 		const plainText = decrypted.toString(CryptoJS.enc.Utf8);
