@@ -20,7 +20,7 @@
 			<div class="text-center p-5" v-if="!started">
 				<Button  label="Start Survey" class="ms-auto mt-2 submit-btn" @click="startSurvey()"/>
 			</div>
-			<h6 class="fw-normal mt-3 desc"> {{ survey.description }} </h6>
+			<h6 class="fw-normal mt-3 desc" v-if="!started"> {{ survey.description }} </h6>
 
 		</template>	
 
@@ -35,18 +35,18 @@
 				</router-view>	
 			</div>
 
+			<Divider />
+
 			<div class="d-flex justify-content-between mt-5">
 				<Button label="Previous" class="p-button-raised p-button-secondary p-button-text me-auto mt-2 submit-btn" 
-						@click="prevPage($event)" v-show="checkPrev()"/>
+						@click="prevPage($event, fulfilledSurvey)" v-show="checkPrev()"/>
 				<Button label="Next" class="p-button-raised p-button-secondary p-button-text ms-auto mt-2 submit-btn " 
-						@click="nextPage($event)" v-show="checkNext()"/>
-					
-				<div class="position-relative text-center d-flex justify-content-end w-100">
-					<Button label="Send survey" class="p-button-raised p-button-success ms-auto submit-btn" 
-						@click="sendSurvey(saveSurveyLink, fulfilledSurvey)" v-show="checkFinish()" :disabled="disabledBtn"/>
-						<div v-if="loading" class="spinner-grow position-absolute" role="status"></div>
-				</div>
-
+						@click="nextPage($event, fulfilledSurvey)" v-show="checkNext()"/>
+			</div>
+			<div class="position-relative text-center d-flex flex-column align-items-center w-100 mt-5">
+				<Button label="Send survey" class="p-button-raised p-button-success submit-btn" :loading="loading"
+						@click="sendSurvey(saveSurveyLink, fulfilledSurvey)" v-if="checkFinish()" :disabled="disabledBtn"/>
+				<small class="warning mt-3" v-if="unfilledQuestions && showError">Questions {{unfilledQuestions}} are not correctly filled.</small>
 			</div>
 		</template>
 	</Card>
@@ -69,7 +69,9 @@
 				response: null,
 				showMessage: false,
 				loading: false,
-				disabledBtn: false
+				disabledBtn: false,
+				showError: false,
+				unfilledQuestions: null
 			}
 		},
 		methods: {
@@ -77,10 +79,12 @@
 				this.started = !this.started
 				this.$router.push(this.items[0].to)
 			},
-			nextPage(event) {
+			nextPage(event, data) {
+				this.checkCorrectAnswers(data)
 				this.$router.push(this.items[this.step].to);
 			},
-			prevPage(event) {
+			prevPage(event, data) {
+				this.checkCorrectAnswers(data)
 				this.$router.push(this.items[this.step - 2].to);
 			},
 			checkFinish() {
@@ -94,33 +98,41 @@
 			},
 			async sendSurvey( url, data) {
 
-				await User.refreshedToken();
+				//await User.refreshedToken();
 
 				let obj = {
 					data: data,
 					hash: this.hash
 				}
 				
-				this.loading = true
-				this.disabledBtn = true
+				const errors = this.checkCorrectAnswers(obj.data)
 
-				await axios.post( url + this.survey.id, obj,  {
-						headers: {
-							Authorization: 'Bearer ' + User.getToken()
-						}
-					}).then( response => {
-						this.response = response.data								
-						this.toggleDialog();
-						this.loading  = false						
-					}).catch( error => {
-						Toast.fire({
-							icon: 'error',
-							timer: 5000,
-							title: "Unable to save survey"
+				if ( errors ) {
+					this.showError = true
+					this.unfilledQuestions = unfilled.filter(value => value !== null).sort().toString()
+				} else {
+					this.loading = true
+					this.disabledBtn = true				
+
+					await axios.post( url + this.survey.id, obj,  {
+							headers: {
+								Authorization: 'Bearer ' + User.getToken()
+							}
+						}).then( response => {
+							this.response = response.data								
+							this.toggleDialog();
+							this.loading  = false						
+						}).catch( error => {
+							Toast.fire({
+								icon: 'error',
+								timer: 5000,
+								title: "Unable to save survey"
+							})
 						})
-					}) 
 
-				//this.$store.dispatch("surveys/sendSurvey", survey.id)				
+					//this.$store.dispatch("surveys/sendSurvey", survey.id)
+				
+				}
 			},
 			complete() {
 				this.$toast.add({severity:'success', summary:'Order submitted', detail: 'Dear, ' + this.formObject.firstname + ' ' + this.formObject.lastname + ' your order completed.'});
@@ -128,6 +140,24 @@
 			toggleDialog() {
 				this.showMessage = !this.showMessage;
 			},
+			checkCorrectAnswers(data) {
+				const unfilled = data.map( (item, index) => {
+					if ( ( 'scale_value' in item && item.scale_value == null ) ||
+					 	 ( 'closed_value' in item && item.closed_value == null ) ||
+						 ( 'value' in item && item.value.every( item => item === ""))
+					 ) {
+						return item.step
+					} else return null
+				})
+				
+				if ( unfilled.some( item => item !== null ) ) {
+					this.unfilledQuestions = unfilled.filter(value => value !== null).sort().toString()
+					return true
+				} else {
+					this.unfilledQuestions = null
+					return false
+				}
+			}
 		},
 		computed: {
 			...mapGetters({ saveSurveyLink: 'links/saveSurvey',
@@ -170,5 +200,7 @@
 	margin: auto;
 	margin-left: .5rem;
 }
-
+.warning {
+	color: var(--red-600);
+}
 </style>

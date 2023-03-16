@@ -26,7 +26,8 @@
 
 	export default {
 		props: {
-			question: Object
+			question: Object,
+			step: Number
 		},
 		data() {
 			return {
@@ -41,7 +42,7 @@
 			})
 		},
 		mounted() {
-			this.$store.dispatch("surveys/setFulfilledSurvey", { value: [...this.selectedInputs, ...this.selectedValues], question: this.question })
+			this.$store.dispatch("surveys/setFulfilledSurvey", { value: [...this.selectedInputs, ...this.selectedValues], question: this.question, step: this.step })
 		},	
 		methods: {
 			checkMaxChoosed(item) {
@@ -68,7 +69,7 @@
 				this.updateValue()
 			},
 			updateValue: debounce(function () {
-				this.$store.dispatch("surveys/setFulfilledSurvey", { value: [...this.selectedInputs, ...this.selectedValues], question: this.question })
+				this.$store.dispatch("surveys/setFulfilledSurvey", { value: [...this.selectedInputs, ...this.selectedValues], question: this.question, step: this.step })
 			}, 100),
 
 		},

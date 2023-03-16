@@ -36,8 +36,7 @@
 					<InputError :validator="v$.password" :submitted="submitted" replace="Password"></InputError>
 				</div>
 				<div class="position-relative text-center mt-5">
-					<Button type="submit" label="Submit" class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg" />
-					<div v-if="loading" class="spinner-grow position-absolute" role="status"></div>
+					<Button type="submit" label="Submit" class="submit-btn btn btn-primary btn-block btn-lg shadow-lg" :loading="loading"/>
 				</div>
 			</form>
 			<div class="text-center mt-5 text-lg fs-4">

@@ -76,6 +76,7 @@ export default {
 		specificSurvey:				DOMAIN_URL + '/api/surveys/',
 		showSurvey:					DOMAIN_URL + '/api/survey/',
 		saveSurvey:					DOMAIN_URL + '/api/survey/',
+		results:					DOMAIN_URL + '/api/results/'
 
 	}),
 
@@ -256,6 +257,9 @@ export default {
 		},
 		saveSurvey(state) {
 			return state.saveSurvey
+		},
+		results(state) {
+			return state.results
 		},
 	}
 }

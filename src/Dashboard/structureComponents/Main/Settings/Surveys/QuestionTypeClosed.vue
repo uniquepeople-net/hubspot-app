@@ -14,7 +14,6 @@
 					<label for="value2">Value "false"</label>
 				</span>
 			</div>
-
 			<SelectButton v-model="valueDefault" :options="options" aria-labelledby="single" class="mt-4"/>
 		</div>
 	</div>

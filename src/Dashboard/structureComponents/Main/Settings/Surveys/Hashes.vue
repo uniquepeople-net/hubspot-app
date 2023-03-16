@@ -30,10 +30,10 @@
 			</div>
 
 			<div v-for="( input, index ) in inputs" v-show="showHashes" class="mt-3 generated">
-				<div class="row gen-item" v-if="input.value && input.hash">
-					<span class="col-auto">{{ decrypt(input.hash, 'ufp') }}</span>
+				<div class="row gen-item align-items-center" v-if="input.value && input.hash">
+					<span class="col-auto">{{ decrypt(input.hash) }}</span>
 					<i class="col-auto bi bi-arrow-right"></i>
-					<span class="col-auto text-decoration-underline">{{ trimString(input.link, 40) }}</span>
+					<span class="col-auto text-decoration-underline">{{ trimString(input.link, 20, 40) }}</span>
 					<Button icon="bi bi-clipboard" severity="secondary" class="copy p-button-secondary p-button-raised p-button-outlined" 
 								aria-label="Copy" :label="copyText" @click="copyToClipboard(input.link, $event)" />
 				</div>
@@ -43,9 +43,9 @@
 				<h6 class="mt-3">Existed hashes:</h6>
 				<div v-for="( hash, index ) in existedHashes" class="mt-3 generated">
 					<div class="row gen-item align-items-center">
-						<span class="col-auto">{{ decrypt(hash.hash, 'ufp') }}</span>
+						<span class="col-auto">{{ decrypt(hash.hash) }}</span>
 						<i class="col-auto bi bi-arrow-right"></i>
-						<span class="col-auto text-decoration-underline">{{ trimString(hash.link, 40) }}</span>
+						<span class="col-auto text-decoration-underline">{{ trimString(hash.link, 20, 40) }}</span>
 						<Button icon="bi bi-clipboard" severity="secondary" class="copy p-button-secondary p-button-raised p-button-outlined" 
 								aria-label="Copy" :label="copyText" @click="copyToClipboard(hash.link, $event)" />
 					</div>
@@ -68,10 +68,10 @@
 			hashesArr: Array
 		},
 		mounted() {
-			if ( this.hashesArr.length ) {
+			if ( this.hashesArr && this.hashesArr.length ) {
 				this.hashesArr.map( h => {
 					this.existedHashes.push({
-						value: this.decrypt(h.hash, 'ufp'),
+						value: this.decrypt(h.hash),
 						id: uniqueId(),
 						hash: h.hash,
 						link: this.generateExistedUrl(h.hash)
@@ -108,11 +108,11 @@
 			updateValue: debounce(function () {
 				this.$store.dispatch( "surveys/setHashes", { limit: this.limit } )
 			}, 100),
-			encrypt(string, secretKey) {
-				return Helpers.encryptAes(string, secretKey)
+			encrypt(string) {
+				return Helpers.encryptAes(string)
 			},
-			decrypt(phrase, secretKey) {
-				return Helpers.decryptAes(phrase, secretKey)
+			decrypt(phrase) {
+				return Helpers.decryptAes(phrase)
 			},
 			generateUrl() {
 				this.showHashes = true
@@ -146,17 +146,12 @@
 							event.target.textContent = 'Copy'
 						}, 1000);
 				} else {
-					console.log(event.target.querySelector('.p-button-label'))
-					
 					event.target.querySelector('.p-button-label').textContent = 'Copied'
 					setTimeout(function() {
 						event.target.querySelector('.p-button-label').textContent = 'Copy'
 					}, 1000);
-				}
-				
-				
+				}	
 			},
-			
 			trimString(str, maxLength) {
 				return Helpers.trimString(str, maxLength)
 			},
@@ -185,7 +180,7 @@
 }
 .copy {
 	width:auto;
-	padding: .15rem .25rem;
+	padding: .25rem .5rem;
 	margin: 0 .5rem;
 }
 .limit {

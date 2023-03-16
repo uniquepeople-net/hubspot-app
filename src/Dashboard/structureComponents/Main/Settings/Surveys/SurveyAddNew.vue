@@ -162,8 +162,6 @@
 					public: this.public
 				}
 
-				console.log(this.newSurvey.questions.length);
-
 				this.addSurvey( this.addSurveyUrl, data );
 
 			},

@@ -11,10 +11,11 @@
 
 	export default {
 		props: {
-			question: Object
+			question: Object,
+			step: Number
 		},
 		mounted() {
-			this.$store.dispatch("surveys/setFulfilledSurvey", { scale_value: this.value, question: this.question })	
+			this.$store.dispatch("surveys/setFulfilledSurvey", { scale_value: this.value, question: this.question, step: this.step })	
 		},	
 		data() {
 			return {
@@ -23,7 +24,7 @@
 		},
 		watch: {
 			value: function(data) {
-				this.$store.dispatch("surveys/setFulfilledSurvey", { scale_value: this.value, question: this.question })	
+				this.$store.dispatch("surveys/setFulfilledSurvey", { scale_value: this.value, question: this.question, step: this.step })	
 			}
 		},
 		components: { Rating }

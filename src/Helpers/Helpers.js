@@ -21,14 +21,17 @@ class Helpers {
 			})			
 	} */
 
-	encryptAes(string, secretKey) {
-		let phrase = CryptoJS.AES.encrypt(string, secretKey).toString()
-		return phrase;
+	encryptAes(string, secretKey = 'ufp') {
+		const encrypted = CryptoJS.AES.encrypt(string, secretKey);
+		const encoded = encodeURIComponent(encrypted);
+		return encoded
 	}
 
-	decryptAes( phrase, secretKey ) {
-		let originString = CryptoJS.AES.decrypt(phrase, secretKey).toString(CryptoJs.enc.Utf8)
-		return originString
+	decryptAes( phrase, secretKey = 'ufp' ) {
+		const decoded = decodeURIComponent(phrase);
+		const decrypted = CryptoJS.AES.decrypt(decoded, secretKey);
+		const plainText = decrypted.toString(CryptoJS.enc.Utf8);
+		return plainText
 	}
 
 	/**
@@ -196,15 +199,19 @@ class Helpers {
 	  
 	// Trim string to return start of string, three dots, end of string
 	// example: "Lorem ipsum ... dolor sit amet"
-	trimString(str, maxLength) {
-		if (str.length <= maxLength) {
+	trimString(str, maxLength, maxCompleteLength) {
+		if (str.length > maxLength) {
+			const trimmedString = str.substring(0, maxLength - 3);
+			const endString = str.substring(str.length - (maxLength - 3));
+			const resultString = trimmedString + '...' + endString;
+			if (resultString.length > maxCompleteLength) {
+			  const diff = maxCompleteLength - 3;
+			  const trimmedEndString = endString.substring(0, diff);
+			  return trimmedString + '...' + trimmedEndString;
+			}
+			return resultString;
+		  }
 		  return str;
-		}
-	  
-		const diff = str.length - maxLength;
-		const start = str.substr(0, Math.ceil(diff / 2));
-		const end = str.substr(str.length - Math.floor(diff / 2));
-		return `${start} . . . ${end}`;
 	}
 	  
 	  

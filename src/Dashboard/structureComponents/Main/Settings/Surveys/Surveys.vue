@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<router-view :key="$route.fullPath" v-if="surveys" :surveys="surveys"></router-view>
-		<!-- <router-view :key="$route.fullPath"></router-view> -->
+		
 		<LoadingIcon v-if="!surveys"/>
 	</div>
 </template>
