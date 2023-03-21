@@ -102,7 +102,8 @@
 
 				let obj = {
 					data: data,
-					hash: this.hash
+					hash: this.hash,
+					survey: this.survey
 				}
 				
 				const errors = this.checkCorrectAnswers(obj.data)

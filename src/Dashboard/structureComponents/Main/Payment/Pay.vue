@@ -17,6 +17,8 @@
 			<p>4242 4242 4242 4242</p>	
 			<p>2223 0031 2200 3222</p>	
 
+			<GooglePay />
+
 			<StripeElements
 				v-if="stripeLoaded"
 				:stripe-key="stripePubKey"
@@ -41,6 +43,7 @@
 	import { StripeElements, StripeElement } from 'vue-stripe-js'
 	import { loadStripe } from '@stripe/stripe-js'
 	import { mapGetters } from 'vuex'
+	import GooglePay from './GooglePay.vue'
 
 	export default {
 		created() {
@@ -164,7 +167,7 @@
 							payProduct: 'payments/payProduct',
 							user: 'user/user' })
 		},
-		components: { StripeElements, StripeElement }
+		components: { StripeElements, StripeElement, GooglePay }
 	}
 </script>
  

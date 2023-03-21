@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="mx-auto">
 		<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
 			<div class="flex align-items-center flex-column pt-6 px-3">
 				<i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
@@ -14,7 +14,7 @@
 			</template>
 		</Dialog>
 	
-		<Card class="card">
+		<Card class="card mx-auto">
 			<template #title>
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h5><span class="fw-light">Add New Survey</span></h5>

@@ -7,6 +7,10 @@
 				</div>
 			</template>
 			<template #content>
+				<div>
+					Completed surveys: {{ survey.count }}
+				</div>
+				<Divider />
 				<div v-for="group in survey.hashes">
 					{{ decrypt(group.hash) + ' - ' + group.count  + ' / ' + group.max_limit}}
 				</div>

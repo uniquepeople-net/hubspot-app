@@ -14,7 +14,7 @@
 			</template>
 		</Dialog>
 
-		<Card class="card">
+		<Card class="card mx-auto">
 			<template #title>
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h5><span class="fw-light">Update Survey</span></h5>

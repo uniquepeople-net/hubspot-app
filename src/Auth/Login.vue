@@ -147,7 +147,7 @@ export default {
 	position: relative;
 	& span.error-msg {
 		position: absolute;
-		bottom: -60%;
+		top: 100%;
 	}
 	& > .p-button {
 		border-radius: 0 4px 4px 0;

@@ -1,4 +1,18 @@
 <template>
+	<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
+		<div class="flex align-items-center flex-column pt-6 px-3">
+			<i class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
+			<h6 class="mt-3">
+				Emails sent!
+			</h6>
+		</div>
+		<template #footer>
+			<div class="flex justify-content-center">
+				<Button label="OK" @click="toggleDialog" class="p-button-text" />
+			</div>
+		</template>
+	</Dialog>
+
 	<h4 class="mb-4">Email Editor</h4>
 	<div class="row g-3">
 		<div class="col-12 col-md-8">
@@ -27,8 +41,11 @@
 					<h5 class="card-header">Choosed Users</h5>
 				</template>
 				<template #content>
-					<Listbox :options="emails" optionLabel="name" style="width:100%" listStyle="max-height:300px"/>
-					<Button label="Send" icon="bi bi-send-check" class="p-button-raised p-button-success mt-3" @click="sendEmails(!v$.$invalid)"/>
+					<Listbox :options="emails" optionLabel="name" style="width:100%" listStyle="max-height:300px"
+							v-model="v$.emails.$model" :class="{'p-invalid':v$.emails.$invalid && submitted}"/>
+					<InputError :validator="v$.emails" :submitted="submitted" replace="Users"></InputError>					
+
+					<Button label="Send" icon="bi bi-send-check" :loading="loading" class="p-button-raised p-button-success mt-3" @click="sendEmails(!v$.$invalid)"/>
 				</template>
 			</Card>	
 		</div>		
@@ -54,12 +71,15 @@
 				subject: '',
 				invalidContent: false,
 				submitted: false,
+				loading: false,
+				showMessage: false
 			}
 		},
 		validations() {
 			return {
 				subject: { required, minLength: minLength(3) },
 				value: { required, minLength: minLength(3) },
+				emails: { required }
 			}
 		},
 		methods: {
@@ -70,6 +90,12 @@
 				if (!isFormValid) {
 					return;
 				}
+				
+				this.loading = true;
+
+				setTimeout(() => {
+					this.showMessage = true
+				}, 2500)
 
 				const data = new FormData()
 				
@@ -96,10 +122,13 @@
 							Authorization: 'Bearer ' + User.getToken(),							
 							'Content-Type': 'multipart/form-data'							
 					}
-				}).then( response => console.log(response))
+				}).then( response => true)
 			},
 			uploadedFiles(e) {
 				this.files = e;
+			},
+			toggleDialog() {
+				this.$router.push({ name: 'all-users' })
 			}
 		},
 		computed: {
