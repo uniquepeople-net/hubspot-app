@@ -25,7 +25,7 @@
 
 			<div class="opinion-levels" v-if="type === 5">
 				<label for="levels">Scale levels</label>
-				<InputNumber inputId="levels" v-model="levels" showButtons mode="decimal" :max="20" :change="handleChange()"/>
+				<InputNumber inputId="levels" v-model="levels" showButtons mode="decimal" :min="1" :max="50" :change="handleChange()"/>
 			</div>
 		</div>
 	</div>

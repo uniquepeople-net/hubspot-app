@@ -25,7 +25,7 @@
 		</template>	
 
 		<template #content v-if="started">
-			<Steps :model="items" :readonly="true" aria-label="Form Steps"/>
+			<Steps :model="items" :readonly="false" aria-label="Form Steps" class="steps-survey"/>
 			
 			<div class="my-5">
 				<router-view v-slot="{Component}"  @prevPage="prevPage($event)" @nextPage="nextPage($event)" @complete="complete">
@@ -203,5 +203,10 @@
 }
 .warning {
 	color: var(--red-600);
+}
+.steps-survey {
+	:deep(.p-steps-list) {
+		flex-wrap: wrap;
+	}
 }
 </style>
