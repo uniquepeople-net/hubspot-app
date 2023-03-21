@@ -46,18 +46,24 @@
 							pointStyle: 'cross',
 							borderRadius: 5,
 							barThickness: 20
+						},
+						point: {
+							pointStyle: 'star',
 						}
 					},
-					responsive: true,					
+					responsive: true,
+					maintainAspectRatio: true,
+					aspectRatio: 1.5,				
 					plugins: {
 						legend: {
 							position: 'bottom',
 							align: 'start',
 							labels: {
-								boxHeight: 5,
-								usePointStyle: true,
-								pointStyleWidth: 20,
-								pointStyle: 'cross',
+								boxHeight: 10,
+								boxWidth: 15,
+								usePointStyle: false,
+								pointStyleWidth: 5,
+								pointStyle: 'star',
 								/* useBorderRadius: true,
 								borderRadius: 20, */
 							}
@@ -88,13 +94,8 @@
 						})
 					}
 					let complet = data.reduce( (a,b) => a + Number(b.data[0]), 0)
-
-					console.log( data, complet )
-					
-
 					data.sort( (a, b) => b.data[0] - a.data[0] )
 				}
-				
 				return data
 			},
 			randomColor(colorPallete) {

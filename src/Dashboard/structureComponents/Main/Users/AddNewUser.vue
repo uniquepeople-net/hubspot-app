@@ -246,31 +246,27 @@ export default {
             this.submitted = false
         },
 		async registerUser(url, data) {
-			try {
-				await User.refreshedToken();
+			await User.refreshedToken();
 
-				const user = await axios.post( url, data, {
-					headers: {
-						Authorization: 'Bearer ' + User.getToken()
-					}
-				}).then(
-					resp => {
-						this.response = resp.data
-						this.resetForm()
-						this.toggleDialog()
-						this.loading = false
-					}				
-				)
-
-			} catch (err) {
+			const user = await axios.post( url, data, {
+				headers: {
+					Authorization: 'Bearer ' + User.getToken()
+				}
+			}).then(
+				resp => {
+					this.response = resp.data
+					this.toggleDialog()
+					this.loading = false
+					//this.resetForm()				
+				}				
+			).catch( error => {
 				Toast.fire({
 					icon: 'error',
 					timer: 5000,
 					title: "Unable to register user"
 				})
 				this.loading = false
-				throw 'Unable to register user'
-			}
+			})
 		},
 		generatePswd() {
 			this.password = Helpers.generatePasswd(12)
