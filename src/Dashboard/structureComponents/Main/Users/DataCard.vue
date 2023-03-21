@@ -19,7 +19,7 @@
 			<template #title>
 				<div class="card-header">
 					<h5>User Data</h5>
-					<DeleteItem v-if="admin" :delete="admin" :itemId="id" :itemName="name" 
+					<DeleteItem v-if="admin" :delete="admin" :itemId="id" :itemName="name + ' ' + surname" 
 								item="user" url="/api/users/" redirectRoute="all-users"></DeleteItem>
 				</div>
 			</template>

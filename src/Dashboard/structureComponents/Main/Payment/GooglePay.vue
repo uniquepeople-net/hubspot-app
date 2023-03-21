@@ -1,38 +1,38 @@
 <template>
 	<div>
 		<google-pay-button
-  environment="TEST"
-  button-type="buy"
-  v-bind:paymentRequest.prop="{
-    apiVersion: 2,
-    apiVersionMinor: 0,
-    allowedPaymentMethods: [
-      {
-        type: 'CARD',
-        parameters: {
-          allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-          allowedCardNetworks: ['AMEX', 'VISA', 'MASTERCARD']
-        },
-        tokenizationSpecification: {
-          type: 'PAYMENT_GATEWAY',
-          parameters: {
-            gateway: 'example',
-            gatewayMerchantId: 'exampleGatewayMerchantId'
-          }
-        }
-      }
-    ],
-    transactionInfo: {
-      totalPriceStatus: 'FINAL',
-      totalPriceLabel: 'Total',
-      totalPrice: '100.00',
-      currencyCode: 'USD',
-      countryCode: 'US'
-    }
-  }"
-  v-on:loadpaymentdata="onLoadPaymentData"
-  v-on:error="onError"
-></google-pay-button>
+			environment="TEST"
+			button-type="buy"
+			v-bind:paymentRequest.prop="{
+				apiVersion: 2,
+				apiVersionMinor: 0,
+				allowedPaymentMethods: [
+				{
+					type: 'CARD',
+					parameters: {
+					allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+					allowedCardNetworks: ['AMEX', 'VISA', 'MASTERCARD']
+					},
+					tokenizationSpecification: {
+					type: 'PAYMENT_GATEWAY',
+					parameters: {
+						gateway: 'example',
+						gatewayMerchantId: 'exampleGatewayMerchantId'
+					}
+					}
+				}
+				],
+				transactionInfo: {
+				totalPriceStatus: 'FINAL',
+				totalPriceLabel: 'Total',
+				totalPrice: '100.00',
+				currencyCode: 'USD',
+				countryCode: 'US'
+				}
+			}"
+			v-on:loadpaymentdata="onLoadPaymentData"
+			v-on:error="onError">
+		</google-pay-button>
 	</div>
 </template>
  
@@ -41,37 +41,6 @@
 	import '@google-pay/button-element';
 
 	export default {
-		mounted() {
-			/* const script = document.createElement('script');
-			script.src = 'https://pay.google.com/gp/p/js/pay.js';
-			script.onload="onGooglePayLoaded()";
-			document.body.appendChild(script);
-
-			function onGooglePayLoaded() {
-				const googlePayClient = 
-					new google.payments.api.PaymentsClient({
-						environment: 'TEST'
-					});
-			}
-
-			const clientConfiguration = {
-				apiVersion: 2,
-				apiVersionMinor: 0,
-				allowedPaymentMethods: [cardPaymentMethod]
-			}
-
-			googlePayClient.isReadyToPay(clientConfiguration)
-				.then( response => {
-					if ( response.result ) {
-						console.log(result)
-						
-					}
-				}).catch( error => {
-					console.log(error)
-					
-				})
- */
-		},
 		data() {
 			return {
 				amount: '100.00',

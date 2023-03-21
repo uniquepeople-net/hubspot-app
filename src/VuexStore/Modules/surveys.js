@@ -44,6 +44,9 @@ export default {
 		RESETSPECIFICRESULTS( state, data ) {
 			state.specificResults = null
 		},
+		DELETEFROMSPECIFIC( state, data ) {
+			state.specificSurvey = data
+		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
 			// https://github.com/vuejs/vuex/issues/1118
@@ -261,6 +264,11 @@ export default {
 		},
 		resetSpecificResults(context) {
 			context.commit("RESETSPECIFICRESULTS")
+		},
+		deleteFromSpecific(context, id) {
+			let specificSurvey = context.rootGetters['surveys/specificSurvey']
+			specificSurvey.questions = specificSurvey.questions.filter( q => q.id !== Number(id) )		
+			context.commit("DELETEFROMSPECIFIC", specificSurvey)
 		}
 	},
 

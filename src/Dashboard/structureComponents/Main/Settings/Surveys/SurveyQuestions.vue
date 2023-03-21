@@ -71,6 +71,7 @@
 					question.index = index
 				})
 				this.$store.dispatch("surveys/setNewSurvey", { questions: [...this.questions] });	
+				this.$store.dispatch("surveys/deleteFromSpecific", qId );	
 			}
 		},
 		computed: {

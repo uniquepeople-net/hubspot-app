@@ -18,6 +18,9 @@
 			<template #title>
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h5><span class="fw-light">Product:</span> {{product.name}}</h5>
+
+					<!-- Stripe Products not possible to delete through API  -->
+					
 					<!-- <DeleteItem v-if="delete" :delete="delete" :itemId="id" 
 								:itemName="name" item="product" url="/api/product/"
 								redirectRoute="products" :callback="'payments/getProducts'"/> -->

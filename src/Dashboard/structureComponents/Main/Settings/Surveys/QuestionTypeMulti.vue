@@ -16,7 +16,7 @@
 	
 			<div class="max-choosed" v-if="type === 3 || type === 4">
 				<label for="maxChoosed">Max. questions to choose</label>
-				<InputNumber inputId="maxChoosed" v-model="maxChoosed" showButtons mode="decimal" :max="values.length" :change="handleChange()"/>
+				<InputNumber inputId="maxChoosed" v-model="maxChoosed" showButtons mode="decimal" :min="1" :max="values.length" :change="handleChange()"/>
 		    </div>
 			
 			<div v-if="type === 4" class="opened-questions">
