@@ -8,7 +8,7 @@
 			<Divider />
 		</template>
 		<template #content>
-			
+			<!-- 
 			<p>4000 0025 0000 3155</p>
 			<p>4000 0027 6000 3184</p>
 			<p>4000 0082 6000 3178</p>
@@ -16,8 +16,8 @@
 
 			<p>4242 4242 4242 4242</p>	
 			<p>2223 0031 2200 3222</p>	
-
-			<GooglePay />
+ -->
+			<GooglePay class="my-5"/>
 
 			<StripeElements
 				v-if="stripeLoaded"
@@ -28,7 +28,7 @@
 								ref="card" @change="cardChange($event)"/>
 			</StripeElements>
 		
-			<Button type="button" @click="pay" label="Pay" class="mt-4 pay-btn" 
+			<Button type="button" @click="pay" label="Pay" class="mt-5 pay-btn" 
 			        iconPos="right" icon="pi pi-search" :disabled="disablePay">
 				Pay
 				<div v-if="loading" class="spinner-grow" role="status">
