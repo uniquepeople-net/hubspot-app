@@ -4,7 +4,7 @@
 		<div>
 			<div class="limit my-4">
 				<label for="limit">Survey limit for one hash:</label>
-				<InputNumber inputId="limit" v-model="limit" showButtons mode="decimal" :max="200" :change="handleLimit()"/>
+				<InputNumber inputId="limit" v-model="limit" showButtons mode="decimal" :max="5000" :min="1" :change="handleLimit()"/>
 			</div>
 
 
