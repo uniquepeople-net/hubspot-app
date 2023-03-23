@@ -78,8 +78,9 @@
 
 							<Divider />
 
-							<div class="d-flex justify-content-end">
+							<div class="d-flex align-items-end flex-column">
 								<Button type="submit" label="Add Survey" class="mt-2 submit-btn" />
+								<small v-if="errors" class="q-errors mt-3">Questions {{errors}} not correctly created</small>
 							</div>
 						</form>
 					</div>
@@ -111,6 +112,7 @@
 				submitted: false,
 				showMessage: false,
 				response: null,
+				errors: null,
 			}
 		},
 		validations() {
@@ -150,6 +152,7 @@
 				this.submitted = true;
 
 				if (!isFormValid || ( !this.newSurvey.questions || !this.newSurvey.questions.length )) {
+					this.errors = ' '
 					return;
 				}
 				
@@ -182,6 +185,51 @@
 					...this.newSurvey
 				}
 
+				// check errors resp. unfilled inputs in questions
+				let errors = dataObj.questions.map( q =>  {
+					if ( q.type === 1 ) {
+						//check if is namuber with value higher than 0
+						let result = this.checkNumber(q.open_value) ? null : (Number(q.index) + 1)
+						return result
+					}
+
+					if ( q.type === 2 ) {
+						//check if is array with precisely two not empty string items
+						let result = Array.isArray(q.options) && q.options.length === 2 && 
+									 typeof q.options[0] === 'string' && 
+									 q.options[0].length > 0 && 
+									 typeof q.options[1] === 'string' && 
+									 q.options[1].length > 0 ? 
+									 	null : (Number(q.index) + 1);
+						return result
+					}
+
+					if ( q.type === 3 || q.type === 4 ) {
+						// check if is namuber with value higher than 0
+						let resultNum = this.checkNumber(q.max_choosed)
+						// check if array has objects with not empty string value
+						let resultArr = this.checkArrayObjectsValues(q.multi_values, 'value', q.index)
+
+						if ( q.type === 4 ) {
+							let resultOpen = this.checkNumber(q.open_value)
+							return resultNum && resultArr && resultOpen ? null : (Number(q.index) + 1)
+						}
+
+						return resultNum && resultArr ? null : (Number(q.index) + 1)
+					}
+
+					if ( q.type === 5 ) {
+						let result = this.checkNumber(q.levels) ? null : Number(q.index) + 1
+						return result
+					}
+				})
+
+				if ( errors.some( e => e !== null ) ) {
+					this.errors = errors.filter(value => value !== null).sort().toString()
+				} else {
+					this.errors = null
+				}
+
 				await User.refreshedToken();
 
 				await axios.post( url, dataObj,  {
@@ -198,8 +246,21 @@
 							title: "Unable to add survey"
 						})
 					}) 
+			},
+			checkNumber(data) {
+				return Number.isInteger(data) && data > 0
+			},
+			checkArrayObjectsValues(arr, valueKey, index) {
+				if (!Array.isArray(arr) || arr.length === 0) {
+					return false ;
+				}
+				for (let i = 0; i < arr.length; i++) {
+					if (!arr[i].hasOwnProperty(valueKey) || arr[i].value.trim().length === 0) {
+						return false;
+					}
+				}
+				return true;
 			}
-			
 		},
 		computed: {
 			...mapGetters({ addSurveyUrl: 'links/addSurvey',
@@ -250,5 +311,8 @@
 }
 .submit-btn {
 	max-width: 25rem;
+}
+.q-errors {
+	color: var(--red-600);
 }
 </style>
