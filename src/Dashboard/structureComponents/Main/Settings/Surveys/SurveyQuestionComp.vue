@@ -1,7 +1,7 @@
 <template>
 	<div :class="`row pb-3 ${ index % 2 == 0 ? 'bgGrey' : 'bgBlue' }`">
 		<div class="inputgroup my-3 col-12 col-lg-6">			
-			<span class="p-inputgroup-addon">
+			<span class="p-inputgroup-addon fw-bold">
 				{{ questionNum() }}
 			</span>
 			<InputText id="title" v-model="v$.title.$model" :class="{'p-invalid':v$.title.$invalid && submitted}" 
@@ -22,7 +22,8 @@
 			<i class="bi bi-trash" @click="deleteItem(qId)"></i>
 		</div>
 
-		<QuestionType v-if="questionType" :type="type" :qId="qId" :question="question ? question : null"/>
+		<QuestionType v-if="questionType" :type="type" :qId="qId" 
+					  :question="question ? question : null" :submitted="submitted"/>
 	</div>
 </template>
  
@@ -67,10 +68,11 @@
 				this.$emit('deleteItem', this.qId)
 			},
 			selectType() {
+				this.$store.dispatch( "surveys/resetNewSurvey", { qId: this.qId } )
 				this.questionType = true;
 			},
 			questionNum() {
-				return (this.index + 1).toString()
+				return (this.index + 1).toString() + '.'
 			},
 			handleQuestionTitle() {	
 				this.updateValue()

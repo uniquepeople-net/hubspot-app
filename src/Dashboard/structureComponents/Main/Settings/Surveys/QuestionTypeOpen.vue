@@ -1,9 +1,10 @@
 <template>
 	<div class="field col-12 md:col-3">
 		<label for="horizontal">Number of opened answers</label>
-		<InputNumber inputId="horizontal" v-model="value" showButtons buttonLayout="horizontal" :step="1"
+		<InputNumber inputId="horizontal" showButtons buttonLayout="horizontal" :step="1"
 			decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" 
-			decrementButtonIcon="pi pi-minus" mode="decimal" :min="1" :change="handleNumberValue()"/>
+			decrementButtonIcon="pi pi-minus" mode="decimal" :min="1" :change="handleNumberValue()"
+			v-model="value" :class="{'p-invalid':submitted && value < 1}" />
 	</div>
 </template>
  
@@ -15,13 +16,14 @@
 	export default {
 		props: { 
 			id: String,
-			question: Object 
+			question: Object,
+			submitted: Boolean 
 		},
-		mounted() {
+		mounted() {			
 			if ( this.question ) {
-				this.value = this.question.opened_answers
+				this.value = this.question.opened_answers ? this.question.opened_answers : this.value
 			}
-			this.$store.dispatch("surveys/setNewSurvey", { open_value: this.value, id: this.id })
+			this.$store.dispatch("surveys/setNewSurvey", { open_value: this.value, qId: this.id })
 		},
 		data() {
 			return {

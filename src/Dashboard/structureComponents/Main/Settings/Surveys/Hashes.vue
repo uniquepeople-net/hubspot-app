@@ -3,7 +3,7 @@
 		<h5 class="text-center mb-4">Hashes</h5>
 		<div>
 			<div class="limit my-4">
-				<label for="limit">Survey limit for one hash:</label>
+				<label for="limit">Survey limit:</label>
 				<InputNumber inputId="limit" v-model="limit" showButtons mode="decimal" :max="5000" :min="1" :change="handleLimit()"/>
 			</div>
 
@@ -184,6 +184,6 @@
 	margin: 0 .5rem;
 }
 .limit {
-	max-width: 12rem;
+	max-width: 7rem;
 }
 </style>

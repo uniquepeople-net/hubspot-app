@@ -101,7 +101,7 @@ export default {
 					})
 		},
 		setNewSurvey( context, data ) {
-			let newSurvey = context.rootGetters['surveys/newSurvey']			
+			let newSurvey = context.rootGetters['surveys/newSurvey']		
 
 			if ( 'questions' in data ) {
 				context.commit("SETNEWSURVEY", {...newSurvey, ...data })
@@ -157,10 +157,28 @@ export default {
 				
 				context.commit("SETNEWSURVEY", { ...newSurvey })
 			}
-
 		},
-		resetNewSurvey( context ) {
-			context.commit("RESETNEWSURVEY", {} )
+		resetNewSurvey( context, data ) {
+			let newSurvey = context.rootGetters['surveys/newSurvey']
+			// clear question object to default values
+			if ( data && 'qId' in data ) {
+				newSurvey.questions.map( (q, index) => {
+					if ( q.qId === data.qId ) {
+						const keepKeys = ['index', 'qId', 'title', 'type']
+						const result = Object.keys(q)
+							.filter(key => keepKeys.includes(key)) // only keep keys that are in the keepKeys array
+							.reduce((obj, key) => {
+								obj[key] = q[key];
+								return obj;
+						}, {});
+
+						newSurvey.questions[index] = result
+						context.commit("SETNEWSURVEY", {...newSurvey })
+					}
+				})
+			} else {
+				context.commit("RESETNEWSURVEY", {} )
+			}
 		},
 		setFulfilledSurvey( context, data ) {
 			let fulfilled = context.rootGetters['surveys/fulfilledSurvey']

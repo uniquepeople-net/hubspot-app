@@ -7,7 +7,7 @@
 ##RUN npm install
 #COPY . /vue-app
 #CMD [ "npm", "start" ]
-#EXPOSE 9000
+#EXPOSE 5000
 
 
 # build stage
