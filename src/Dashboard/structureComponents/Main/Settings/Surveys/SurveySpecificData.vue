@@ -167,6 +167,8 @@
 				if (!isFormValid) {
 					this.errors = ' '
 					return;
+				} else {
+					this.errors = null
 				}
 				
 				let data = {
@@ -239,6 +241,7 @@
 
 				if ( errors.some( e => e !== null ) ) {
 					this.errors = errors.filter(value => value !== null).sort().toString()
+					return
 				} else {
 					this.errors = null
 				}
