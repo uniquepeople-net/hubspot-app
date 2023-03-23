@@ -52,8 +52,7 @@
 							this.message = 'You are not authorized to do this survey.'
 							return false
 						}
-						return true
-					}
+					}					
 
 					if ( this.survey.hashes.length ) {
 						let hashesArr = this.survey.hashes
@@ -87,11 +86,13 @@
 		computed: {
 			...mapGetters({ survey: 'surveys/specificSurveyBySlug' }),
 			queryHash() {
-				return this.$route.query.hash ? 
-						encodeURIComponent(this.$route.query.hash) : 
-						localStorage.getItem(this.survey.name)
+				if ( this.$route.query.hash ) {
+					localStorage.setItem(this.survey.name, encodeURIComponent(this.$route.query.hash))
+					return encodeURIComponent(this.$route.query.hash)
+				} else {
+					return localStorage.getItem(this.survey.name)
+				} 
 			}
-
 		},
 		components: { AnswerSurvey, LoadingIcon, Message, AnswerSurveyInfo },
 	}
