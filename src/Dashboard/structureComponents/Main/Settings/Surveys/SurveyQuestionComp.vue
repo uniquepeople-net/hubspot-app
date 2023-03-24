@@ -29,12 +29,13 @@
  
  
 <script>
-	import { debounce } from 'lodash';
 	import { required, minLength, maxLength } from "@vuelidate/validators";
 	import { useVuelidate } from "@vuelidate/core";
+	import { debounce } from 'lodash';
 	import QuestionType from './QuestionType.vue';
 
 	export default {
+		setup: () => ({ v$: useVuelidate() }),
 		props: {
 			types: Object,
 			qId: String,
@@ -49,7 +50,6 @@
 				this.questionType = true
 			}			
 		},
-		setup: () => ({ v$: useVuelidate() }),
 		data() {
 			return {
 				title: '',
@@ -68,7 +68,8 @@
 				this.$emit('deleteItem', this.qId)
 			},
 			selectType() {
-				this.$store.dispatch( "surveys/resetNewSurvey", { qId: this.qId } )
+				/* this.$store.dispatch( "surveys/resetNewSurvey", 
+						{ title: this.title, index: this.index,  qId: this.qId, type: this.type } ) */
 				this.questionType = true;
 			},
 			questionNum() {
