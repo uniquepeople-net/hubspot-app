@@ -60,9 +60,6 @@
 				this.levels = this.question.opinion_sc_levels ? this.question.opinion_sc_levels : this.levels
 			}			
 
-			console.log(this.levels)
-			
-
 			this.$store.dispatch("surveys/setNewSurvey",  {
 					...( this.type == 3 || this.type === 4 ? {
 							multi_values: this.values,

@@ -162,20 +162,29 @@ export default {
 			let newSurvey = context.rootGetters['surveys/newSurvey']
 			// clear question object to default values
 			if ( data && 'qId' in data ) {
-				newSurvey.questions.map( (q, index) => {
-					if ( q.qId === data.qId ) {
-						const keepKeys = ['index', 'qId', 'title', 'type']
+				/* newSurvey.questions.map( (q, index) => {
+					if ( Number(q.qId) === Number(data.qId) ) {
+						/* const keepKeys = ['index', 'qId', 'title', 'type']
 						const result = Object.keys(q)
 							.filter(key => keepKeys.includes(key)) // only keep keys that are in the keepKeys array
 							.reduce((obj, key) => {
 								obj[key] = q[key];
 								return obj;
 						}, {});
+						return result 
+						return { ...q, title: 'jkjkjjj' }
+						
+						
 
-						newSurvey.questions[index] = result
-						context.commit("SETNEWSURVEY", {...newSurvey })
 					}
+					return q
 				})
+
+				//newSurvey.questions = newS
+
+				console.log(newSurvey) */
+				
+				context.commit("SETNEWSURVEY", {...newSurvey })
 			} else {
 				context.commit("RESETNEWSURVEY", {} )
 			}
@@ -285,8 +294,10 @@ export default {
 		},
 		deleteFromSpecific(context, id) {
 			let specificSurvey = context.rootGetters['surveys/specificSurvey']
-			specificSurvey.questions = specificSurvey.questions.filter( q => q.id !== Number(id) )		
-			context.commit("DELETEFROMSPECIFIC", specificSurvey)
+			if (specificSurvey) {
+				specificSurvey.questions = specificSurvey.questions.filter( q => q.id !== Number(id) )		
+				context.commit("DELETEFROMSPECIFIC", specificSurvey)
+			}	
 		}
 	},
 
