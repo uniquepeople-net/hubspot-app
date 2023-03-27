@@ -17,7 +17,7 @@
 		props: { 
 			id: String,
 			question: Object,
-			submitted: Boolean 
+			submitted: Boolean,
 		},
 		mounted() {			
 			if ( this.question ) {

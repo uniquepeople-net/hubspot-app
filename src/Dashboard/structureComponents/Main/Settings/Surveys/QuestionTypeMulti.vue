@@ -23,7 +23,7 @@
 		    </div>
 			
 			<div v-if="type === 4" class="opened-questions">
-				<QuestionTypeOpen :id="id"/>
+				<QuestionTypeOpen :id="id" :question="question"/>
 			</div>
 
 			<div class="opinion-levels" v-if="type === 5">
@@ -58,6 +58,7 @@
 				})
 				this.maxChoosed = this.question.max_to_choose ? this.question.max_to_choose : this.maxChoosed
 				this.levels = this.question.opinion_sc_levels ? this.question.opinion_sc_levels : this.levels
+				this.opened_value = this.question.opened_answers ? this.question.opened_answers : null
 			}			
 
 			this.$store.dispatch("surveys/setNewSurvey",  {
@@ -76,6 +77,8 @@
 				values: [],
 				maxChoosed: 0,
 				levels: 1,
+				opened_value: null
+
 			}
 		},
 		methods: {

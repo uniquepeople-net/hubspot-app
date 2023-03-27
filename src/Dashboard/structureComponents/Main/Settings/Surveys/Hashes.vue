@@ -80,6 +80,8 @@
 				})
 				this.limit = this.hashesArr[0].max_limit
 				this.$store.dispatch( "surveys/setHashes", { hashes: this.hashes, limit: this.limit, existedHashes: this.existedHashesArr } )
+			} else {
+				this.$store.dispatch( "surveys/setHashes", { hashes: this.hashes, limit: this.limit, existedHashes: this.existedHashesArr } )
 			}
 		},
 		data() {

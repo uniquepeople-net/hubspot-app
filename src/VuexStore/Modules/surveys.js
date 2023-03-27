@@ -173,9 +173,6 @@ export default {
 						}, {});
 						return result 
 						return { ...q, title: 'jkjkjjj' }
-						
-						
-
 					}
 					return q
 				})

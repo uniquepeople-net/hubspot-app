@@ -108,6 +108,15 @@
 				
 				const errors = this.checkCorrectAnswers(obj.data)
 
+				const unfilled = obj.data.map( (item, index) => {
+					if ( ( 'scale_value' in item && item.scale_value == null ) ||
+					 	 ( 'closed_value' in item && item.closed_value == null ) ||
+						 ( 'value' in item && item.value.every( item => item === ""))
+					 ) {
+						return item.step
+					} else return null
+				})
+
 				if ( errors ) {
 					this.showError = true
 					this.unfilledQuestions = unfilled.filter(value => value !== null).sort().toString()
