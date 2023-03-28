@@ -131,7 +131,8 @@
 						}).then( response => {
 							this.response = response.data								
 							this.toggleDialog();
-							this.loading  = false						
+							this.loading  = false
+							//localStorage.setItem(this.survey.slug + 'done', true)						
 						}).catch( error => {
 							Toast.fire({
 								icon: 'error',

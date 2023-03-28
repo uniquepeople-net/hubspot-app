@@ -2,9 +2,9 @@
     <Card class="card">
         <template #content>
             <h4 class="text-center">
-                <i class="bi bi-exclamation-triangle-fill"></i>
+                <i class="d-block bi bi-exclamation-triangle-fill mb-4"></i>
                 <span class="mx-3">{{ message }}</span >
-                <i class="bi bi-exclamation-triangle-fill"></i>
+                <!-- <i class="d-block bi bi-exclamation-triangle-fill mt-4"></i> -->
             </h4>
 			<div class="d-flex justify-content-center mt-5">
 				<slot name="button"></slot>
@@ -34,6 +34,7 @@
     margin: 2rem;
 }
 .bi-exclamation-triangle-fill {
+	font-size: 3rem;
     color: var(--orange-400);
 }
 </style>

@@ -29,7 +29,7 @@
 			<div class="opinion-levels" v-if="type === 5">
 				<label for="levels">Scale levels</label>
 				<InputNumber inputId="levels" v-model="levels" showButtons mode="decimal" 
-							 :min="1" :max="50" :change="handleChange()"
+							 :min="1" :max="20" :change="handleChange()"
 							 :class="{'p-invalid':submitted && levels < 1}"/>
 			</div>
 		</div>
@@ -83,9 +83,13 @@
 		},
 		methods: {
 			addItem() {
-				let newObj = { value: '', id: uniqueId()}
-				this.values = [...this.values, newObj] 
-				this.maxChoosed = this.values.length
+				if (this.values.length < 10) {
+					let newObj = { value: '', id: uniqueId()}
+					this.values = [...this.values, newObj] 
+					this.maxChoosed = this.values.length
+				} else {
+					return
+				}
 			},
 			removeItem(index) {
 				this.values = this.values.filter( q => q.id !== index )

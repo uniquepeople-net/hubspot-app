@@ -4,7 +4,7 @@
 		<InputNumber inputId="horizontal" showButtons buttonLayout="horizontal" :step="1"
 			decrementButtonClass="p-button-danger" incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus" 
 			decrementButtonIcon="pi pi-minus" mode="decimal" :min="1" :change="handleNumberValue()"
-			v-model="value" :class="{'p-invalid':submitted && value < 1}" />
+			v-model="value" :class="{'p-invalid':submitted && value < 1}" :max="20"/>
 	</div>
 </template>
  

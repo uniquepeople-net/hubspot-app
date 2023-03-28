@@ -15,6 +15,9 @@
 			this.$store.dispatch("surveys/resetSpecificSurvey")
 			this.$store.dispatch("surveys/specificSurvey", this.id)
 		},
+		unmounted() {
+			this.$store.dispatch("surveys/resetNewSurvey");
+		},
 		data() {
 			return {
 				id: this.$route.params.survey_id,

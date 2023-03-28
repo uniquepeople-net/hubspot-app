@@ -3,7 +3,7 @@
 		<AnswerSurveyInfo v-if="survey" :survey="survey" :hash="queryHash"/>
 		<Message v-if="message" :message="message">
 			<template v-slot:button>
-				<Button label="Log In here" @click="pushToLogin()"/>
+				<!-- <Button label="Log In here" @click="pushToLogin()"/> -->
 			</template>
 		</Message>
 		<AnswerSurvey v-if="showSurvey || checkSurveyAcces()" :survey="survey" :hash="queryHash"/>
@@ -21,7 +21,7 @@
 
 	export default {
 		created() {		
-			this.$store.dispatch("surveys/specificSurveyBySlug", this.slug)			
+			this.$store.dispatch("surveys/specificSurveyBySlug", this.slug)
 		},
 		data() {
 			return {
@@ -36,7 +36,13 @@
 					let isActive = this.survey.active
 					let isPublic = this.survey.public
 					let status = this.survey.survey_status.id
-					
+					let surveyDone = localStorage.getItem(this.slug + 'done');
+
+					if ( surveyDone === true  ) {
+						this.message = 'You have successfully filled out the survey before!'
+						return false
+					}
+
 					if ( status !== 2 ) {
 						this.message = 'This survey is ' + this.survey.survey_status.name
 						return false
