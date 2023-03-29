@@ -15,7 +15,7 @@
 
 	export default {
 		props: { 
-			id: String,
+			id: Number,
 			question: Object,
 			submitted: Boolean,
 		},
@@ -23,7 +23,7 @@
 			if ( this.question ) {
 				this.value = this.question.opened_answers ? this.question.opened_answers : this.value
 			}
-			this.$store.dispatch("surveys/setNewSurvey", { open_value: this.value, qId: this.id })
+			this.$store.dispatch("surveys/setNewSurvey", { open_value: this.value, index: this.id })
 		},
 		data() {
 			return {
@@ -35,7 +35,7 @@
 				this.updateValue()
 			},
 			updateValue: debounce(function () {
-				this.$store.dispatch("surveys/setNewSurvey", { open_value: this.value, qId: this.id })
+				this.$store.dispatch("surveys/setNewSurvey", { open_value: this.value, index: this.id })
 			}, 100),
 		},
 		components: { InputNumber }

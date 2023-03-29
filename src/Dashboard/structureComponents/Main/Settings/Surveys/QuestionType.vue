@@ -1,13 +1,13 @@
 <template>
 	<div>
 	
-		<QuestionTypeOpen v-if="type === 1" :id="qId" :question="question ? question : null"
+		<QuestionTypeOpen v-if="type === 1" :id="index" :question="question ? question : null"
 							:submitted="submitted"/>
 	
-		<QuestionTypeClosed v-if="type === 2" :id="qId" :question="question ? question : null"
+		<QuestionTypeClosed v-if="type === 2" :id="index" :question="question ? question : null"
 							:submitted="submitted"/>
 		
-		<QuestionTypeMulti v-if="type === 3 || type === 4 || type === 5" :type="type" :id="qId" 
+		<QuestionTypeMulti v-if="type === 3 || type === 4 || type === 5" :type="type" :id="index" 
 							:question="question ? question : null" :submitted="submitted"/>
 	
 	</div>
@@ -23,7 +23,7 @@
 	export default {
 		props: { 
 			type: Number,
-			qId: String,
+			index: Number,
 			question: Object,
 			submitted: Boolean
 		},

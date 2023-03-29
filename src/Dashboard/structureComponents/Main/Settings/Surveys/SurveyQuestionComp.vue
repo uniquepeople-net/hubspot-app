@@ -22,7 +22,7 @@
 			<i class="bi bi-trash" @click="deleteItem(qId)"></i>
 		</div>
 
-		<QuestionType v-if="questionType" :type="type" :qId="qId" 
+		<QuestionType v-if="questionType" :type="type" :index="index" 
 					  :question="question ? question : null" :submitted="submitted"/>
 	</div>
 </template>
@@ -65,7 +65,7 @@
 		},
 		methods: {
 			deleteItem() {
-				this.$emit('deleteItem', this.qId)
+				this.$emit('deleteItem', { qId: this.qId, index: this.index })
 			},
 			selectType() {
 				/* this.$store.dispatch( "surveys/resetNewSurvey", 
@@ -79,7 +79,7 @@
 				this.updateValue()
 			},
 			updateValue: debounce(function () {
-				this.$store.dispatch("surveys/setNewSurvey", { title: this.title, type: this.type, qId: this.qId })
+				this.$store.dispatch("surveys/setNewSurvey", { title: this.title, type: this.type, index: this.index })
 			}, 100),
 
 		},

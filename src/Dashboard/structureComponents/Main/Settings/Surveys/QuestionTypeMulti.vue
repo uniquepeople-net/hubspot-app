@@ -46,7 +46,7 @@
 
 	export default {
 		props: { 
-			id: String,
+			id: Number,
 			type: Number,
 			question: Object,
 			submitted: Boolean
@@ -69,7 +69,7 @@
 					...( this.type === 5 ? {
 							levels: this.levels
 						} : null),
-					qId: this.id
+					index: this.id
 				} )
 		},
 		data() {
@@ -95,7 +95,7 @@
 				this.values = this.values.filter( q => q.id !== index )
 				this.maxChoosed = this.values.length
 
-				this.$store.dispatch("surveys/setNewSurvey",  { multi_values: this.values, max_choosed: this.maxChoosed, qId: this.is } )
+				this.$store.dispatch("surveys/setNewSurvey",  { multi_values: this.values, max_choosed: this.maxChoosed, index: this.id } )
 			},
 			max() {
 				return this.values.length
@@ -114,7 +114,7 @@
 					...( this.type === 5 ? {
 							levels: this.levels
 						} : null),
-					qId: this.id
+					index: this.id
 				}
 				
 				this.$store.dispatch("surveys/setNewSurvey",  dataObj )

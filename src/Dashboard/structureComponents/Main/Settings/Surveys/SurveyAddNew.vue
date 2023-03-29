@@ -269,6 +269,9 @@
 			...mapGetters({ addSurveyUrl: 'links/addSurvey',
 							newSurvey: 'surveys/newSurvey' }),
 		},
+		unmounted() {
+			this.$store.dispatch("surveys/resetNewSurvey");
+		},
 		components: { Calendar, SurveyQuestions, Hashes }
 	}
 </script>

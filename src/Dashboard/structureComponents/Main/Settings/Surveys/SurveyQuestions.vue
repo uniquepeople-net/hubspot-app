@@ -2,7 +2,7 @@
 	<div>
 		<h5 class="text-center mb-4">Questions</h5>
 		
-		<SurveyQuestionComp :key="question.qId" v-for="(question, index) in questions" 
+		<SurveyQuestionComp :key="question.index" v-for="(question, index) in questions" 
 							:question="specSurvey ? specSurvey.questions[index] : null" 
 							:types="types" @deleteItem="deleteItem" :qId="question.qId" 
 							:index="index" :submitted="submitted"/>
@@ -58,15 +58,15 @@
 		},
 		methods: {
 			addComponent() {
-				let newObj = { title: '', index: null, qId: uniqueId() }
+				let newObj = { title: '', index: null/* , qId: uniqueId() */ }
 				this.questions = [...this.questions, newObj]
 				this.questions.map( (question, index) => {	
 					question.index = index
 				})
 				this.$store.dispatch("surveys/setNewSurvey", { questions: [...this.questions] }); 
 			},
-			deleteItem(qId) {
-				this.questions = this.questions.filter( q => q.qId !== qId )
+			deleteItem({ qId, index}) {
+				this.questions = this.questions.filter( q => q.index !== index )
 				this.questions.map( (question, index) => {
 					question.index = index
 				})

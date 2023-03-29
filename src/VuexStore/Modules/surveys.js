@@ -108,17 +108,17 @@ export default {
 
 			} else if ( 'title' in data ) {
 				newSurvey.questions.map( quest => {
-					if (quest.qId === data.qId)  {						  
+					if (quest.index === data.index)  {						  
 						quest.title = data.title
 						quest.type = data.type
 					}					
-				})
-				
+				})				
+
 				context.commit("SETNEWSURVEY", { ...newSurvey })
 
 			} else if ( 'open_value' in data ) {
 				newSurvey.questions.map( quest => {
-					if (quest.qId === data.qId)  {	 
+					if (quest.index === data.index)  {	 
 						quest.open_value = data.open_value
 					}					
 				})
@@ -128,7 +128,7 @@ export default {
 			} else if ( 'options' in data ) {
 
 				newSurvey.questions.map( quest => {
-					if (quest.qId === data.qId)  {				  
+					if (quest.index === data.index)  {				  
 						quest.options = data.options
 						quest.value_default = data.value_default
 					}					
@@ -139,7 +139,7 @@ export default {
 			} else if ( 'multi_values' in data ) {
 				
 				newSurvey.questions.map( quest => {
-					if (quest.qId === data.qId)  {				  
+					if (quest.index === data.index)  {				  
 						quest.multi_values = data.multi_values
 						quest.max_choosed = data.max_choosed
 					}					
@@ -150,7 +150,7 @@ export default {
 			} else if ( 'levels' in data ) {
 				
 				newSurvey.questions.map( quest => {
-					if (quest.qId === data.qId)  {				  
+					if (quest.index === data.index)  {				  
 						quest.levels = data.levels
 					}					
 				})
