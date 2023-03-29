@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<h5 class="mb-5">{{question.title}}</h5>
-		<SelectButton v-model="value" :options="options" aria-labelledby="single" /> 
+		<SelectButton v-model="value" :options="options" aria-labelledby="single" class="closed-btns"/> 
 	</div>
 </template>
  
@@ -37,4 +37,14 @@
  
  
 <style lang='scss' scoped>
+:deep(.p-selectbutton) {
+	display: flex;
+	.p-button {
+		flex: 1;
+		max-width: 10rem;
+		margin: 0 1rem;
+		border: 1px solid #ced4da;
+	}
+}
+
 </style>

@@ -26,8 +26,8 @@
 		
 		<template #footer>
 			<div class="d-flex justify-content-between edit-icon">
-				<div>
-					<a :href="stringToSlug(survey.name)"><i class="bi bi-link"></i></a>
+				<div :class="`${survey.hashes.length !== 0 && 'invisible'}`">
+					<a :href="`${survey.hashes.length === 0 ? stringToSlug(survey.name) : ''}`"><i class="bi bi-link"></i></a>
 				</div>
 				<router-link :to="{name: 'answer-results', params: {survey_id: survey.id}}" :key="$route.fullPath" 
 							 :survey="survey">
@@ -108,5 +108,9 @@
 	padding: .5rem 1rem;
 	box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
 	border-radius: 6px;
+}
+.invisible {
+	visibility: hidden;
+	pointer-events: none;
 }
 </style>

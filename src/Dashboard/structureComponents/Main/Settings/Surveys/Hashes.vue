@@ -31,9 +31,10 @@
 
 			<div v-for="( input, index ) in inputs" v-show="showHashes" class="mt-3 generated">
 				<div class="row gen-item align-items-center" v-if="input.value && input.hash">
-					<span class="col-auto">{{ decrypt(input.hash) }}</span>
-					<i class="col-auto bi bi-arrow-right"></i>
-					<span class="col-auto text-decoration-underline">{{ trimString(input.link, 20, 40) }}</span>
+					<span class="col-8 col-md-4 col-lg-3 col-xl-2">{{ decrypt(input.hash) }}&nbsp;
+						<i class="col-auto bi bi-arrow-right"></i>
+					</span>
+					<span class="col-auto text-decoration-underline trimmed-url">{{ trimString(input.link, 20, 40) }}</span>
 					<Button icon="bi bi-clipboard" severity="secondary" class="copy p-button-secondary p-button-raised p-button-outlined" 
 								aria-label="Copy" :label="copyText" @click="copyToClipboard(input.link, $event)" />
 				</div>
@@ -43,11 +44,15 @@
 				<h6 class="mt-3">Existed hashes:</h6>
 				<div v-for="( hash, index ) in existedHashes" class="mt-3 generated">
 					<div class="row gen-item align-items-center">
-						<span class="col-auto">{{ decrypt(hash.hash) }}</span>
-						<i class="col-auto bi bi-arrow-right"></i>
-						<span class="col-auto text-decoration-underline">{{ trimString(hash.link, 20, 40) }}</span>
+						<span class="col-8 col-md-4 col-lg-3 col-xl-2">{{ decrypt(hash.hash) }}&nbsp;
+							<i class="bi bi-arrow-right"></i>
+						</span>
+						<span class="col-auto text-decoration-underline trimmed-url">{{ trimString(hash.link, 20, 40) }}</span>
 						<Button icon="bi bi-clipboard" severity="secondary" class="copy p-button-secondary p-button-raised p-button-outlined" 
 								aria-label="Copy" :label="copyText" @click="copyToClipboard(hash.link, $event)" />
+						<div class="col-1 trash">
+							<i class="bi bi-trash" @click="deleteExistedHash(index)"></i>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -107,6 +112,12 @@
 			removeItem(index) {
 				this.inputs = this.inputs.filter( q => q.id !== index )
 				this.generateUrl()
+			},
+			deleteExistedHash(index) {
+				this.existedHashes = this.existedHashes.filter( (h, i) => i !== index )
+				this.existedHashesArr = []
+				this.existedHashes.map( h => this.existedHashesArr.push(h.hash) )
+				this.$store.dispatch( "surveys/setHashes", { hashes: this.hashes, limit: this.limit, existedHashes: this.existedHashesArr } )
 			},
 			handleLimit() {
 				this.updateValue()
@@ -191,5 +202,19 @@
 }
 .limit {
 	max-width: 7rem;
+}
+.trash {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	& .bi-trash {
+		color: var(--red-700);
+		font-size: 1.2rem;
+		padding: .3rem .5rem;
+		cursor: pointer;
+	}
+}
+.trimmed-url {
+	min-width: 20rem;
 }
 </style>
