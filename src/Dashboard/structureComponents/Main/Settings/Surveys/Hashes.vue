@@ -4,7 +4,7 @@
 		<div>
 			<div class="limit my-4">
 				<label for="limit">Survey limit:</label>
-				<InputNumber inputId="limit" v-model="limit" showButtons mode="decimal" :max="5000" :min="1" :change="handleLimit()"/>
+				<InputNumber inputId="limit" v-model="limit" showButtons mode="decimal" :max="50" :min="1" :change="handleLimit()"/>
 			</div>
 
 
@@ -97,8 +97,12 @@
 		},
 		methods: {
 			addItem() {
-				let newObj = { value: '', id: uniqueId(), hash: '', link: ''}
-				this.inputs = [...this.inputs, newObj] 
+				if ( this.inputs.length < 10  ) {
+					let newObj = { value: '', id: uniqueId(), hash: '', link: ''}
+					this.inputs = [...this.inputs, newObj] 
+				} else {
+					return
+				}
 			},
 			removeItem(index) {
 				this.inputs = this.inputs.filter( q => q.id !== index )
