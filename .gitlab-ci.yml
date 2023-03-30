@@ -69,7 +69,7 @@ deploy_prod:
     - chmod 644 ~/.ssh/known_hosts
   script:
     - export DEPLOY_PATH=/home/ufp.sk/sub/app/
-    - rsync -az -vv -r -e "ssh -p $PORT" --delete dist/* $UID_PROD@$SERVER_PROD:$DEPLOY_PATH
+    - rsync -az -vv -r -e "ssh -p $PORT_PROD" --delete dist/* $UID_PROD@$SERVER_PROD:$DEPLOY_PATH
   rules:
   - if: $CI_COMMIT_BRANCH == "prod"
   when: manual
