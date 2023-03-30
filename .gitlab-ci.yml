@@ -50,7 +50,7 @@ deploy_prod:
     - npm install
     - cp webpack.prod.config.js webpack.config.js
     - npm run build
-    - sshpass -p $SSH_PASS rsync -ae "ssh -o StrictHostKeyChecking=no -p 28223" dist/  uid159900@shell.r5.websupport.sk:~/ufp.sk/sub/app/
+    - sshpass -p $SSH_PASS_PROD rsync -ae "ssh -o StrictHostKeyChecking=no -p 28223" dist/  uid159900@shell.r5.websupport.sk:~/ufp.sk/sub/app/
     #- ssh $UID@$SERVER -p $PORT "cd $THEME_PATH && rm -r node_modules && cd src && rm -r js && rm -r scss && rm index.js"
   rules:
   - if: $CI_COMMIT_BRANCH == "prod"
