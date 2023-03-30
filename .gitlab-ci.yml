@@ -14,7 +14,7 @@ build_node:
   script:
     - npm install
     - cp webpack.test.config.js webpack.config.js
-    - npm run prod
+    - npm run build
   artifacts:
     paths:
       - dist/*
