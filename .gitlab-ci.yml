@@ -1,7 +1,23 @@
 stages:
+  - build
   - package
   - deploy
   - prod
+
+build_node:
+  stage: build
+  only:
+    - develop
+    - test
+    - prod
+  image: node:16
+  script:
+    - npm install
+    - cp webpack.test.config.js webpack.config.js
+    - npm run prod
+  artifacts:
+    paths:
+      - dist/*
 
 package:
   stage: package
@@ -43,15 +59,17 @@ deploy_test:
   - if: $CI_COMMIT_BRANCH == "test"
 
 deploy_prod:
-  image: alpine
   stage: deploy
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "$WS_PRIVATE_KEY_PROD" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$WS_HOST_KEY_PROD" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
   script:
-    - apk add --no-cache --update nodejs npm rsync openssh sshpass
-    - npm install
-    - cp webpack.prod.config.js webpack.config.js
-    - npm run build
-    - sshpass -p $SSH_PASS_PROD rsync -ae "ssh -o StrictHostKeyChecking=no -p 28223" dist/  uid159900@shell.r5.websupport.sk:~/ufp.sk/sub/app/
-    #- ssh $UID@$SERVER -p $PORT "cd $THEME_PATH && rm -r node_modules && cd src && rm -r js && rm -r scss && rm index.js"
+    - export DEPLOY_PATH=/home/ufp.sk/sub/app/
+    - rsync -az -vv -r -e "ssh -p $PORT" --delete dist/* $UID_PROD@$SERVER_PROD:$DEPLOY_PATH
   rules:
   - if: $CI_COMMIT_BRANCH == "prod"
   when: manual
