@@ -29,14 +29,20 @@
 					datasets: this.dataArray()
 				},
 				chartOptions: {
-					scales: {
+					/* scales: {
 						xAxes: [{
 							ticks: {
 								beginAtZero: true,
-								min: 700 // set the minimum height to 100
+								min: 700
+							}
+						}],
+						yAxes: [{
+							ticks: {
+								beginAtZero: true,
+								max: 1000
 							}
 						}]
-					},
+					}, */
 					indexAxis: 'y',
 					// Elements options apply to all of the options unless overridden in a dataset
 					// In this case, we are setting the border of each horizontal bar to be 2px wide
@@ -53,7 +59,7 @@
 					},
 					responsive: true,
 					maintainAspectRatio: true,
-					aspectRatio: 1.5,				
+					aspectRatio: 1,				
 					plugins: {
 						legend: {
 							position: 'bottom',
@@ -64,8 +70,8 @@
 								usePointStyle: false,
 								pointStyleWidth: 5,
 								pointStyle: 'star',
-								/* useBorderRadius: true,
-								borderRadius: 20, */
+								useBorderRadius: true,
+								borderRadius: 20,
 							}
 						},
 						title: {
@@ -87,8 +93,9 @@
 				let data = []
 				if ( this.result.count ) {
 					for(const res in this.result.count) {
+						let points = this.result.type_id === 5 ? ' points' : '';
 						data.push({
-							label: res + ' - ' + this.result.count[res],
+							label: res + points + ' - ' + this.result.count[res],
 							data: [this.result.count[res]],
 							backgroundColor: this.randomColor(colorPallete),
 						})

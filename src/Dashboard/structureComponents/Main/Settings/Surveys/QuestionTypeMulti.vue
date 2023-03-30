@@ -8,23 +8,23 @@
 						@click="removeItem(item.id)"/>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row justify-content-between">
 			<div v-if="type === 3 || type === 4" class="d-flex flex-column add-item">
 				<span>Add item</span>
 				<Button icon="bi bi-plus-lg" class="p-button-rounded p-button-success p-button-outlined" 
 						@click="addItem"/>
 			</div>
 	
+			<div v-if="type === 4" class="opened-questions">
+				<QuestionTypeOpen :id="id" :question="question" @value="valueOpen"/>
+			</div>
+
 			<div class="max-choosed" v-if="type === 3 || type === 4">
 				<label for="maxChoosed">Max. questions to choose</label>
 				<InputNumber inputId="maxChoosed" v-model="maxChoosed" showButtons mode="decimal" 
-							 :min="1" :max="values.length" :change="handleChange()"
+							 :min="1" :max="values.length + opened_value_child" :change="handleChange()"
 							 :class="{'p-invalid':submitted && maxChoosed < 1}"/>
 		    </div>
-			
-			<div v-if="type === 4" class="opened-questions">
-				<QuestionTypeOpen :id="id" :question="question"/>
-			</div>
 
 			<div class="opinion-levels" v-if="type === 5">
 				<label for="levels">Scale levels</label>
@@ -77,8 +77,8 @@
 				values: [],
 				maxChoosed: 0,
 				levels: 1,
-				opened_value: null
-
+				opened_value: null,
+				opened_value_child: 1
 			}
 		},
 		methods: {
@@ -120,7 +120,9 @@
 				this.$store.dispatch("surveys/setNewSurvey",  dataObj )
 			
 			}, 100),
-			
+			valueOpen(value) {
+				this.opened_value_child = value
+			}
 		},
 		components: { QuestionTypeOpen, InputNumber },
 	}
@@ -134,7 +136,7 @@
 }
 .max-choosed, .opened-questions {
 	max-width: 15rem;
-	margin-right: 2rem;
+	//margin-right: 2rem;
 }
 .opinion-levels {
 	max-width: 15rem;

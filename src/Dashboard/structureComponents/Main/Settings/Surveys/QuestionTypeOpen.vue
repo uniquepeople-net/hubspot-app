@@ -32,6 +32,7 @@
 		},
 		methods: {
 			handleNumberValue() {
+				this.$emit('value', this.value)
 				this.updateValue()
 			},
 			updateValue: debounce(function () {
