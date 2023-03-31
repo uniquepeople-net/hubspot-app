@@ -22,8 +22,8 @@
 			<div class="max-choosed" v-if="type === 3 || type === 4">
 				<label for="maxChoosed">Max. questions to choose</label>
 				<InputNumber inputId="maxChoosed" v-model="maxChoosed" showButtons mode="decimal" 
-							 :min="1" :max="values.length + opened_value_child" :change="handleChange()"
-							 :class="{'p-invalid':submitted && maxChoosed < 1}"/>
+							 :min="1" :max="values.length + (type === 4 ? opened_value_child : 0)" 
+							 :change="handleChange()" :class="{'p-invalid':submitted && maxChoosed < 1}"/>
 		    </div>
 
 			<div class="opinion-levels" v-if="type === 5">
@@ -122,6 +122,15 @@
 			}, 100),
 			valueOpen(value) {
 				this.opened_value_child = value
+			}
+		},
+		watch: {
+			type: function(data) {
+				if ( data === 3 ) {
+					this.maxChoosed = (this.maxChoosed > 0 && this.maxChoosed > this.opened_value_child) ? 
+											this.maxChoosed - this.opened_value_child : 
+											this.maxChoosed
+				}
 			}
 		},
 		components: { QuestionTypeOpen, InputNumber },
