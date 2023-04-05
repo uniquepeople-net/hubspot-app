@@ -156,6 +156,16 @@ export default {
 				})
 				
 				context.commit("SETNEWSURVEY", { ...newSurvey })
+
+			} else if ( 'max_choosed' in data ) {
+				
+				newSurvey.questions.map( quest => {
+					if (quest.index === data.index)  {				  
+						quest.max_choosed = data.max_choosed
+					}					
+				})
+				
+				context.commit("SETNEWSURVEY", { ...newSurvey })
 			}
 		},
 		resetNewSurvey( context, data ) {

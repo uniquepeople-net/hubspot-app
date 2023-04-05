@@ -26,8 +26,8 @@
 	
 	export default {
 		created() {
-			this.$store.dispatch('statsData/getPlayerStats')
-			this.$store.dispatch('statsData/getPlayerData')
+			//this.$store.dispatch('statsData/getPlayerStats')
+			//this.$store.dispatch('statsData/getPlayerData')
 		},
 		computed: {
 			...mapGetters({ params: 'statsData/params',

@@ -237,6 +237,11 @@
 						let result = this.checkNumber(q.levels) ? null : Number(q.index) + 1
 						return result
 					}
+					
+					if (q.type === 6) {
+						let result = this.checkNumber(q.max_choosed) ? null : Number(q.index) + 1
+						return result
+					}
 				})
 
 				if ( errors.some( e => e !== null ) ) {

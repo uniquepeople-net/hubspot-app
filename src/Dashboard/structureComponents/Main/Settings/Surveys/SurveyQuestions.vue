@@ -5,7 +5,7 @@
 		<SurveyQuestionComp :key="question.index" v-for="(question, index) in questions" 
 							:question="specSurvey ? specSurvey.questions[index] : null" 
 							:types="types" @deleteItem="deleteItem" :qId="question.qId" 
-							:index="index" :submitted="submitted"/>
+							:index="question.index" :submitted="submitted" :keyValue="index"/>
 		
 		<div class="d-flex justify-content-center my-5">
 			<Button label="Add Question" class="mt-2 submit-btn p-button-raised p-button-secondary p-button-text" 
@@ -66,12 +66,10 @@
 				this.$store.dispatch("surveys/setNewSurvey", { questions: [...this.questions] }); 
 			},
 			deleteItem({ qId, index}) {
-				this.questions = this.questions.filter( q => q.index !== index )
-				this.questions.map( (question, index) => {
-					question.index = index
-				})
-				this.$store.dispatch("surveys/setNewSurvey", { questions: [...this.questions] });	
 				this.$store.dispatch("surveys/deleteFromSpecific", qId );	
+				let q = this.questions.filter( q => q.index !== index )
+				this.$store.dispatch("surveys/setNewSurvey", { questions: [...q] });	
+				this.questions = q
 			}
 		},
 		computed: {

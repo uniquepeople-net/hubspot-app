@@ -1,5 +1,5 @@
 <template>
-	<div :class="`row pb-3 ${ index % 2 == 0 ? 'bgGrey' : 'bgBlue' }`">
+	<div :class="`row pb-3 ${ keyValue % 2 == 0 ? 'bgGrey' : 'bgBlue' }`">
 		<div class="inputgroup my-3 col-12 col-lg-6">			
 			<span class="p-inputgroup-addon fw-bold">
 				{{ questionNum() }}
@@ -19,7 +19,7 @@
 		</div>
 
 		<div class="my-3 col-1 trash">
-			<i class="bi bi-trash" @click="deleteItem(qId)"></i>
+			<i class="bi bi-trash" @click="deleteItem()"></i>
 		</div>
 
 		<QuestionType v-if="questionType" :type="type" :index="index" 
@@ -37,6 +37,7 @@
 	export default {
 		setup: () => ({ v$: useVuelidate() }),
 		props: {
+			keyValue: Number,
 			types: Object,
 			qId: String,
 			index: Number,
@@ -73,7 +74,7 @@
 				this.questionType = true;
 			},
 			questionNum() {
-				return (this.index + 1).toString() + '.'
+				return (this.keyValue + 1).toString() + '.'
 			},
 			handleQuestionTitle() {	
 				this.updateValue()

@@ -7,15 +7,15 @@
 	import PostsCarousel from './PostsCarousel.vue'
 	
 	export default {
-	components: { PostsCarousel },
 		data() {
 			return {
 				
-			}
+				}
 		},
 		methods: {
- 
+			
 		},
+		components: { PostsCarousel },
 	}
 </script>
  

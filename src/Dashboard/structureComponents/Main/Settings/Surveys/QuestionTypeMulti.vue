@@ -102,8 +102,7 @@
 			},
 			handleChange() {
 				this.updateValue()
-			},
-			
+			},		
 			updateValue: debounce(function () {
 				
 				let dataObj = {

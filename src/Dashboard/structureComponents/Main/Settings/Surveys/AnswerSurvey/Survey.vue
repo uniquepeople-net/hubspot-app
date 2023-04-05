@@ -33,6 +33,11 @@
 		methods: {
 			checkSurveyAcces() {				
 				if ( this.survey ) {
+
+					if ( this.survey.questions.some( q => q.type_id === 6 ) ) {
+						this.$store.dispatch("stats/getCompetitionsTeams")
+					}
+
 					let isActive = this.survey.active
 					let isPublic = this.survey.public
 					let status = this.survey.survey_status.id

@@ -18,23 +18,24 @@ export default {
 
 
 		// Instat API
-		instatBasic:				'https://service.instatfootball.com/feed.php?id=1098908&key=4VYKAPm0',				 
-		instatPlayerData:			'&tpl=11&player_id=',
-		instatTeamData:				'&tpl=12&team_id=',
-		instatOPtions:				'&lang_id=1&lang=en&format=json',
-		instatPlayerMatches:		'&tpl=41&player_id=',
-		instatTournamentSeason:		'&tournament_id=40&season_id=',
-		instatMatch:				'&tpl=37&match_id=',
+		statBasicUrl:			'https://apirest.wyscout.com/v3/',				 
+		statAreas:				'areas',
+		competitionsListSvk:	'competitions?areaId=SVK',
+		competitionsFirstTeams:	'competitions/775/teams',
+		teamPlayers:			'teams/',
+		statPlayerMatches:		'&tpl=41&player_id=',
+		statTournamentSeason:	'&tournament_id=40&season_id=',
+		statMatch:				'&tpl=37&match_id=',
 
 		// Own Stats API
-		statsBasic:					'https://futbal-data.uniquepeople.sk/api.php?action=',
+		/* statsBasic:					'https://futbal-data.uniquepeople.sk/api.php?action=',
 		lastMatchPlayerStats:		'get_player_stats_last_match&player_id=',
 		matchPlayerStats:			'get_player_stats_by_match&player_id=',
 		seasonsAll:					'get_player_seasons&player_id=',
 		seasonMatches:				'get_player_matches&player_id=',
 		season:						'&season_id=',
 		match:						'&match_id=',
-		team:						'get_team_info&team_id=',
+		team:						'get_team_info&team_id=', */
 
 		// Auth service routes for token iss check
 		loginAuthServiceUrl: 		'http://auth_nginx/api/login',
@@ -118,29 +119,17 @@ export default {
 			return state.updateFee
 		},
 
-		// Instat API
-		instatBasic(state) {
-			return state.instatBasic
+		// Wyscout API
+		statAreas(state) {
+			return state.statAreas
 		},
-		instatPlayerData(state) {
-			return state.instatPlayerData
+		statBasicUrl(state) {
+			return state.statBasicUrl
 		},
-		instatTeamData(state) {
-			return state.instatTeamData
+		competitionsListSvk(state) {
+			return state.competitionsListSvk
 		},
-		instatPlayerMatches(state) {
-			return state.instatPlayerMatches
-		},
-		instatMatch(state) {
-			return state.instatMatch
-		},
-		instatTournamentSeason(state) {
-			return state.instatTournamentSeason
-		},
-		instatOPtions(state) {
-			return state.instatOPtions
-		},
-
+		
 		// Own API routes getters
 		statsBasic(state) {
 			return state.statsBasic

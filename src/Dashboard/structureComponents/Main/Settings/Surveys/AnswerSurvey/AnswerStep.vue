@@ -5,6 +5,7 @@
 		<AnswerMulti 	v-if="checkQuestionType(3)" :question="questionData()" :step="step"/>
 		<AnswerMulti 	v-if="checkQuestionType(4)" :question="questionData()" :step="step"/>
 		<AnswerScale 	v-if="checkQuestionType(5)" :question="questionData()" :step="step"/>
+		<AnswerBest11 	v-if="checkQuestionType(6)" :question="questionData()" :step="step"/>
 	</div>
 </template>
  
@@ -14,6 +15,7 @@
 	import AnswerMulti from './AnswerMulti.vue'
 	import AnswerOpen from './AnswerOpen.vue'
 	import AnswerScale from './AnswerScale.vue'
+	import AnswerBest11 from './AnswerBest11.vue'
 
 	export default {
 		props: {
@@ -32,7 +34,7 @@
 				return this.survey.questions[this.step - 1]
 			}
 		},
-		components: { AnswerOpen, AnswerClosed, AnswerMulti, AnswerScale },
+		components: { AnswerOpen, AnswerClosed, AnswerMulti, AnswerScale, AnswerBest11 },
 	}
 </script>
  
