@@ -102,6 +102,21 @@ export default {
 					context.commit("SETTEAMSQUAD", response.data.squad)
 				})
 				.catch( error => console.log(error))
+
+			await axios.get(statBasicUrl + 'teams/' + id + '/transfers?fromDate=2022-08-01&toDate=2023-04-04&details=player', {
+				headers: {
+					Authorization: 'Basic Z2wydHVjdS1jZjV3NnJsaTYtM3BnbHJqNi13ZHdyNWU1aHN3OjVpJUdXaE50XnFTcGZCcHU0c241c3VieHEtK3M5UQ=='
+				}}).then( response => {
+					let transfers = response.data.transfer;
+					let squad = context.rootGetters['stats/teamSquad']
+					
+					transfers.map( t => {
+						if ( t.fromTeamId === id ) {
+							squad.push( t.player )
+						}
+					})
+					context.commit("SETTEAMSQUAD", squad)
+				})
 		},
 
 	},

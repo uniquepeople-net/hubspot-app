@@ -1,7 +1,10 @@
 <template>
 	<div>
 		<h5>{{question.title}}</h5>
-		<small>Vyberte max. {{ this.question.max_to_choose }} {{ this.question.max_to_choose <= 1 ? 'hráča' : 'hráčov' }} </small>
+		<small>
+			Vyberte {{ this.question.max_to_choose }} {{ this.question.max_to_choose <= 1 ? 'hráča' : 'hráčov' }} 
+			/ <i>Choose {{ this.question.max_to_choose }} {{ this.question.max_to_choose <= 1 ? 'player' : 'players' }}</i>
+		</small>
 
 		<Divider />
 

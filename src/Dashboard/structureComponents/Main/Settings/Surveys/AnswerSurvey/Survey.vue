@@ -16,9 +16,9 @@
 					of your votes as follows:</span></p>
 
 				<ul class="no-style">
-					<li>1st place = 10 points</li>
-					<li>2nd place = 5 points</li>
-					<li>3rd place = 3 points</li>
+					<li>1st place = 5 points</li>
+					<li>2nd place = 3 points</li>
+					<li>3rd place = 1 points</li>
 				</ul>
 					
 
