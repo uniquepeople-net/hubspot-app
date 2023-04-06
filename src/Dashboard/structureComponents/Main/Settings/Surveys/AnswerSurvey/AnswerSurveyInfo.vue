@@ -4,7 +4,7 @@
             <img class="img-ufp" src="https://ufp.sk/wp-content/uploads/2020/04/cropped-ikona-192x192.png" alt="">
         </a>
         
-        <div class="mt-4 text-center">
+        <div class="my-4 text-center">
             <h3>{{  decodedHash(hash)  }}</h3>
             <!-- <h4>{{ survey.name }}</h4> -->
         </div>

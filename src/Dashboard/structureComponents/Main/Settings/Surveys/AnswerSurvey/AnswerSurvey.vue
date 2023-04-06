@@ -136,7 +136,7 @@
 								this.loading = false
 								this.disabledBtn = false
 							}
-							//localStorage.setItem(this.survey.slug + 'done', true)						
+							localStorage.setItem(this.survey.slug + 'done', true)						
 						}).catch( error => {
 							this.loading = false
 							this.disabledBtn = false							
