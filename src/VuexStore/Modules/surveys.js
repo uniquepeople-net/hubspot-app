@@ -112,7 +112,7 @@ export default {
 		async getPositions( context ) {
 			let positionsLink = context.rootGetters['links/positions']
 
-			await User.refreshedToken();
+			//await User.refreshedToken();
 
 			await axios.get( positionsLink, {
 					headers: {
