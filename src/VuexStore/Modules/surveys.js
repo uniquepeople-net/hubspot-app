@@ -6,6 +6,8 @@ export default {
 	state: () => ({
 		surveys: null,
 		questionTypes: null,
+		positions: null,
+		types: null,
 		newSurvey: {},
 		specificSurvey: null,
 		specificSurveyBySlug: null,
@@ -19,6 +21,12 @@ export default {
 		},
 		SETQUESTTYPES( state, data ) {
 			state.questionTypes = data
+		},
+		SETPOSITIONS( state, data ) {
+			state.positions = data
+		},
+		SETTYPES( state, data ) {
+			state.types = data
 		},
 		SETNEWSURVEY( state, data ) {
 			state.newSurvey = data
@@ -53,6 +61,7 @@ export default {
 			Object.assign(state, { 
 				surveys: null,
 				questionTypes: null,
+				positions: null,
 				newSurvey: {},
 				specificSurvey: null,
 				specificSurveyBySlug: null,
@@ -99,6 +108,42 @@ export default {
 							title: 'Unable to load question types'
 						})
 					})
+		},
+		async getPositions( context ) {
+			let positionsLink = context.rootGetters['links/positions']
+
+			await User.refreshedToken();
+
+			await axios.get( positionsLink, {
+					headers: {
+						Authorization: 'Bearer ' + User.getToken()
+				}}).then( response =>  {
+					context.commit("SETPOSITIONS", response.data)	
+				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						title: 'Unable to load positions'
+					})
+				})
+		},
+		async getTypes( context ) {
+			let typesLink = context.rootGetters['links/types']
+
+			await User.refreshedToken();
+
+			await axios.get( typesLink, {
+					headers: {
+						Authorization: 'Bearer ' + User.getToken()
+				}}).then( response =>  {
+					context.commit("SETTYPES", response.data)	
+				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						title: 'Unable to load survey types'
+					})
+				})
 		},
 		setNewSurvey( context, data ) {
 			let newSurvey = context.rootGetters['surveys/newSurvey']		
@@ -158,10 +203,13 @@ export default {
 				context.commit("SETNEWSURVEY", { ...newSurvey })
 
 			} else if ( 'max_choosed' in data ) {
-				
+
 				newSurvey.questions.map( quest => {
 					if (quest.index === data.index)  {				  
 						quest.max_choosed = data.max_choosed
+						if ( 'value_default' in data ) {
+							quest.value_default = data.value_default
+						}
 					}					
 				})
 				
@@ -329,6 +377,12 @@ export default {
 		},
 		specificResults( state ) {
 			return state.specificResults
+		},
+		positions( state ) {
+			return state.positions
+		},
+		types( state ) {
+			return state.types
 		},
 	}
 }

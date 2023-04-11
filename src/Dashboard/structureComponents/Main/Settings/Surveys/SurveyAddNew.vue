@@ -65,6 +65,8 @@
 			
 							</div>
 
+							<SurveyAdvanced v-model="advancedData"/>
+							
 							<Divider />
 
 							<div>
@@ -97,6 +99,7 @@
 	import Calendar from 'primevue/calendar';
 	import SurveyQuestions from './SurveyQuestions.vue';
 	import Hashes from './Hashes.vue';
+	import SurveyAdvanced from './SurveyAdvanced.vue';
 
 	export default {
  		setup: () => ({ v$: useVuelidate() }),
@@ -113,6 +116,7 @@
 				showMessage: false,
 				response: null,
 				errors: null,
+				advancedData: null
 			}
 		},
 		validations() {
@@ -136,6 +140,9 @@
 			}
 		},
 		methods: {
+			getData() {
+
+			},
 			dateFormatted(date) {
 				if ( date ) {
 					let currentDate = date
@@ -164,7 +171,8 @@
 					start_date: this.startDate,
 					finish_date: this.finishDate,
 					active: this.active,
-					public: this.public
+					public: this.public,
+					advanced: this.advancedData
 				}
 
 				this.addSurvey( this.addSurveyUrl, data );
@@ -277,7 +285,7 @@
 		unmounted() {
 			this.$store.dispatch("surveys/resetNewSurvey");
 		},
-		components: { Calendar, SurveyQuestions, Hashes }
+		components: { Calendar, SurveyQuestions, Hashes, SurveyAdvanced }
 	}
 </script>
  

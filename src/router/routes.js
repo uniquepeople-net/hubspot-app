@@ -62,8 +62,11 @@ import SurveyAddNew from '../Dashboard/structureComponents/Main/Settings/Surveys
 import SurveySpecific from '../Dashboard/structureComponents/Main/Settings/Surveys/SurveySpecific.vue';
 import AnswerStep from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/AnswerStep.vue';
 import AnswerResults from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/AnswerResults.vue';
+import SuccessPage from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/SuccessPage.vue';
 
 import NotFound from '../Dashboard/global/NotFound.vue';
+
+
 
 export const routes = [
 
@@ -187,6 +190,8 @@ export const routes = [
 		],
 		
 	},
+	
+	{ path: '/success', component: SuccessPage, name:'success', props: true },
 	
 	
 	{ path: '/:pathMatch(.*)*', component: NotFound},

@@ -3,7 +3,7 @@ export default {
 
 	state: () => ({
 		areas: [],
-		competitionsList: {},
+		competitionsList: [],
 		competitionsDetail: {},
 		competitionsTeams: [],
 		teamSquad: []
@@ -51,17 +51,26 @@ export default {
 					context.commit("SETMATCHES", response.data.data.match)
 				}) */
 		},
-		async getCompetitionsList( context, matchId ) {
-			let instatBasic = context.rootGetters['links/instatBasic']
-			let instatMatch = context.rootGetters['links/instatMatch']
-			let instatOPtions = context.rootGetters['links/instatOPtions']
+		async getCompetitionsList( context  ) {
+			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+			let competitionsListSvk = context.rootGetters['links/competitionsListSvk']
 
 			await User.refreshedToken();
 
-			/* await axios.get(instatBasic + instatMatch + matchId + instatOPtions)
+			await axios.get(statBasicUrl + competitionsListSvk, {
+				headers: {
+					Authorization: 'Basic Z2wydHVjdS1jZjV3NnJsaTYtM3BnbHJqNi13ZHdyNWU1aHN3OjVpJUdXaE50XnFTcGZCcHU0c241c3VieHEtK3M5UQ=='
+				}})
 				.then( response => {
-					context.commit("SETMATCH", response.data.data.match_info[0])
-				}) */
+					context.commit("SETCOMPETITIONSLIST", response.data.competitions)
+				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load competitions list"
+					})
+				})
 		},
 		async getCompetitionsDetail( context, team ) {
 			let instatBasic = context.rootGetters['links/instatBasic']
@@ -75,19 +84,25 @@ export default {
 					context.commit("SETTEAM" + team.number , response.data.data.row[0])
 				}) */ 
 		},
-		async getCompetitionsTeams( context ) {
+		async getCompetitionsTeams( context, id ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
 
 			//await User.refreshedToken();
 			
-			await axios.get(statBasicUrl + 'competitions/775/teams', {
+			await axios.get(statBasicUrl + 'competitions/' + id + '/teams', {
 				headers: {
 					Authorization: 'Basic Z2wydHVjdS1jZjV3NnJsaTYtM3BnbHJqNi13ZHdyNWU1aHN3OjVpJUdXaE50XnFTcGZCcHU0c241c3VieHEtK3M5UQ=='
 				}})
 				.then( response => {		
 					context.commit("SETCOMPETITIONSTEAMS", response.data.teams)
 				})
-				.catch( error => console.log(error))
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load competition teams"
+					})
+				})
 		},
 		async getTeamSquad( context, id ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
@@ -117,6 +132,13 @@ export default {
 					})
 					context.commit("SETTEAMSQUAD", squad)
 				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load team squad"
+					})
+				})
 		},
 
 	},
@@ -127,6 +149,9 @@ export default {
 		},
 		teamSquad(state) {
 			return state.teamSquad
+		},
+		competitionsList(state) {
+			return state.competitionsList
 		}
 	}
 }

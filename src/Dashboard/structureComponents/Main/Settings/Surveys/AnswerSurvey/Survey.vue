@@ -102,8 +102,9 @@
 			checkSurveyAcces() {				
 				if ( this.survey ) {
 
-					if ( this.survey.questions.some( q => q.type_id === 6 ) ) {
-						this.$store.dispatch("stats/getCompetitionsTeams")
+					//if ( this.survey.questions.some( q => q.type_id === 6 ) ) {
+					if ( this.survey.type_id === 2 ) {
+						this.$store.dispatch("stats/getCompetitionsTeams", this.survey.advanced.competition_id)
 					}
 
 					let isActive = this.survey.active
@@ -185,6 +186,7 @@
 }
 .ital {
 	font-style: italic;
+	color: rgb(167, 167, 167);
 }
 .no-style {
 	list-style: none;

@@ -68,6 +68,8 @@
 			
 							</div>
 
+							<SurveyAdvanced v-model="advancedData" :specSurvey="survey ? survey : null" />
+
 							<Divider />
 
 							<div>
@@ -100,6 +102,7 @@
 	import SurveyQuestions from './SurveyQuestions.vue';
 	import Hashes from './Hashes.vue';
 	import DeleteItem from '../../Users/DeleteItem.vue';
+	import SurveyAdvanced from './SurveyAdvanced.vue';
 
 
 	export default {
@@ -126,6 +129,7 @@
 				showMessage: false,
 				response: null,
 				errors: null,
+				advancedData: null
 			}
 		},
 		validations() {
@@ -177,7 +181,8 @@
 					start_date: this.startDate,
 					finish_date: this.finishDate,
 					active: this.active,
-					public: this.public
+					public: this.public,
+					advanced: this.advancedData
 				}
 				
 				this.updateSurvey( this.updateSurveyUrl, data );
@@ -288,7 +293,7 @@
 							survey: 'surveys/specificSurvey',
 							newSurvey: 'surveys/newSurvey' })
 		},
-		components: { Calendar, SurveyQuestions, Hashes, DeleteItem }
+		components: { Calendar, SurveyQuestions, Hashes, DeleteItem, SurveyAdvanced }
 	}
 </script>
  

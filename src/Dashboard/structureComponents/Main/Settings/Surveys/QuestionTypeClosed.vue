@@ -39,7 +39,8 @@
 				this.options = this.question.closed_answers ? this.question.closed_answers : this.options
 				this.valueDefault = this.question.closed_answs_default
 			}
-			this.$store.dispatch("surveys/setNewSurvey", { options: this.options, value_default: this.valueDefault, index: this.id })		},
+			this.$store.dispatch("surveys/setNewSurvey", { options: this.options, value_default: this.valueDefault, index: this.id })		
+		},
 		data() {
 			return {
 				valueDefault: '',

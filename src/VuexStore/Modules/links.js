@@ -77,7 +77,9 @@ export default {
 		specificSurvey:				DOMAIN_URL + '/api/surveys/',
 		showSurvey:					DOMAIN_URL + '/api/survey/',
 		saveSurvey:					DOMAIN_URL + '/api/survey/',
-		results:					DOMAIN_URL + '/api/results/'
+		results:					DOMAIN_URL + '/api/results/',
+		positions:					DOMAIN_URL + '/api/positions',
+		types:						DOMAIN_URL + '/api/survey-types'
 
 	}),
 
@@ -249,6 +251,12 @@ export default {
 		},
 		results(state) {
 			return state.results
+		},
+		positions(state) {
+			return state.positions
+		},
+		types(state) {
+			return state.types
 		},
 	}
 }
