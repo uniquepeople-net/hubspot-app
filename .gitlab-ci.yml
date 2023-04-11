@@ -1,6 +1,6 @@
 stages:
   - build
-  - package
+  #- package
   - deploy
   - prod
 
@@ -24,31 +24,31 @@ build_node:
     paths:
       - dist/*
 
-package:
-  stage: package
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
-  script:
-    - mkdir -p /kaniko/.docker
-    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA --destination $CI_REGISTRY_IMAGE:latest
-  rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
+#package:
+#  stage: package
+#  image:
+#    name: gcr.io/kaniko-project/executor:debug
+#    entrypoint: [""]
+#  script:
+#    - mkdir -p /kaniko/.docker
+#    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
+#    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA --destination $CI_REGISTRY_IMAGE:latest
+#  rules:
+#    - if: $CI_COMMIT_BRANCH == "develop"
 
-deploy_develop:
-  stage: deploy
-  dependencies:
-    - package
-  image:
-    name: bitnami/kubectl:latest
-    entrypoint: [""]
-  script:
-    - kubectl set image deployment/ufp-dev-ufp-vue-webpack ufp-dev-ufp-vue-webpack=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA -n ufp-dev --token=$UFP_DEV_TOKEN
-  rules:
-    - if: $CI_COMMIT_BRANCH == "develop"
-  tags:
-    - kube-runner 
+#deploy_develop:
+#  stage: deploy
+#  dependencies:
+#    - package
+#  image:
+#    name: bitnami/kubectl:latest
+#    entrypoint: [""]
+#  script:
+#    - kubectl set image deployment/ufp-dev-ufp-vue-webpack ufp-dev-ufp-vue-webpack=$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA -n ufp-dev --token=$UFP_DEV_TOKEN
+#  rules:
+#    - if: $CI_COMMIT_BRANCH == "develop"
+#  tags:
+#    - kube-runner 
 
 deploy_test:
   image: alpine
