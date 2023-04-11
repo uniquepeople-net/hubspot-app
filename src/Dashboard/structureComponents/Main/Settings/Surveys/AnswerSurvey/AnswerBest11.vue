@@ -134,13 +134,9 @@
 			position() {
 				return this.positions ? this.positions.filter( p => p.id === Number(this.question.closed_answs_default) ) : null
 			},
-			filteredSquad() {
-				console.log(this.position, this.positions)
-								
+			filteredSquad() {				
 				let defaultValueStr = this.position ? this.position[0].position.toLowerCase() : null;
 				
-				console.log(defaultValueStr)
-
 				if ( defaultValueStr === 'all' ) {
 					return this.squad
 				} 
