@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex align-items-center flex-column mt-5">
         <a href="https://ufp.sk">
-            <img class="img-ufp" src="https://ufp.sk/wp-content/uploads/2020/04/cropped-ikona-192x192.png" alt="">
+            <img class="img-ufp" src="https://ufp.sk/wp-content/uploads/2023/04/cropped-logo-transp.png" alt="">
         </a>
         
         <div class="my-4 text-center">

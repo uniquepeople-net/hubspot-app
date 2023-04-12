@@ -47,6 +47,7 @@
 				this.message = this.specSurvey.advanced.success_message ? this.specSurvey.advanced.success_message : this.message
 				this.competition = this.specSurvey.advanced.competition_id ? this.specSurvey.advanced.competition_id : this.competition
 				this.type = this.specSurvey.type_id ? this.specSurvey.type_id : this.type
+				this.handleChange()
 			}
 		},
 		data() {

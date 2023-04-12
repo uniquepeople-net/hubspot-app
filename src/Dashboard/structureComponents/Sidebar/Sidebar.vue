@@ -3,7 +3,7 @@
 	<Sidebar v-model:visible="visibleLeft" class="sidebar" :modal="sidebarModal" :dismissable="sidebarModal">
 		<template v-slot:header class="sidebar-slot-header">
 			<div class="logo">
-				<a href="https://ufp.sk"><img src="../../../../assets/images/logo/logo.png" alt="Logo" srcset="" /></a>
+				<a href="https://ufp.sk"><img src="https://ufp.sk/wp-content/uploads/2023/04/cropped-logo-transp.png" alt="Logo" srcset="" /></a>
 			</div>
 		</template>
 
