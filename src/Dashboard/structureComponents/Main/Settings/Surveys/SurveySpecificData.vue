@@ -31,7 +31,7 @@
 								<div class="inputgroup mb-5 col-12 col-lg-6">
 									<InputIcon icon="bi bi-pencil"></InputIcon>
 									<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
-											name="name" placeholder="Name"/>
+											name="name" placeholder="Name" disabled/>
 								
 									<InputError :validator="v$.name" :submitted="submitted" replace="Name"></InputError>
 								</div>
