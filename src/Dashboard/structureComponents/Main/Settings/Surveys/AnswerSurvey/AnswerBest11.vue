@@ -2,8 +2,12 @@
 	<div>
 		<h5>{{question.title}}</h5>
 		<small class="guide">
-			Vyberte {{ this.question.max_to_choose }} {{ this.question.max_to_choose <= 1 ? 'hráča' : 'hráčov' }} 
-			/ <i>Choose {{ this.question.max_to_choose }} {{ this.question.max_to_choose <= 1 ? 'player' : 'players' }}</i>
+			Z celkového zoznamu vyber {{ this.question.max_to_choose }} {{ this.question.max_to_choose <= 1 ? 'hráča' : 'hráčov' }} 
+			{{ this.question.max_to_choose <= 1 ? 'ktorý bol' : 'ktorí boli' }} podľa teba najlepší v najvyššej súťaži (Fortuna liga)
+			{{ position && position[0].id === 1 ? 'a zároveň im urči poradie od 1. do 3. miesta' : '' }}
+			/ From the list of players you shall select {{ this.question.max_to_choose }} {{ this.question.max_to_choose <= 1 ? 'player' : 'players' }}
+			who, in your opinion, {{ this.question.max_to_choose <= 1 ? 'was' : 'were' }} the best in the highest division (Fortuna liga)
+			{{ position && position[0].id === 1 ? 'and at the same time you shall determine their order from 1st to 3rd place' : '' }}
 		</small>
 
 		<Divider />
