@@ -46,7 +46,7 @@
 			<div class="position-relative text-center d-flex flex-column align-items-center w-100 mt-5">
 				<Button label="Send survey" class="p-button-raised p-button-success submit-btn" :loading="loading"
 						@click="sendSurvey(saveSurveyLink, fulfilledSurvey)" v-if="checkFinish()" :disabled="disabledBtn"/>
-				<small class="warning mt-3" v-if="unfilledQuestions && showError">Questions {{unfilledQuestions}} are not correctly filled.</small>
+				<small class="warning mt-3" v-if="unfilledQuestions && showError">Otázky {{unfilledQuestions}} nie sú správne vyplnené / Questions {{unfilledQuestions}} are not correctly filled.</small>
 			</div>
 		</template>
 	</Card>
