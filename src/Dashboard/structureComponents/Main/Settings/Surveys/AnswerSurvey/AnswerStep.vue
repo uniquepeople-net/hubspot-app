@@ -6,6 +6,7 @@
 		<AnswerMulti 	v-if="checkQuestionType(4)" :question="questionData()" :step="step"/>
 		<AnswerScale 	v-if="checkQuestionType(5)" :question="questionData()" :step="step"/>
 		<AnswerBest11 	v-if="checkQuestionType(6)" :question="questionData()" :step="step"/>
+		<AnswerBestW11  v-if="checkQuestionType(7)" :question="questionData()" :step="step"/>
 	</div>
 </template>
  
@@ -16,6 +17,7 @@
 	import AnswerOpen from './AnswerOpen.vue'
 	import AnswerScale from './AnswerScale.vue'
 	import AnswerBest11 from './AnswerBest11.vue'
+	import AnswerBestW11 from './AnswerBestW11.vue'
 
 	export default {
 		props: {
@@ -28,13 +30,17 @@
 		},
 		methods: {
 			checkQuestionType(id) {
-				return this.survey.questions[this.step - 1].type_id === id ? true : false
+				if ( this.survey.advanced.competition_id === 771 && id === 7 ) {
+					return true
+				} else if ( this.survey.advanced.competition_id !== 771 ) {
+					return this.survey.questions[this.step - 1].type_id === id ? true : false
+				}
 			},
 			questionData() {
 				return this.survey.questions[this.step - 1]
 			}
 		},
-		components: { AnswerOpen, AnswerClosed, AnswerMulti, AnswerScale, AnswerBest11 },
+		components: { AnswerOpen, AnswerClosed, AnswerMulti, AnswerScale, AnswerBest11, AnswerBestW11 },
 	}
 </script>
  

@@ -30,9 +30,10 @@ export default {
 			// https://github.com/vuejs/vuex/issues/1118
 			Object.assign(state, { 
 				areas: [],
-				competitionsList: {},
+				competitionsList: [],
 				competitionsDetail: {},
-				competitionsTeams: {},
+				competitionsTeams: [],
+				teamSquad: []
 			})
 		}
 	},
@@ -116,7 +117,13 @@ export default {
 				.then( response => {			
 					context.commit("SETTEAMSQUAD", response.data.squad)
 				})
-				.catch( error => console.log(error))
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load team squad"
+					})
+				})
 
 			await axios.get(statBasicUrl + 'teams/' + id + '/transfers?fromDate=2022-08-01&toDate=2023-04-04&details=player', {
 				headers: {
@@ -140,7 +147,19 @@ export default {
 					})
 				})
 		},
-
+		async getWomensFutbalnetTeams( context ) {
+			await axios.get( 'https://sutaze.api.sportnet.online/api/v1/public/competitions/629778567163293609a40351/parts/629df93778fdf23f5007cf08/teams' )
+				.then( response => {			
+					context.commit("SETCOMPETITIONSTEAMS", response.data.teams)
+				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load womens teams"
+					})
+				})
+		}
 	},
 
 	getters: {
