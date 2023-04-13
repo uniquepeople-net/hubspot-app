@@ -102,7 +102,7 @@
 		},
 		methods: {
 			addItem() {
-				if ( (this.inputs.length + this.existedHashesArr.length) < 10 ) {
+				if ( (this.inputs.length + this.existedHashesArr.length) < 50 ) {
 					let newObj = { value: '', id: uniqueId(), hash: '', link: ''}
 					this.inputs = [...this.inputs, newObj] 
 				} else {

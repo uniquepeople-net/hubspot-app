@@ -153,12 +153,25 @@ class Helpers {
 	} 
 
 	// Format string to slug
-	stringToSlug(str) {
-  		return str.toLowerCase()
-				  .trim()
-				  .replace(/[^\w\s-]/g, '')
-				  .replace(/[\s_-]+/g, '-')
-				  .replace(/^-+|-+$/g, '');
+	stringToSlug(string) {
+		const diacriticMap = {
+			'á': 'a', 'ä': 'a', 'č': 'c', 'ď': 'd', 'é': 'e', 'í': 'i',
+			'ĺ': 'l', 'ľ': 'l', 'ň': 'n', 'ó': 'o', 'ô': 'o', 'ŕ': 'r',
+			'š': 's', 'ť': 't', 'ú': 'u', 'ý': 'y', 'ž': 'z',
+			'Á': 'A', 'Ä': 'A', 'Č': 'C', 'Ď': 'D', 'É': 'E', 'Í': 'I',
+			'Ĺ': 'L', 'Ľ': 'L', 'Ň': 'N', 'Ó': 'O', 'Ô': 'O', 'Ŕ': 'R',
+			'Š': 'S', 'Ť': 'T', 'Ú': 'U', 'Ý': 'Y', 'Ž': 'Z',
+			'â': 'a', 'ê': 'e', 'î': 'i', 'ô': 'o', 'û': 'u', 'ŷ': 'y',
+			'Â': 'A', 'Ê': 'E', 'Î': 'I', 'Ô': 'O', 'Û': 'U', 'Ŷ': 'Y',
+			'Ǎ': 'A', 'ǎ': 'a', 'Ě': 'E', 'ě': 'e', 'Ǐ': 'I', 'ǐ': 'i',
+			'Ǒ': 'O', 'ǒ': 'o', 'Ǔ': 'U', 'ǔ': 'u',
+		};
+		return string
+		  .replace(/[^\u0000-\u007E]/g, c => diacriticMap[c] || '') // remove diacritics
+		  .toLowerCase()
+		  .replace(/[^\w\s-]/g, '') // remove non-word chars
+		  .replace(/[\s_-]+/g, '-') // replace spaces and underscores with a hyphen
+		  .replace(/^-+|-+$/g, ''); // remove leading/trailing hyphens
 	}
 
 	// Check existence of keys in nested object
