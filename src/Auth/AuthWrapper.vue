@@ -4,7 +4,7 @@
 			<div class="col-lg-5 col-12">
 				<div id="auth-left">
 					<div class="auth-logo text-center">
-						<a href="https://ufp.sk"><img src="../../assets/images/logo/logo.png" alt="Logo" class="logo"/></a>
+						<a href="https://ufp.sk"><img src="https://ufp.sk/wp-content/uploads/2023/04/cropped-logo-transp.png" alt="Logo" class="logo"/></a>
 					</div>
 					
 					<slot name="title"></slot>

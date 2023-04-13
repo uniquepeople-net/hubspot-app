@@ -103,11 +103,11 @@
 				}
 			},
 			removeItem(index) {
-				if ( this.selectedPlayers.length === 1 && this.selectedPlayers[0].wyId === index ) {
+				if ( this.selectedPlayers.length === 1 && this.selectedPlayers[0].sportnetUser._id === index ) {
 					this.selectedPlayers = []
 					this.selectedPlayer = null
 				} else {
-					this.selectedPlayers = this.selectedPlayers.filter(p => p.wyId !== index);
+					this.selectedPlayers = this.selectedPlayers.filter(p => p.sportnetUser._id !== index);
 					this.selectedPlayer = null
 				}
 			},
