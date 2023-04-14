@@ -30,9 +30,9 @@
 		},
 		methods: {
 			checkQuestionType(id) {
-				if ( this.survey.advanced.competition_id === 771 && id === 7 ) {
+				if ( this.survey.type_id === 2 && this.survey.advanced.competition_id === 771 && id === 7 ) {
 					return true
-				} else if ( this.survey.advanced.competition_id !== 771 ) {
+				} else if ( (this.survey.type_id === 2 && this.survey.advanced.competition_id !== 771) || this.survey.type_id === 1 ) {
 					return this.survey.questions[this.step - 1].type_id === id ? true : false
 				}
 			},
