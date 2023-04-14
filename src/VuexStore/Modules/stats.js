@@ -149,8 +149,17 @@ export default {
 		},
 		async getWomensFutbalnetTeams( context ) {
 			await axios.get( 'https://sutaze.api.sportnet.online/api/v1/public/competitions/629778567163293609a40351/parts/629df93778fdf23f5007cf08/teams' )
-				.then( response => {			
-					context.commit("SETCOMPETITIONSTEAMS", response.data.teams)
+				.then( response => {
+					let teams = response.data.teams.map( t => {
+						let originUrl = t.organization.logo_public_url
+						const parts = originUrl.split('/');
+						parts.pop(); // remove the last portion of the URL which is the filename
+						const newUrl = `${parts.join('/')}/logo`;
+						t.organization.logo_public_url = newUrl
+						return t
+					})
+
+					context.commit("SETCOMPETITIONSTEAMS", teams)
 				})
 				.catch( error => {
 					Toast.fire({

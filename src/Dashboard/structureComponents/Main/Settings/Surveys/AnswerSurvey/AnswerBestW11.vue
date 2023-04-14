@@ -18,7 +18,7 @@
 				:click="handleTeam()" :key="'listbox1_' + step">
             <template #option="slotProps">
                 <div class="flex align-items-center">
-                    <!-- <img alt="" :src="slotProps.option.organization.logo_public_url" :class="`flag flag-${slotProps.option.wyId} mr-2`" style="width: 18px" /> -->
+                    <img alt="" :src="slotProps.option.organization.logo_public_url" :class="`flag flag-${slotProps.option.wyId} mr-2`" style="width: 18px" />
                     <span class="ms-3">{{ slotProps.option.name }}</span>
                 </div>
             </template>
