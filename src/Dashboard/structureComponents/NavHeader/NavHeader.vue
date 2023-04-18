@@ -62,9 +62,6 @@
 						<NavProfile />
 
 					</ul>
-					
-					
-
 				</div>
 			</div>
 		</nav>
@@ -79,6 +76,11 @@
 	import { mapGetters } from 'vuex'
 
 	export default {
+		created() {
+			if ( this.user.instat_id ) {
+				this.$store.dispatch("stats/getPlayerDetails", this.user.instat_id);
+			}
+		},
 		computed: {
 			...mapGetters({ user: 'user/user' }),
 		},

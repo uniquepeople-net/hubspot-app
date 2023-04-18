@@ -9,7 +9,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 		command: () => sidebarHide()
 	},
 	{
-		label: 'Instat',
+		label: 'Stats',
 		icon: 'bi-bar-chart',
 		visible: isInstat,
 		class: 'instat-t',		// for testing purpose

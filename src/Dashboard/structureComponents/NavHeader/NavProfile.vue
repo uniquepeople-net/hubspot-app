@@ -3,11 +3,12 @@
 		<a href="#" data-bs-toggle="dropdown" aria-expanded="false" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu">
 			<div class="user-menu d-flex flex-column align-items-center">
 				<div class="user-name">
-					<h6 class="mb-0 text-gray-600">{{ user.name }}</h6>
+					<small class="mb-0 text-gray-600">{{ playerDetails ? playerDetails.shortName : user.surname }}</small>
 				</div>
 				<div class="user-img d-flex align-items-center">
 					<div class="avatar avatar-md">
-						<img src="../../../../assets/images/faces/2.jpg" />
+						<img v-if="!playerDetails" src="../../../../assets/images/ndplayer_100x130.png" />
+						<img v-if="playerDetails" :src="playerDetails.imageDataURL" />
 					</div>
 				</div>
 			</div>
@@ -58,7 +59,8 @@
 			},
 		},
 		computed: {
-			...mapGetters({ user: 'user/user' }),
+			...mapGetters({ user: 'user/user',
+							playerDetails: 'stats/playerDetails' }),
 		},
 	}
 </script>

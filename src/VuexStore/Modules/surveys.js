@@ -335,6 +335,49 @@ export default {
 					Authorization: 'Bearer ' + User.getToken()
 				}})
 				.then( response => {
+
+					// logic for count points for players based on place assigned
+					if ( response.data.some( r => r.type_id === 6 && r.closed_answs_default === '1' ) ) {
+						let resultBestOne = response.data.filter( r => r.type_id === 6 && r.closed_answs_default === '1')
+
+						let contents = resultBestOne[0].answers.map( r => {
+							return r.content
+						})
+
+						//set points based on position of item in array 
+						const points = { 0: 5, 1: 3, 2: 1 };
+						
+						/* const result = [];
+						
+						contents.forEach(array => {
+							array.forEach((name, index) => {
+								const existingObj = result.find(obj => obj.name === name);
+								if (existingObj) {
+								existingObj.points += points[index];
+								} else {
+								result.push({ name: name, points: points[index] });
+								}
+							});
+						}); */
+
+						const result = {};
+
+						contents.forEach(array => {
+							array.forEach((name, index) => {
+								if (!result[name]) {
+								result[name] = 0;
+								}
+								result[name] += points[index];
+							});
+						});
+
+						response.data.map( r => {
+							if ( r.type_id === 6 && r.closed_answs_default === '1' ) {
+								return r.count = result
+							}
+						})
+					}
+
 					context.commit("SETSPECIFICRESULTS", response.data)
 				})
 				.catch( error => {

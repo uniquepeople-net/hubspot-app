@@ -2,6 +2,10 @@ export default {
 	namespaced: true,
 
 	state: () => ({
+		playerDetails: null,
+		playerCareer: null,
+		playerMatches: null,
+		matchDetails: null,
 		areas: [],
 		competitionsList: [],
 		competitionsDetail: {},
@@ -10,6 +14,18 @@ export default {
 	}),
 
 	mutations: {
+		SETPLAYERDETAILS( state, data ) {
+			state.playerDetails = data
+		},
+		SETPLAYERCAREER( state, data ) {
+			state.playerCareer = data
+		},
+		SETPLAYERMATCHES( state, data ) {
+			state.playerMatches = data
+		},
+		SETMATCHDETAILS( state, data ) {
+			state.matchDetails = data
+		},
 		SETAREAS( state, data ) {
 			state.areas = data;
 		},
@@ -29,6 +45,10 @@ export default {
 			// Merge rather than replace so we don't lose observers
 			// https://github.com/vuejs/vuex/issues/1118
 			Object.assign(state, { 
+				playerDetails: null,
+				playerMatches: null,
+				playerCareer: null,
+				matchDetails: null,
 				areas: [],
 				competitionsList: [],
 				competitionsDetail: {},
@@ -39,6 +59,118 @@ export default {
 	},
 
 	actions: {
+		async getPlayerDetails( context, id ) {
+			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+
+			await User.refreshedToken();
+
+			axios.get( statBasicUrl + 'players/' + id + '?details=currentTeam', {
+				headers: {
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
+				}})
+				.then( response => {
+					context.commit("SETPLAYERDETAILS", response.data)
+				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load player details"
+					})
+				})
+		},
+		async getPlayerCareer( context, id ) {
+			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+
+			await User.refreshedToken();
+
+			axios.get( statBasicUrl + 'players/' + id + '/career?details=season,competition', {
+				headers: {
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
+				}})
+				.then( response => {
+					context.commit("SETPLAYERCAREER", response.data.career.reverse())
+				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load player seasons"
+					})
+				})
+		},
+		async getPlayerMatches( context, id ) {
+			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+
+			await User.refreshedToken();
+
+			axios.get( statBasicUrl + 'players/' + id + '/matches', {
+				headers: {
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
+				}})
+				.then( response => {
+
+					/* const result = response.data.matches.reduce((acc, curr) => {
+						const key = curr.seasonId;
+						const obj = curr;
+						if (!acc[key]) {
+							acc[key] = [obj];
+						} else {
+							acc[key].push(obj);
+						}
+						return acc;
+					}, {}); */
+					  
+					context.commit("SETPLAYERMATCHES", response.data.matches)
+				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load player matches"
+					})
+				})			
+		},
+		async getPlayerMatchesBySeason( context, data ) {
+			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+
+			await User.refreshedToken();
+
+			axios.get( statBasicUrl + 'players/' + data.userId + '/matches?seasonId=' + data.seasonId , {
+				headers: {
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
+				}})
+				.then( response => {
+					context.commit("SETPLAYERMATCHES", response.data.matches)
+				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load player matches"
+					})
+				})			
+		},
+		async getMatchDetails( context, id ) {
+			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+
+			await User.refreshedToken();
+
+			axios.get( statBasicUrl + 'matches/' + id + '?details=coaches,players,teams,competition,round,season', {
+				headers: {
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
+				}})
+				.then( response => {
+					context.commit("SETMATCHDETAILS", response.data)
+				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load match details"
+					})
+				})
+		},
 		async getAreas(context, season = 30) {
 			let instatBasic = context.rootGetters['links/statBasicUrl']
 			
@@ -60,7 +192,7 @@ export default {
 
 			await axios.get(statBasicUrl + competitionsListSvk, {
 				headers: {
-					Authorization: 'Basic Z2wydHVjdS1jZjV3NnJsaTYtM3BnbHJqNi13ZHdyNWU1aHN3OjVpJUdXaE50XnFTcGZCcHU0c241c3VieHEtK3M5UQ=='
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
 				.then( response => {
 					context.commit("SETCOMPETITIONSLIST", response.data.competitions)
@@ -92,7 +224,7 @@ export default {
 			
 			await axios.get(statBasicUrl + 'competitions/' + id + '/teams', {
 				headers: {
-					Authorization: 'Basic Z2wydHVjdS1jZjV3NnJsaTYtM3BnbHJqNi13ZHdyNWU1aHN3OjVpJUdXaE50XnFTcGZCcHU0c241c3VieHEtK3M5UQ=='
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
 				.then( response => {		
 					context.commit("SETCOMPETITIONSTEAMS", response.data.teams)
@@ -112,7 +244,7 @@ export default {
 			
 			await axios.get(statBasicUrl + 'teams/' + id + '/squad', {
 				headers: {
-					Authorization: 'Basic Z2wydHVjdS1jZjV3NnJsaTYtM3BnbHJqNi13ZHdyNWU1aHN3OjVpJUdXaE50XnFTcGZCcHU0c241c3VieHEtK3M5UQ=='
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
 				.then( response => {			
 					context.commit("SETTEAMSQUAD", response.data.squad)
@@ -127,7 +259,7 @@ export default {
 
 			await axios.get(statBasicUrl + 'teams/' + id + '/transfers?fromDate=2022-08-01&toDate=2023-04-04&details=player', {
 				headers: {
-					Authorization: 'Basic Z2wydHVjdS1jZjV3NnJsaTYtM3BnbHJqNi13ZHdyNWU1aHN3OjVpJUdXaE50XnFTcGZCcHU0c241c3VieHEtK3M5UQ=='
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}}).then( response => {
 					let transfers = response.data.transfer;
 					let squad = context.rootGetters['stats/teamSquad']
@@ -172,6 +304,18 @@ export default {
 	},
 
 	getters: {
+		playerDetails(state) {
+			return state.playerDetails
+		},
+		playerCareer(state) {
+			return state.playerCareer
+		},
+		playerMatches(state) {
+			return state.playerMatches
+		},
+		matchDetails(state) {
+			return state.matchDetails
+		},
 		competitionsTeams(state) {
 			return state.competitionsTeams
 		},

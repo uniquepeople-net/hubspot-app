@@ -6,6 +6,7 @@
 			<template #content>
 				<div v-if="match" class="card-body position-relative">
 					<div class="row">
+						
 						<div class="col-6 collect align-items-start">
 							<h5 class="fw-light mb-md-3">{{ match.team1_name }}</h5>
 							<!-- <Skeleton width="5rem" class="mb-2"></Skeleton> -->
@@ -27,8 +28,8 @@
 					<div class="result position-absolute">
 						<!-- <span>{{ modifyResult(match.score) }}</span>
 						<p class="date mt-2">{{ matchDate( match.match_date ) }}</p> -->
-						<span>{{ modifyResult(match.score) }}</span>
-						<p class="date mt-2">{{ matchDate(match.match_date) }}</p>
+						<span>{{ modifyResult(match.label) }}</span>
+						<p class="date mt-2">{{ matchDate(match.dateutc) }}</p>
 					</div>
 
 					<Skeleton v-if="!match" width="5rem" height="2.5rem" class="result position-absolute"></Skeleton>					
@@ -50,10 +51,8 @@
 		methods: {
 			modifyResult(data) {
 				if (data) {
-					let split = data.split('');
-					split[1] = ' : '
-					data = split.join('')
-					return data
+					let split = data.split(',');
+					return split[1]
 				}
 				return data
 			},
@@ -65,9 +64,7 @@
 			}
 		},
 		computed: {
-			...mapGetters({ match: 'statsData/selectedMatch',
-							team1: 'statsData/team1',
-							team2: 'statsData/team2'})
+			...mapGetters({ match: 'stats/matchDetails' })
 		},
 	}
 </script>

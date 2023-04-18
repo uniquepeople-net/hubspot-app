@@ -11,7 +11,6 @@
  
 <script>	
 	import { mapGetters } from 'vuex'; 
-
 	import Sidebar from './structureComponents/Sidebar/Sidebar.vue'
 	import NavHeader from './structureComponents/NavHeader/NavHeader.vue';
 
@@ -38,12 +37,13 @@
 		computed: {
 			...mapGetters({ unAuth: 'user/unAuth',
 							user: 'user/user',
-							activeSidebar: 'appData/activeSidebar' }),
+							activeSidebar: 'appData/activeSidebar'}),
 		},
 		watch: {
 			user: function (data) {
 				if ( data.role_id ) {
 					this.show = true
+					this.$store.dispatch('stats/getPlayerDetails', this.user.instat_id )
 				}
 			},
 			unAuth: function(data) {

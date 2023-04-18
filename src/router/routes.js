@@ -32,7 +32,7 @@ import WalletInfo from '../Dashboard/structureComponents/Main/Payment/WalletInfo
 import Pay from '../Dashboard/structureComponents/Main/Payment/Pay.vue'
 import PayStatus from '../Dashboard/structureComponents/Main/Payment/PayStatus.vue'
 
-import Instat from '../Dashboard/structureComponents/Main/Stats/Instat.vue';
+import Stats from '../Dashboard/structureComponents/Main/Stats/Stats.vue';
 
 import Info from '../Dashboard/structureComponents/Main/Info/Info.vue';
 import InfoUfp from '../Dashboard/structureComponents/Main/Info/InfoUfp.vue';
@@ -75,7 +75,7 @@ export const routes = [
 
 			{ path: '/my-board', component: MyBoard, name: 'my-board' },
 
-			{ path: '/stats', component: Instat, name: 'instat' },
+			{ path: '/stats', component: Stats, name: 'stats' },
 
 			{ path: '/users', component: Users, name: 'users', redirect: { name: 'all-users' },
 				// Check if user has privileges to access this route

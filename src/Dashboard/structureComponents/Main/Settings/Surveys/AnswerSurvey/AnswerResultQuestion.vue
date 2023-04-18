@@ -1,12 +1,17 @@
 <template>
 	<Card class="card">
 		<template #title>
-			<div>
+			<div class="d-flex justify-content-between align-items-center">
 				<h6>{{result.title}}</h6>
+				<i v-if="!toggle" @click="handleToggle()" class="bi bi-toggle-off"></i>
+				<i v-if="toggle" @click="handleToggle()" class="bi bi-toggle-on"></i>
 			</div>
 		</template>
 		<template #content>
-			<Chart type="bar" :data="chartData" :options="chartOptions" class="h-30rem"  />
+			<Chart v-if="!toggle" type="bar" :data="chartData" :options="chartOptions" class="h-30rem"  />
+			<div v-if="toggle">
+				<small class="d-block" v-for="(item, key) in sortedResults()">{{key + ': ' + item}}</small>
+			</div>
 		</template>
 	</Card>
 </template>
@@ -24,6 +29,7 @@
 		},
 		data() {
 			return {
+				toggle: false,
 				chartData: {
 					labels: [''],
 					datasets: this.dataArray()
@@ -108,6 +114,19 @@
 			randomColor(colorPallete) {
 				let random = colorPallete[Math.floor(Math.random()*colorPallete.length)]
 				return random
+			},
+			handleToggle() {
+				this.toggle = !this.toggle
+			},
+			sortedResults() {
+				let countResults = this.result.count
+				if ( countResults ) {
+					const sortedObj = Object.fromEntries(
+						Object.entries(countResults)
+							.sort((a, b) => b[1] - a[1])
+					);
+					return sortedObj
+				}
 			}
 		},
 		components: { Chart }
@@ -116,4 +135,11 @@
  
  
 <style lang='scss' scoped>
+.bi-toggle-on, .bi-toggle-off {
+	cursor: pointer;
+	font-size: 2rem;
+}
+.bi-toggle-on {	
+	color: var(--green-600);
+}
 </style>

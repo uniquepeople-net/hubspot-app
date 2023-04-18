@@ -5,7 +5,7 @@
 			<Badge v-if="unreadEmailsCount > 0" :value="unreadEmailsCount" severity="info" class="position-absolute top-0 start-0"/>
 		</a>
 	</li>
-	<Menu id="overlay_menu" ref="menu" :model="items" :popup="true" class="mt-2 p-0">
+	<Menu id="overlay_menu" ref="menu" :model="items" :popup="true" class="mt-2 p-0 over_menu">
 		<template #item>					
 			<div class="email-menu mx-0 my-2">
 				<ul v-if="unreadEmails">

@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader')
 const webpack = require('webpack');
 const path = require('path');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
     entry: {
@@ -88,5 +89,6 @@ module.exports = {
 			DOMAIN_URL: JSON.stringify('https://app-apigw.ufp.sk'),
 		}),
         new webpack.HotModuleReplacementPlugin(),
+		new Dotenv(),
     ],
 };

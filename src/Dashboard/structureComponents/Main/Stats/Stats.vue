@@ -8,11 +8,11 @@
 		</div>
 	
 		<div class="col-12 col-lg-6 mt-4 mt-lg-0">
-			<MatchCardPlayer :params="restParams"/>
+			<!-- <MatchCardPlayer :params="restParams"/> -->
 		</div>
 	</div>
 
-	<PlayerStats class="mt-4" :params="params" v-if="show"/>
+	<!-- <PlayerStats class="mt-4" :params="params" v-if="show"/> -->
 
 </template>
  
@@ -26,15 +26,14 @@
 	
 	export default {
 		created() {
-			//this.$store.dispatch('statsData/getPlayerStats')
-			//this.$store.dispatch('statsData/getPlayerData')
+			this.$store.dispatch('stats/getPlayerCareer', this.user.instat_id )
+			//this.$store.dispatch('stats/getPlayerDetails', this.user.instat_id )
+			this.$store.dispatch('stats/getPlayerMatches', this.user.instat_id )
 		},
 		computed: {
-			...mapGetters({ params: 'statsData/params',
-							restParams: 'statsData/restParams',
-							seasons: 'statsData/seasons',
-							matches: 'statsData/matches',
-							show: 'statsData/playerStatsComponent'}),
+			...mapGetters({ user: 'user/user',
+							matches: 'stats/playerMatches',
+							seasons: 'stats/playerCareer' }),
 		},
 		components: { MatchSelects, MatchCard, PlayerStats, MatchCardPlayer },
 	}
