@@ -27,7 +27,6 @@
 	export default {
 		created() {
 			this.$store.dispatch('stats/getPlayerCareer', this.user.instat_id )
-			//this.$store.dispatch('stats/getPlayerDetails', this.user.instat_id )
 			this.$store.dispatch('stats/getPlayerMatches', this.user.instat_id )
 		},
 		computed: {

@@ -6,6 +6,12 @@ export default {
 		playerCareer: null,
 		playerMatches: null,
 		matchDetails: null,
+		matchStats: null,
+		matchVideo: null,
+		team1: null,
+		team2: null,
+		scorersTeam1: null,
+		scorersTeam2: null,
 		areas: [],
 		competitionsList: [],
 		competitionsDetail: {},
@@ -25,6 +31,24 @@ export default {
 		},
 		SETMATCHDETAILS( state, data ) {
 			state.matchDetails = data
+		},
+		SETMATCHSTATS( state, data ) {
+			state.matchStats = data
+		},
+		SETMATCHVIDEO( state, data ) {
+			state.matchVideo = data
+		},
+		SETTEAM1( state, data ) {
+			state.team1 = data
+		},
+		SETTEAM2( state, data ) {
+			state.team2 = data
+		},
+		SETSCORERTEAM1( state, data ) {
+			state.scorersTeam1 = data
+		},
+		SETSCORERTEAM2( state, data ) {
+			state.scorersTeam2 = data
 		},
 		SETAREAS( state, data ) {
 			state.areas = data;
@@ -49,6 +73,11 @@ export default {
 				playerMatches: null,
 				playerCareer: null,
 				matchDetails: null,
+				matchVideo: null,
+				team1: null,
+				team2: null,
+				scorersTeam1: null,
+				scorersTeam2: null,
 				areas: [],
 				competitionsList: [],
 				competitionsDetail: {},
@@ -110,6 +139,7 @@ export default {
 				}})
 				.then( response => {
 
+					//create separated objects with matches based on seasonId
 					/* const result = response.data.matches.reduce((acc, curr) => {
 						const key = curr.seasonId;
 						const obj = curr;
@@ -160,7 +190,32 @@ export default {
 				headers: {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
-				.then( response => {
+				.then( response => {			
+					const teamsData = response.data.teamsData
+					const key1 = Object.keys(teamsData)[0];
+					const key2 = Object.keys(teamsData)[1];
+
+					const team1 = {...teamsData[key1]};
+					const team2 = {...teamsData[key2]};
+
+					context.commit("SETTEAM1", team1.side === 'home' ? team1 : team2)
+					context.commit("SETTEAM2", team2.side === 'away' ? team2 : team1)
+
+					let playersTeam1, playersTeam2
+				
+					if ( team1.side === 'home' ) {
+						playersTeam1 = [...team1.formation.bench, ...team1.formation.lineup]
+						playersTeam2 = [...team2.formation.bench, ...team2.formation.lineup]
+					} else {
+						playersTeam1 = [...team2.formation.bench, ...team2.formation.lineup]
+						playersTeam2 = [...team1.formation.bench, ...team1.formation.lineup]
+					}
+
+					let scorersTeam1 = playersTeam1.filter( p => p.goals !== '0' || p.ownGoals !== '0' && p.player)
+					let scorersTeam2 = playersTeam2.filter( p => p.goals !== '0' || p.ownGoals !== '0' && p.player)
+
+					context.commit("SETSCORERTEAM1", scorersTeam1)
+					context.commit("SETSCORERTEAM2", scorersTeam2)
 					context.commit("SETMATCHDETAILS", response.data)
 				})
 				.catch( error => {
@@ -171,10 +226,53 @@ export default {
 					})
 				})
 		},
+		async getMatchStats( context, id ) {
+			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+
+			await User.refreshedToken();
+
+			axios.get( statBasicUrl + 'videos/' + id /* + '/qualities' */ /* + '/offsets' */,  {
+				headers: {
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
+				}})
+				.then( response => {
+					console.log(response)
+					context.commit("SETMATCHSTATS", response.data)
+				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load match stats"
+					})
+				})
+
+		},
+		async getMatchVideo( context, id ) {
+			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+
+			await User.refreshedToken();
+
+			axios.get( statBasicUrl + 'videos/' + id /* + '/qualities' */ /* + '/offsets' */,  {
+				headers: {
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
+				}})
+				.then( response => {
+					console.log(response)
+					context.commit("SETMATCHVIDEO", response.data)
+				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load match video"
+					})
+				})
+
+		},
 		async getAreas(context, season = 30) {
 			let instatBasic = context.rootGetters['links/statBasicUrl']
 			
-
 			await User.refreshedToken();
 
 			let instatId = context.rootGetters['user/user'].instat_id;				
@@ -315,6 +413,24 @@ export default {
 		},
 		matchDetails(state) {
 			return state.matchDetails
+		},
+		matchStats(state) {
+			return state.matchStats
+		},
+		matchVideo(state) {
+			return state.matchVideo
+		},
+		team1(state) {
+			return state.team1
+		},
+		team2(state) {
+			return state.team2
+		},
+		scorersTeam1(state) {
+			return state.scorersTeam1
+		},
+		scorersTeam2(state) {
+			return state.scorersTeam2
 		},
 		competitionsTeams(state) {
 			return state.competitionsTeams

@@ -1,36 +1,36 @@
 <template>
-	<Card class="card match-card">
+	<Card class="card match-card" v-if="match">
 			<template #title>
 				<div class="card-header"><h5>Match Info</h5></div>
 			</template>
 			<template #content>
-				<div v-if="match" class="card-body position-relative">
-					<div class="row">
-						
-						<div class="col-6 collect align-items-start">
-							<h5 class="fw-light mb-md-3">{{ match.team1_name }}</h5>
-							<!-- <Skeleton width="5rem" class="mb-2"></Skeleton> -->
-							<img v-if="team1" class="team-logo" :src="team1.photo ? team1.photo : null" alt="">
-							<!-- <img class="team-logo" src="../../../assets/images/za.png" alt=""> -->
-							<!-- <Skeleton shape="circle" size="2.5rem" class="mr-2"></Skeleton> -->
+				<div  class="card-body">
+					<div class="row position-relative">
+						<div class="col-5 collect ps-0">
+							<img v-if="team1" class="team-logo" :src="team1.team.imageDataURL ? team1.team.imageDataURL : ''" alt="">
+							<h6 class="team-name fw-bold mb-md-3 text-center">{{ team1.team.officialName }}</h6>
+						</div>
+						<div class="col-2"></div>
+						<div class="col-5 collect pe-0">
+							<img v-if="team2" class="team-logo" :src="team2.team.imageDataURL ? team2.team.imageDataURL : ''" alt="">
+							<h6 class="team-name text-center fw-bold mb-md-3">{{ team2.team.officialName }}</h6>
 						</div>
 
-						<div class="col-6 collect align-items-end">
-							<!-- <h5 class="text-end fw-light mb-md-3">{{ match.team2_name }}</h5> -->
-							<h5 class="text-end fw-light mb-md-3">{{ match.team2_name }}</h5>
-							<!-- <Skeleton width="5rem" class="mb-2"></Skeleton> -->
-							<img v-if="team2" class="team-logo" :src="team2.photo ? team2.photo : null" alt="">
-							<!-- <img class="team-logo" src="../../../assets/images/st.png" alt=""> -->
-							<!-- <Skeleton shape="circle" size="2.5rem" class="mr-2"></Skeleton> -->
+						<div class="col-6 mt-3">
+							<Scorers :scorers="scorersTeam1" position="right"/>
 						</div>
-					</div>
 
-					<div class="result position-absolute">
-						<!-- <span>{{ modifyResult(match.score) }}</span>
-						<p class="date mt-2">{{ matchDate( match.match_date ) }}</p> -->
-						<span>{{ modifyResult(match.label) }}</span>
-						<p class="date mt-2">{{ matchDate(match.dateutc) }}</p>
-					</div>
+						<div class="col-6 mt-3">
+							<Scorers :scorers="scorersTeam2" position="left"/>
+						</div>
+
+						<div class="result position-absolute">
+							<p class="date mb-1">{{ matchDate(match.dateutc) }}</p>
+							<span>{{ modifyResult(match.label) }}</span>
+						</div>
+					</div>					
+
+					<AdvancedData class="mt-5" :id="match.wyId"/>
 
 					<Skeleton v-if="!match" width="5rem" height="2.5rem" class="result position-absolute"></Skeleton>					
 				</div>
@@ -41,13 +41,10 @@
  
 <script>
 	import { mapGetters } from 'vuex';
+	import AdvancedData from '../structureComponents/Main/Stats/MatchData/AdvancedData.vue';
+	import Scorers from '../structureComponents/Main/Stats/Scorers.vue';
 
 	export default {
-		data() {
-			return {
-
-			}
-		},
 		methods: {
 			modifyResult(data) {
 				if (data) {
@@ -64,8 +61,13 @@
 			}
 		},
 		computed: {
-			...mapGetters({ match: 'stats/matchDetails' })
+			...mapGetters({ match: 'stats/matchDetails',
+							team1: 'stats/team1',
+							team2: 'stats/team2',
+							scorersTeam1: 'stats/scorersTeam1',
+							scorersTeam2: 'stats/scorersTeam2' })
 		},
+		components: { Scorers, AdvancedData }
 	}
 </script>
  
@@ -74,19 +76,22 @@
 .match-card {
 	//max-width: 576px;
 	.team-logo {
-		max-width: 60px;
+		max-width: 80px;
+		margin-bottom: 1rem;
+	}
+	.team-name {
+		font-size: 1.2rem;
 	}
 	.collect {
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
-		
+		align-items: center;
 	}
 	h5 {
 		font-size: 1.5rem;
 	}
 	.result {
-		top: 85%;
+		top: 1.5rem;
 		right: 0;
 		left: 0;
 		margin-left: auto;
@@ -114,8 +119,8 @@
 		.team-logo {
 			max-width: 50px;
 		}
-		h5 {
-			font-size: 1.2rem;
+		.team-name {
+			font-size: 1rem;
 		}
 		.result {
 			span {
