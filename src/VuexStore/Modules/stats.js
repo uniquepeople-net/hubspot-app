@@ -217,8 +217,8 @@ export default {
 						playersTeam2 = [...team1.formation.bench, ...team1.formation.lineup]
 					}
 
-					let scorersTeam1 = playersTeam1.filter( p => p.goals !== '0' || p.ownGoals !== '0' && p.player)
-					let scorersTeam2 = playersTeam2.filter( p => p.goals !== '0' || p.ownGoals !== '0' && p.player)
+					let scorersTeam1 = playersTeam1.filter( p => Number(p.goals) > 0 || Number(p.ownGoals) > 0 && p.player)
+					let scorersTeam2 = playersTeam2.filter( p => Number(p.goals) > 0 || Number(p.ownGoals) > 0 && p.player)
 
 					context.commit("SETSCORERTEAM1", scorersTeam1)
 					context.commit("SETSCORERTEAM2", scorersTeam2)
