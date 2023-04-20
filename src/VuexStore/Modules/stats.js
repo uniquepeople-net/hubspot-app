@@ -1,3 +1,5 @@
+import Helpers from "../../Helpers/Helpers"
+
 export default {
 	namespaced: true,
 
@@ -190,13 +192,17 @@ export default {
 				headers: {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
-				.then( response => {			
+				.then( response => {
+								
 					const teamsData = response.data.teamsData
 					const key1 = Object.keys(teamsData)[0];
 					const key2 = Object.keys(teamsData)[1];
 
 					const team1 = {...teamsData[key1]};
 					const team2 = {...teamsData[key2]};
+					
+					Helpers.substitionsHelper(team1)
+					Helpers.substitionsHelper(team2)
 
 					context.commit("SETTEAM1", team1.side === 'home' ? team1 : team2)
 					context.commit("SETTEAM2", team2.side === 'away' ? team2 : team1)
@@ -231,12 +237,26 @@ export default {
 
 			await User.refreshedToken();
 
-			axios.get( statBasicUrl + 'videos/' + id /* + '/qualities' */ /* + '/offsets' */,  {
+			axios.get( statBasicUrl + 'matches/' + id  + '/advancedstats',  {
 				headers: {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
 				.then( response => {
-					console.log(response)
+					let team1 = context.rootGetters['stats/team1']
+					let team2 = context.rootGetters['stats/team2']
+
+					for (let [key, value] of Object.entries(response.data)) {
+						for (let [keyIn, valueIn] of Object.entries(value)) {
+							if ( Number(keyIn) === Number(team1.teamId) ) {
+								value['team1'] = valueIn
+								delete value[keyIn]
+							} else if ( Number(keyIn) === Number(team2.teamId) ){
+								value['team2'] = valueIn
+								delete value[keyIn]
+							}
+						}
+					}
+
 					context.commit("SETMATCHSTATS", response.data)
 				})
 				.catch( error => {
