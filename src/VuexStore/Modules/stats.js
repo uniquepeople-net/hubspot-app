@@ -7,6 +7,7 @@ export default {
 		playerDetails: null,
 		playerCareer: null,
 		playerMatches: null,
+		playerStats: null,
 		matchDetails: null,
 		matchStats: null,
 		matchVideo: null,
@@ -30,6 +31,9 @@ export default {
 		},
 		SETPLAYERMATCHES( state, data ) {
 			state.playerMatches = data
+		},
+		SETPLAYERSTATS( state, data ) {
+			state.playerStats = data
 		},
 		SETMATCHDETAILS( state, data ) {
 			state.matchDetails = data
@@ -163,6 +167,28 @@ export default {
 					})
 				})			
 		},
+		async getPalyerStats( context, data ) {
+			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+
+			await User.refreshedToken();
+
+			axios.get( statBasicUrl + 'players/' + data.id + '/matches/' + data.matchId + '/advancedstats', {
+				headers: {
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
+				}})
+				.then( response => {
+					console.log(response)
+					
+					context.commit("SETPLAYERSTATS", response.data)
+				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load player stats"
+					})
+				})			
+		},
 		async getPlayerMatchesBySeason( context, data ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
 
@@ -190,10 +216,9 @@ export default {
 
 			axios.get( statBasicUrl + 'matches/' + id + '?details=coaches,players,teams,competition,round,season', {
 				headers: {
-					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE,
 				}})
 				.then( response => {
-								
 					const teamsData = response.data.teamsData
 					const key1 = Object.keys(teamsData)[0];
 					const key2 = Object.keys(teamsData)[1];
@@ -260,6 +285,7 @@ export default {
 					context.commit("SETMATCHSTATS", response.data)
 				})
 				.catch( error => {
+					context.commit("SETMATCHSTATS", null)
 					Toast.fire({
 						icon: 'error',
 						timer: 5000,
@@ -430,6 +456,9 @@ export default {
 		},
 		playerMatches(state) {
 			return state.playerMatches
+		},
+		playerStats(state) {
+			return state.playerStats
 		},
 		matchDetails(state) {
 			return state.matchDetails

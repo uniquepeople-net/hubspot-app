@@ -33,6 +33,8 @@ import Pay from '../Dashboard/structureComponents/Main/Payment/Pay.vue'
 import PayStatus from '../Dashboard/structureComponents/Main/Payment/PayStatus.vue'
 
 import Stats from '../Dashboard/structureComponents/Main/Stats/Stats.vue';
+import MatchStats from '../Dashboard/structureComponents/Main/Stats/MatchData/MatchStats.vue';
+import PlayerStats from '../Dashboard/structureComponents/Main/Stats/PlayerData/PlayerStats.vue';
 
 import Info from '../Dashboard/structureComponents/Main/Info/Info.vue';
 import InfoUfp from '../Dashboard/structureComponents/Main/Info/InfoUfp.vue';
@@ -75,7 +77,16 @@ export const routes = [
 
 			{ path: '/my-board', component: MyBoard, name: 'my-board' },
 
-			{ path: '/stats', component: Stats, name: 'stats' },
+			{ path: '/stats', component: Stats, name: 'stats', redirect: { name: 'match' },
+				
+				children: [
+					
+					{ path: 'match', component: MatchStats, name: 'match' },
+
+					{ path: 'player', component: PlayerStats, name: 'player' },
+
+				] 
+			},
 
 			{ path: '/users', component: Users, name: 'users', redirect: { name: 'all-users' },
 				// Check if user has privileges to access this route

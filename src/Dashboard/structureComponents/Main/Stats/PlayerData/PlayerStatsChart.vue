@@ -14,7 +14,7 @@
 						   title="Passes" :accColor="getRandom(chartColors)" :inaccColor="chartColorInnacurate"
 						   @getData="getChartData"/>
 			</div>
-			<div class="col-6 col-sm-6 col-lg-4 col-xl-3">
+			<!-- <div class="col-6 col-sm-6 col-lg-4 col-xl-3">
 				<StatChart v-if="params.shots" :accurate="params.shots_target" :inacurate="params.shots_wide" 
 							title="Shots" :accColor="getRandom(chartColors)" :inaccColor="chartColorInnacurate"
 							@getData="getChartData"/>
@@ -28,7 +28,7 @@
 				<StatChart v-if="params.tackles" :accurate="params.tackles_all" :inacurate="params.tackles_lost" 
 						   title="Tackles" :accColor="getRandom(chartColors)" :inaccColor="chartColorInnacurate"
 							@getData="getChartData"/>
-			</div>
+			</div> -->
 		</div>
 
 	</div>
@@ -36,7 +36,7 @@
  
  
 <script>
-	import StatChart from '../../../global/StatChart.vue'
+	import StatChart from '../../../../global/StatChart.vue'
 
 	export default {
 		props: ['params'],
@@ -66,11 +66,11 @@
 				this.openModal()
 			}
 		},
+ 		//21ey%+5(L[2V
 		
 		components: { StatChart }
 	}
 </script>
- 
  
 <style lang='scss'>
 

@@ -42,7 +42,7 @@
 <script>
 	import { mapGetters } from 'vuex';
 	import AdvancedData from '../structureComponents/Main/Stats/MatchData/AdvancedData.vue';
-	import Scorers from '../structureComponents/Main/Stats/Scorers.vue';
+	import Scorers from '../structureComponents/Main/Stats/MatchData/Scorers.vue';
 
 	export default {
 		methods: {

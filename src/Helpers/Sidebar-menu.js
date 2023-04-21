@@ -15,8 +15,13 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 		class: 'instat-t',		// for testing purpose
 		items: [
 			{ 
-				label: 'By Match',
-				to: '/stats',
+				label: 'Match',
+				to: '/stats/match',
+				command: () => sidebarHide()
+			},
+			{ 
+				label: 'Player',
+				to: '/stats/player',
 				command: () => sidebarHide()
 			}
 		]

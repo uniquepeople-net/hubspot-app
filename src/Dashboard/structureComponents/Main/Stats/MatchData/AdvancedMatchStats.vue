@@ -14,34 +14,20 @@
 										 :percentage="false" :chartData="passesData" />
 			</div>
 		</div>
+		<div class="mt-3">
+			<AdvancedMatchStatsBar v-for="stat in advStatBars" :title="stat.label" :values="stat.values"/>
+		</div>
 	</div>
 </template>
  
  
 <script>
-import AdvancedMatchStatsChart from './AdvancedMatchStatsChart.vue'
+	import AdvancedMatchStatsBar from './AdvancedMatchStatsBar.vue'
+	import AdvancedMatchStatsChart from './AdvancedMatchStatsChart.vue'
+	
 	export default {
-	components: { AdvancedMatchStatsChart },
 		props: {
 			stats: Object
-		},
-		mounted() {
-			this.possessionData = this.chartData(this.team1Possesion, this.team2Possesion)
-			this.shotsData = this.chartData(this.team1Shots, this.team2Shots)
-			this.passesData = this.chartData(this.team1Passes, this.team2Passes)
-		},
-		data() {
-			return {
-				team1Possesion: this.stats.possession.team1.possessionPercent,
-				team2Possesion: this.stats.possession.team2.possessionPercent,
-				possessionData: null,
-				team1Shots: this.stats.general.team1.shotsOnTarget,
-				team2Shots: this.stats.general.team2.shotsOnTarget,
-				shotsData: null,
-				team1Passes: this.stats.passes.team1.passes,
-				team2Passes: this.stats.passes.team2.passes,
-				passesData: null,				
-			}
 		},
 		methods: {
 			chartData(data1, data2) {
@@ -56,19 +42,30 @@ import AdvancedMatchStatsChart from './AdvancedMatchStatsChart.vue'
 				}
 			}
 		},
-		watch: {
-			stats: function (data) {
-				this.team1Possesion = this.stats.possession.team1.possessionPercent
-				this.team2Possesion = this.stats.possession.team2.possessionPercent
-				this.team1Shots = this.stats.general.team1.shotsOnTarget
-				this.team2Shots = this.stats.general.team2.shotsOnTarget
-				this.team1Passes = this.stats.passes.team1.passes,
-				this.team2Passes = this.stats.passes.team2.passes,
-				this.possessionData = this.chartData(this.team1Possesion, this.team2Possesion)
-				this.shotsData = this.chartData(this.team1Shots, this.team2Shots)
-				this.passesData = this.chartData(this.team1Passes, this.team2Passes)
-			},
-		}
+		computed: { 
+			team1Possesion() { return this.stats.possession.team1.possessionPercent },
+			team2Possesion() { return this.stats.possession.team2.possessionPercent },
+			possessionData() { return this.chartData(this.team1Possesion, this.team2Possesion) },
+			team1Shots() { return this.stats.general.team1.shotsOnTarget },
+			team2Shots() { return this.stats.general.team2.shotsOnTarget },
+			shotsData() { return this.chartData(this.team1Shots, this.team2Shots) },
+			team1Passes() { return this.stats.passes.team1.passes },
+			team2Passes() { return this.stats.passes.team2.passes },
+			passesData() { return this.chartData(this.team1Passes, this.team2Passes) },
+			advStatBars() {			
+				return [
+					{ label: 'Total Attempts', values: { team1: this.stats.general.team1.shots, team2: this.stats.general.team2.shots } },
+					{ label: 'Fouls', values: { team1: this.stats.general.team1.fouls, team2: this.stats.general.team2.fouls } },
+					{ label: 'Corners', values: { team1: this.stats.general.team1.corners, team2: this.stats.general.team2.corners } },
+					{ label: 'Offsides', values: { team1: this.stats.general.team1.offsides, team2: this.stats.general.team2.offsides } },
+					{ label: 'Free kicks', values: { team1: this.stats.general.team1.freeKicks, team2: this.stats.general.team2.freeKicks } },
+					{ label: 'Successful duels', values: { team1: this.stats.duels.team1.duelsSuccessful, team2: this.stats.duels.team2.duelsSuccessful } },
+					{ label: 'Total looses', values: { team1: this.stats.transitions.team1.lossesTotal, team2: this.stats.transitions.team2.lossesTotal } },
+					{ label: 'Successful passes', values: { team1: this.stats.passes.team1.passesSuccessful, team2: this.stats.passes.team2.passesSuccessful } },
+				]
+			}	
+		},
+		components: { AdvancedMatchStatsChart, AdvancedMatchStatsBar },
 	}
 </script>
  

@@ -138,8 +138,7 @@
 						</div>
 
 						<div class="position-relative text-center mt-2">
-							<Button type="submit" label="Submit" class="submit-btn btn btn-primary btn-block btn-lg shadow-lg" :disabled="loading"/>
-							<div v-if="loading" class="spinner-grow position-absolute" role="status"></div>
+							<Button type="submit" :loading="loading" label="Submit" class="submit-btn btn btn-primary btn-block btn-lg shadow-lg" :disabled="loading"/>
 						</div>
 
 					</form>
@@ -305,7 +304,7 @@ export default {
 	display: flex;
 	& span.error-msg {
 		position: absolute;
-		bottom: -60%;
+		top: 100%;
 	}
 	& > .p-button {
 		border-radius: 0 4px 4px 0;

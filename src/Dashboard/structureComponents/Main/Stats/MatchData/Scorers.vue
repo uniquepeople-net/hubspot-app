@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<div v-for="scorer in scorers" :class="`scorer-wrap justify-content-${position === 'left' ? 'start' : 'end'}`">
-			<img v-if="position === 'left'" v-for="goal in Number(scorer.goals)  + Number(scorer.ownGoals)" class="soccer-ball" src="../../../../../assets/images/football.png" alt="">
+			<img v-if="position === 'left'" v-for="goal in Number(scorer.goals)  + Number(scorer.ownGoals)" class="soccer-ball" src="../../../../../../assets/images/football.png" alt="">
 			<span class="scorer-name mx-1">{{scorer.player.shortName}}</span>
-			<img v-if="position === 'right'" v-for="goal in Number(scorer.goals)  + Number(scorer.ownGoals)" class="soccer-ball" src="../../../../../assets/images/football.png" alt="">
+			<img v-if="position === 'right'" v-for="goal in Number(scorer.goals)  + Number(scorer.ownGoals)" class="soccer-ball" src="../../../../../../assets/images/football.png" alt="">
 		</div>
 	</div>
 </template>

@@ -14,7 +14,7 @@
 			data1: Number,
 			data2: Number,
 			percentage: Boolean,
-			chartData: Array
+			chartData: Object
 		},
 		data() {
 			return {
@@ -23,10 +23,7 @@
 					cutout: '40%'
 				},
 			}
-		},
-		methods: {
- 
-		},
+		}
 	}
 </script>
  
