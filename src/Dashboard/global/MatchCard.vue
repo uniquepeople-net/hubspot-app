@@ -1,8 +1,8 @@
 <template>
 	<Card class="card match-card" v-if="match">
-			<template #title>
-				<div class="card-header"><h5>Match Info</h5></div>
-			</template>
+			<!-- <template #title>
+				<div class="card-header"><h5>{{ displayMatchStats ? 'Match Info' : 'Player Info'}}</h5></div>
+			</template> -->
 			<template #content>
 				<div  class="card-body">
 					<div class="row position-relative">
@@ -30,7 +30,9 @@
 						</div>
 					</div>					
 
-					<AdvancedData class="mt-5" :id="match.wyId"/>
+					<AdvancedData class="mt-5" :id="match.wyId" v-if="displayMatchStats"/>
+
+					<AdvancedDataPlayer class="mt-5" :id="match.wyId" v-if="!displayMatchStats"/>
 
 					<Skeleton v-if="!match" width="5rem" height="2.5rem" class="result position-absolute"></Skeleton>					
 				</div>
@@ -42,9 +44,11 @@
 <script>
 	import { mapGetters } from 'vuex';
 	import AdvancedData from '../structureComponents/Main/Stats/MatchData/AdvancedData.vue';
+	import AdvancedDataPlayer from '../structureComponents/Main/Stats/PlayerData/AdvancedDataPlayer.vue';
 	import Scorers from '../structureComponents/Main/Stats/MatchData/Scorers.vue';
 
 	export default {
+		props: ['displayMatchStats'],
 		methods: {
 			modifyResult(data) {
 				if (data) {
@@ -67,7 +71,7 @@
 							scorersTeam1: 'stats/scorersTeam1',
 							scorersTeam2: 'stats/scorersTeam2' })
 		},
-		components: { Scorers, AdvancedData }
+		components: { Scorers, AdvancedData, AdvancedDataPlayer }
 	}
 </script>
  

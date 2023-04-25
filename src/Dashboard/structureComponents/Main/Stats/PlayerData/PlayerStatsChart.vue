@@ -10,9 +10,9 @@
 	
 		<div class="row">
 			<div class="col-6 col-sm-6 col-lg-4 col-xl-3">
-				<StatChart v-if="params.passes" :accurate="params.passes_acc" :inacurate="params.passes_inacc" 
+				<!-- <StatChart v-if="params.passes" :accurate="params.passes_acc" :inacurate="params.passes_inacc" 
 						   title="Passes" :accColor="getRandom(chartColors)" :inaccColor="chartColorInnacurate"
-						   @getData="getChartData"/>
+						   @getData="getChartData"/> -->
 			</div>
 			<!-- <div class="col-6 col-sm-6 col-lg-4 col-xl-3">
 				<StatChart v-if="params.shots" :accurate="params.shots_target" :inacurate="params.shots_wide" 
@@ -39,7 +39,7 @@
 	import StatChart from '../../../../global/StatChart.vue'
 
 	export default {
-		props: ['params'],
+		props: ['match'],
 		data() {
 			return {
 				displayModal: false,
@@ -65,9 +65,7 @@
 				
 				this.openModal()
 			}
-		},
- 		//21ey%+5(L[2V
-		
+		},		
 		components: { StatChart }
 	}
 </script>

@@ -1,18 +1,16 @@
 <template>
 	<div>
-		<PlayerStatsChart v-if="match" :match="match"/>
+		<MatchCard :displayMatchStats="false"/>
 	</div>
 </template>
  
  
 <script>
-	import PlayerStatsChart from './PlayerStatsChart.vue'
+	import { mapGetters } from 'vuex';
+	import MatchCard from '../../../../global/MatchCard.vue'
 
 	export default {
 		props: ['id', 'matchId'],
-		created() {
-			this.$store.dispatch('stats/getPalyerStats', { id: this.id, matchId: this.matchId } )
-		},
 		data() {
 			return {
 			}
@@ -20,7 +18,10 @@
 		methods: {
  
 		},
-		components: { PlayerStatsChart }
+		computed: {
+			...mapGetters({ match: 'stats/matchDetails' }),
+		},
+		components: { MatchCard }
 	}
 </script>
  

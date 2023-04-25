@@ -43,11 +43,13 @@
 .bar-dark {
 	:deep(.p-progressbar-value) {
 		background: var(--bluegray-500);
+		border-radius: 100px;
 	}
 }
 .bar-light	{
 	:deep(.p-progressbar-value) {
 		background: var(--bluegray-700);
+		border-radius: 100px;
 	}
 }
 .bar-left {

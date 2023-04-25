@@ -177,8 +177,6 @@ export default {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
 				.then( response => {
-					console.log(response)
-					
 					context.commit("SETPLAYERSTATS", response.data)
 				})
 				.catch( error => {

@@ -23,8 +23,12 @@
 								</div>
 							</template>
 						</Dropdown>
+
 					
 						<Skeleton v-else height="2rem" class="mb-2"></Skeleton>
+						
+						<SeasonPlayerData v-if="selectedSeason" :data="selectedSeason"/>
+
 					</div>
 					
 					<div class="col-12 col-sm-6">
@@ -50,6 +54,8 @@
 
 						<Skeleton v-else height="2rem" class="mb-2"></Skeleton>
 					</div>
+					
+					<Button :label="btnLabel" severity="secondary" text raised class="mt-4 mx-auto" @click="handleRedirect"/>
 				</div>
 			</div>
 		</template>
@@ -59,9 +65,11 @@
  
 <script>
 	import { mapGetters } from 'vuex';
+	import SeasonPlayerData from './SeasonPlayerData.vue';
 
 	export default {
-		props: [ 'matches', 'seasons' ],
+	components: { SeasonPlayerData },
+		props: [ 'matches', 'seasons', 'btnLabel', 'btnRoute' ],
 		data() {
 			return {
 				selectedMatch: null,
@@ -74,7 +82,11 @@
 				this.$store.dispatch( "stats/getPlayerMatchesBySeason", { userId: this.player.wyId, seasonId: this.selectedSeason.seasonId});						
 			},
 			selectMatch() {
-				this.$store.dispatch( "stats/getMatchDetails", this.selectedMatch.matchId );						
+				this.$store.dispatch( "stats/getMatchDetails", this.selectedMatch.matchId );
+				this.$store.dispatch( "stats/getPalyerStats", { id: this.player.wyId, matchId: this.selectedMatch.matchId } )						
+			},
+			handleRedirect() {
+				this.$router.push({ name: this.btnRoute })
 			}
 		},
 		computed: {
@@ -89,12 +101,10 @@
 	:deep(.p-card-content) {
 		padding: 0;
 	}
-	
 }
 .matches {
 	:deep(.match-item) {
 		font-size: .5rem;
 	}
 }
-
 </style>

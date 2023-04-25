@@ -47,7 +47,6 @@
 	import { mapGetters } from 'vuex';
 
 	export default {
-		props: ['matchId'],
 		data() {
 			return {
 				teamCheck: true,

@@ -1,6 +1,8 @@
 <template>
 	<div class="text">
-		<h6 class="text-center fw-light">{{ title }}</h6>
+		<h6 class="text-center fw-normal">
+			{{ title }} <span v-if="complete"> ({{ completeData }})</span>
+		</h6>
 		<div class="fw-bold text-center">{{ data1 + `${percentage ? '%' : ''}` +  ' - '  + data2 + `${percentage ? '%' : ''}` }}</div>
 		<Chart type="doughnut" :data="chartData" :options="options" class="w-full md:w-30rem" />
 	</div>
@@ -14,7 +16,9 @@
 			data1: Number,
 			data2: Number,
 			percentage: Boolean,
-			chartData: Object
+			chartData: Object,
+			complete: Boolean,
+			completeData: Number
 		},
 		data() {
 			return {

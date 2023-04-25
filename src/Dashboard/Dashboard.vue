@@ -43,7 +43,9 @@
 			user: function (data) {
 				if ( data.role_id ) {
 					this.show = true
-					this.$store.dispatch('stats/getPlayerDetails', this.user.instat_id )
+					if ( this.user.instat_id ) {
+						this.$store.dispatch('stats/getPlayerDetails', this.user.instat_id )
+					}
 				}
 			},
 			unAuth: function(data) {
