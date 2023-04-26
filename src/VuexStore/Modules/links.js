@@ -69,6 +69,9 @@ export default {
 		detachGroups:				DOMAIN_URL + '/api/group-user/detach',
 		groupUser:					DOMAIN_URL + '/api/group-user',
 
+		// Documents links
+		documents:					DOMAIN_URL + '/api/documents',
+
 		// Surveys links
 		surveys:					DOMAIN_URL + '/api/surveys',
 		addSurvey:					DOMAIN_URL + '/api/surveys/store',
@@ -202,12 +205,12 @@ export default {
 			return state.payments
 		}, 
 
-		// News routes
+		// News getters
 		redditSoccer(state) {
 			return state.redditSoccer
 		},
 
-		// Groups routes
+		// Groups getters
 		groups(state) {
 			return state.groups
 		},
@@ -227,7 +230,12 @@ export default {
 			return state.detachGroups
 		},
 
-		// Surveys routes
+		// Documents getters
+		documents( state ) {
+			return state.documents
+		},
+
+		// Surveys getters
 		addSurvey(state) {
 			return state.addSurvey
 		},

@@ -3,7 +3,7 @@
 				:multiple="true" accept="image/*,application/pdf" :maxFileSize="10000000" :fileLimit="20"
 				@select="onSelectedFiles" :showUploadButton="false" @remove="onRemoveFile" @clear="onClearAllFiles"
 				invalidFileSizeMessage="Max file size is 10MB" invalidFileLimitMessage="Max number of files is 20"
-				invalidFileTypeMessage="Invalid file type" >		
+				invalidFileTypeMessage="Invalid file type">		
 		<template #content>
                 <ul v-if="uploadedFiles && uploadedFiles[0]">
                     <li v-for="file of uploadedFiles[0]" :key="file">{{ file.name }} - {{ file.size }} bytes</li>

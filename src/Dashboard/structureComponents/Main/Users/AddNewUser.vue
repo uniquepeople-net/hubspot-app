@@ -16,7 +16,6 @@
                 </div>
             </template>
         </Dialog>
-
         
 		<Card class="card">
 			<template #title>
@@ -262,7 +261,7 @@ export default {
 			).catch( error => {
 				Toast.fire({
 					icon: 'error',
-					timer: 5000,
+					timer: 4000,
 					title: "Unable to register user"
 				})
 				this.loading = false

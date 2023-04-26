@@ -27,6 +27,12 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 		]
 	},
 	{
+		label: 'Documents',
+		icon: 'bi bi-file-earmark-text',
+		to: '/documents',
+		class: 'documents-t',		// for testing purpose
+	},
+	{
 		label: 'Users',
 		icon: 'bi-people',
 		visible: checkRole,
@@ -76,6 +82,11 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 		/* to:	'/settings',
 		command: () => sidebarHide() */
 		items: [
+			{
+				label: 'Documents',
+				to: {name: 'docs-all'},
+				command: () => sidebarHide()
+			},
 			{
 				label: 'Groups',
 				to: {name: 'groups-all'},

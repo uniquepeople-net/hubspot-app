@@ -32,6 +32,8 @@ import WalletInfo from '../Dashboard/structureComponents/Main/Payment/WalletInfo
 import Pay from '../Dashboard/structureComponents/Main/Payment/Pay.vue'
 import PayStatus from '../Dashboard/structureComponents/Main/Payment/PayStatus.vue'
 
+import Documents from '../Dashboard/structureComponents/Main/Documents/Documents.vue';
+
 import Stats from '../Dashboard/structureComponents/Main/Stats/Stats.vue';
 import MatchStats from '../Dashboard/structureComponents/Main/Stats/MatchData/MatchStats.vue';
 import PlayerStats from '../Dashboard/structureComponents/Main/Stats/PlayerData/PlayerStats.vue';
@@ -55,6 +57,10 @@ import AddNewProduct from '../Dashboard/structureComponents/Main/Settings/AddNew
 import Groups from '../Dashboard/structureComponents/Main/Settings/Groups.vue';
 import GroupsAll from '../Dashboard/structureComponents/Main/Settings/GroupsAll.vue';
 import AddNewGroup from '../Dashboard/structureComponents/Main/Settings/AddNewGroup.vue';
+import DocumentsSet from '../Dashboard/structureComponents/Main/Settings/Documents/Documents.vue'
+import AddNewDoc from '../Dashboard/structureComponents/Main/Settings/Documents/AddNewDocument.vue';
+import DocsAll from '../Dashboard/structureComponents/Main/Settings/Documents/DocumentsAll.vue';
+
 
 import Survey from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/Survey.vue';
 
@@ -87,6 +93,8 @@ export const routes = [
 
 				] 
 			},
+
+			{ path: '/documents', component: Documents, name: 'documents' },
 
 			{ path: '/users', component: Users, name: 'users', redirect: { name: 'all-users' },
 				// Check if user has privileges to access this route
@@ -150,6 +158,15 @@ export const routes = [
 				beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() ),
 
 				children: [
+					{ path: 'docs', component: DocumentsSet, name: 'docs', props: true, redirect: { name: 'docs-all' },
+					
+						children: [
+							{ path: 'all', component: DocsAll, name: 'docs-all', props: true },
+							
+							{ path: 'add-new', component: AddNewDoc, name: 'add-new-doc', props: true },
+						]
+					},
+
 					{ path: 'products', component: Products, name: 'products', props: true, redirect: { name: 'products' },
 					
 						children: [
