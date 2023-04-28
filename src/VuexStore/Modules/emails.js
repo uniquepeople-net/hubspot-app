@@ -106,7 +106,9 @@ export default {
 							Authorization: 'Bearer ' + User.getToken()
 						}
 					})
-					.then( response => {return true})
+					.then( response => {
+						context.commit("SETSPECIFICEMAIL", response.data)
+					})
 					.catch( error =>  {
 						Toast.fire({
 							icon: 'error',

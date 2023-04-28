@@ -10,9 +10,8 @@
 				</div>
 			</template>
 			<template #content>
-				<div v-html="email.body"></div>
+				<div v-html="formatEmailBody(email.body)"></div>
 			</template>
-			<div>specific email {{ emailId }}</div>
 		</Card>  
 
 		<LoadingIcon v-if="!email"/>
@@ -35,11 +34,20 @@
 			
 			this.$store.dispatch("emails/getSpecificEmail", { recipientId: recipientId, emailId: emailId });
 		},
+		methods: {
+			formatEmailBody(body) {
+				if ( this.email.dynamic && this.email.dynamic.length ) {
+					this.email.dynamic.map( d => {
+						body = body.replace(new RegExp(d.value, 'g'), this.user[d.name] )
+						
+					})
+					return body
+				} else return body
+			}
+		},
 		computed: {
-			...mapGetters({ specificEmail: 'emails/specificEmail' }),
-			emailId() {
-				return this.$route.params.email_id
-			},
+			...mapGetters({ specificEmail: 'emails/specificEmail',
+							user: 'user/user' }),
 			email() {
 				return this.specificEmail[0]
 			}

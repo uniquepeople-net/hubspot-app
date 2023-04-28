@@ -249,6 +249,15 @@ class Helpers {
 			}
 		})
 	}
+
+	// Append array of objects to FormData
+	appendArrToFormData(arrayOfObj, formData, title) {
+		arrayOfObj.forEach((obj, index) => {
+			Object.keys(obj).forEach(key => {
+				formData.append(`${title}[${index}][${key}]`, obj[key]);
+			});
+		});
+	}	
 	  
 }
 

@@ -1,6 +1,8 @@
 <template>
-	<router-view :key="$route.fullPath" v-if="emails" :emails="emails"></router-view>
-	<LoadingIcon v-if="!emails"/>
+	<div>
+		<router-view :key="$route.fullPath" v-if="emails" :emails="emails"></router-view>
+		<LoadingIcon v-if="!emails"/>
+	</div>
 </template>
  
  

@@ -1,8 +1,8 @@
 <template>
 	<FileUpload name="files[]" url="http://localhost:80/api/bulk-emails" @upload="onAdvancedUpload($event, $ev)" 
-				:multiple="true" accept="image/*,application/pdf" :maxFileSize="10000000" :fileLimit="20"
+				:multiple="true" accept="image/*,application/pdf" :maxFileSize="16000000" :fileLimit="20"
 				@select="onSelectedFiles" :showUploadButton="false" @remove="onRemoveFile" @clear="onClearAllFiles"
-				invalidFileSizeMessage="Max file size is 10MB" invalidFileLimitMessage="Max number of files is 20"
+				invalidFileSizeMessage="Max file size is 16MB" invalidFileLimitMessage="Max number of files is 20"
 				invalidFileTypeMessage="Invalid file type">		
 		<template #content>
                 <ul v-if="uploadedFiles && uploadedFiles[0]">

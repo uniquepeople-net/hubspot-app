@@ -31,6 +31,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
 		icon: 'bi bi-file-earmark-text',
 		to: '/documents',
 		class: 'documents-t',		// for testing purpose
+		command: () => sidebarHide()
 	},
 	{
 		label: 'Users',

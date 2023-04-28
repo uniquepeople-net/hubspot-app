@@ -1,8 +1,11 @@
 <template>
 	<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
 		<div class="flex align-items-center flex-column pt-6 px-3">
-			<i class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
-			<h6 class="mt-3">
+            <i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
+			<i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
+			<h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
+            <h6 v-if="response.error" v-for="(error, index) in response.error" class="mt-3">{{ index + ': ' + error[0].replace('validation.', '') }}</h6>
+			<h6 v-if="!response" class="mt-3">
 				Emails sent!
 			</h6>
 		</div>
@@ -48,6 +51,28 @@
 					<Button label="Send" icon="bi bi-send-check" :loading="loading" class="p-button-raised p-button-success mt-3" @click="sendEmails(!v$.$invalid)"/>
 				</template>
 			</Card>	
+		</div>
+		<div class="col-12 col-md-6">
+			<Card class="card">
+				<template #title>
+					<h5 class="card-header d-flex justify-content-between align-items-center">
+						Dynamic data
+						<Button icon="bi bi-plus-lg" class="p-button-rounded p-button-success p-button-outlined" 
+								@click="addItem"/>
+					</h5>
+				</template>
+				<template #content>
+					<div v-for="(dynamic, index) in dynamicArr" class="my-2 d-flex">
+						<Dropdown v-model="dynamic.data" :options="dynamicData" :key="index"
+								  optionLabel="name" optionValue="value" placeholder="Select an Value" 
+								  :class="`dynamic-dropdown ${submitted && !dynamic.data && 'p-invalid' }`"/>
+						<InputText id="value" v-model="dynamic.value" :class="`ms-1 dynamic-input ${submitted && !dynamic.value && 'p-invalid'}`"
+								   name="value" placeholder="Value" />
+						<Button icon="bi bi-dash-lg" class="p-button-rounded p-button-danger p-button-text remove-btn" 
+								@click="removeItem(index)"/>
+					</div>
+				</template>
+			</Card>
 		</div>		
 	</div>		
 </template>
@@ -72,7 +97,22 @@
 				invalidContent: false,
 				submitted: false,
 				loading: false,
-				showMessage: false
+				showMessage: false,
+				dynamicArr: [],
+				dynamicData: [
+					{  name: 'Name', value: 'name'},
+					{  name: 'Surname', value: 'surname'},
+					{  name: 'Var. symbol', value: 'var_symbol'},
+					{  name: 'Email', value: 'email'},
+					{  name: 'Club', value: 'club'},
+					{  name: 'Country code', value: 'country_code'},
+					{  name: 'Tel number', value: 'tel_number'},
+					{  name: 'Birth date', value: 'birth_date'},
+					{  name: 'Member from', value: 'member_from'},
+					{  name: 'Stat id', value: 'instat_id' },
+				],
+				selectedDynamicData: null,
+				response: null
 			}
 		},
 		validations() {
@@ -83,11 +123,22 @@
 			}
 		},
 		methods: {
+			addItem() {
+				if ( this.dynamicArr.length === this.dynamicData.length) {
+					return
+				} else {
+ 					let obj = { data: '', value: '' }
+					this.dynamicArr.push(obj)
+				} 
+			},
+			removeItem(index) {
+				this.dynamicArr = this.dynamicArr.filter( (d, i) => i !== index )
+			},
 			async sendEmails(isFormValid) {
-
 				this.submitted = true;
+				let someEmptyDynamic = this.dynamicArr.some( d => d.data === '' || d.value === '' )
 
-				if (!isFormValid) {
+				if (!isFormValid || someEmptyDynamic ) {
 					return;
 				}
 				
@@ -109,6 +160,9 @@
 				data.append('replyEmail', this.user.email)
 				data.append('fromUserId', this.user.id)
 
+				Helpers.appendArrToFormData(this.dynamicArr, data, 'dynamic')
+				Helpers.appendArrToFormData(this.emails, data, 'users')
+
 				this.emails.map( email => {
 					data.append('recipients[]', email.email )
 					data.append('toNames[]', email.name )
@@ -122,13 +176,23 @@
 							Authorization: 'Bearer ' + User.getToken(),							
 							'Content-Type': 'multipart/form-data'							
 					}
-				}).then( response => true)
+				}).then( response => {
+					this.response = response.data
+					this.toggleDialog()
+					this.loading = false
+				}).catch( error => {
+						Toast.fire({
+							icon: 'error',
+							title: 'Unable to send email(s)'
+						})
+					})
 			},
 			uploadedFiles(e) {
 				this.files = e;
 			},
 			toggleDialog() {
-				this.$router.push({ name: 'all-users' })
+				this.showMessage = !this.showMessage
+				//this.$router.push({ name: 'all-users' })
 			}
 		},
 		computed: {
@@ -153,5 +217,11 @@
 		weight: 400;
 	}
 	color: var(--red-600);
+}
+.dynamic-dropdown, .dynamic-input {
+	width: 43%;
+}
+.remove-btn {
+	//width: auto;
 }
 </style>

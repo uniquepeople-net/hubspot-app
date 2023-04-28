@@ -21,12 +21,20 @@
 			<LoadingIcon />
 		</template>
 		<Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+		<Column field="name" header="Name" sortable style="min-width: 14rem">
+			<template #body="{data}">
+				{{data.name}}
+			</template>
+			<template #filter="{filterModel}">
+				<InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by name"/>
+			</template>			
+		</Column>
 		<Column field="surname" header="Surname" sortable style="min-width: 14rem">
 			<template #body="{data}">
 				{{data.surname}}
 			</template>
 			<template #filter="{filterModel}">
-				<InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by name"/>
+				<InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by surname"/>
 			</template>			
 		</Column>
 
@@ -135,18 +143,17 @@
 				this.filters = {
 					'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
 					'name': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
+					'surname': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
 					'club': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.STARTS_WITH}]},
 					'fee': {value: null, matchMode: FilterMatchMode.EQUALS},
 					'active_member': {value: null, matchMode: FilterMatchMode.EQUALS},
 					'groups': {operator: FilterOperator.AND, constraints: [{value: null, matchMode: FilterMatchMode.CONTAINS}]},
 				}
 			},
-			formatGroups(groups) {				
-				let groupsArr = []
-				groups && groups.map( group => {
-					groupsArr.push(group.name)
-				})
-				return groups && groupsArr.sort().join(', ')			
+			formatGroups(groups) {
+				if ( groups ) {
+					return groups.join(', ')	
+				}
 			}
 		},
 		computed: {
@@ -154,8 +161,18 @@
 		},
 		watch: {
 			users: function (data) {
-				this.userData = data
-				this.loading = false
+				if (data) {
+					this.userData = data.map( d => {
+						let groups = ''
+						if ( d.groups ) {
+							groups = d.groups.map( g => {
+								return g.name
+							})
+						}
+						return { ...d, groups: groups }
+					})
+					this.loading = false
+				}
 			},
 		},
 		components: { TriStateCheckbox, BulkActions }
