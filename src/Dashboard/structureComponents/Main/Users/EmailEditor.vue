@@ -39,12 +39,12 @@
 		</div>
 		
 		<div class="col-12 col-md-4">
-			<Card class="card h-100">
+			<Card class="card h-100" v-if="emails">
 				<template #title>
 					<h5 class="card-header">Choosed Users</h5>
 				</template>
 				<template #content>
-					<Listbox :options="emails" optionLabel="name" style="width:100%" listStyle="max-height:300px"
+					<Listbox :options="emails" :optionLabel="labelTemplate" style="width:100%" listStyle="max-height:300px"
 							v-model="v$.emails.$model" :class="{'p-invalid':v$.emails.$invalid && submitted}"/>
 					<InputError :validator="v$.emails" :submitted="submitted" replace="Users"></InputError>					
 
@@ -193,6 +193,9 @@
 			toggleDialog() {
 				this.showMessage = !this.showMessage
 				//this.$router.push({ name: 'all-users' })
+			},
+			labelTemplate(data) {
+				return data ? data.name + ' ' + data.surname : ''
 			}
 		},
 		computed: {
