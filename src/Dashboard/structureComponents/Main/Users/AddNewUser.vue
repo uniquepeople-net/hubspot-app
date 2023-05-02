@@ -69,12 +69,12 @@
 								<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
 							</div>
 
-							<div class="inputgroup mb-5 col-12 col-lg-6">
+							<div class="inputgroup mb-5 col-12 col-lg-6 justify-content-center">
 								<InputIcon icon="bi bi-activity"></InputIcon>
 								<ToggleButton v-model="active" onLabel="Active member" offLabel="Inactive member" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${active ? 'bg-info' : 'bg-warning'} p-togglebtn-active`"/>
 							</div>
 		
-							<div class="inputgroup mb-5 col-12 align-items-center col-lg-6">
+							<div class="inputgroup mb-5 col-12 col-lg-6 align-items-center">
 								<label for="icon">Member from:&nbsp;</label>
 								<Calendar inputId="icon" v-model="memberFrom" :showIcon="true" dateFormat="dd.mm.yy" class="calendar"/>
 								<InputError :validator="v$.memberFrom" :submitted="submitted" replace="Member from date"></InputError>
@@ -88,7 +88,7 @@
 								<InputError :validator="v$.instatId" :submitted="submitted" replace="Instat ID"></InputError>
 							</div>
 		
-							<div class="inputgroup mb-5 col-12 col-lg-6">
+							<div class="inputgroup mb-5 col-12 col-lg-6 justify-content-center">
 								<InputIcon icon="pi pi-euro"></InputIcon>
 								<ToggleButton v-model="paid" onLabel="Paid" offLabel="UnPaid" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${paid ? 'bg-success' : 'bg-danger'} p-togglebutton`"/>
 							</div>
@@ -100,13 +100,13 @@
 								<InputError :validator="v$.role" :submitted="submitted" replace="Role"></InputError>
 							</div>
 		
-							<div class="inputgroup mb-5 col-12 col-lg-6">
+							<!-- <div class="inputgroup mb-5 col-12 col-lg-6">
 								<InputIcon icon="bi bi-123"></InputIcon>
 								<InputText id="varSymbol" v-model="v$.varSymbol.$model" :class="{'p-invalid':v$.varSymbol.$invalid && submitted}"
 											name="varSymbol" placeholder="Var. symbol"/>
 		
 								<InputError :validator="v$.varSymbol" :submitted="submitted" replace="Var. symbol"></InputError>
-							</div>
+							</div> -->
 
 							<div class="inputgroup mb-5 col-12 col-xxl-6">
 								<InputIcon icon="pi pi-lock"></InputIcon>
@@ -165,7 +165,7 @@ export default {
 			phoneNum: '',
 			club: '',
 			memberFrom: '',
-			varSymbol: '',
+			//varSymbol: '',
 			active: true,
 			instatId: '',
             password: '',
@@ -189,7 +189,7 @@ export default {
 			instatId: { numeric },
 			role: { required },
             password: { required,  minLength: minLength(8)},
-			varSymbol: { numeric, required },
+			//varSymbol: { numeric, required },
 			memberFrom: { required },
         }
     },
@@ -215,7 +215,7 @@ export default {
 				club: this.club,
 				active: this.active,
 				memberFrom: this.memberFrom,
-				varSymbol: this.varSymbol,
+				//varSymbol: this.varSymbol,
 				password: this.password,
 			}
 
@@ -235,7 +235,7 @@ export default {
 			this.instat_id = ''
 			this.countryCode = ''
 			this.phoneNum = ''
-			this.varSymbol = ''
+			//this.varSymbol = ''
 			this.memberFrom = ''
 			this.club = ''
 			this.role = ''

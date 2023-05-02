@@ -125,7 +125,7 @@
 								<InputError :validator="v$.role" :submitted="submitted" replace="Role"></InputError>
 							</div>
 
-							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
+							<!-- <div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
 								<InputIcon icon="bi bi-123"></InputIcon>
 								<span class="p-float-label w-100">
 									<InputText id="varSymbol" v-model="v$.varSymbol.$model" :class="{'p-invalid':v$.varSymbol.$invalid && submitted}"
@@ -133,7 +133,7 @@
 									<label for="varSymbol">Var. symbol</label>
 								</span>	
 								<InputError :validator="v$.varSymbol" :submitted="submitted" replace="Var. symbol"></InputError>
-							</div>
+							</div> -->
 							
 						</div>
 
@@ -181,7 +181,7 @@ export default {
 			phoneNum: this.userData.tel_number,
 			club: this.userData.club,
 			memberFrom: this.userData.member_from,
-			varSymbol: this.userData.var_symbol,
+			//varSymbol: this.userData.var_symbol,
 			instatId: this.userData.instat_id,
             submitted: false,
             showMessage: false,
@@ -203,7 +203,7 @@ export default {
 			phoneNum: { customTelNumber },
 			club: { minLength: minLength(3) },
 			instatId: { numeric },
-			varSymbol: { numeric },
+			//varSymbol: { numeric },
 			role: { required },
         }
     },
@@ -229,7 +229,7 @@ export default {
 				club: this.club,
 				active: this.active,
 				memberFrom: this.memberFrom,
-				varSymbol: this.varSymbol
+				//varSymbol: this.varSymbol
 			}
 			
 			this.updateUser( this.userUrl, this.id, data )	
@@ -281,7 +281,7 @@ export default {
 				this.role = data.role_id
 				this.active = data.active_member
 				this.memberFrom = data.member_from
-				this.varSymbol = data.var_symbol 
+				//this.varSymbol = data.var_symbol 
 			}
 		}
 	},
