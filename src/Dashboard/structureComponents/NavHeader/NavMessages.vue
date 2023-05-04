@@ -15,15 +15,16 @@
 				</ul>
 				<div v-if="!unreadEmails.length" class="no-emails">No new emails</div>
 			</div>
+		</template>
 		
 			<Divider  class="mb-0"/>
-
+		<template #end>
 			<router-link to="/emails/inbox">
 				<div class="email-footer">
 					<h6 class="mb-0 fw-light">Inbox</h6>
 				</div>
-			</router-link>			
-		</template>
+			</router-link>
+		</template>			
 	</Menu>
 </template>
  
@@ -60,6 +61,7 @@
 	padding: 0.75rem 1rem;
 }
 .email-menu {
+	background: var(--surface-0);
 	padding: 0 1rem;
 	.no-emails {
 		margin: 1rem 0

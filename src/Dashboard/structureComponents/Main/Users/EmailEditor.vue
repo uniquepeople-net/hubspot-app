@@ -29,7 +29,8 @@
 					</div>
 				</template>
 				<template #content>
-					<Editor v-model="v$.value.$model" :editorStyle="`height:320px; padding:0;`" :class="{'p-invalid':v$.value.$invalid && submitted}"/>
+					<Editor v-model="v$.value.$model" :class="{'p-invalid':v$.value.$invalid && submitted}" ref="editor"/>
+					<Button @click="toggleMode" plain text raised class="d-block ms-auto">{{ editorMode }}</Button>
 					<InputError :validator="v$.value" :submitted="submitted" replace="Content"></InputError>					
 				</template>
 				<template #footer>
@@ -39,7 +40,7 @@
 		</div>
 		
 		<div class="col-12 col-md-4">
-			<Card class="card h-100" v-if="emails">
+			<Card class="card h-100">
 				<template #title>
 					<h5 class="card-header">Choosed Users</h5>
 				</template>
@@ -48,7 +49,7 @@
 							v-model="v$.emails.$model" :class="{'p-invalid':v$.emails.$invalid && submitted}"/>
 					<InputError :validator="v$.emails" :submitted="submitted" replace="Users"></InputError>					
 
-					<Button label="Send" icon="bi bi-send-check" :loading="loading" class="p-button-raised p-button-success mt-3" @click="sendEmails(!v$.$invalid)"/>
+					<Button label="Send" :disabled="!emails" icon="bi bi-send-check" :loading="loading" class="p-button-raised p-button-success mt-3" @click="sendEmails(!v$.$invalid)"/>
 				</template>
 			</Card>	
 		</div>
@@ -83,6 +84,9 @@
 	import { useVuelidate } from "@vuelidate/core";
 	import { mapGetters } from 'vuex';
 	import { toRaw } from 'vue';
+	import Delta from 'quill-delta';
+	import { QuillDeltaToHtmlConverter } from 'quill-delta-to-html';
+	import { compile, convert } from 'html-to-text';
 	import Editor from 'primevue/editor'
 	import Listbox from 'primevue/listbox';
 	import FileUploadCard from './FileUploadCard.vue';
@@ -91,13 +95,22 @@
 		setup: () => ({ v$: useVuelidate() }),
 		data() {
 			return {
-				value: '<h2>Create new email</h2>',
+				value: `<div>
+							<div>
+								<img src="https://api.QRGenerator.sk/by-square/pay/qr.png?iban=SK2709000000005112386457&amount=40&currency=EUR&vs={symbol}&payment_note=ufp-clenske-2023&due_date=2023-06-03&size=256&transparent=false" alt="QR kod"/>
+							</div>
+							<h3 style="font-weight:bold;">Únia futbalových profesionálov</h3>
+							<div><img src="https://ufp.sk/wp-content/uploads/2023/04/cropped-logo-transp.png" alt="logo Ufp"></div>
+							<h4>Miletičova 5, 821 08 Bratislava</h4>
+							<h4>info@ufp.sk</h4>
+							<h4>ufp.sk</h4>
+						</div>`,
 				files: null,
 				subject: '',
-				invalidContent: false,
 				submitted: false,
 				loading: false,
 				showMessage: false,
+				editorMode: 'HTML',
 				dynamicArr: [],
 				dynamicData: [
 					{  name: 'Name', value: 'name'},
@@ -196,7 +209,30 @@
 			},
 			labelTemplate(data) {
 				return data ? data.name + ' ' + data.surname : ''
-			}
+			},
+			toggleMode() {
+				const editor = this.$refs.editor.quill;
+				const mode = this.editorMode;
+				if (mode === 'HTML') {
+					const delta = new Delta().insert(editor.root.innerHTML);
+					editor.setContents(delta);
+					this.editorMode = 'Plain Text';
+				} else {
+					const delta = editor.getContents();
+					const converter = new QuillDeltaToHtmlConverter(delta.ops);
+					const html = converter.convert()
+	
+					const options = {
+						wordwrap: 130,
+						preserveNewlines: true
+					};
+					const text = convert(html, options);
+					
+					editor.pasteHTML(text);
+					//editor.root.innerHTML = text;
+					this.editorMode = 'HTML';
+				}
+			},
 		},
 		computed: {
 			...mapGetters({ emails: 'appData/getUsers',
