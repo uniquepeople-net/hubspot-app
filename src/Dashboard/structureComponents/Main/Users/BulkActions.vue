@@ -41,8 +41,6 @@
 					this.$store.dispatch("appData/setChoosedUsers", users);
 					this.$router.push({ name: route })
 				}
-				console.log(users)
-				
 			}
 		},
 		computed: {

@@ -4,7 +4,7 @@
 		
 		<SurveyQuestionComp :key="question.index" v-for="(question, index) in questions" 
 							:question="specSurvey ? specSurvey.questions[index] : null" 
-							:types="types" @deleteItem="deleteItem" :qId="question.qId" 
+							:types="typesData" @deleteItem="deleteItem" :qId="question.qId" 
 							:index="question.index" :submitted="submitted" :keyValue="index"/>
 		
 		<div class="d-flex justify-content-center my-5">
@@ -26,11 +26,13 @@
 		},
 		props: {
 			submitted: Boolean,
-			specSurvey: Object
+			specSurvey: Object,
+			surveyType: Number,
 		},
 		data() {
 			return {
-				questions: []
+				questions: [],
+				typesData: this.types ? this.types : []
 			}
 		},
 		mounted() {
@@ -70,10 +72,24 @@
 				let q = this.questions.filter( q => q.index !== index )
 				this.$store.dispatch("surveys/setNewSurvey", { questions: [...q] });	
 				this.questions = q
+			},
+			handleWatch() {
+				if ( this.types ) {
+					if ( this.surveyType === 1 ) {
+						this.typesData = this.types.filter( d => d.type !== "Best11" )
+					} else {
+						this.typesData = this.types.filter( d => d.type === "Best11" )
+					}
+					this.questions = !this.specSurvey ? [] : this.questions
+				}
 			}
 		},
 		computed: {
-			...mapGetters({ types: 'surveys/questionTypes' })
+			...mapGetters({ types: 'surveys/questionTypes' }),
+		},
+		watch: {
+			surveyType: ['handleWatch'],
+			types: ['handleWatch'],
 		},
 		components: { SurveyQuestionComp },
 	}

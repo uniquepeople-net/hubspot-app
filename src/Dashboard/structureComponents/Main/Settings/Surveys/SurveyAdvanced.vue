@@ -15,7 +15,7 @@
 					<label for="competition">Competitions</label>
 					<Dropdown inputId="competition" v-model="competition" :options="competitionsList" 
 							  optionLabel="name" optionValue="wyId" placeholder="Select Competition"
-							  @change="handleChange()"/>
+							  @change="handleChange()" :class="{'p-invalid': submitted && competition === null}"/>
 				</div>
 
 				<div class="d-flex mb-5 col-12 col-lg-6">
@@ -36,7 +36,8 @@
 
 	export default {
 		props: {
-			specSurvey: Object
+			specSurvey: Object,
+			submitted: Boolean
 		},
 		created() {
 			this.$store.dispatch("stats/getCompetitionsList");
@@ -47,14 +48,14 @@
 				this.message = this.specSurvey.advanced.success_message ? this.specSurvey.advanced.success_message : this.message
 				this.competition = this.specSurvey.advanced.competition_id ? this.specSurvey.advanced.competition_id : this.competition
 				this.type = this.specSurvey.type_id ? this.specSurvey.type_id : this.type
-				this.handleChange()
 			}
+			this.handleChange()
 		},
 		data() {
 			return {
 				message: '',
 				competition: null,
-				type: null
+				type: 1
 			}
 		},
 		methods: {

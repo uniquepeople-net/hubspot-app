@@ -36,7 +36,7 @@
 					<h5 class="card-header">Choosed Users</h5>
 				</template>
 				<template #content>
-					<Listbox :options="users" optionLabel="name" style="width:100%" listStyle="max-height:300px"/>
+					<Listbox :options="users" :optionLabel="labelTemplate" style="width:100%" listStyle="max-height:300px"/>
 					<div class="mt-3">
 						<Button label="Assign" icon="bi bi-tags" class="p-button-raised p-button-success" 
 						        @click="submitAssign" :disabled="loading"/>
@@ -103,6 +103,10 @@
 			toggleDialog() {
 				this.showMessage = !this.showMessage;
         	},
+			labelTemplate(data) {
+				let groups = data.groups.map( g => g.name )
+				return data ? data.name + ' ' + data.surname + ' - ( ' + groups + ' )' : ''
+			},
 		},
 		computed: {
 			...mapGetters({ users: 'appData/getUsers',

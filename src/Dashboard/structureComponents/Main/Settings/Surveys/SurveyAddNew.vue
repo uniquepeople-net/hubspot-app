@@ -65,12 +65,12 @@
 			
 							</div>
 
-							<SurveyAdvanced v-model="advancedData"/>
+							<SurveyAdvanced v-model="advancedData" :submitted="submitted" />
 							
 							<Divider />
 
 							<div>
-								<SurveyQuestions :submitted="submitted"/>
+								<SurveyQuestions :submitted="submitted" :surveyType="advancedData ? advancedData.type : null"/>
 								<p v-if="!newSurvey.questions || !newSurvey.questions.length" class="text-danger text-center">No questions added</p>
 							</div>
 	
@@ -158,7 +158,8 @@
 			handleSubmit(isFormValid) {
 				this.submitted = true;
 
-				if (!isFormValid || ( !this.newSurvey.questions || !this.newSurvey.questions.length )) {
+				if (!isFormValid || ( !this.newSurvey.questions || !this.newSurvey.questions.length ) 
+					|| ( this.advancedData.type === 2 && this.advancedData.competition === null ) ) {
 					this.errors = ' '
 					return;
 				} else {

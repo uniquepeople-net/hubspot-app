@@ -68,12 +68,13 @@
 			
 							</div>
 
-							<SurveyAdvanced v-model="advancedData" :specSurvey="survey ? survey : null" />
+							<SurveyAdvanced v-model="advancedData" :submitted="submitted" :specSurvey="survey ? survey : null" />
 
 							<Divider />
 
 							<div>
-								<SurveyQuestions :submitted="submitted" :specSurvey="survey ? survey : null"/>
+								<SurveyQuestions :submitted="submitted" :specSurvey="survey ? survey : null"
+												 :surveyType="advancedData ? advancedData.type : null"/>
 							</div>
 	
 							<Divider />
@@ -168,7 +169,8 @@
 			handleSubmit(isFormValid) {
 				this.submitted = true;
 
-				if (!isFormValid) {
+				if (!isFormValid || ( !this.newSurvey.questions || !this.newSurvey.questions.length ) 
+					|| ( this.advancedData.type === 2 && this.advancedData.competition === null ) ) {
 					this.errors = ' '
 					return;
 				} else {
