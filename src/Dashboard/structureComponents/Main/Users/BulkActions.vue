@@ -12,7 +12,7 @@
  
  
 <script>
-
+	import { mapGetters } from 'vuex'
 	import { toRaw  } from 'vue'
 
 	export default {
@@ -34,12 +34,20 @@
 				let users = [] 
 	
 				if ( this.selected ) {
-					toRaw(this.selected).map( sel => users.push(sel))
+					toRaw(this.selected).map( sel => {
+						let findedUser = this.usersAll.find( i => i.id === sel.id ) 
+						users.push(findedUser)
+					})
 					this.$store.dispatch("appData/setChoosedUsers", users);
 					this.$router.push({ name: route })
 				}
+				console.log(users)
+				
 			}
 		},
+		computed: {
+			...mapGetters({ usersAll: 'users/getUsers' })
+		}
 	}
 </script>
  

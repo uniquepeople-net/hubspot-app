@@ -60,11 +60,8 @@ export default {
 						}
 					})
 				})
-
 				context.commit("SETUSERS", users)
-					
 			})
-			
 		},
 	},
 

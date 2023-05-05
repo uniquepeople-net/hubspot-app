@@ -19,6 +19,7 @@ export default {
 			// https://github.com/vuejs/vuex/issues/1118
 			Object.assign(state, { 
 				activeSidebar: null,
+				choosedUsers: null
 			})
 		}
 	},

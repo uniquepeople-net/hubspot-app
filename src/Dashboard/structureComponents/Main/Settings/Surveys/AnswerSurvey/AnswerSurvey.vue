@@ -108,8 +108,9 @@
 				
 				const errors = this.checkCorrectAnswers(obj.data)
 
-				// Check if question has some value filled not if has precisely 
-				// all permitted values filled
+				/* 	Check if question has some value filled not if has precisely 
+				**	all permitted values filled
+				*/ 
 
 				/* const unfilled = obj.data.map( (item, index) => {
 					if ( ( 'scale_value' in item && item.scale_value == null ) ||
@@ -120,12 +121,14 @@
 					} else return null
 				}) */
 
-				// Check if question has preciselly number of permitted values filled
-				 
+
+				// Check if question has preciselly number of permitted values filled 
 				const unfilled = obj.data.map( (item, index) => {
 					if ( ( 'scale_value' in item && item.scale_value == null ) ||
 					 	 ( 'closed_value' in item && item.closed_value == null ) ||
-						 ( 'value' in item && item.value.length !== item.question.max_to_choose)
+						 ( 'value' in item && 
+						 	this.survey.type_id === 1 ? item.value.every( item => item === "") : 
+							item.value.length !== item.question.max_to_choose)
 					 ) {
 						return item.step
 					} else return null
@@ -176,8 +179,9 @@
 				const unfilled = data.map( (item, index) => {
 					if ( ( 'scale_value' in item && item.scale_value == null ) ||
 					 	 ( 'closed_value' in item && item.closed_value == null ) ||
-						 ( /* 'value' in item && item.value.every( item => item === "") */ 
-						   'value' in item && item.value.length !== item.question.max_to_choose)
+						 ( 'value' in item && 
+						 	this.survey.type_id === 1 ? item.value.every( item => item === "") : 
+							item.value.length !== item.question.max_to_choose)
 					 ) {
 						return item.step
 					} else return null
