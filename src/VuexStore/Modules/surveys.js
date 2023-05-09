@@ -387,10 +387,22 @@ export default {
 							resultRank[key] = { first, second, third }
 						}
 
+						const sortedObj = Object.entries(resultRank)
+							.map(([name, {first, second, third}]) => ({ name, first, second, third }))
+							.sort((a, b) => {
+								if (b.first !== a.first) return b.first - a.first;
+								if (b.second !== a.second) return b.second - a.second;
+								return b.third - a.third;
+							})
+							.reduce((result, {name, first, second, third}) => {
+								result[name] = {first, second, third};
+								return result;
+							}, {});
+
 						response.data.map( r => {
 							if ( r.type_id === 6 && r.closed_answs_default === '1' ) {
 								r.count = result
-								r.countRank = resultRank
+								r.countRank = sortedObj
 								return r.count, r.countRank
 							}
 						})
