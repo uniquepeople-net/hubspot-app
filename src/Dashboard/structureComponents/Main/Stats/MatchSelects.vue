@@ -27,7 +27,6 @@
 					
 						<Skeleton v-else height="2rem" class="mb-2"></Skeleton>
 						
-						<SeasonPlayerData v-if="selectedSeason" :data="selectedSeason"/>
 
 					</div>
 					
@@ -53,6 +52,10 @@
 						</Dropdown> 
 
 						<Skeleton v-else height="2rem" class="mb-2"></Skeleton>
+					</div>
+
+					<div class="col-12">
+						<SeasonPlayerData v-if="selectedSeason" :data="selectedSeason"/>
 					</div>
 					
 					<Button :label="btnLabel" severity="secondary" text raised class="mt-4 mx-auto" @click="handleRedirect"/>

@@ -11,6 +11,17 @@
 			<Chart v-if="!toggle" type="bar" :data="chartData" :options="chartOptions" class="h-30rem"  />
 			<div v-if="toggle">
 				<small class="d-block" v-for="(item, key) in sortedResults()">{{key + ': ' + item}}</small>
+				<div v-if="result.countRank">
+					<Divider />
+					<small class="d-flex justify-content-between" v-for="(item, key) in result.countRank">
+						<span class="">{{key + ': '}}</span>
+						<span>
+							<small class="me-1" v-for="(i, k) in item">
+								{{ `${k === 'first' && 'first:' || k === 'second' && 'second:' || k === 'third' && 'third:'} ${i}, `}}
+							</small>
+						</span>
+					</small>
+				</div>
 			</div>
 		</template>
 	</Card>

@@ -28,6 +28,11 @@
 		
 				this.$store.dispatch("user/getUser");
 			}
+			/* const cookies = document.cookie.split('; ');
+			const jwtCookie = cookies.find(cookie => cookie.startsWith('jwt='));			
+			const token = jwtCookie ? jwtCookie.substring(4) : null;
+			console.log(cookies) */
+			
 		},
 		data() {
 			return{

@@ -346,34 +346,52 @@ export default {
 
 						//set points based on position of item in array 
 						const points = { 0: 5, 1: 3, 2: 1 };
-						
-						/* const result = [];
-						
-						contents.forEach(array => {
-							array.forEach((name, index) => {
-								const existingObj = result.find(obj => obj.name === name);
-								if (existingObj) {
-								existingObj.points += points[index];
-								} else {
-								result.push({ name: name, points: points[index] });
-								}
-							});
-						}); */
+						const ranks = { 0: 'a', 1: 'b', 2: 'c' };
 
 						const result = {};
+						const countRank = {}
 
 						contents.forEach(array => {
 							array.forEach((name, index) => {
 								if (!result[name]) {
-								result[name] = 0;
+									result[name] = 0;
+								}
+								if (!countRank[name]) {
+									countRank[name] = ''
 								}
 								result[name] += points[index];
+								countRank[name] += ranks[index]
 							});
 						});
 
+						// check how many times was added points 5,3,1
+						const resultRank = {};
+						
+						for (const key in countRank) {
+							const value = countRank[key];
+							let first = 0;
+							let second = 0;
+							let third = 0;
+						
+							for (let i = 0; i < value.length; i++) {
+								const letter = value[i];
+								if (letter === "a") {
+									first++;
+								} else if (letter === "b") {
+									second++;
+								} else if (letter === "c") {
+									third++;
+								}
+							}
+							
+							resultRank[key] = { first, second, third }
+						}
+
 						response.data.map( r => {
 							if ( r.type_id === 6 && r.closed_answs_default === '1' ) {
-								return r.count = result
+								r.count = result
+								r.countRank = resultRank
+								return r.count, r.countRank
 							}
 						})
 					}
