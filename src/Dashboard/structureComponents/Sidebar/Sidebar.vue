@@ -27,7 +27,6 @@
 		data() {
 			return {
 				visibleLeft: false,
-				items: sidebarMenu( this.showItemByRole, this.checkwindowWidth, this.checkStatsIdexists ),
 				sidebarModal: true
 			}
 		},
@@ -51,6 +50,9 @@
 		},
 		computed: {
 			...mapGetters({ user: 'user/user' }),
+			items() { 
+				return sidebarMenu( this.showItemByRole, this.checkwindowWidth, this.checkStatsIdexists, this.$i18n )
+			}
 		},
 		watch: {
 			visibleLeft: function(data) {

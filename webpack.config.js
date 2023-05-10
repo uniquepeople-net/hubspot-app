@@ -15,7 +15,8 @@ module.exports = {
         extensions: [ '.js', '.vue' ],
         alias: {
             '~': path.resolve(__dirname, 'src')
-          }
+        },
+		fullySpecified: false,
     },
     devtool: "eval",
     output: {

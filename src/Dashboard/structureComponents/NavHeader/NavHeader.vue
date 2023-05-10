@@ -1,5 +1,8 @@
 <template>
-	<header class="mb-3">
+	<header class="mb-3 d-flex justify-content-between">
+
+		<NavLang class="nav-lang"/>
+
 		<nav class="navbar navbar-expand navbar-light navbar-top">
 			<div class="container-fluid">
 				
@@ -74,6 +77,7 @@
 	import NavProfile from './NavProfile.vue'
 	import NavWarning from './NavWarning.vue'
 	import { mapGetters } from 'vuex'
+	import NavLang from './NavLang.vue'
 
 	export default {
 		created() {
@@ -84,10 +88,18 @@
 		computed: {
 			...mapGetters({ user: 'user/user' }),
 		},
-		components: { NavProfile, NavMessages, NavWarning },
+		components: { NavProfile, NavMessages, NavWarning, NavLang },
 	}
 </script>
  
  
 <style lang='scss' scoped>
+.nav-lang {
+	margin-left: 5rem;
+}
+/* @media( min-width: 992px ) {
+	.nav-lang {
+		margin-left: 0rem;
+	}
+} */
 </style>

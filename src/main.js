@@ -2,6 +2,17 @@ import styles from './scss/main.scss';
 
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { createI18n } from 'vue-i18n'
+
+import { messages } from './Helpers/Languages'
+
+const i18n = createI18n({
+	locale: 'en', // set locale
+	fallbackLocale: 'sk', // set fallback locale
+	messages, // set locale messages
+	// If you need to specify other options, you can set other options
+	// ...
+})
 
 // Axios
 import axios from 'axios';
@@ -33,6 +44,30 @@ export const router = createRouter({
     routes
 }) 
 
+router.beforeEach((to, from, next) => {
+	const lang = to.params.lang // extract language parameter from URL	
+	let language
+	
+	// get from local storage before set language
+	let storageLang = localStorage.getItem('lang')
+	storageLang ? language = storageLang : language = lang
+
+	if (language && i18n.global.availableLocales.includes(language)) {
+		i18n.locale = language // set the current locale to the extracted language
+		i18n.global.locale = language
+	} else {
+		i18n.locale = 'en' // set default locale if the language is not valid
+		i18n.global.locale = 'en'
+	}
+	// Redirect to language-specific URL if language is different from the current URL
+	if (language !== lang) {
+		const newPath = `/${language}${to.path.substring(3)}`
+		next(newPath)
+	  } else {
+		next()
+	  }
+})
+
 // SweetAlert 2
 import Swal from 'sweetalert2';
 window.Swal = Swal;
@@ -53,8 +88,6 @@ window.Toast = Toast
 // VueX Store
 import store from './VuexStore/store';
 window.store = store
-
-
 
 // Import main template
 import App from './App.vue';
@@ -91,6 +124,7 @@ import LoadingIcon from './Dashboard/global/LoadingIcon.vue';
 
 createApp(App)
 	.use(router)
+	.use(i18n)
 	.use(store)
 	.use(PrimeVue)
 	.component('Chart', Chart)

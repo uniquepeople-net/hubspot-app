@@ -78,12 +78,17 @@ import NotFound from '../Dashboard/global/NotFound.vue';
 
 export const routes = [
 
-	{ path: '/', component: Dashboard, name: 'dashboard',
+	{
+        path: '/', // empty path will redirect to default route
+        redirect: { name: 'dashboard', params: { lang: 'en' } }
+    },
+
+	{ path: '/:lang', component: Dashboard, name: 'dashboard',
 		children: [
 
-			{ path: '/my-board', component: MyBoard, name: 'my-board' },
+			{ path: '/:lang/my-board', component: MyBoard, name: 'my-board' },
 
-			{ path: '/stats', component: Stats, name: 'stats', redirect: { name: 'match' },
+			{ path: '/:lang/stats', component: Stats, name: 'stats', redirect: { name: 'match' },
 				
 				children: [
 					
@@ -94,9 +99,9 @@ export const routes = [
 				] 
 			},
 
-			{ path: '/documents', component: Documents, name: 'documents' },
+			{ path: '/:lang/documents', component: Documents, name: 'documents' },
 
-			{ path: '/users', component: Users, name: 'users', redirect: { name: 'all-users' },
+			{ path: '/:lang/users', component: Users, name: 'users', redirect: { name: 'all-users' },
 				// Check if user has privileges to access this route
 				beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() ),
 
@@ -116,9 +121,9 @@ export const routes = [
 
 			},
 			
-			{ path: '/my-profile', component: Myprofile, name: 'my-profile' },
+			{ path: '/:lang/my-profile', component: Myprofile, name: 'my-profile' },
 
-			{ path: '/wallet', component: Wallet, name: 'wallet', redirect: { name: 'wallet-info' },
+			{ path: '/:lang/wallet', component: Wallet, name: 'wallet', redirect: { name: 'wallet-info' },
 
 				children: [
 					{ path: 'wallet-info', component: WalletInfo, name: 'wallet-info' },
@@ -130,7 +135,7 @@ export const routes = [
 
 			},
 						
-			{ path: '/info', component: Info, name: 'info', redirect: { name: 'info-ufp' },
+			{ path: '/:lang/info', component: Info, name: 'info', redirect: { name: 'info-ufp' },
 
 				children: [
 					{ path: 'ufp', component: InfoUfp, name: 'info-ufp' },
@@ -140,7 +145,7 @@ export const routes = [
 
 			},
 
-			{ path: '/emails', component: Emails, name: 'emails', props: true, redirect: { name: 'inbox' },
+			{ path: '/:lang/emails', component: Emails, name: 'emails', props: true, redirect: { name: 'inbox' },
 
 				children: [
 					{ path: 'inbox', component: Inbox, name: 'inbox', props: true },
@@ -150,9 +155,9 @@ export const routes = [
 
 			},
 
-			{ path: '/news', component: NewsRumors, name: 'news-rumors' },
+			{ path: '/:lang/news', component: NewsRumors, name: 'news-rumors' },
 
-			{ path: '/settings', component: Settings, name: 'settings', props: true, redirect: { name: 'products' },
+			{ path: '/:lang/settings', component: Settings, name: 'settings', props: true, redirect: { name: 'products' },
 				
 				// Check if user has privileges to access this route
 				beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() ),
@@ -206,12 +211,12 @@ export const routes = [
 		],
 	},
 
-	{ path: '/login', component: Login, name: 'login' },
-    { path: '/logout', component: Logout, name:'logout' },
-    { path: '/forgot', component: Forget, name:'forgot' },
-    { path: '/update-password', component: UpdatePassword, name:'update-password' },
+	{ path: '/:lang/login', component: Login, name: 'login' },
+    { path: '/:lang/logout', component: Logout, name:'logout' },
+    { path: '/:lang/forgot', component: Forget, name:'forgot' },
+    { path: '/:lang/update-password', component: UpdatePassword, name:'update-password' },
 
-	{ path: '/survey/:slug', component: Survey, name:'survey', props: true ,
+	{ path: '/:lang/survey/:slug', component: Survey, name:'survey', props: true ,
 	
 		children: [
 			{ path: 'step/:step', component: AnswerStep, name:'step', props: true },
@@ -219,10 +224,10 @@ export const routes = [
 		
 	},
 	
-	{ path: '/success', component: SuccessPage, name:'success', props: true },
+	{ path: '/:lang/success', component: SuccessPage, name:'success', props: true },
 	
 	
-	{ path: '/:pathMatch(.*)*', component: NotFound},
+	{ path: '/:lang/:pathMatch(.*)*', component: NotFound},
 	
-	{ path: '/404', component: NotFound, name: '404' },
+	{ path: '/:lang/404', component: NotFound, name: '404' },
 ]

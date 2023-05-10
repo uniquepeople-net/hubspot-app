@@ -1,6 +1,7 @@
 import { router } from '../main'
 import CryptoJS from 'crypto-js'
 
+
 class Helpers {
 
 	// add script file function in vue component

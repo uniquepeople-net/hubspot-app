@@ -1,51 +1,51 @@
-export const sidebarMenu = (checkRole, sidebarHide, isInstat) => {
+export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 	
 	return [
 	{
-		label: 'My board',
+		label: i18n.t("message.myboard"),
 		icon: 'bi-collection',
-		to:	'/my-board',
+		to:	{ name: 'my-board', params: { lang: i18n.locale } },
 		class: 'my-board-t',	// for testing purpose
 		command: () => sidebarHide()
 	},
 	{
-		label: 'Stats',
+		label: i18n.t("message.stats"),
 		icon: 'bi-bar-chart',
 		visible: isInstat,
 		class: 'instat-t',		// for testing purpose
 		items: [
 			{ 
-				label: 'Match',
-				to: '/stats/match',
+				label: i18n.t("message.match"),
+				to: { name: 'match', params: { lang: i18n.locale } },
 				command: () => sidebarHide()
 			},
 			{ 
-				label: 'Player',
-				to: '/stats/player',
+				label: i18n.t("message.player"),
+				to: { name: 'player', params: { lang: i18n.locale } },
 				command: () => sidebarHide()
 			}
 		]
 	},
 	{
-		label: 'Documents',
+		label: i18n.t("message.documents"),
 		icon: 'bi bi-file-earmark-text',
-		to: '/documents',
+		to: { name: 'documents', params: { lang: i18n.locale } },
 		class: 'documents-t',		// for testing purpose
 		command: () => sidebarHide()
 	},
 	{
-		label: 'Users',
+		label: i18n.t("message.users"),
 		icon: 'bi-people',
 		visible: checkRole,
 		class: 'users-t',		// for testing purpose
 		items: [
 			{
-				label: 'All Users',
+				label: i18n.t("message.allUsers"),
 				to: {name: 'all-users'},
 				command: () => sidebarHide()
 			},
 			{ 
-				label: 'Add New User',
+				label: i18n.t("message.addNewUser"),
 				to: {name: 'add-new-user'},
 				command: () => sidebarHide()				
 			},

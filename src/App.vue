@@ -8,13 +8,6 @@
 
 
 export default {
-	mounted() {	
-	},	
-	data() {
-		return {
-
-		}
-	},
 }
 </script>
 
