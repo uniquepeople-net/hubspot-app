@@ -1,5 +1,6 @@
 <template>
 	
+
 	<Sidebar v-model:visible="visibleLeft" class="sidebar" :modal="sidebarModal" :dismissable="sidebarModal">
 		<template v-slot:header class="sidebar-slot-header">
 			<div class="logo">
@@ -7,11 +8,12 @@
 			</div>
 		</template>
 
-		<PanelMenu v-if="items" :model="items"/>
+		<PanelMenu v-model:expandedKeys="expandedKeys" v-if="items" :model="items" 
+				   ref="panelMenu" @panel-open="onPanelClick" />
 	</Sidebar>
 
 	<SidebarBurger @click="visibleLeft = true"/>
-			
+
 </template>
  
  
@@ -22,12 +24,16 @@
 
 	export default {
 		mounted() {
-			this.checkwindowWidth()		
+			this.checkwindowWidth()
+			this.$nextTick(() => {
+				this.expandActivePanel()
+			});
 		},
 		data() {
 			return {
 				visibleLeft: false,
-				sidebarModal: true
+				sidebarModal: true,
+				expandedKeys: null
 			}
 		},
 		methods: {
@@ -46,6 +52,37 @@
 			},
 			checkStatsIdexists() {
 				return this.user.instat_id ? true : false
+			},
+			expandActivePanel() {				
+				const panelMenu = this.$refs.panelMenu;
+				const routeName = this.$route.name
+
+				const foundObject = this.items.find(obj => {
+					if (obj.to && obj.to.name === routeName) {
+						return true;
+					}
+					if (obj.items) {
+						const foundItem = obj.items.find(item => item.to && item.to.name === routeName);
+						return foundItem !== undefined;
+					}
+					return false;
+				});
+
+				this.expandedKeys = foundObject
+				this.expandNode(this.expandedKeys);
+			},
+			expandNode(node) {
+				if (node.items && node.items.length) {
+					this.expandedKeys[node.key] = true;
+
+					for (let child of node.items) {
+						this.expandNode(child);
+					}
+				}
+			},
+			onPanelClick(event) {
+				this.expandedKeys = event.item
+				this.expandNode(event.item)				
 			}
 		},
 		computed: {
@@ -59,15 +96,24 @@
 				this.$store.dispatch("appData/setActiveSidebar", data)
 			}
 		},
-		components: { SidebarBurger },
+		components: { SidebarBurger }
 	}
 </script>
- 
- 
+
+
 <style lang='scss'>
 .sidebar {
 	width: 12rem !important;
-	border-radius: 0 50px 0 0;	
+	border-radius: 0 50px 0 0;
+	.router-link-active-exact {
+		background: var(--bluegray-100);
+		transition: all .3s;
+		box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+		//box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+		//box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+		//box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+		box-shadow: var(--teal-50) 0px 4px 16px 0px inset, rgba(17, 17, 26, 0.05) 0px 8px 32px 0px;
+		}
 	& .p-sidebar-header {
 		justify-content: space-between;
 		.logo img {

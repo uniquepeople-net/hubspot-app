@@ -11,6 +11,10 @@ export const messages = {
 		allUsers: 'All Users',
 		addNewUser: 'Add New User',
 		ufpNews: 'UFP News',
+		Emails: 'Emails',
+		Footballnews: 'Football News',
+		NewsRumors: 'News & Rumors',
+		Settings: 'Settings',
 	  }
 	},
 	sk: {
@@ -24,7 +28,11 @@ export const messages = {
 		users: 'Používatelia',
 		allUsers: 'Zoznam Používateľov',
 		addNewUser: 'Pridať Používateľa',
-		ufpNews: 'Správy UFP'
+		ufpNews: 'Správy UFP',
+		Emails: 'Emaily',
+		Footballnews: 'Futbalové správy',
+		NewsRumors: 'Správy a Novinky',
+		Settings: 'Nastavenia',
 	  }
 	}
   }

@@ -202,7 +202,7 @@
 			items() {
 				let items = []
 				this.survey.questions.map( (q , index) =>  {
-					items.push({ to: '/survey/' + this.survey.slug + '/step/' + (Number(index) + 1) }) 
+					items.push({ to: '/' + this.$i18n.locale + '/survey/' + this.survey.slug + '/step/' + (Number(index) + 1) }) 
 				})
 				return items
 			}

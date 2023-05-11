@@ -2,6 +2,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 	
 	return [
 	{
+		key: '1',
 		label: i18n.t("message.myboard"),
 		icon: 'bi-collection',
 		to:	{ name: 'my-board', params: { lang: i18n.locale } },
@@ -9,6 +10,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 		command: () => sidebarHide()
 	},
 	{
+		key: '2',
 		label: i18n.t("message.stats"),
 		icon: 'bi-bar-chart',
 		visible: isInstat,
@@ -27,6 +29,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 		]
 	},
 	{
+		key: '3',
 		label: i18n.t("message.documents"),
 		icon: 'bi bi-file-earmark-text',
 		to: { name: 'documents', params: { lang: i18n.locale } },
@@ -34,6 +37,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 		command: () => sidebarHide()
 	},
 	{
+		key: '4',
 		label: i18n.t("message.users"),
 		icon: 'bi-people',
 		visible: checkRole,
@@ -52,31 +56,34 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 		]
 	},
 	{
+		key: '5',
 		label: 'Info',
 		icon: 'bi bi-info-circle',
 		class: 'info-t',		// for testing purpose
 		items: [
 			{ 
-				label: 'Emails',
+				label: i18n.t("message.Emails"),
 				to: {name: 'inbox'},
 				command: () => sidebarHide()				
 			},
 		]
 	},
 	{
-		label: 'Football news',
+		key: '6',
+		label: i18n.t("message.Footballnews"),
 		icon: 'bi bi-cup-hot',
 		class: 'news-t',		// for testing purpose
 		items: [
 			{
-				label: 'News & Rumors ',
+				label: i18n.t("message.NewsRumors"),
 				to: {name: 'news-rumors'},
 				command: () => sidebarHide()
 			},
 		]
 	},
 	{
-		label: 'Settings',
+		key: '7',
+		label: i18n.t("message.Settings"),
 		icon: 'bi-gear-wide-connected',
 		visible: checkRole,
 		class: 'settings-t',		// for testing purpose
@@ -106,6 +113,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 		]
 	},
 	{
+		key: '8',
 		label: 'Contact',
 		icon: 'bi-phone',
 		class: 'contact-t',		// for testing purpose

@@ -65,7 +65,7 @@
 				return length > 1 ? length + ' days' : length + ' day'
 			},
 			stringToSlug(data) {
-				let path = window.location.origin + '/survey/' + Helpers.stringToSlug(data)
+				let path = window.location.origin + '/' + this.$i18n.locale + '/survey/' + Helpers.stringToSlug(data)
 				return path
 			},
 			surveyLink() {

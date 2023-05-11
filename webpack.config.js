@@ -82,13 +82,18 @@ module.exports = {
         new HtmlWebpackPlugin({
 			inject: 'body',
             template: './src/index.html',
-			/* chunks: ['app', 'mazer'],
-			chunksSortMode: 'manual', */
         }),
 		new webpack.DefinePlugin({
 			//DOMAIN_URL: JSON.stringify('https://ufp-dev-api-gw.uniquekube.uniquepeople.cloud'),
 			DOMAIN_URL: JSON.stringify('http://localhost:80'),
 			//DOMAIN_URL: JSON.stringify('https://ufp-apigw.uniquepeople.cloud'),
+			'__VUE_OPTIONS_API__': true,
+      		'__VUE_PROD_DEVTOOLS__': true,
+
+			// Define feature flags for vue-i18n
+			'__VUE_I18N_FULL_INSTALL__': JSON.stringify(true),
+			'__VUE_I18N_LEGACY_API__': JSON.stringify(true),
+			'__INTLIFY_PROD_DEVTOOLS__': JSON.stringify(true),
 		}),
         new webpack.HotModuleReplacementPlugin(),
 		new Dotenv(),
