@@ -2,22 +2,11 @@ import styles from './scss/main.scss';
 
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import { createI18n } from 'vue-i18n'
-
-import { messages } from './Helpers/Languages'
-
-const i18n = createI18n({
-	locale: 'en', // set locale
-	fallbackLocale: 'sk', // set fallback locale
-	messages, // set locale messages
-	// If you need to specify other options, you can set other options
-	// ...
-})
+import { i18n } from './plugins/vuelidate-i18n'
 
 // Axios
 import axios from 'axios';
 window.axios = axios;
-
 
 // Sidebar helpers
 /* import Sidebar from './Helpers/Sidebar';
@@ -122,8 +111,12 @@ import InputError from './Dashboard/global/InputError.vue';
 import PasswordSuggestions from './Dashboard/global/PasswordSuggestions.vue';
 import LoadingIcon from './Dashboard/global/LoadingIcon.vue';
 
-createApp(App)
-	.use(router)
+const app = createApp(App)
+
+import { messages } from './Helpers/Languages'
+app.config.globalProperties.$messages = messages;
+
+app.use(router)
 	.use(i18n)
 	.use(store)
 	.use(PrimeVue)

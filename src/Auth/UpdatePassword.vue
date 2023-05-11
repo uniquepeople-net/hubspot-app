@@ -16,7 +16,7 @@
 
 	<AuthWrapper>
 		<template v-slot:title>
-			<h1 class="auth-title mb-4">Update password</h1>
+			<h1 class="auth-title mb-4">{{ $t('message.UpdatePassword')}}</h1>
 		</template>
 
 		<template v-slot:body>
@@ -31,9 +31,9 @@
 				<div class="inputgroup mb-5 col-12 col-lg-6">
 					<InputIcon icon="pi pi-lock"></InputIcon>
 					<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
-							name="password" placeholder="New Password">
+							name="password" :placeholder="$t('message.NewPassword')">
 						<template #header>
-							<h6>Pick a password</h6>
+							<h6>{{ $t('message.PickAPassword') }}</h6>
 						</template>
 						<template #footer="sp">
 							{{sp.level}}
@@ -47,9 +47,9 @@
 				<div class="inputgroup mb-5 col-12 col-lg-6">
 					<InputIcon icon="pi pi-lock"></InputIcon>
 					<Password id="password_confirmation" v-model="v$.password_confirmation.$model" :class="{'p-invalid':v$.password_confirmation.$invalid && submitted}" toggleMask
-							name="password_confirmation" placeholder="Confirm New Password">
+							name="password_confirmation" :placeholder="$t('message.ConfirmNewPassword')">
 						<template #header>
-							<h6>Pick a password</h6>
+							<h6>{{$t('message.PickAPassword')}}</h6>
 						</template>
 						<template #footer="sp">
 							{{sp.level}}
@@ -61,8 +61,8 @@
 				</div>
 				
 				<div class="position-relative text-center mt-5">
-					<Button type="submit" label="Update password" class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg" />
-					<div v-if="loading" class="spinner-grow position-absolute" role="status"></div>
+					<Button type="submit" label="Update password" :loading="loading" class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg" />
+					<!-- <div v-if="loading" class="spinner-grow position-absolute" role="status"></div> -->
 				</div>
 			</form>
 			
@@ -73,7 +73,8 @@
  
  
 <script>
-import { email, required, sameAs, minLength } from "@vuelidate/validators";
+//import { sameAs } from "@vuelidate/validators";
+import { sameAs, required, email, minLength } from "../plugins/vuelidate-i18n";
 import { useVuelidate } from "@vuelidate/core";
 
 import AuthWrapper from '../Auth/AuthWrapper.vue';

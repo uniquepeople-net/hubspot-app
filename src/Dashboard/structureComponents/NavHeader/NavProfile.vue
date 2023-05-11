@@ -29,12 +29,12 @@
                     {
                         label: 'My Profile',
                         icon: 'pi pi-user-edit',
-						to:	'/my-profile'
+						to:	{ name: 'my-profile' }
                     },
                     {
                         label: 'Wallet',
                         icon: 'pi pi-euro',
-						to: '/wallet/wallet-info',
+						to: { name: 'wallet-info' },
                         command: () => {
                             //this.$toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000});
                         }
@@ -45,7 +45,7 @@
 					{
                         label: 'Logout',
                         icon: 'pi pi-sign-out',
-                        to: '/logout',
+                        to: { name: 'logout' },
 						/* style: {
 							background: '#fa9c9c',
 						} */

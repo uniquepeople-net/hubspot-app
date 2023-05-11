@@ -30,7 +30,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 	},
 	{
 		key: '3',
-		label: i18n.t("message.documents"),
+		label: i18n.t("message.Documents"),
 		icon: 'bi bi-file-earmark-text',
 		to: { name: 'documents', params: { lang: i18n.locale } },
 		class: 'documents-t',		// for testing purpose
@@ -91,22 +91,22 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 		command: () => sidebarHide() */
 		items: [
 			{
-				label: 'Documents',
+				label: i18n.t("message.Documents"),
 				to: {name: 'docs-all'},
 				command: () => sidebarHide()
 			},
 			{
-				label: 'Groups',
+				label: i18n.t("message.Groups"),
 				to: {name: 'groups-all'},
 				command: () => sidebarHide()
 			},
 			{
-				label: 'Products',
+				label: i18n.t("message.Products"),
 				to: {name: 'products-all'},
 				command: () => sidebarHide()
 			},
 			{
-				label: 'Surveys',
+				label: i18n.t("message.Surveys"),
 				to: {name: 'surveys-all'},
 				command: () => sidebarHide()
 			},
@@ -114,14 +114,14 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 	},
 	{
 		key: '8',
-		label: 'Contact',
+		label: i18n.t("message.Contact"),
 		icon: 'bi-phone',
 		class: 'contact-t',		// for testing purpose
 		/* to:	'/settings',
 		command: () => sidebarHide() */
 		items: [
 			{
-				label: 'UFP',
+				label: "UFP",
 				to: {name: 'info-ufp'},
 				command: () => sidebarHide()
 			},

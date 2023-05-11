@@ -3,6 +3,8 @@
 		<div class="row h-100">
 			<div class="col-lg-5 col-12">
 				<div id="auth-left">
+					<NavLang class="auth-lang"/>
+
 					<div class="auth-logo text-center">
 						<a href="https://ufp.sk"><img src="https://ufp.sk/wp-content/uploads/2023/04/cropped-logo-transp.png" alt="Logo" class="logo"/></a>
 					</div>
@@ -22,7 +24,9 @@
  
  
 <script>
+	import NavLang from '../Dashboard/structureComponents/NavHeader/NavLang.vue'
 	export default {
+	components: { NavLang },
 		data() {
 			return {
 			}
@@ -41,12 +45,17 @@
 	#auth #auth-left{padding:5rem 8rem}
 	#auth #auth-left .auth-title{font-size:4rem;margin-bottom:1rem}
 	#auth #auth-left .auth-subtitle{color:#a8aebb;font-size:1.7rem;line-height:2.5rem}
-	#auth #auth-left .auth-logo{margin-bottom:3rem}
-	#auth #auth-left .auth-logo img{height:5rem}
+	#auth #auth-left .auth-logo{margin-bottom:2rem}
+	#auth #auth-left .auth-logo img{height:7rem}
 	@media screen and (max-width:767px) {
 		#auth #auth-left{padding:5rem}
 	}
 	@media screen and (max-width:576px) { 
 		#auth #auth-left{padding:4rem 3rem}
+	}
+	.auth-lang {
+		position: absolute;
+		top: 1rem;
+		left: 1rem;
 	}
 </style>

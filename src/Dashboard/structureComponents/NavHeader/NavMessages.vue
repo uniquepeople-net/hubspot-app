@@ -19,7 +19,7 @@
 		
 			<Divider  class="mb-0"/>
 		<template #end>
-			<router-link to="/emails/inbox">
+			<router-link :to="{name: 'inbox'}">
 				<div class="email-footer">
 					<h6 class="mb-0 fw-light">Inbox</h6>
 				</div>

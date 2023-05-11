@@ -17,8 +17,8 @@
 
 	<AuthWrapper>
 		<template v-slot:title>
-			<h1 class="auth-title mb-4">Forgot Password</h1>
-			<h5 class="text-secondary mb-5">Input your email and we will send you reset password link.</h5>
+			<h1 class="auth-title mb-4">{{ $t('message.ForgotPassword') }}</h1>
+			<h5 class="text-secondary mb-5">{{ $t('message.ForgotPasswordNotice')}}</h5>
 		</template>
 
 		<template v-slot:body>
@@ -32,8 +32,7 @@
 				</div>
 				
 				<div class="position-relative text-center mt-5">
-					<Button type="submit" label="Submit" class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg" />
-					<div v-if="loading" class="spinner-grow position-absolute" role="status"></div>
+					<Button type="submit" :label="$t('message.Submit')" :loading="loading" class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg" />
 				</div>
 
 			</form>
@@ -44,7 +43,8 @@
  
  
 <script>
-	import { email, required } from "@vuelidate/validators";
+	//import { email, required, helpers } from "@vuelidate/validators";
+	import { required, email, minLength } from "../plugins/vuelidate-i18n";
 	import { useVuelidate } from "@vuelidate/core";
 	import AuthWrapper from './AuthWrapper.vue'
 
@@ -61,7 +61,10 @@
 		},
 		validations() {
 			return {
-				email: { required, email }
+				email: { 
+					required/* : helpers.withMessage( this.$t('message.EmailRequired'), required ), */ ,
+					email/* : helpers.withMessage( this.$t('message.EmailNotValid'), email ) */
+				}
 			}
 		},
 		methods: {
@@ -78,8 +81,11 @@
 
 				let data = {
 					email: this.email, 
-					url: window.location.origin
+					url: window.location.origin + '/' + this.$i18n.locale
 				}
+
+				console.log(data)
+				
 
 				axios.post( reqPassForgetUrl, data )
 					.then( response => {

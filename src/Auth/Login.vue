@@ -3,7 +3,6 @@
             <div class="flex align-items-center flex-column pt-6 px-3">
                 <i class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
                 <h5 class="mt-3">{{ error }}</h5>
-
             </div>
             <template #footer>
                 <div class="flex justify-content-center">
@@ -15,7 +14,7 @@
 
 	<AuthWrapper>
 		<template v-slot:title>
-			<h1 class="auth-title mb-4">Log in</h1>
+			<h1 class="auth-title mb-4">{{ $t('message.Login') }}</h1>
 		</template>
 
 		<template v-slot:body>
@@ -30,17 +29,17 @@
 				<div class="form-group position-relative has-icon-left mb-4 p-inputgroup mb-5 col-12">
 					<InputIcon icon="pi pi-lock"></InputIcon>
 					<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
-								name="password" placeholder="Password" :feedback="false">
+								name="password" :placeholder="$t('message.Password')" :feedback="false">
 					</Password>
 	
-					<InputError :validator="v$.password" :submitted="submitted" replace="Password"></InputError>
+					<InputError :validator="v$.password" :submitted="submitted" :replace="$t('message.Password')"></InputError>
 				</div>
 				<div class="position-relative text-center mt-5">
-					<Button type="submit" label="Submit" class="submit-btn btn btn-primary btn-block btn-lg shadow-lg" :loading="loading"/>
+					<Button type="submit" :label="$t('message.LoginV')" class="submit-btn btn btn-primary btn-block btn-lg shadow-lg" :loading="loading"/>
 				</div>
 			</form>
 			<div class="text-center mt-5 text-lg fs-4">
-				<Button label="Forgot password ?" 
+				<Button :label="$t('message.ForgotPassword') + ' ?'" 
 						class="font-bold p-button-raised p-button-secondary p-button-text"
 						@click="redirectForgot"></Button>
 			</div>
@@ -51,7 +50,8 @@
  
  
 <script>
-import { email, required, sameAs, minLength, numeric } from "@vuelidate/validators";
+import { sameAs, numeric } from "@vuelidate/validators";
+import { required, email, minLength } from "../plugins/vuelidate-i18n";
 import { useVuelidate } from "@vuelidate/core";
 
 import AuthWrapper from '../Auth/AuthWrapper.vue';
@@ -71,10 +71,9 @@ export default {
     validations() {
         return {
             email: { required, email },
-            password: { required,  minLength: minLength(8)},
+            password: { required, minLength: minLength(8)},
         }
     },
-
     methods: {
         handleSubmit(isFormValid) {
             this.submitted = true;
