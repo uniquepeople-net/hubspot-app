@@ -61,7 +61,7 @@
 				</div>
 				
 				<div class="position-relative text-center mt-5">
-					<Button type="submit" label="Update password" :loading="loading" class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg" />
+					<Button type="submit" :label="$t('message.Update') + ' ' +  $t('message.password')" :loading="loading" class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg" />
 					<!-- <div v-if="loading" class="spinner-grow position-absolute" role="status"></div> -->
 				</div>
 			</form>

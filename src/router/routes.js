@@ -157,7 +157,7 @@ export const routes = [
 
 			{ path: '/:lang/news', component: NewsRumors, name: 'news-rumors' },
 
-			{ path: '/:lang/settings', component: Settings, name: 'settings', props: true, redirect: { name: 'products' },
+			{ path: '/:lang/settings', component: Settings, name: 'settings', props: true, redirect: { name: 'docs-all' },
 				
 				// Check if user has privileges to access this route
 				beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() ),

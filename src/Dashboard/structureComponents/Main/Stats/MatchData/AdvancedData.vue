@@ -1,9 +1,9 @@
 <template>
 	<TabView class="tab-view">
-		<TabPanel header="LINEUPS">
+		<TabPanel :header="$t('message.LINEUPS')">
 			<LineUps />
 		</TabPanel>
-		<TabPanel header="STATS">
+		<TabPanel :header="$t('message.STATS')">
 			<AdvancedMatchStats v-if="stats" :stats="stats"/>
 		</TabPanel>
 		<TabPanel header="VIDEO">

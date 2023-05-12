@@ -1,10 +1,10 @@
 <template>
 	<div class="mt-3 p-2 p-card bg-light">
-		<small class="d-block">Matches: {{ data.appearances }}</small>
-		<small class="d-block">Minutes played: {{ data.minutesPlayed }}</small>
-		<small class="d-block">Goals: {{ data.goal }}</small>
-		<small class="d-block">Yellow cards: {{ data.yellowCard }}</small>
-		<small class="d-block">Red cards: {{ data.redCards }}</small>
+		<small class="d-block">{{$t('message.Matches') + ': ' +  data.appearances }}</small>
+		<small class="d-block">{{$t('message.Minutesplayed') + ': ' +  data.minutesPlayed }}</small>
+		<small class="d-block">{{$t('message.Goals') + ': ' +  data.goal }}</small>
+		<small class="d-block">{{$t('message.Yellowcards') + ': ' +  data.yellowCard }}</small>
+		<small class="d-block">{{$t('message.Redcards') + ': ' +  data.redCards }}</small>
 	</div>
 </template>
  

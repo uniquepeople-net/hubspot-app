@@ -13,15 +13,16 @@
 						<li class="spec-email fw-bold">{{ email.reply_name }}</li>
 					</router-link>
 				</ul>
-				<div v-if="!unreadEmails.length" class="no-emails">No new emails</div>
+				<div v-if="!unreadEmails.length" class="no-emails">{{ $t('message.Nonewemails') }}</div>
 			</div>
 		</template>
 		
-			<Divider  class="mb-0"/>
+		<Divider  class="mb-0"/>
+
 		<template #end>
 			<router-link :to="{name: 'inbox'}">
 				<div class="email-footer">
-					<h6 class="mb-0 fw-light">Inbox</h6>
+					<h6 class="mb-0 fw-light">{{ $t('message.Inbox') }}</h6>
 				</div>
 			</router-link>
 		</template>			

@@ -4,9 +4,9 @@
 			<div class="card-body">
 				<div class="row">
 					<div class="col-12 col-sm-6 mb-3 mb-sm-0">
-						<h5>Season</h5>
+						<h5>{{ $t('message.Season') }}</h5>
 						<Dropdown v-if="seasons" v-model="selectedSeason" :options="seasons" :optionLabel="seasons.competition" 
-								  :optionValue="seasons.seasonId" placeholder="Select Season" class="w-100" @change="selectSeason">		
+								  :optionValue="seasons.seasonId" :placeholder="$t('message.SelectSeason')" class="w-100" @change="selectSeason">		
 							<template #value="slotProps">
 								<div v-if="slotProps.value" class="flex align-items-center">
 									<div>{{ slotProps.value.competition.name }}</div>
@@ -31,10 +31,10 @@
 					</div>
 					
 					<div class="col-12 col-sm-6">
-						<h5>Match</h5>
+						<h5>{{ $t('message.Match')}}</h5>
 						<Dropdown v-if="matches" v-model="selectedMatch" :options="matches" 
 								  :optionLabel="matches.label" class="w-100 matches"
-								  :optionValue="matches.label" placeholder="Select Match" 
+								  :optionValue="matches.label" :placeholder="$t('message.SelectMatch')" 
 								  inputClass="matches-dropdown" @change="selectMatch">
 							<template #value="slotProps">
 								<div v-if="slotProps.value" class="flex align-items-center">

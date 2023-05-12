@@ -54,22 +54,33 @@
 				return this.user.instat_id ? true : false
 			},
 			expandActivePanel() {				
-				const panelMenu = this.$refs.panelMenu;
+				const panelMenu = this.$refs.panelMenu
 				const routeName = this.$route.name
+				const routeMatched = this.$route.matched
+				
+				let foundedObj;
+				routeMatched.reverse().some( r => {
+					const findObj = this.items.find(obj => {
 
-				const foundObject = this.items.find(obj => {
-					if (obj.to && obj.to.name === routeName) {
-						return true;
-					}
-					if (obj.items) {
-						const foundItem = obj.items.find(item => item.to && item.to.name === routeName);
-						return foundItem !== undefined;
-					}
-					return false;
-				});
+						if (obj.to && obj.to.name.includes( r.name )) {
+							return true;
+						}
+						if (obj.items) {
+							const foundItem = obj.items.find(item => item.to && item.to.name.includes( r.name ));
+							return foundItem !== undefined;
+						}
+						return false;
+					});
 
-				this.expandedKeys = foundObject
-				this.expandNode(this.expandedKeys);
+					if( findObj ) {
+						foundedObj = findObj
+					}
+				})
+
+				this.expandedKeys = foundedObj
+				if ( this.expandedKeys ) {
+					this.expandNode(this.expandedKeys);
+				}
 			},
 			expandNode(node) {
 				if (node.items && node.items.length) {

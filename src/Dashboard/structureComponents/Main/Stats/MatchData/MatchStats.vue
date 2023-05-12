@@ -1,10 +1,10 @@
 <template>
 	<div>
-		<h4 class="mb-4">Match Stats</h4>
+		<h4 class="mb-4">{{ $t('message.MatchStats') }}</h4>
 		<div class="row justify-content-center">
 			<div class="col-12 col-lg-6">
 				<MatchSelects class="mb-4" :seasons="seasons" :matches="matches"
-							  btnLabel="Player stats" btnRoute="player"/>
+							  :btnLabel="$t('message.Playerstats')" btnRoute="player"/>
 
 				<MatchCard :displayMatchStats="true"/>
 			</div>

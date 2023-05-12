@@ -1,5 +1,5 @@
 <template>
-	<router-link :to="linkTo" class="me-3 d-flex flex-column-reverse justify-content-center">
+	<router-link :to="{name: linkTo}" class="me-3 d-flex flex-column-reverse justify-content-center">
 		<i class="bi bi-exclamation-circle fs-4"></i>
 	</router-link>
 </template>

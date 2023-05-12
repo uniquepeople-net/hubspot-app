@@ -21,18 +21,26 @@
 <script>
 	import { mapGetters } from 'vuex';
 	import {loadStripe} from '@stripe/stripe-js';
+	import { i18n } from '../../../plugins/vuelidate-i18n'
 
 	export default {
-		data() {
-			return {
-				items: [                   
+		methods: {
+			toggle(event) {
+				this.$refs.menu.toggle(event);
+			},
+		},
+		computed: {
+			...mapGetters({ user: 'user/user',
+							playerDetails: 'stats/playerDetails' }),
+			items(){
+				return [                   
                     {
-                        label: 'My Profile',
+                        label: this.$i18n.t("message.Profile"),
                         icon: 'pi pi-user-edit',
 						to:	{ name: 'my-profile' }
                     },
                     {
-                        label: 'Wallet',
+                        label: this.$i18n.t("message.Wallet"),
                         icon: 'pi pi-euro',
 						to: { name: 'wallet-info' },
                         command: () => {
@@ -43,24 +51,16 @@
 						separator: true,
 					},
 					{
-                        label: 'Logout',
+                        label: this.$i18n.t("message.Logout"),
                         icon: 'pi pi-sign-out',
                         to: { name: 'logout' },
 						/* style: {
 							background: '#fa9c9c',
 						} */
                     }
-				],
+				]
 			}
-		},
-		methods: {
-			toggle(event) {
-				this.$refs.menu.toggle(event);
-			},
-		},
-		computed: {
-			...mapGetters({ user: 'user/user',
-							playerDetails: 'stats/playerDetails' }),
+
 		},
 	}
 </script>

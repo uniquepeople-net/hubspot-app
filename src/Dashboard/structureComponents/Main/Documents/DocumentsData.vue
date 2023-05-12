@@ -2,7 +2,7 @@
 	<Card class="card">
 		<template #title>
 			<div class="card-header">
-				<h5>Documents</h5>
+				<h5>{{ $t('message.Documents')}}</h5>
 			</div>
 		</template>
 		<template #content>
