@@ -128,7 +128,7 @@
 					 	 ( 'closed_value' in item && item.closed_value == null ) ||
 						 ( 'value' in item && 
 						 	this.survey.type_id === 1 ? item.value.every( item => item === "") : 
-							item.value.length !== item.question.max_to_choose)
+							( this.survey.type_id === 2 && item.value.length !== item.question.max_to_choose ))
 					 ) {
 						return item.step
 					} else return null
@@ -181,7 +181,7 @@
 					 	 ( 'closed_value' in item && item.closed_value == null ) ||
 						 ( 'value' in item && 
 						 	this.survey.type_id === 1 ? item.value.every( item => item === "") : 
-							item.value.length !== item.question.max_to_choose)
+							( this.survey.type_id === 2 && item.value.length !== item.question.max_to_choose ))
 					 ) {
 						return item.step
 					} else return null
