@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h2>Contact us</h2>
+		<h2 class="mb-4">{{ $t('message.Contactus') }}</h2>
 		<ContactForm />
 	</div>
 </template>

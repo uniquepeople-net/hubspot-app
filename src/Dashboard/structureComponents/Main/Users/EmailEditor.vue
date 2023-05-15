@@ -17,7 +17,7 @@
 			</template>
 		</Dialog>
 
-		<h4 class="mb-4">Email Editor</h4>
+		<h4 class="mb-4">{{ $t('message.EmailEditor')}}</h4>
 		<div class="row g-3">
 			<div class="col-12 col-md-8">
 				<Card class="card">

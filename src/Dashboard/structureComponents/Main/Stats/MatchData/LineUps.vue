@@ -8,7 +8,7 @@
 		</div>
 		<div class="mt-4 lineup">
 			<p :class="`m-0 p-2 ${index % 2 === 0 ? 'bg' : ''}`" v-for="(pos, index) in getSelectedTeam().formation.lineup" >
-				<!-- <span class="me-1">{{pos.shirtNumber}}</span> -->
+				<span class="me-1 shirt-nr">{{pos.shirtNumber}}</span>
 				<span class="fw-semibold">{{pos.player.firstName + ' ' + pos.player.lastName }}</span>
 				<span v-if="Number(pos.yellowCards) > 0"><i class="bi bi-file-fill yellow mx-1"></i></span>
 				<span v-if="Number(pos.redCards) > 0"><i class="bi bi-file-fill red mx-1"></i></span>
@@ -24,9 +24,9 @@
 		</div>
 
 		<div class="mt-3 lineup">
-			<h6 class="text-center">Substitutions</h6>
+			<h6 class="text-center">{{ $t('message.Substitutions') }}</h6>
 			<p :class="`m-0 p-2 ${index % 2 === 0 ? 'bg' : ''}`" v-for="(pos, index) in getSelectedTeam().formation.bench" >
-				<!-- <span class="me-1">{{pos.shirtNumber}}</span> -->
+				<span class="me-1 shirt-nr">{{pos.shirtNumber}}</span>
 				<span class="fw-semibold">{{pos.player.firstName + ' ' + pos.player.lastName }}</span>
 				<span v-if="Number(pos.yellowCards) > 0"><i class="bi bi-file-fill yellow"></i></span>
 				<span v-if="Number(pos.redCards) > 0"><i class="bi bi-file-fill red"></i></span>
@@ -102,5 +102,10 @@
 		font-size: .7rem;
 		color: var(--gray-00);
 	}
+}
+.shirt-nr {
+	display: inline-block;
+	text-align: center;
+	width: 14px;
 }
 </style>

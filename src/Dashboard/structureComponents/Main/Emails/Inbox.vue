@@ -2,22 +2,22 @@
 	<DataTable v-if="emails" :value="emails" :paginator="true" class="p-datatable-customers card" :rows="10"
 		dataKey="id" :rowHover="true" v-model:selection="selectedEmails" v-model:filters="filters" filterDisplay="menu" 
 		paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" 
-		:rowsPerPageOptions="[10,25,50,100]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
+		:rowsPerPageOptions="[10,25,50,100]" :currentPageReportTemplate="`${$t('message.Showing')} {first} ${$t('message.to')} {last} ${$t('message.of')} {totalRecords} ${$t('message.emailov')}`"
 		:globalFilterFields="['reply_name', 'reply_email', 'subject', 'created_at']" responsiveLayout="scroll">
 		<template #header>
-			<h5 class="mb-3">Emails</h5>			
+			<h5 class="mb-3">{{ $t('message.Emails') }}</h5>			
 			<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
 				<span class="p-input-icon-left mb-3 mb-sm-0">
 					<i class="pi pi-search" />
-					<InputText v-model="filters['global'].value" placeholder="Keyword Search" />
+					<InputText v-model="filters['global'].value" :placeholder="$t('message.KeywordSearch')" />
 				</span>
-				<Button type="button" icon="pi pi-filter-slash" label="Clear filters" class="p-button-outlined" @click="clearFilter()"/>
+				<Button type="button" icon="pi pi-filter-slash" :label="$t('message.ClearFilters')" class="p-button-outlined" @click="clearFilter()"/>
 			</div>
 		</template>
 
 		<template #empty>
 			<div class="my-4 text-center">
-				<i class="bi bi-envelope-open me-3"></i>No emails found.</div>
+				<i class="bi bi-envelope-open me-3"></i>{{ $t('message.Noemailsfound') }}</div>
 		</template>
 
 		<template #loading>			
@@ -34,7 +34,7 @@
 			</template>
 		</Column>
 
-		<Column field="reply_name" header="Name" sortable style="min-width: 14rem">
+		<Column field="reply_name" :header="$t('message.Name')" sortable style="min-width: 14rem">
 			<template #body="{data}">
 				<p class="m-0" :class="!checkIsReadEmail(data) && 'fw-bold'">{{data.reply_name}}</p>
 			</template>
@@ -43,7 +43,7 @@
 			</template>			
 		</Column>
 		
-		<Column field="reply_email" header="Address" sortable style="min-width: 8rem">
+		<Column field="reply_email" :header="$t('message.Address')" sortable style="min-width: 8rem">
 			<template #body="{data}">
 				<p class="m-0" :class="!checkIsReadEmail(data) && 'fw-bold'">{{data.reply_email}}</p>
 			</template>
@@ -52,7 +52,7 @@
 			</template>
 		</Column>
 
-		<Column field="subject" header="Subject" sortable style="min-width: 8rem">
+		<Column field="subject" :header="$t('message.Subject')" sortable style="min-width: 8rem">
 			<template #body="{data}">
 				<p class="m-0" :class="!checkIsReadEmail(data) && 'fw-bold'">{{data.subject}}</p>
 			</template>
@@ -61,7 +61,7 @@
 			</template>
 		</Column>
 
-		<Column field="created_at" header="Date" sortable dataType="date" style="min-width: 8rem">
+		<Column field="created_at" :header="$t('message.Date')" sortable dataType="date" style="min-width: 8rem">
 			<template #body="{data}">
 				{{formatDate(data.created_at)}}
 			</template>

@@ -16,7 +16,7 @@
 
 	<Card class="card">
 		<template #title>
-			<div class="card-header"><h5>Change Password</h5></div>
+			<div class="card-header"><h5>{{ $t('message.Change') + ' ' + $t('message.Password') }}</h5></div>
 		</template>
 		<template #content>
 			<div class="card-body">
@@ -25,16 +25,16 @@
 					<div class="inputgroup mb-5 col-12 col-lg-6">
 						<InputIcon icon="pi pi-lock"></InputIcon>
 						<Password id="old_password" v-model="v$.old_password.$model" :class="{'p-invalid':v$.old_password.$invalid && submitted}" toggleMask
-								name="old_password" placeholder="Old Password" :feedback="false">
+								name="old_password" :placeholder="$t('message.Olde') + ' ' + $t('message.Password')" :feedback="false">
 						</Password>
 		
-						<InputError :validator="v$.old_password" :submitted="submitted" replace="Old Password"></InputError>
+						<InputError :validator="v$.old_password" :submitted="submitted" :replace="$t('message.Olde') + ' ' + $t('message.Password')"></InputError>
 					</div>
 						
 					<div class="inputgroup mb-5 col-12 col-lg-6">
 						<InputIcon icon="pi pi-lock"></InputIcon>
 						<Password id="new_password" v-model="v$.new_password.$model" :class="{'p-invalid':v$.new_password.$invalid && submitted}" toggleMask
-								name="new_password" placeholder="New Password">
+								name="new_password" :placeholder="$t('message.Newe') + ' ' + $t('message.Password')">
 							<template #header>
 								<h6>Pick a password</h6>
 							</template>
@@ -44,13 +44,13 @@
 							</template>
 						</Password>
 		
-						<InputError :validator="v$.new_password" :submitted="submitted" replace="New Password"></InputError>
+						<InputError :validator="v$.new_password" :submitted="submitted" :replace="$t('message.Newe') + ' ' + $t('message.Password')"></InputError>
 					</div>
 					
 					<div class="inputgroup mb-5 col-12 col-lg-6">
 						<InputIcon icon="pi pi-lock"></InputIcon>
 						<Password id="password_confirmation" v-model="v$.password_confirmation.$model" :class="{'p-invalid':v$.password_confirmation.$invalid && submitted}" toggleMask
-								name="password_confirmation" placeholder="Confirm New Password">
+								name="password_confirmation" :placeholder="$t('message.Confirm') + ' ' + $t('message.Newe')  + ' ' + $t('message.Password')">
 							<template #header>
 								<h6>Pick a password</h6>
 							</template>
@@ -60,10 +60,10 @@
 							</template>
 						</Password>
 		
-						<InputError :validator="v$.password_confirmation" :submitted="submitted" replace="Password Confirmation"></InputError>
+						<InputError :validator="v$.password_confirmation" :submitted="submitted" :replace="$t('message.Password') + ' ' + $t('message.Confirmation')"></InputError>
 					</div>
 				
-					<Button type="submit" label="Change Password" class="mt-2 submit-btn" />
+					<Button type="submit" :label="$t('message.Change') + ' ' + $t('message.Password')" class="mt-2 submit-btn" />
 
 				</form>
 			</div>

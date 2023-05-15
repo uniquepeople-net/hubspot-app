@@ -1,12 +1,12 @@
 <template>
 	<div class="mb-4 mb-sm-0">
 		<div class="d-flex justify-content-between justify-content-sm-start">
-			<Dropdown v-model="selectedAction" :options="actions" optionLabel="name" placeholder="Select an Action" />
+			<Dropdown v-model="selectedAction" :options="actions" optionLabel="name" :placeholder="$t('message.SelectanAction')" />
 			<Button v-if="selectedAction" :label="selectedAction.name" :icon="selectedAction.icon" 
 					class="p-button-raised p-button-danger ms-3" @click="commitAction(selectedAction.route)"
 					:disabled="selectedAction && (!selected || selected.length === 0)"/>
 		</div>
-		<small class="error" v-if="selectedAction && (!selected || selected.length === 0)">No emails chosen</small>
+		<small class="error" v-if="selectedAction && (!selected || selected.length === 0)">{{ $t('message.Noemailschosen') }}</small>
 	</div>
 </template>
  
@@ -23,7 +23,7 @@
 			return {
 				selectedAction: null,
 				actions: [
-					{ name: 'Delete Emails', code: 'delete', icon: 'bi bi-trash', route: 'delete-emails' },
+					{ name: this.$i18n.t("message.DeleteEmails"), code: 'delete', icon: 'bi bi-trash', route: 'delete-emails' },
 				]
 			}
 		},

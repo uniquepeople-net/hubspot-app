@@ -2,17 +2,17 @@
 	<div>
 		<div class="row">
 			<div class="col-4">
-				<AdvancedMatchStatsChart title="Shots" :data1="shotsOnTarget" :data2="shotsWide"
+				<AdvancedMatchStatsChart :title="$t('message.Shots')" :data1="shotsOnTarget" :data2="shotsWide"
 										 :percentage="false" :chartData="possessionData" 
 										 :complete="true" :completeData="shots"/>
 			</div>
 			<div class="col-4">
-				<AdvancedMatchStatsChart title="Duels" :data1="duelsGood" :data2="duelsBad"
+				<AdvancedMatchStatsChart :title="$t('message.Duels')" :data1="duelsGood" :data2="duelsBad"
 										 :percentage="false" :chartData="duelsData" 
 										 :complete="true" :completeData="duels"/>
 			</div>
 			<div class="col-4">
-				<AdvancedMatchStatsChart title="Passes" :data1="passesGood" :data2="passesBad"
+				<AdvancedMatchStatsChart :title="$t('message.Passes')" :data1="passesGood" :data2="passesBad"
 										 :percentage="false" :chartData="passesData" 
 										 :complete="true" :completeData="passes"/>
 			</div>
@@ -22,17 +22,17 @@
 		</div>
 		<div class="row mt-3">
 			<div class="col-4">
-				<AdvancedMatchStatsChart title="Aerial Duels" :data1="aerialDuelsGood" :data2="aerialDuelsBad"
+				<AdvancedMatchStatsChart :title="$t('message.AerialDuels')" :data1="aerialDuelsGood" :data2="aerialDuelsBad"
 										 :percentage="false" :chartData="aerialDuelsData" 
 										 :complete="true" :completeData="aerialDuels"/>
 			</div>
 			<div class="col-4">
-				<AdvancedMatchStatsChart title="Defensive Duels" :data1="defensiveDuelsGood" :data2="defensiveDuelsBad"
+				<AdvancedMatchStatsChart :title="$t('message.DefensiveDuels')" :data1="defensiveDuelsGood" :data2="defensiveDuelsBad"
 										 :percentage="false" :chartData="defensiveDuelsData" 
 										 :complete="true" :completeData="defensiveDuels"/>
 			</div>
 			<div class="col-4">
-				<AdvancedMatchStatsChart title="Offensive Duels" :data1="offensiveDuelsGood" :data2="offensiveDuelsBad"
+				<AdvancedMatchStatsChart :title="$t('message.OffensiveDuels')" :data1="offensiveDuelsGood" :data2="offensiveDuelsBad"
 										 :percentage="false" :chartData="offensiveDuelsData" 
 										 :complete="true" :completeData="offensiveDuels"/>
 			</div>
@@ -42,17 +42,17 @@
 		</div>
 		<div class="row mt-3">
 			<div class="col-4">
-				<AdvancedMatchStatsChart title="Back Passes" :data1="backPassesGood" :data2="backPassesBad"
+				<AdvancedMatchStatsChart :title="$t('message.BackPasses')" :data1="backPassesGood" :data2="backPassesBad"
 										 :percentage="false" :chartData="backPassesData" 
 										 :complete="true" :completeData="backPasses"/>
 			</div>
 			<div class="col-4">
-				<AdvancedMatchStatsChart title="Forward passes" :data1="forwardPassesGood" :data2="forwardPassesBad"
+				<AdvancedMatchStatsChart :title="$t('message.ForwardPasses')" :data1="forwardPassesGood" :data2="forwardPassesBad"
 										 :percentage="false" :chartData="forwardPassesData" 
 										 :complete="true" :completeData="forwardPasses"/>
 			</div>
 			<div class="col-4">
-				<AdvancedMatchStatsChart title="Vertical passes" :data1="verticalPassesGood" :data2="verticalPassesBad"
+				<AdvancedMatchStatsChart :title="$t('message.VerticalPasses')" :data1="verticalPassesGood" :data2="verticalPassesBad"
 										 :percentage="false" :chartData="verticalPassesData" 
 										 :complete="true" :completeData="verticalPasses"/>
 			</div>
@@ -122,23 +122,23 @@
 			verticalPassesData() { return this.chartData(this.verticalPassesGood, this.verticalPassesBad) },
 			advStatBars() {			
 				return [
-					{ label: 'Shot Assists', value: this.stats.total.shotAssists + this.stats.total.shotOnTargetAssists },
-					{ label: 'Blocked Shots', value: this.stats.total.shotsBlocked },
-					{ label: 'Corners', value: this.stats.total.corners },
-					{ label: 'Crosses', value: this.stats.total.crosses },
-					{ label: 'Fouls', value: this.stats.total.fouls },
-					{ label: 'Fouls Suffered', value: this.stats.total.foulsSuffered },
-					{ label: 'Dribbles', value: this.stats.total.dribbles },
+					{ label: this.$i18n.t("message.ShotAssists"), value: this.stats.total.shotAssists + this.stats.total.shotOnTargetAssists },
+					{ label: this.$i18n.t("message.BlockedShots"), value: this.stats.total.shotsBlocked },
+					{ label: this.$i18n.t("message.Corners"), value: this.stats.total.corners },
+					{ label: this.$i18n.t("message.Crosses"), value: this.stats.total.crosses },
+					{ label: this.$i18n.t("message.Fouls"), value: this.stats.total.fouls },
+					{ label: this.$i18n.t("message.FoulsSuffered"), value: this.stats.total.foulsSuffered },
+					{ label: this.$i18n.t("message.Dribbles"), value: this.stats.total.dribbles },
 				]
 			},
 			advStatBars2() {			
 				return [
-					{ label: 'Received Passes', value: this.stats.total.receivedPass },
-					{ label: 'Offsides', value: this.stats.total.offsides },
-					{ label: 'Losses', value: this.stats.total.losses },
-					{ label: 'Free Kicks', value: this.stats.total.freeKicks },
-					{ label: 'Attacking Actions', value: this.stats.total.attackingActions },
-					{ label: 'Defensive Actions', value: this.stats.total.defensiveActions },
+					{ label: this.$i18n.t("message.ReceivedPasses"), value: this.stats.total.receivedPass },
+					{ label: this.$i18n.t("message.Offsides"), value: this.stats.total.offsides },
+					{ label: this.$i18n.t("message.Losses"), value: this.stats.total.losses },
+					{ label: this.$i18n.t("message.Freekicks"), value: this.stats.total.freeKicks },
+					{ label: this.$i18n.t("message.AttackingActions"), value: this.stats.total.attackingActions },
+					{ label: this.$i18n.t("message.DefensiveActions"), value: this.stats.total.defensiveActions },
 				]
 			}
 		},

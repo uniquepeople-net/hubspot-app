@@ -21,7 +21,7 @@
 <script>
 	import { mapGetters } from 'vuex';
 	import {loadStripe} from '@stripe/stripe-js';
-	import { i18n } from '../../../plugins/vuelidate-i18n'
+	//import { i18n } from '../../../plugins/vuelidate-i18n'
 
 	export default {
 		methods: {

@@ -32,20 +32,20 @@
 
 						<div class="mb-5 col-12">
 							<Textarea :autoResize="true" rows="5" cols="30" v-model="v$.textArea.$model" 
-									  :class="{'p-invalid':v$.textArea.$invalid && submitted}" placeholder="Insert message"/>
+									  :class="{'p-invalid':v$.textArea.$invalid && submitted}" :placeholder="$t('message.Insertmessage')"/>
 							<InputError :validator="v$.textArea" :submitted="submitted" replace="Text"></InputError>
 						</div>
 
 						<div class="select-rec mb-5 col-12">
-							<h5 class="me-3">To: </h5>
+							<h5 class="me-3">{{ $t('message.To') + ':' }}</h5>
 							<Dropdown v-model="v$.selectedRecipient.$model" :options="recipients" :class="{'p-invalid':v$.selectedRecipient.$invalid && submitted}"
-									  optionLabel="name" optionValue="code" placeholder="Select a Recipient" />
+									  optionLabel="name" optionValue="code" :placeholder="$t('message.SelectRecipient')" />
 							<InputError :validator="v$.selectedRecipient" :submitted="submitted" replace="Recipient"></InputError>
 						</div>
 					</div>
 
 					<div class="send-email">
-						<Button type="submit" label="Send Email" class="mt-2 submit-btn" :disabled="disabledBtn"/>
+						<Button type="submit" :label="$t('message.SendEmail')" class="mt-2 submit-btn" :disabled="disabledBtn"/>
 						<div v-if="spinner" class="spinner-grow" style="width: 2.5rem; height: 2.5rem;" role="status"></div>						
 					</div>
 

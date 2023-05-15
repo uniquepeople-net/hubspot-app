@@ -156,11 +156,14 @@
 		& .p-submenu-list {
 			& .p-menuitem-text {
 				font-weight: 400;
+				text-align: left;
 			}
 		}
 	}
 	.p-menuitem-text {
 		font-weight: 500;
+		width: 100%;
+		text-align: center;
 	}
 	.pi-chevron-right, .pi-chevron-down {
 		order: 3;

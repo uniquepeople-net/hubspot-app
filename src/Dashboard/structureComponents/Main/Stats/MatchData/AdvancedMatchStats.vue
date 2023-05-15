@@ -2,15 +2,15 @@
 	<div>
 		<div class="row">
 			<div class="col-4">
-				<AdvancedMatchStatsChart title="Ball Possession" :data1="team1Possesion" :data2="team2Possesion"
+				<AdvancedMatchStatsChart :title="$t('message.BallPossession')" :data1="team1Possesion" :data2="team2Possesion"
 										 :percentage="true" :chartData="possessionData" />
 			</div>
 			<div class="col-4">
-				<AdvancedMatchStatsChart title="Shots on target" :data1="team1Shots" :data2="team2Shots"
+				<AdvancedMatchStatsChart :title="$t('message.Shotsontarget')" :data1="team1Shots" :data2="team2Shots"
 										 :percentage="false" :chartData="shotsData" />
 			</div>
 			<div class="col-4">
-				<AdvancedMatchStatsChart title="Completed passest" :data1="team1Passes" :data2="team2Passes"
+				<AdvancedMatchStatsChart :title="$t('message.Completedpasses')" :data1="team1Passes" :data2="team2Passes"
 										 :percentage="false" :chartData="passesData" />
 			</div>
 		</div>
@@ -54,14 +54,14 @@
 			passesData() { return this.chartData(this.team1Passes, this.team2Passes) },
 			advStatBars() {			
 				return [
-					{ label: 'Total Attempts', values: { team1: this.stats.general.team1.shots, team2: this.stats.general.team2.shots } },
-					{ label: 'Fouls', values: { team1: this.stats.general.team1.fouls, team2: this.stats.general.team2.fouls } },
-					{ label: 'Corners', values: { team1: this.stats.general.team1.corners, team2: this.stats.general.team2.corners } },
-					{ label: 'Offsides', values: { team1: this.stats.general.team1.offsides, team2: this.stats.general.team2.offsides } },
-					{ label: 'Free kicks', values: { team1: this.stats.general.team1.freeKicks, team2: this.stats.general.team2.freeKicks } },
-					{ label: 'Successful duels', values: { team1: this.stats.duels.team1.duelsSuccessful, team2: this.stats.duels.team2.duelsSuccessful } },
-					{ label: 'Total looses', values: { team1: this.stats.transitions.team1.lossesTotal, team2: this.stats.transitions.team2.lossesTotal } },
-					{ label: 'Successful passes', values: { team1: this.stats.passes.team1.passesSuccessful, team2: this.stats.passes.team2.passesSuccessful } },
+					{ label: this.$i18n.t("message.TotalAttempts"), values: { team1: this.stats.general.team1.shots, team2: this.stats.general.team2.shots } },
+					{ label: this.$i18n.t("message.Fouls"), values: { team1: this.stats.general.team1.fouls, team2: this.stats.general.team2.fouls } },
+					{ label: this.$i18n.t("message.Corners"), values: { team1: this.stats.general.team1.corners, team2: this.stats.general.team2.corners } },
+					{ label: this.$i18n.t("message.Offsides"), values: { team1: this.stats.general.team1.offsides, team2: this.stats.general.team2.offsides } },
+					{ label: this.$i18n.t("message.Freekicks"), values: { team1: this.stats.general.team1.freeKicks, team2: this.stats.general.team2.freeKicks } },
+					{ label: this.$i18n.t("message.Successfulduels"), values: { team1: this.stats.duels.team1.duelsSuccessful, team2: this.stats.duels.team2.duelsSuccessful } },
+					{ label: this.$i18n.t("message.Totallooses"), values: { team1: this.stats.transitions.team1.lossesTotal, team2: this.stats.transitions.team2.lossesTotal } },
+					{ label: this.$i18n.t("message.Successfulpasses"), values: { team1: this.stats.passes.team1.passesSuccessful, team2: this.stats.passes.team2.passesSuccessful } },
 				]
 			}	
 		},

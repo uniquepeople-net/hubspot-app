@@ -1,6 +1,6 @@
 <template>
 
-	<h2>My Profile</h2>
+	<h2>{{ $t('message.Profile') }}</h2>
 
 	<div class="row gy-3 mt-3">
 		

@@ -2,16 +2,16 @@
 	<DataTable v-if="users" :value="userData" :paginator="true" class="p-datatable-customers card" :rows="10" :loading="loading"
 		dataKey="id" :rowHover="true" v-model:selection="selectedUsers" v-model:filters="filters" filterDisplay="menu" 
 		paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" 
-		:rowsPerPageOptions="[10,25,50]" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
+		:rowsPerPageOptions="[10,25,50]" :currentPageReportTemplate="`${$t('message.Showing')} {first} ${$t('message.to')} {last} ${$t('message.of')} {totalRecords} ${$t('message.usersov')}`"
 		:globalFilterFields="['name', 'surname', 'club']" responsiveLayout="scroll">
 		<template #header>
-			<h5 class="mb-3">Users</h5>			
+			<h5 class="mb-3">{{ $t('message.users') }}</h5>			
 			<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
 				<span class="p-input-icon-left mb-3 mb-sm-0">
 					<i class="pi pi-search" />
-					<InputText v-model="filters['global'].value" placeholder="Keyword Search" />
+					<InputText v-model="filters['global'].value" :placeholder="$t('message.KeywordSearch')" />
 				</span>
-				<Button type="button" icon="pi pi-filter-slash" label="Clear filters" class="p-button-outlined" @click="clearFilter()"/>
+				<Button type="button" icon="pi pi-filter-slash" :label="$t('message.ClearFilters')" class="p-button-outlined" @click="clearFilter()"/>
 			</div>
 		</template>
 		<template #empty>
@@ -21,7 +21,7 @@
 			<LoadingIcon />
 		</template>
 		<Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-		<Column field="name" header="Name" sortable style="min-width: 14rem">
+		<Column field="name" :header="$t('message.Name')" sortable style="min-width: 14rem">
 			<template #body="{data}">
 				{{data.name}}
 			</template>
@@ -29,7 +29,7 @@
 				<InputText type="text" v-model="filterModel.value" class="p-column-filter" placeholder="Search by name"/>
 			</template>			
 		</Column>
-		<Column field="surname" header="Surname" sortable style="min-width: 14rem">
+		<Column field="surname" :header="$t('message.Surname')" sortable style="min-width: 14rem">
 			<template #body="{data}">
 				{{data.surname}}
 			</template>
@@ -38,7 +38,7 @@
 			</template>			
 		</Column>
 
-		<Column field="club" header="Club" sortable style="min-width: 14rem">
+		<Column field="club" :header="$t('message.Club')" sortable style="min-width: 14rem">
 			<template #body="{data}">
 				{{data.club}}
 			</template>
@@ -47,7 +47,7 @@
 			</template>			
 		</Column>
 		
-		<Column field="fee" header="Fee" dataType="boolean" sortable :filterMenuStyle="{'width':'8rem'}" style="min-width: 8rem">
+		<Column field="fee" :header="$t('message.Fee')" dataType="boolean" sortable :filterMenuStyle="{'width':'8rem'}" style="min-width: 8rem">
 			<template #body="{data}">
 				<i class="pi" :class="{'true-icon pi-check-circle': data.fee, 'false-icon pi-times-circle': !data.fee}"></i>
 			</template>
@@ -57,13 +57,13 @@
 			</template>
 		</Column>
 
-		<Column field="is_admin" header="State" dataType="boolean" sortable :filterMenuStyle="{'width':'8rem'}" style="min-width: 8rem">
+		<Column field="is_admin" :header="$t('message.State')" dataType="boolean" sortable :filterMenuStyle="{'width':'8rem'}" style="min-width: 8rem">
 			<template #body="{data}">
 				<Badge :value="stateUser(data.is_admin)" :severity="stateBadge(data.is_admin)"/>
 			</template>
 		</Column>
 
-		<Column field="active_member" header="Activity" dataType="boolean" sortable :filterMenuStyle="{'width':'8rem'}" style="min-width: 8rem">
+		<Column field="active_member" :header="$t('message.Activity')" dataType="boolean" sortable :filterMenuStyle="{'width':'8rem'}" style="min-width: 8rem">
 			<template #body="{data}">
 				<i class="pi" :class="{'true-icon pi-check-circle': data.active_member, 'false-icon pi-times-circle': !data.active_member}"></i>
 			</template>
@@ -73,7 +73,7 @@
 			</template>
 		</Column>
 
-		<Column field="groups" header="Groups" sortable style="min-width: 14rem">
+		<Column field="groups" :header="$t('message.Groups')" sortable style="min-width: 14rem">
 			<template #body="{data}">
 				{{formatGroups(data.groups)}}
 			</template>
@@ -93,7 +93,7 @@
 		<template #footer>
 			<div class="d-flex flex-column flex-sm-row justify-content-between">
 				<BulkActions :selected="selectedUsers"/>
-				<Button label="Add new user" icon="pi pi-user-plus" class="p-button-raised p-button-info" @click="addNewUser"/>
+				<Button :label="$t('message.addNewUser')" icon="pi pi-user-plus" class="p-button-raised p-button-info" @click="addNewUser"/>
 			</div>
 		</template>
 	</DataTable>

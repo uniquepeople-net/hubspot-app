@@ -18,7 +18,7 @@
 		<Card class="card">
 			<template #title>
 				<div class="card-header">
-					<h5>User Data</h5>
+					<h5>{{ $t('message.UserData') }}</h5>
 					<DeleteItem v-if="admin" :delete="admin" :itemId="id" :itemName="name + ' ' + surname" 
 								item="user" url="/api/users/" redirectRoute="all-users"></DeleteItem>
 				</div>
@@ -32,8 +32,8 @@
 								<InputIcon icon="pi pi-user"></InputIcon>
 								<span class="p-float-label w-100">
 									<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
-											name="name" placeholder="Name"/>
-									<label for="name">Name</label>
+											name="name" :placeholder="$t('message.Name')"/>
+									<label for="name">{{$t('message.Name')}}</label>
 								</span>
 							
 								<InputError :validator="v$.name" :submitted="submitted" replace="Name"></InputError>
@@ -43,8 +43,8 @@
 								<InputIcon icon="pi pi-user"></InputIcon>
 								<span class="p-float-label w-100">
 									<InputText id="surname" v-model="v$.surname.$model" :class="{'p-invalid':v$.surname.$invalid && submitted}" 
-										   name="surname" placeholder="Surname"/>
-									<label for="surname">Surname</label>
+										   name="surname" :placeholder="$t('message.Surname')"/>
+									<label for="surname">{{$t('message.Surname')}}</label>
 								</span>
 							
 								<InputError :validator="v$.surname" :submitted="submitted" replace="Surname"></InputError>
@@ -54,8 +54,8 @@
 								<InputIcon icon="bi bi-house"></InputIcon>
 								<span class="p-float-label w-100">
 									<InputText id="club" v-model="v$.club.$model" :class="{'p-invalid':v$.club.$invalid && submitted}" 
-											name="club" placeholder="Club"/>
-									<label for="club">Club</label>
+											name="club" :placeholder="$t('message.Club')"/>
+									<label for="club">{{$t('message.Club')}}</label>
 								</span>	
 							
 								<InputError :validator="v$.club" :submitted="submitted" replace="Club"></InputError>
@@ -77,13 +77,13 @@
 								<span class="p-float-label">
 									<InputMask id="countryCode" v-model="v$.countryCode.$model" :class="{'p-invalid':v$.countryCode.$invalid && submitted}" 
 											   name="countryCode" placeholder="+9999" mask="+99?99"/>
-									<label for="countryCode">Code</label>
+									<label for="countryCode">{{ $t('message.Code') }}</label>
 								</span>
 								<InputError :validator="v$.countryCode" :submitted="submitted" replace="countryCode"></InputError>
 								<span class="p-float-label">
 									<InputMask id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
 										   	   name="phoneNum" placeholder="999 999 999" mask="999 999 999? 999999" autoClear/>
-									<label for="phoneNum">Phone number</label>
+									<label for="phoneNum">{{ $t('message.Phonenumber') }}</label>
 								</span>
 
 								<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
