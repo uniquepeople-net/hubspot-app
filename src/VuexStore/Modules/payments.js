@@ -2,7 +2,8 @@ export default {
 	namespaced: true,
 
 	state: () => ({
-		stripePubKey: 'pk_test_51MEDDqCf79OEZcUi83xIfRoEvrH9sIa2h2aE2vkcaWjajZv4WfC2Y91HEek2gm2qMIAdD1yXjUjVBqY0TE256ZiA00ZlXgpZjo',
+		//stripePubKey: process.env.STRIPE_PUB_TEST_KEY,
+		stripePubKey: process.env.STRIPE_PUB_LIVE_KEY,
 		products: null,
 		payProduct: null,
 		payments: null

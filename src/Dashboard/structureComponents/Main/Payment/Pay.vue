@@ -8,15 +8,6 @@
 			<Divider />
 		</template>
 		<template #content>
-			<!-- 
-			<p>4000 0025 0000 3155</p>
-			<p>4000 0027 6000 3184</p>
-			<p>4000 0082 6000 3178</p>
-			<p>4000 0038 0000 0446</p>
-
-			<p>4242 4242 4242 4242</p>	
-			<p>2223 0031 2200 3222</p>	
- -->
 			<GooglePay class="my-5"/>
 
 			<StripeElements
@@ -115,14 +106,15 @@
 							priceId: this.payProduct.default_price,
 							description: this.payProduct.name,
 							userId: this.user.id,
-							productName: this.payProduct.name 
+							productName: this.payProduct.name, 
+							methodId: result.token.card.id,
 							/* amount: this.payProduct.amount_decimal,
 							stripeToken: result.token.id,
 							//billing_details: { name: 'fero' },
-							card: result.token.card.id,
 							//returnUrl: window.location.href,*/
 						}
 					
+
 						axios.post( this.paymentUrl , data, {
 							headers: {
 								'Content-Type': 'application/json',
@@ -146,7 +138,7 @@
 								})								
 								this.loading = false
 								this.disablePay = false
-							} )
+							})
 					}).catch( error => {
 						Toast.fire({
 							icon: 'error',

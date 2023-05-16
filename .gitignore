@@ -31,4 +31,5 @@ dist
 yarn.lock
 package-lock.json
 Dockerfile
+.env
 # End of https://www.toptal.com/developers/gitignore/api/vue,git
