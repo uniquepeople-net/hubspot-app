@@ -30,9 +30,9 @@ deploy_test:
   stage: deploy
   script:
     - apk add --no-cache --update nodejs npm rsync openssh sshpass
-    - npm install
-    - cp webpack.test.config.js webpack.config.js
-    - npm run build
+    #- npm install
+    #- cp webpack.test.config.js webpack.config.js
+    #- npm run build
     - sshpass -p $SSH_PASS rsync -ae "ssh -o StrictHostKeyChecking=no -p 28918" dist/  uid1120160@shellserver-4.websupport.sk:~/uniquepeople.cloud/sub/ufp/
     #- ssh $UID@$SERVER -p $PORT "cd $THEME_PATH && rm -r node_modules && cd src && rm -r js && rm -r scss && rm index.js"
   rules:
