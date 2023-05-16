@@ -8,7 +8,8 @@
 			<Divider />
 		</template>
 		<template #content>
-			<GooglePay class="my-5"/>
+			
+			<!-- <GooglePay class="my-5"/> -->
 
 			<StripeElements
 				v-if="stripeLoaded"

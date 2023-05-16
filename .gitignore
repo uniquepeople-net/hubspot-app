@@ -4,6 +4,7 @@
 ### Git ###
 # Created by git for backups. To disable backups in Git:
 # $ git config --global mergetool.keepBackup false
+.env
 *.orig
 
 # Created by git when using merge tools for conflicts
@@ -31,5 +32,4 @@ dist
 yarn.lock
 package-lock.json
 Dockerfile
-.env
 # End of https://www.toptal.com/developers/gitignore/api/vue,git
