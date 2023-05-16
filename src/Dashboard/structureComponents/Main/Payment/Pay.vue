@@ -39,7 +39,8 @@
 
 	export default {
 		created() {
-			var stripeKey = process.env.STRIPE_PUB_LIVE_KEY;
+			//var stripeKey = process.env.STRIPE_PUB_LIVE_KEY;
+			var stripeKey = this.stripePubKey;
 			const stripePromise = loadStripe(stripeKey)
 			stripePromise.then( response => {
 				this.stripeLoaded = true

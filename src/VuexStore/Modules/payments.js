@@ -3,7 +3,8 @@ export default {
 
 	state: () => ({
 		//stripePubKey: process.env.STRIPE_PUB_TEST_KEY,
-		stripePubKey: process.env.STRIPE_PUB_LIVE_KEY,
+		//stripePubKey: process.env.STRIPE_PUB_LIVE_KEY,
+		stripePubKey: 'pk_live_51MEDDqCf79OEZcUi57jg0pjv3sGOgQYjbCwiUVtqMvrQva0qWA8mqxqYi1WK7147ueGAycz72DUp1mxgNLt2vVBb00ick95Fh3',
 		products: null,
 		payProduct: null,
 		payments: null
