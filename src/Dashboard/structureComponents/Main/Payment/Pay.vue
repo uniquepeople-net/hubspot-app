@@ -103,20 +103,22 @@
 					.then( result => {
 					// Handle result.error or result.token
 						let data = {
-							returnUrl: window.location.origin + '/wallet/pay-status',
+							returnUrl: window.location.origin + '/' + this.$i18n.locale + '/wallet/pay-status',
 							productId: this.payProduct.id,
 							priceId: this.payProduct.default_price,
 							description: this.payProduct.name,
 							userId: this.user.id,
 							productName: this.payProduct.name, 
 							methodId: result.token.card.id,
-							/* amount: this.payProduct.amount_decimal,
+							email: this.user.email,
+							varSymbol: this.user.var_symbol,
 							stripeToken: result.token.id,
+							result: result.token
+							/* amount: this.payProduct.amount_decimal,
 							//billing_details: { name: 'fero' },
 							//returnUrl: window.location.href,*/
 						}
 					
-
 						axios.post( this.paymentUrl , data, {
 							headers: {
 								'Content-Type': 'application/json',
