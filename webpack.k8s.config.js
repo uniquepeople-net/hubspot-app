@@ -43,8 +43,12 @@ module.exports = {
 					  'css-loader',
 					  'sass-loader'
 					]
-				  }
+				  },
 				  // other vue-loader options go here
+				  compilerOptions: {
+					//exclude google-pay-button from native components
+					isCustomElement: (tag) => tag === 'google-pay-button'
+				  }
 				}
 			  },
             { 

@@ -9,16 +9,23 @@
 		</template>
 		<template #content>
 			
-			<!-- <GooglePay class="my-5"/> -->
+			<PaymentMethods />
 
-			<StripeElements
-				v-if="stripeLoaded"
-				:stripe-key="stripePubKey"
-				v-slot="{ elements }"
-				ref="elms">
-				<StripeElement type="card" :elements="elements" :options="cardOptions"
-								ref="card" @change="cardChange($event)"/>
-			</StripeElements>
+			<GooglePay class="my-4" :product="payProduct"/>
+
+			<Divider />
+
+			<div>
+				<h6 class="mb-3">Credit card:</h6>
+				<StripeElements
+					v-if="stripeLoaded"
+					:stripe-key="stripePubKey"
+					v-slot="{ elements }"
+					ref="elms">
+					<StripeElement type="card" :elements="elements" :options="cardOptions"
+									ref="card" @change="cardChange($event)"/>
+				</StripeElements>
+			</div>
 		
 			<Button type="button" @click="pay" label="Pay" class="mt-5 pay-btn" 
 			        iconPos="right" icon="pi pi-search" :disabled="disablePay">
@@ -36,6 +43,7 @@
 	import { loadStripe } from '@stripe/stripe-js'
 	import { mapGetters } from 'vuex'
 	import GooglePay from './GooglePay.vue'
+	import PaymentMethods from './PaymentMethods.vue'
 
 	export default {
 		created() {
@@ -50,7 +58,6 @@
 			if ( !this.payProduct ) {
 				this.$router.push({ name: 'wallet-info' })
 			}			
-			
 		},
 		data() {
 			return {
@@ -163,7 +170,7 @@
 							payProduct: 'payments/payProduct',
 							user: 'user/user' })
 		},
-		components: { StripeElements, StripeElement, GooglePay }
+		components: { StripeElements, StripeElement, GooglePay, PaymentMethods }
 	}
 </script>
  

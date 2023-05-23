@@ -1,7 +1,7 @@
 <template>
-	<header class="mb-3 d-flex justify-content-between">
+	<header class="mb-3 d-flex justify-content-end">
 
-		<NavLang class="nav-lang"/>
+		<!-- <NavLang class="nav-lang"/> -->
 
 		<nav class="navbar navbar-expand navbar-light navbar-top">
 			<div class="container-fluid">

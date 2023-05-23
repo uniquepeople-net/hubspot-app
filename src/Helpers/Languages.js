@@ -127,6 +127,7 @@ export const messages = {
 		Newe: 'New',
 		Confirm: 'Confirm',
 		Confirmation: 'Confirmation',
+		Language: 'Language',
 	  },
 	  validations: {
         required: "This field is required.",
@@ -263,6 +264,7 @@ export const messages = {
 		Newe: 'Nové',
 		Confirm: 'Potvrdite',
 		Confirmation: 'Potvrdenie',
+		Language: 'Jazyk',
 	  },
 	  validations: {
         required: "Toto pole je nevyhnutné.",

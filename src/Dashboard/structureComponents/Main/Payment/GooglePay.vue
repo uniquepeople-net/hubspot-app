@@ -7,31 +7,36 @@
 				apiVersion: 2,
 				apiVersionMinor: 0,
 				allowedPaymentMethods: [
-				{
-					type: 'CARD',
-					parameters: {
-					allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-					allowedCardNetworks: ['AMEX', 'VISA', 'MASTERCARD']
-					},
-					tokenizationSpecification: {
-					type: 'PAYMENT_GATEWAY',
-					parameters: {
-						gateway: 'example',
-						gatewayMerchantId: 'exampleGatewayMerchantId'
+					{
+						type: 'CARD',
+						parameters: {
+						allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+						allowedCardNetworks: ['AMEX', 'VISA', 'MASTERCARD']
+						},
+						tokenizationSpecification: {
+						type: 'PAYMENT_GATEWAY',
+						parameters: {
+							gateway: 'example',
+							gatewayMerchantId: 'exampleGatewayMerchantId'
+						}
+						}
 					}
-					}
-				}
 				],
+				merchantInfo: {
+					merchantId: '12345678901234567890',
+					merchantName: 'Demo Merchant',
+				},
 				transactionInfo: {
-				totalPriceStatus: 'FINAL',
-				totalPriceLabel: 'Total',
-				totalPrice: '100.00',
-				currencyCode: 'USD',
-				countryCode: 'US'
+					totalPriceStatus: 'FINAL',
+					totalPriceLabel: 'Total',
+					totalPrice: '1.00',
+					currencyCode: 'EUR',
+					countryCode: 'SK'
 				}
 			}"
 			v-on:loadpaymentdata="onLoadPaymentData"
-			v-on:error="onError">
+			v-on:error="onError"
+			v-on:readytopaychange="onReadyToPayChange">
 		</google-pay-button>
 	</div>
 </template>
@@ -60,8 +65,8 @@
 						tokenizationSpecification: {
 							type: 'PAYMENT_GATEWAY',
 							parameters: {
-							gateway: 'example',
-							gatewayMerchantId: 'exampleGatewayMerchantId',
+								gateway: 'example',
+								gatewayMerchantId: 'exampleGatewayMerchantId',
 							},
 						},
 						},
@@ -70,6 +75,13 @@
 						merchantId: '12345678901234567890',
 						merchantName: 'Demo Merchant',
 					},
+					transactionInfo: {
+						totalPriceStatus: 'FINAL',
+						totalPriceLabel: 'Total',
+						totalPrice: '1.00',
+						currencyCode: 'EUR',
+						countryCode: 'SK'
+					}
 				},
 			}
 		},
