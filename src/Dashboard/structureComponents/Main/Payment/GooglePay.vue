@@ -23,8 +23,8 @@
 					}
 				],
 				merchantInfo: {
-					merchantId: '12345678901234567890',
-					merchantName: 'Demo Merchant',
+					merchantId: 'BCR2DN4T7LRLJQSS',
+					merchantName: 'UFP',
 				},
 				transactionInfo: {
 					totalPriceStatus: 'FINAL',
@@ -48,7 +48,7 @@
 	export default {
 		data() {
 			return {
-				amount: '100.00',
+				amount: '1.00',
 				existingPaymentMethodRequired: false,
 				buttonColor: 'default',
 				buttonType: 'buy',
@@ -99,7 +99,7 @@
 				};
 			},
 			onReadyToPayChange: event => {
-				console.log('ready to pay change', event.detail);
+				//console.log('ready to pay change', event.detail);
 			},
 			onClick: () => {
 				console.log('click');

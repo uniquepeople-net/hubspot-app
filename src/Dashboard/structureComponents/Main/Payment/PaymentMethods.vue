@@ -1,12 +1,23 @@
 <template>
-	<div class="card flex justify-content-center">
-        <div class="flex flex-column gap-3">
-            <div v-for="category in categories" :key="category.key" class="flex align-items-center">
-                <RadioButton v-model="selectedCategory" :inputId="category.key" name="pizza" :value="category.name" />
-                <label :for="category.key" class="ml-2">{{ category.name }}</label>
-            </div>
-        </div>
-    </div>
+	<div class="mb-5">
+		<h6 class="mb-4">{{ $t('message.Choose') + ' ' + $t('message.PaymentMethod') + ':' }}</h6>
+		<div v-for="method in methods" :key="method.key" class="my-3 methods-wrapper">
+			
+				
+				<label :for="method.key" class="me-2 w-100 d-flex label-wrapper">
+					<i :class="`${method.icon} me-3`"></i>
+					<span>{{ method.name }}</span>
+				</label>
+			
+			<RadioButton v-model="selectedMethod" :inputId="method.key" name="pizza" :value="method.key" class="me-3"/>
+		</div>
+
+		<div class="d-flex justify-content-center">
+			<Button :label="$t('message.Continue')" severity="success" text raised class="mt-5 mx-auto" 
+					@click="choosedMethod"/>
+		</div>
+		
+	</div>
 </template>
  
  
@@ -16,17 +27,18 @@
 	export default {
 		data() {
 			return {
-				selectedCategory: 'Production',
-				categories: [
-					{ name: 'Accounting', key: 'A' },
-					{ name: 'Marketing', key: 'M' },
-					{ name: 'Production', key: 'P' },
-					{ name: 'Research', key: 'R' }
+				selectedMethod: 'card',
+				methods: [
+					{ name: this.$i18n.t('message.CreditDebitCard'), key: 'card', icon: 'bi bi-credit-card-2-back' },
+					{ name: 'Google Pay', key: 'google', icon: 'bi bi-google' },
+					{ name: 'Apple Pay', key: 'apple', icon: 'bi bi-apple' },
 				]
 			}
 		},
 		methods: {
- 
+			choosedMethod() {
+				this.$emit('choosedMethod', this.selectedMethod)
+			}
 		},
 		components: { RadioButton }
 	}
@@ -34,4 +46,18 @@
  
  
 <style lang='scss' scoped>
+.methods-wrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+	cursor: pointer;
+	.label-wrapper {
+		padding: .5rem .5rem;
+		cursor: pointer;
+	}
+	label {
+		flex: 1;
+	}
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<Card class="card" v-if="payProduct">
+	<Card class="card mx-auto" v-if="payProduct">
 		<template #title>
 			<h5><span class="fw-light">Title: </span>{{ payProduct.name }}</h5>
 			<h5><span class="fw-light">Description: </span>{{ payProduct.description }}</h5>
@@ -9,30 +9,35 @@
 		</template>
 		<template #content>
 			
-			<PaymentMethods />
-
-			<GooglePay class="my-4" :product="payProduct"/>
+			<PaymentMethods @choosedMethod="choosedMethod"/>
 
 			<Divider />
 
-			<div>
-				<h6 class="mb-3">Credit card:</h6>
-				<StripeElements
-					v-if="stripeLoaded"
-					:stripe-key="stripePubKey"
-					v-slot="{ elements }"
-					ref="elms">
-					<StripeElement type="card" :elements="elements" :options="cardOptions"
-									ref="card" @change="cardChange($event)"/>
-				</StripeElements>
+			<div v-if="method && method === 'google'" class="d-flex justify-content-center">
+				<GooglePay class="my-4" :product="payProduct"/>
 			</div>
-		
-			<Button type="button" @click="pay" label="Pay" class="mt-5 pay-btn" 
-			        iconPos="right" icon="pi pi-search" :disabled="disablePay">
-				Pay
-				<div v-if="loading" class="spinner-grow" role="status">
+
+			<div v-if="method && method === 'card'">
+				<div>
+					<StripeElements
+						v-if="stripeLoaded"
+						:stripe-key="stripePubKey"
+						v-slot="{ elements }"
+						ref="elms">
+						<StripeElement type="card" :elements="elements" :options="cardOptions"
+										ref="card" @change="cardChange($event)"/>
+					</StripeElements>
 				</div>
-			</Button>
+			
+				<div class="d-flex justify-content-center">
+					<Button type="button" @click="pay" label="Pay" class="mt-5 pay-btn" 
+					        iconPos="right" icon="pi pi-search" :disabled="disablePay">
+						Pay
+						<div v-if="loading" class="spinner-grow" role="status">
+						</div>
+					</Button>
+				</div>
+			</div>
 		</template>
 	</Card>
 </template>
@@ -65,6 +70,7 @@
 				loading: false,
 				stripeLoaded: false,
 				disablePay: false,
+				method: null,
 				cardOptions: {
                     hidePostalCode: true,
                     style: {
@@ -73,7 +79,7 @@
                             color: '#454D54',
                             fontWeight: '400',
                             fontFamily: 'Inter, Calibri, sans-serif',
-                            fontSize: '1.3rem',
+                            fontSize: '18px',
                             fontSmoothing: 'antialiased',
 
                             ':-webkit-autofill': {
@@ -96,6 +102,9 @@
 		methods: {
 			cardChange(e) {
 				//console.log(e)
+			},
+			choosedMethod(e) {
+				this.method = e
 			},
 			pay() {
 				const groupComponent = this.$refs.elms
@@ -139,6 +148,10 @@
 								if (action && action.type === 'redirect_to_url') {
 									window.location = action.redirect_to_url.url;
 								}
+								const success = response.data.charge.status
+								if ( success && success === 'succeeded' ) {
+									window.location = window.location.origin + '/' + this.$i18n.locale + '/wallet/pay-status'
+								}
 
 							})
 							.catch( error => {
@@ -180,7 +193,8 @@
 	max-width: 576px;
 }
 .pay-btn {
-	min-width: 300px;
+	min-width: 200px;
+	max-width: 200px;
 	justify-content: center;
 	position: relative;
 	.spinner-grow {
