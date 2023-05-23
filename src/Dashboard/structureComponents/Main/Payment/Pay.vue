@@ -21,7 +21,7 @@
 				<div>
 					<StripeElements
 						v-if="stripeLoaded"
-						:stripe-key="stripePubKey"
+						:stripe-key="stripeKey"
 						v-slot="{ elements }"
 						ref="elms">
 						<StripeElement type="card" :elements="elements" :options="cardOptions"
@@ -66,6 +66,7 @@
 		},
 		data() {
 			return {
+				stripeKey: process.env.STRIPE_PUB_LIVE_KEY,
 				stripe: null,
 				loading: false,
 				stripeLoaded: false,
