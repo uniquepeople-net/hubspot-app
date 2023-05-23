@@ -2,8 +2,8 @@ export default {
 	namespaced: true,
 
 	state: () => ({
-		stripePubKey: process.env.STRIPE_PUB_TEST_KEY,
-		//stripePubKey: process.env.STRIPE_PUB_LIVE_KEY,
+		//stripePubKey: process.env.STRIPE_PUB_TEST_KEY,
+		stripePubKey: process.env.STRIPE_PUB_LIVE_KEY,
 		//stripePubKey: 'pk_live_51MEDDqCf79OEZcUi57jg0pjv3sGOgQYjbCwiUVtqMvrQva0qWA8mqxqYi1WK7147ueGAycz72DUp1mxgNLt2vVBb00ick95Fh3',
 		//stripePubKey: 'pk_test_51MEDDqCf79OEZcUi83xIfRoEvrH9sIa2h2aE2vkcaWjajZv4WfC2Y91HEek2gm2qMIAdD1yXjUjVBqY0TE256ZiA00ZlXgpZjo',
 		products: null,
