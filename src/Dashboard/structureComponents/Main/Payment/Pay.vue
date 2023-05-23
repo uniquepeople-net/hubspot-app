@@ -21,7 +21,7 @@
 				<div>
 					<StripeElements
 						v-if="stripeLoaded"
-						:stripe-key="stripeKey"
+						:stripe-key="stripePubKey"
 						v-slot="{ elements }"
 						ref="elms">
 						<StripeElement type="card" :elements="elements" :options="cardOptions"
@@ -66,7 +66,7 @@
 		},
 		data() {
 			return {
-				stripeKey: process.env.STRIPE_PUB_LIVE_KEY,
+				//stripeKey: process.env.STRIPE_PUB_LIVE_KEY,
 				stripe: null,
 				loading: false,
 				stripeLoaded: false,
@@ -149,11 +149,19 @@
 								if (action && action.type === 'redirect_to_url') {
 									window.location = action.redirect_to_url.url;
 								}
+
 								const success = response.data.charge.status
 								if ( success && success === 'succeeded' ) {
 									window.location = window.location.origin + '/' + this.$i18n.locale + '/wallet/pay-status'
+								} else {
+									Toast.fire({
+										icon: 'error',
+										timer: 8000,
+										title: response.data.charge.status
+									})								
+									this.loading = false
+									this.disablePay = false
 								}
-
 							})
 							.catch( error => {
 								Toast.fire({
