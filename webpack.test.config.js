@@ -7,6 +7,8 @@ const path = require('path');
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
+	mode: 'production',
+  	devtool: 'none',
     entry: {
         app: ['./src/main.js'],
        	//mazer: ['./src/mazer.js'],
