@@ -8,7 +8,7 @@ const Dotenv = require('dotenv-webpack');
 
 module.exports = {
 	mode: 'production',
-  	devtool: 'none',
+  	devtool: false,
     entry: {
         app: ['./src/main.js'],
        	//mazer: ['./src/mazer.js'],
@@ -20,7 +20,7 @@ module.exports = {
         },
 		fullySpecified: false,
     },
-    devtool: "eval",
+    //devtool: "eval",
     output: {
         filename: "[name].js",
         path: path.resolve(__dirname, "./dist"),
