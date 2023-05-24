@@ -9,7 +9,7 @@ export default {
 
 	mutations: {
 		SETUSER( state, data ) {
-			state.user = {...data.user};
+			state.user = {...data.user, memberships: [...data.memberships]};
 			state.user.fee = Boolean(state.user.fee)			
 		},
 		SETUNAUTH( state, data ) {

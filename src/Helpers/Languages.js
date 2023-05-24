@@ -132,6 +132,11 @@ export const messages = {
 		Confirm: 'Confirm',
 		Confirmation: 'Confirmation',
 		Language: 'Language',
+		Yearly: 'Yearly',
+		fee: 'fee',
+		Membership: 'Membership',
+		Paid: 'Paid',
+		Unpaid: 'Unpaid',
 	  },
 	  validations: {
         required: "This field is required.",
@@ -273,6 +278,11 @@ export const messages = {
 		Confirm: 'Potvrdite',
 		Confirmation: 'Potvrdenie',
 		Language: 'Jazyk',
+		Yearly: 'Ročný',
+		fee: 'poplatok',
+		Membership: 'Členstvo',
+		Paid: 'Uhradené',
+		Unpaid: 'Neuhradené',
 	  },
 	  validations: {
         required: "Toto pole je nevyhnutné.",
