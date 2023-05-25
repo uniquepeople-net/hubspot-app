@@ -5,10 +5,32 @@ const { VueLoaderPlugin } = require('vue-loader')
 const webpack = require('webpack');
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
+	optimization: {
+		minimize: true,
+		minimizer: [
+		  new TerserPlugin({
+			terserOptions: {
+				sourceMap: false,
+				format: {
+					comments: false,
+				},
+				compress: {
+					drop_console: true, // Remove console.log statements
+				},
+				mangle: {
+					// Options for name mangling
+					keep_fnames: false, // Do not preserve function names
+				},
+			},
+			extractComments: false,
+		  }),
+		],
+	},
 	mode: 'production',
-  	devtool: false,
+  	devtool: 'nosources-source-map',
     entry: {
         app: ['./src/main.js'],
        	//mazer: ['./src/mazer.js'],
