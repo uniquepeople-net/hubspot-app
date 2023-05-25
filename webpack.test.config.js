@@ -42,7 +42,6 @@ module.exports = {
         },
 		fullySpecified: false,
     },
-    //devtool: "eval",
     output: {
         filename: "[name].js",
         path: path.resolve(__dirname, "./dist"),

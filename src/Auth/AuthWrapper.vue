@@ -1,7 +1,7 @@
 <template>
 	<div id="auth">
 		<div class="row h-100">
-			<div class="col-lg-5 col-12">
+			<div class="col-lg-12 col-12">
 				<div id="auth-left">
 					<NavLang class="auth-lang"/>
 
@@ -13,11 +13,12 @@
 				
 					<slot name="body"></slot>
 					
+					<slot name="footer"></slot>
 				</div>
 			</div>
-			<div class="col-lg-7 d-none d-lg-block">
+			<!-- <div class="col-lg-7 d-none d-lg-block">
 				<div id="auth-right"></div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </template>
@@ -57,5 +58,9 @@
 		position: absolute;
 		top: 1rem;
 		left: 1rem;
+	}
+	#auth-left {
+		max-width: 768px;
+		margin: auto;
 	}
 </style>

@@ -42,8 +42,6 @@
 			},
 			membership() {
 				let membershipObj = this.user.memberships.filter( m => m.id === this.user.membership_id )
-				console.log(membershipObj[0])
-				
 				return membershipObj[0].name
 			}
 		},

@@ -7,6 +7,7 @@ export default {
 		userProfileApiGwUrl: 	DOMAIN_URL + '/api/user-profile',
 		refreshApiGwUrl: 		DOMAIN_URL + '/api/refresh',
 		registerApiGwUrl: 		DOMAIN_URL + '/api/register',
+		registerNewApiGwUrl: 	DOMAIN_URL + '/api/register-new',
 		reqPassForget:			DOMAIN_URL + '/api/req-password-reset',
 		updatePassword:			DOMAIN_URL + '/api/update-password',
 
@@ -102,6 +103,9 @@ export default {
 		},
 		registerApiGwUrl(state) {
 			return state.registerApiGwUrl
+		},
+		registerNewApiGwUrl(state) {
+			return state.registerNewApiGwUrl
 		},
 		reqPassForget(state) {
 			return state.reqPassForget

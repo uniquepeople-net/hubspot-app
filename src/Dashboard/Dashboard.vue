@@ -4,7 +4,13 @@
 
 		<div id="main" :class="activeSidebar ? 'main-active-sidebar' : ''">
 			<NavHeader class="navbar"/>	
+			
 			<router-view></router-view>
+			<!-- <router-view v-slot="{ Component }">
+				<transition name="fade">
+					<component :is="Component" />
+				</transition>
+			</router-view> -->
 		</div>
 	</div>
 </template>
@@ -85,4 +91,15 @@
 		margin-left: 12rem;
 	}
 }
+/* .fade-enter-active {
+	transition: all .8s;
+}
+.fade-leave-active {
+  	transition: all 0.2s;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  scale: .99;
+} */
 </style>

@@ -1,51 +1,61 @@
 <template>
-	<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
-            <div class="flex align-items-center flex-column pt-6 px-3">
-                <i class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
-                <h5 class="mt-3">{{ error }}</h5>
-            </div>
-            <template #footer>
-                <div class="flex justify-content-center">
-                    <Button label="OK" @click="toggleDialog" class="p-button-text" />
-                </div>
-            </template>
-    </Dialog>
+	<div>
+		<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
+	            <div class="flex align-items-center flex-column pt-6 px-3">
+	                <i class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
+	                <h5 class="mt-3">{{ error }}</h5>
+	            </div>
+	            <template #footer>
+	                <div class="flex justify-content-center">
+	                    <Button label="OK" @click="toggleDialog" class="p-button-text" />
+	                </div>
+	            </template>
+	    </Dialog>
+		
 	
-
-	<AuthWrapper>
-		<template v-slot:title>
-			<h1 class="auth-title mb-4">{{ $t('message.Login') }}</h1>
-		</template>
-
-		<template v-slot:body>
-			<form action="index.html" @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
-				<div class="form-group position-relative has-icon-left mb-4 p-inputgroup mb-5 col-12">
-					<InputIcon icon="pi pi-envelope"></InputIcon>
-					<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
-								name="email" placeholder="Email"/>
-
-					<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
-				</div>
-				<div class="form-group position-relative has-icon-left mb-4 p-inputgroup mb-5 col-12">
-					<InputIcon icon="pi pi-lock"></InputIcon>
-					<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
-								name="password" :placeholder="$t('message.Password')" :feedback="false">
-					</Password>
+		<AuthWrapper>
+			<template v-slot:title>
+				<h1 class="auth-title mb-4">{{ $t('message.Login') }}</h1>
+			</template>
 	
-					<InputError :validator="v$.password" :submitted="submitted" :replace="$t('message.Password')"></InputError>
+			<template v-slot:body>
+				<form action="index.html" @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
+					<div class="form-group position-relative has-icon-left mb-4 p-inputgroup mb-5 col-12">
+						<InputIcon icon="pi pi-envelope"></InputIcon>
+						<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
+									name="email" placeholder="Email"/>
+	
+						<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
+					</div>
+					<div class="form-group position-relative has-icon-left mb-4 p-inputgroup mb-5 col-12">
+						<InputIcon icon="pi pi-lock"></InputIcon>
+						<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
+									name="password" :placeholder="$t('message.Password')" :feedback="false">
+						</Password>
+		
+						<InputError :validator="v$.password" :submitted="submitted" :replace="$t('message.Password')"></InputError>
+					</div>
+					<div class="position-relative text-center mt-5">
+						<Button type="submit" :label="$t('message.LoginV')" class="submit-btn btn btn-primary btn-block btn-lg shadow-lg" :loading="loading"/>
+					</div>
+				</form>
+				<div class="text-center mt-5 text-lg fs-4">
+					<Button :label="$t('message.ForgotPassword') + ' ?'" 
+							class="font-bold p-button-raised p-button-secondary p-button-text"
+							@click="redirectForgot"></Button>
 				</div>
-				<div class="position-relative text-center mt-5">
-					<Button type="submit" :label="$t('message.LoginV')" class="submit-btn btn btn-primary btn-block btn-lg shadow-lg" :loading="loading"/>
+			</template>
+	
+			<template v-slot:footer>
+				<div class="mt-4 center-center">
+					<span class="registered-text">{{ $t('message.Notregistered') + '?' }}</span>
+					<Button :label="$t('message.Create') + ' ' +  $t('message.Account')" 
+							severity="secondary" text @click="redirectRegister"/>
 				</div>
-			</form>
-			<div class="text-center mt-5 text-lg fs-4">
-				<Button :label="$t('message.ForgotPassword') + ' ?'" 
-						class="font-bold p-button-raised p-button-secondary p-button-text"
-						@click="redirectForgot"></Button>
-			</div>
-		</template>
-
-	</AuthWrapper>
+			</template>
+	
+		</AuthWrapper>
+	</div>
 </template>
  
  
@@ -124,7 +134,7 @@ export default {
             this.showMessage = !this.showMessage;
         
             if(!this.showMessage) {
-                this.resetForm();
+                //this.resetForm();
             }
         },
         resetForm() {
@@ -134,6 +144,9 @@ export default {
         },
 		redirectForgot() {
 			this.$router.push({name: 'forgot'})
+		},
+		redirectRegister() {
+			this.$router.push({name: 'register'})
 		}
     },
 	components: { AuthWrapper }
@@ -173,4 +186,8 @@ export default {
 	margin: auto;
 	margin-left: .5rem;
 }
+.registered-text {
+	font-size: .8rem;
+}
+
 </style>

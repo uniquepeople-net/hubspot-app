@@ -12,6 +12,7 @@ import Login from '../Auth/Login.vue';
 import Logout from '../Auth/Logout.vue';
 import Forget from '../Auth/Forget.vue';
 import UpdatePassword	from '../Auth/UpdatePassword.vue';
+import Register from '../Auth/Register.vue';
 
 import Dashboard from '../Dashboard/Dashboard.vue';
 
@@ -215,6 +216,7 @@ export const routes = [
     { path: '/:lang/logout', component: Logout, name:'logout' },
     { path: '/:lang/forgot', component: Forget, name:'forgot' },
     { path: '/:lang/update-password', component: UpdatePassword, name:'update-password' },
+    { path: '/:lang/register', component: Register, name:'register' },
 
 	{ path: '/:lang/survey/:slug', component: Survey, name:'survey', props: true ,
 	
