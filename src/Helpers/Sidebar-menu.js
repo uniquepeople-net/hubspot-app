@@ -110,6 +110,11 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 				to: {name: 'surveys-all'},
 				command: () => sidebarHide()
 			},
+			{
+				label: 'App',
+				to: {name: 'app-settings'},
+				command: () => sidebarHide()
+			},
 		]
 	},
 	{

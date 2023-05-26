@@ -28,7 +28,7 @@
 							<form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
 		
 								<div class="row">
-									<div class="inputgroup mb-5 col-12 col-xxl-6">
+									<div class="inputgroup mb-5 col-12">
 										<InputIcon icon="pi pi-user"></InputIcon>
 										<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
 												name="name" :placeholder="$t('message.Name')"/>
@@ -36,7 +36,7 @@
 										<InputError :validator="v$.name" :submitted="submitted" replace="Name"></InputError>
 									</div>
 		
-									<div class="inputgroup mb-5 col-12 col-xxl-6">
+									<div class="inputgroup mb-5 col-12">
 										<InputIcon icon="pi pi-user"></InputIcon>
 										<InputText id="surname" v-model="v$.surname.$model" :class="{'p-invalid':v$.surname.$invalid && submitted}" 
 												name="surname" :placeholder="$t('message.Surname')"/>
@@ -44,7 +44,7 @@
 										<InputError :validator="v$.surname" :submitted="submitted" replace="Surname"></InputError>
 									</div>
 		
-									<div class="inputgroup mb-5 col-12 col-xxl-6">
+									<div class="inputgroup mb-5 col-12">
 										<InputIcon icon="pi pi-envelope"></InputIcon>
 										<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}"
 													name="email" placeholder="Email"/>
@@ -52,7 +52,7 @@
 										<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
 									</div>
 		
-									<!-- <div class="inputgroup mb-5 col-12 col-xxl-6">
+									<!-- <div class="inputgroup mb-5 col-12">
 										<InputIcon icon="bi bi-telephone"></InputIcon>
 										<InputMask id="countryCode" v-model="v$.countryCode.$model" :class="{'p-invalid':v$.countryCode.$invalid && submitted}" 
 												name="countryCode" placeholder="+9999" mask="+99?99"/>
@@ -63,7 +63,7 @@
 										<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
 									</div> -->
 		
-									<div class="inputgroup mb-5 col-12 col-xxl-6">
+									<div class="inputgroup mb-5 col-12">
 										<InputIcon icon="pi pi-lock"></InputIcon>
 										<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
 												name="password" :placeholder="$t('message.Password')">
@@ -80,7 +80,7 @@
 										<InputError :validator="v$.password" :submitted="submitted" replace="Password"></InputError>
 									</div>
 
-									<div class="inputgroup mb-5 col-12 col-lg-6">
+									<div class="inputgroup mb-5 col-12">
 										<InputIcon icon="pi pi-lock"></InputIcon>
 										<Password id="password_confirmation" v-model="v$.password_confirmation.$model" :class="{'p-invalid':v$.password_confirmation.$invalid && submitted}" toggleMask
 												name="password_confirmation" :placeholder="$t('message.ConfirmPassword')">

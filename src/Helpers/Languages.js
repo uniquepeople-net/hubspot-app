@@ -181,7 +181,7 @@ export const messages = {
 		Submit: 'Poslať',
 		Password: 'Heslo',
 		password: 'heslo',
-		ForgotPasswordNotice: 'Vložte sem Váš prihlasovací email, na ktorý pošleme link na reset hesla.',
+		ForgotPasswordNotice: 'Vložte sem Váš prihlasovací email, na ktorý pošleme link pre reset hesla.',
 		EmailRequired: 'Email je potrebný.',
 		EmailNotValid: 'Email nie je platný.',
 		UpdatePassword: 'Zmena hesla.',

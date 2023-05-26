@@ -73,6 +73,9 @@ import AnswerStep from '../Dashboard/structureComponents/Main/Settings/Surveys/A
 import AnswerResults from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/AnswerResults.vue';
 import SuccessPage from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/SuccessPage.vue';
 
+import AppSettings from '../Dashboard/structureComponents/Main/Settings/AppSettings/AppSettings.vue'
+import AppSettingsAll from '../Dashboard/structureComponents/Main/Settings/AppSettings/AppSettingsAll.vue'
+
 import NotFound from '../Dashboard/global/NotFound.vue';
 
 
@@ -203,6 +206,14 @@ export const routes = [
 							{ path: 'add-new', component: SurveyAddNew, name: 'add-new-survey', props: true },
 
 							{ path: 'results/:survey_id', component: AnswerResults, name: 'answer-results', props: true },
+						]
+
+					},
+
+					{ path: 'app-settings', component: AppSettings, name: 'app-settings', props: true, redirect: { name: 'app-settings-all' },
+					
+						children: [
+							{ path: 'all', component: AppSettingsAll, name: 'app-settings-all', props: true },
 						]
 
 					},

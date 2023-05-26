@@ -15,7 +15,7 @@ export default {
 
 <style lang="scss" scoped>
 .fade-enter-active {
-	transition: all .5s;
+	transition: opacity .5s;
 }
 .fade-leave-active {
   	transition: all 0.2s;

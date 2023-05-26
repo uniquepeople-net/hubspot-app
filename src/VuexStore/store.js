@@ -13,6 +13,7 @@ import news from './Modules/news'
 import groups from './Modules/groups'
 import surveys from './Modules/surveys'
 import documents from './Modules/documents'
+import emailsSet from './Modules/emailsSet';
 
 const store = createStore({
 	modules: {
@@ -28,7 +29,8 @@ const store = createStore({
 		news,
 		groups,
 		surveys,
-		documents
+		documents,
+		emailsSet,
 	}
 })
 

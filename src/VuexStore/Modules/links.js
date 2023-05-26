@@ -73,6 +73,9 @@ export default {
 		// Documents links
 		documents:					DOMAIN_URL + '/api/documents',
 
+		// Emails settings links
+		emailsSet:					DOMAIN_URL + '/api/settings-emails',
+
 		// Surveys links
 		surveys:					DOMAIN_URL + '/api/surveys',
 		addSurvey:					DOMAIN_URL + '/api/surveys/store',
@@ -237,6 +240,11 @@ export default {
 		// Documents getters
 		documents( state ) {
 			return state.documents
+		},
+
+		// Emails settings getters
+		emailsSet( state ) {
+			return state.emailsSet
 		},
 
 		// Surveys getters
