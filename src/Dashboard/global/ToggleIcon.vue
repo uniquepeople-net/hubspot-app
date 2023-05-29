@@ -8,10 +8,12 @@
  
 <script>
 	export default {
-		props: ['data'],
+		props:{
+			value: Boolean
+		},
 		data() {
 			return {
-				dataComp: this.data
+				dataComp: this.value
 			}
 		},
 		methods: {

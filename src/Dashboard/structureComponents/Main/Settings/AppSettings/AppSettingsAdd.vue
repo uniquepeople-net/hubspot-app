@@ -6,9 +6,6 @@
 				<i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
 				<h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
 				<h6 v-if="response.error" v-for="(error, index) in response.error" class="mt-3">{{ index + ': ' + error[0].replace('validation.', '') }}</h6>
-				<p v-if="response.message" :style="{lineHeight: 1.5}">
-					{{ $t('message.Youraccountisregisteredundername') }} <b>{{name}} </b> {{ $t('message.andemail') }} <b>{{email}}</b>.
-				</p>
 			</div>
 			<template #footer>
 				<div class="flex justify-content-center">
@@ -24,51 +21,49 @@
 							@click="addItem"/>
 				</div>
 
-				<div class="row" v-for="(d, index) in data">
-					<div class="inputgroup col-12 col-lg-6 mb-3 mb-lg-0">
+				<div class="row" v-for="(d, index) in data" :key="index">
+					<div class="inputgroup col-12 col-lg-6 mb-5 mb-lg-0 position-relative">
 						<InputIcon icon="pi pi-envelope"></InputIcon>
-						<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted, 'w-100': true}"
+						<InputText id="email" v-model="d.email" :class="{'p-invalid':validateEmail(d.email), 'w-100': true}"
 									name="email" placeholder="Email"/>
 
-						<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
+						<small v-if="validateEmail(d.email)" class="error-msg">Insert valid email</small>
 					</div>
 
 					<div class="inputgroup col-12 col-lg-6">
 						<InputIcon icon="bi bi-card-heading"></InputIcon>
-						<InputText id="title" v-model="v$.title.$model" :class="{'p-invalid':v$.title.$invalid && submitted, 'w-100': true}" 
+						<InputText id="title" v-model="d.title" :class="{'p-invalid':validateTitle(d.title), 'w-100': true}" 
 								name="title" placeholder="Title"/>
 					
-						<InputError :validator="v$.title" :submitted="submitted" replace="Title"></InputError>
+						<small v-if="validateTitle(d.title)" class="error-msg">Insert title between 2 and 255 characters</small>
 					</div>
 
 					<div class="col-12 col-lg-4 mb-3 mb-lg-0 mt-3 d-flex align-items-center">
-						<span class="me-2">Report:</span><ToggleIcon class="d-inline"/>
-						<span class="me-2 ms-5">Contact:</span><ToggleIcon class="d-inline"/>
+						<span class="me-2">Report:</span>
+							<ToggleIcon class="d-inline" :value="d.report" @toggleValue="toggleValue( index, 'report', $event )"/>
+						<span class="me-2 ms-5">Contact:</span>
+							<ToggleIcon class="d-inline" :value="d.contact" @toggleValue="toggleValue( index, 'contact', $event )"/>
 					</div>
 
 					<div class="col-12 col-lg-8 d-flex align-items-center justify-content-end">
 						<Button icon="bi bi-dash-lg" class="p-button-rounded p-button-danger p-button-text" 
-							@click="removeItem(index)"/>
+								@click="removeItem(index)"/>
 					</div>
-						<Divider />
+
+					<Divider />
 				</div>
 
 				<div class="position-relative text-center mt-2">
 					<Button type="submit" :label="$t('message.Submit')" 
-							class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg" :loading="loading"/>
+							class="submit-btn btn btn-primary btn-block btn-lg shadow-lg" :loading="loading"
+							@click="handleSubmit"/>
 				</div>
-
-			
 		</div>
 					
-			
     </div>
 </template>
 
 <script>
-
-import { required, email, minLength, sameAs } from "../../../../../plugins/vuelidate-i18n";
-import { useVuelidate } from "@vuelidate/core";
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 
@@ -76,7 +71,6 @@ import ToggleIcon from '../../../../global/ToggleIcon.vue';
 
 
 export default {
-    setup: () => ({ v$: useVuelidate() }),
     data() {
         return {
 			data: [],
@@ -85,13 +79,9 @@ export default {
             submitted: false,
             showMessage: false,
 			response: null,
-			loading: false
-        }
-    },
-    validations() {
-        return {
-            title: { required, minLength: minLength(2) },
-            email: {  required, email },
+			loading: false,
+			validEmail: false,
+			validTitle: false
         }
     },
     methods: {
@@ -100,28 +90,57 @@ export default {
 			this.data.push(obj)
 		},
 		removeItem(index) {
-			console.log(index)
 			this.data = this.data.filter( (d, i) => i !== index )
 		},
-        handleSubmit(isFormValid) {
+		toggleValue(index, title, value) {
+			console.log(index, title, value)
+			this.data = this.data.map( (d, i) => {
+				if ( index === i ) {
+					console.log(d, d[title])
+					
+					return { ...d, [title]: value }
+				}
+			})
+		},
+		validateEmail(value) {
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;			
+			if ( !emailRegex.test(value) ) {
+				this.validEmail = false 
+				return true
+			 } else {
+				this.validEmail = true
+				return false
+			 }
+		},
+		validateTitle(title) {
+			if ( title.length <= 2 || title.length >= 255 ) {
+				this.validTitle = false
+				return true
+			} else {
+				this.validTitle = true
+				return false
+			}
+		},
+        handleSubmit() {
             this.submitted = true;
+			this.data.map( d => {
+				this.validateEmail(d.email)
+				this.validateTitle(d.title)
+			})
 
-            if (!isFormValid) {
-                return;
-            }
+			if ( !this.validEmail || !this.validTitle ) return
 
-			this.loading = true
+
+            this.loading = true
 
 			let data = {
-				title: this.title,
-				email: this.email,
+				emails: this.data
 			}
 
-			this.sendEmails( this.registersApiGwUrl, data )			
+			this.sendEmails( this.sendEmailsUrl, data )			
         },
         toggleDialog() {
             this.showMessage = !this.showMessage;
-        
             if ( this.response && this.response.status === 'success') {
 				//this.resetForm()				
 			}
@@ -133,7 +152,9 @@ export default {
         },
 		async sendEmails(url, data) {
 
-			const user = await axios.post( url, data, {
+			await User.refreshedToken();
+
+			await axios.post( url, data, {
 				headers: {
 					Authorization: 'Bearer ' + User.getToken()
 				}
@@ -141,6 +162,7 @@ export default {
 				resp => {
 					this.response = resp.data
 					this.toggleDialog()
+					this.$store.dispatch("emailsSet/getEmailsSet");
 					this.loading = false
 				}				
 			).catch( error => {
@@ -157,7 +179,7 @@ export default {
 		}
     },
 	computed: {
-		...mapGetters({ registersApiGwUrl: 'links/registerNewApiGwUrl' }),
+		...mapGetters({ sendEmailsUrl: 'links/emailsSet' }),
 	},
 	components: { ToggleIcon }
 }
@@ -190,5 +212,14 @@ export default {
 }
 #countryCode {
 	max-width: 6rem;
+}
+.error-msg {
+	position: absolute;
+	top: 100%;
+	font: {
+		size: .8rem;
+		weight: 400;
+	}
+	color: var(--red-600);
 }
 </style>

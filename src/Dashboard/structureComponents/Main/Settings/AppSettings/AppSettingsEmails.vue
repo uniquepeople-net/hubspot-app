@@ -13,18 +13,18 @@
 					<Column field="title" header="Title"></Column>
 					<Column field="report" header="Report">
 						<template #body="slotProps">
-							<ToggleIcon :data="slotProps.data.report" @toggleValue="toggleReport(slotProps.data, $event)"/>
+							<ToggleIcon :value="slotProps.data.report" @toggleValue="toggleReport(slotProps.data, $event)"/>
 						</template>
 					</Column>
 					<Column field="contact" header="Contact">
 						<template #body="slotProps">
-							<ToggleIcon :data="slotProps.data.contact" @toggleValue="toggleContact(slotProps.data, $event)"/>
+							<ToggleIcon :value="slotProps.data.contact" @toggleValue="toggleContact(slotProps.data, $event)"/>
 						</template>
 					</Column>
 					<Column>
 						<template #body="slotProps">
 							<DeleteItem :delete="true" :itemId="slotProps.data.id" 
-										:itemName="slotProps.data.title"
+										:itemName="slotProps.data.title" callback="emailsSet/getEmailsSet"
 										item="email" url="/api/settings-emails/" redirectRoute="app-settings"></DeleteItem>
 						</template>
 					</Column>
