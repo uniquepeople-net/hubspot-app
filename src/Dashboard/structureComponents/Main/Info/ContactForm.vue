@@ -20,7 +20,7 @@
 				<form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
 
 					<div class="row">
-						<div class="inputgroup mb-5 col-12">
+						<!-- <div class="inputgroup mb-5 col-12">
 							<InputIcon icon="pi pi-user"></InputIcon>
 							<InputText id="name" name="name" :placeholder="user.name" disabled/>
 						</div>
@@ -28,7 +28,7 @@
 						<div class="inputgroup mb-5 col-12">
 							<InputIcon icon="pi pi-envelope"></InputIcon>
 							<InputText id="email" name="email" :placeholder="user.email" disabled/>
-						</div>
+						</div> -->
 
 						<div class="mb-5 col-12">
 							<Textarea :autoResize="true" rows="5" cols="30" v-model="v$.textArea.$model" 
@@ -36,10 +36,10 @@
 							<InputError :validator="v$.textArea" :submitted="submitted" replace="Text"></InputError>
 						</div>
 
-						<div class="select-rec mb-5 col-12">
+						<div class="select-rec mb-5 col-12" v-if="recipients">
 							<h5 class="me-3">{{ $t('message.To') + ':' }}</h5>
 							<Dropdown v-model="v$.selectedRecipient.$model" :options="recipients" :class="{'p-invalid':v$.selectedRecipient.$invalid && submitted}"
-									  optionLabel="name" optionValue="code" :placeholder="$t('message.SelectRecipient')" />
+									  optionLabel="title" optionValue="email" :placeholder="$t('message.SelectRecipient')" />
 							<InputError :validator="v$.selectedRecipient" :submitted="submitted" replace="Recipient"></InputError>
 						</div>
 					</div>
@@ -63,16 +63,14 @@
 	import { mapGetters } from 'vuex'; 
 
 	export default {
+		created() {
+			this.$store.dispatch("emailsSet/getEmailsSet");
+		},
 		setup: () => ({ v$: useVuelidate() }),
 		data() {
 			return {
 				textArea: '',
 				selectedRecipient: null,
-				recipients: [
-					{ name: 'UFP advisor', code: 'branobolech@gmail.com', id: 8405 },
-					{ name: 'Technical Support', code: 'Miroslav.Viazanko@uniquepeople.net', id: 8200 },
-					{ name: 'UFP Law advise', code: 'viazanko@pobox.sk', id: 202 },
-				],
 				submitted: false,
 				disabledBtn: false,
 				spinner: false,
@@ -119,13 +117,17 @@
 				this.selectedRecipient = null;
 			},
 			getName() {
-				let selected = this.recipients.filter( rec => rec.code === this.selectedRecipient )
+				let selected = this.recipients.filter( rec => rec.email === this.selectedRecipient )
 				return selected[0]
 			}
 		},
 		computed: {
 			...mapGetters({ user: 'user/user',
-							emailResponse: 'emails/response' }),
+							emailResponse: 'emails/response',
+							emails: 'emailsSet/emails' }),
+			recipients() {
+				return this.emails ? this.emails.filter( r => r.contact === true) : []
+			}
 		},
 		watch: {
 			emailResponse: function(data) {
@@ -136,11 +138,6 @@
 				}
 			}
 		}
-		/*
-		patrik.abraham336@gmail.com
-		almasi.laci11@gmail.com
-		dragan14kv@gmail.com
-		baezaldo1988@hotmail.com*/
 	}
 </script>
  

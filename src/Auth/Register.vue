@@ -7,7 +7,7 @@
 				<h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
 				<h6 v-if="response.error" v-for="(error, index) in response.error" class="mt-3">{{ index + ': ' + error[0].replace('validation.', '') }}</h6>
 				<p v-if="response.message" :style="{lineHeight: 1.5}">
-					{{ $t('message.Youraccountisregisteredundername') }} <b>{{name}} </b> {{ $t('message.andemail') }} <b>{{email}}</b>.
+					{{ $t('message.Youraccountisregisteredundername') }} <b>{{name}} {{surname}}</b> {{ $t('message.andemail') }} <b>{{email}}</b>.
 				</p>
 			</div>
 			<template #footer>

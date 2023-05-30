@@ -39,10 +39,10 @@
 					</div>
 
 					<div class="col-12 col-lg-4 mb-3 mb-lg-0 mt-3 d-flex align-items-center">
-						<span class="me-2">Report:</span>
-							<ToggleIcon class="d-inline" :value="d.report" @toggleValue="toggleValue( index, 'report', $event )"/>
-						<span class="me-2 ms-5">Contact:</span>
+						<span class="me-2">Contact:</span>
 							<ToggleIcon class="d-inline" :value="d.contact" @toggleValue="toggleValue( index, 'contact', $event )"/>
+						<span class="me-2 ms-5">Report:</span>
+							<ToggleIcon class="d-inline" :value="d.report" @toggleValue="toggleValue( index, 'report', $event )"/>
 					</div>
 
 					<div class="col-12 col-lg-8 d-flex align-items-center justify-content-end">
@@ -71,11 +71,12 @@ import ToggleIcon from '../../../../global/ToggleIcon.vue';
 
 
 export default {
+	props: {
+		existingEmails: Object
+	},
     data() {
         return {
 			data: [],
-            title: '',
-            email: '@',
             submitted: false,
             showMessage: false,
 			response: null,
@@ -86,20 +87,18 @@ export default {
     },
     methods: {
 		addItem() {
-			let obj = { email: '', title: '', report: false, contact: false }
+			let obj = { email: '@', title: '', report: false, contact: false }
 			this.data.push(obj)
 		},
 		removeItem(index) {
 			this.data = this.data.filter( (d, i) => i !== index )
 		},
 		toggleValue(index, title, value) {
-			console.log(index, title, value)
 			this.data = this.data.map( (d, i) => {
-				if ( index === i ) {
-					console.log(d, d[title])
-					
+				if ( index === i ) {					
 					return { ...d, [title]: value }
 				}
+				return d
 			})
 		},
 		validateEmail(value) {
@@ -127,14 +126,14 @@ export default {
 				this.validateEmail(d.email)
 				this.validateTitle(d.title)
 			})
-
-			if ( !this.validEmail || !this.validTitle ) return
-
+			
+			if ( this.data.length && (!this.validEmail || !this.validTitle) ) return
 
             this.loading = true
 
 			let data = {
-				emails: this.data
+				emails: this.data,
+				existingEmails: this.existingEmails
 			}
 
 			this.sendEmails( this.sendEmailsUrl, data )			
@@ -162,8 +161,9 @@ export default {
 				resp => {
 					this.response = resp.data
 					this.toggleDialog()
-					this.$store.dispatch("emailsSet/getEmailsSet");
+					this.data = []
 					this.loading = false
+					this.$store.dispatch("emailsSet/getEmailsSet");
 				}				
 			).catch( error => {
 				Toast.fire({

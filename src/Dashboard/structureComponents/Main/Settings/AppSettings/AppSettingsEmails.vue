@@ -8,17 +8,18 @@
 			</template>
 
 			<template #content>
-				<DataTable v-if="emails" :value="emails" tableStyle="min-width: 50rem">
+				<Skeleton v-if="!emails" height="2rem" class="mb-2"></Skeleton>
+				<DataTable v-if="emails" :value="emailsData" tableStyle="min-width: 50rem">
 					<Column field="email" header="Email"></Column>
 					<Column field="title" header="Title"></Column>
-					<Column field="report" header="Report">
-						<template #body="slotProps">
-							<ToggleIcon :value="slotProps.data.report" @toggleValue="toggleReport(slotProps.data, $event)"/>
-						</template>
-					</Column>
 					<Column field="contact" header="Contact">
 						<template #body="slotProps">
 							<ToggleIcon :value="slotProps.data.contact" @toggleValue="toggleContact(slotProps.data, $event)"/>
+						</template>
+					</Column>
+					<Column field="report" header="Report">
+						<template #body="slotProps">
+							<ToggleIcon :value="slotProps.data.report" @toggleValue="toggleReport(slotProps.data, $event)"/>
 						</template>
 					</Column>
 					<Column>
@@ -35,7 +36,7 @@
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h6><span class="fw-normal">Add Emails</span></h6>
 				</div>
-				<AppSettingsAdd />
+				<AppSettingsAdd :existingEmails="emailsData"/>
 			</template>
 		</Card>
 	</div>
@@ -54,7 +55,7 @@
 		},
 		data() {
 			return {
-				emailsData: null
+				emailsData: []
 			}
 		},
 		methods: {

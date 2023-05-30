@@ -18,14 +18,16 @@ export default {
 	actions: {
 		async getEmailsSet(context) {
 			let emailsUrl = context.rootGetters['links/emailsSet']
-
+			
 			await User.refreshedToken();
-
+			
+			context.commit("SETEMAILS", null)
+			
 			await axios.get( emailsUrl, {
-						headers: {
-							Authorization: 'Bearer ' + User.getToken()
-						}
-					}).then( response => {
+				headers: {
+					Authorization: 'Bearer ' + User.getToken()
+				}
+			}).then( response => {
 						if(response.data) {
 							response.data.map( r => {
 								r.report = Boolean(r.report)
