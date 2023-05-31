@@ -144,7 +144,7 @@ export const messages = {
 		RegisterV: 'Register',
 		ConfirmPassword: 'Confirm Password',
 		Youraccountisregisteredundername: 'Your account is registered under name:',
-		andemail: 'and email:',
+		andemail: 'and we have sent verify link on your email:',
 		Alreadyaccount: 'Already have account',
 	  },
 	  validations: {
@@ -299,7 +299,7 @@ export const messages = {
 		RegisterV: 'Registrovať',
 		ConfirmPassword: 'Potvrdiť heslo',
 		Youraccountisregisteredundername: 'Váš účet je zaregistrovaný pod menom:',
-		andemail: 'a emailom:',
+		andemail: 'a poslali sme potvrdzovací link na Váš email:',
 		Alreadyaccount: 'Máte už účet',
 	  },
 	  validations: {
