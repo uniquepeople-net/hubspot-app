@@ -1,4 +1,7 @@
-
+:root {
+	--card-bg: #f6f6f6;
+	--card-shadow: #e6e6e6;
+}
 a {
 	text-decoration: none;
 	color: inherit;
@@ -11,6 +14,7 @@ a {
 	border-radius:12px;
 	overflow: hidden;
 	box-shadow: 0 2px 4px 0 rgb(14 30 37 / 12%), 0 2px 16px 0 rgb(14 30 37 / 32%);
+	background-color: var(--card-bg);
 }
 
 .center-center {

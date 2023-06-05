@@ -48,7 +48,10 @@ import Inbox from '../Dashboard/structureComponents/Main/Emails/Inbox.vue';
 import SpecificEmail from '../Dashboard/structureComponents/Main/Emails/SpecificEmail.vue';
 
 
+import FootballNews from '../Dashboard/structureComponents/Main/FootballNews/FootballNews.vue';
 import NewsRumors from '../Dashboard/structureComponents/Main/FootballNews/NewsRumors.vue';
+import VideoList from '../Dashboard/structureComponents/Main/FootballNews/VideoList.vue';
+import EmbedVideo from '../Dashboard/structureComponents/Main/FootballNews/EmbedVideo.vue';
 
 import Settings from '../Dashboard/structureComponents/Main/Settings/Settings.vue';
 import Products from '../Dashboard/structureComponents/Main/Settings/Products.vue';
@@ -159,7 +162,15 @@ export const routes = [
 
 			},
 
-			{ path: '/:lang/news', component: NewsRumors, name: 'news-rumors' },
+			{ path: '/:lang/news', component: FootballNews, name: 'news-rumors', props: true, redirect: { name: 'news-rumors-news' }, 
+		
+				children: [
+					{ path: 'news-rumors', component: NewsRumors, name: 'news-rumors-news', props: true },
+
+					{ path: 'video-list', component: VideoList, name: 'news-rumors-video', props: true},
+				]
+			
+			},
 
 			{ path: '/:lang/settings', component: Settings, name: 'settings', props: true, redirect: { name: 'docs-all' },
 				
