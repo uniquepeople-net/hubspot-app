@@ -24,7 +24,6 @@
 						<template v-slot:loading>
 							<div class="spinner-grow" role="status"></div>
 						</template>
-
 					</Tweet>				
 				</div>
 				

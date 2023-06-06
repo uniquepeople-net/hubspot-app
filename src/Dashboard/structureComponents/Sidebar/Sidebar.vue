@@ -118,14 +118,16 @@
 	border-radius: 0 50px 0 0;
 	.router-link-active-exact {
 		background: var(--bluegray-100);
+		background: #e9ecef;
 		transition: all .2s;
 		//transform: scaleX(1.1);
-		box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+		//box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 		//box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
 		//box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 		//box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-		box-shadow: var(--teal-50) 0px 4px 16px 0px inset, rgba(17, 17, 26, 0.05) 0px 8px 32px 0px;
-		}
+		//box-shadow: var(--teal-50) 0px 4px 16px 0px inset, rgba(17, 17, 26, 0.05) 0px 8px 32px 0px;
+		border-radius: 8px;
+	}
 	& .p-sidebar-header {
 		justify-content: space-between;
 		.logo img {
@@ -135,6 +137,30 @@
 	& .p-sidebar-content {
 		& .p-panelmenu.p-component {
 			margin-top: 1rem;
+			.p-panelmenu-header {
+				position: relative;
+			}
+			.p-panelmenu-panel {
+				margin-bottom: .5rem;
+				.p-panelmenu-header-content {
+					border: 0;
+					border-radius: 8px;
+					box-shadow: var(--card-shadow) 1.95px 1.95px 0px;
+				}
+				.p-toggleable-content {
+					margin-left: 2px;
+					.p-menuitem-content {
+						border-radius: 8px;
+					}
+					.p-panelmenu-content {
+						border-radius: 0 0 8px 8px;
+						border: 0;
+					}
+				}
+			}
+			.p-panelmenu-header-content {
+				background-color: var(--card-bg);
+			}
 		}
 		.p-panelmenu-header-action {
 			position: relative;

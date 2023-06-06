@@ -79,6 +79,11 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 				to: {name: 'news-rumors'},
 				command: () => sidebarHide()
 			},
+			{
+				label: 'Highlights',
+				to: {name: 'news-rumors-video'},
+				command: () => sidebarHide()
+			},
 		]
 	},
 	{
