@@ -56,6 +56,7 @@ export default {
 		
 		// Payment service routes
 		payment:					DOMAIN_URL + '/api/payment', 
+		googlePayment:				DOMAIN_URL + '/api/google-payment', 
 		paymentUpdate:				DOMAIN_URL + '/api/payment/',
 		payments:					DOMAIN_URL + '/api/payments', 
 	
@@ -204,6 +205,9 @@ export default {
 		// Payment service routes getters
 		payment(state) {
 			return state.payment
+		}, 
+		googlePayment(state) {
+			return state.googlePayment
 		}, 
 		paymentUpdate(state) {
 			return state.paymentUpdate

@@ -14,7 +14,7 @@
 			<Divider />
 
 			<div v-if="method && method === 'google'" class="d-flex justify-content-center">
-				<GooglePay class="my-4" :product="payProduct" :user="user" :url="paymentUrl" :stripeKey="stripePubKey"/>
+				<GooglePay class="my-4" :product="payProduct" :user="user" :url="googlePaymentUrl" :stripeKey="stripePubKey"/>
 			</div>
 
 			<div v-if="method && method === 'card'">
@@ -187,6 +187,7 @@
 		},
 		computed: {
 			...mapGetters({ paymentUrl: 'links/payment',
+							googlePaymentUrl: 'links/googlePayment',
 							stripePubKey: 'payments/stripePubKey',
 							payProduct: 'payments/payProduct',
 							user: 'user/user' })

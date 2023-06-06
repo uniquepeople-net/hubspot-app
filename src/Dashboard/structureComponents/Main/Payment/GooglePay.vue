@@ -2,7 +2,7 @@
 	<div>
 		<google-pay-button
 			environment="TEST"
-			button-type="buy"
+			button-type="pay"
 			v-bind:paymentRequest.prop="{
 				apiVersion: 2,
 				apiVersionMinor: 0,
@@ -10,21 +10,22 @@
 					{
 						type: 'CARD',
 						parameters: {
-						allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-						allowedCardNetworks: ['AMEX', 'VISA', 'MASTERCARD']
+							allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+							allowedCardNetworks: ['AMEX', 'VISA', 'MASTERCARD']
 						},
 						tokenizationSpecification: {
-						type: 'PAYMENT_GATEWAY',
-						parameters: {
-							gateway: 'example',
-							gatewayMerchantId: 'exampleGatewayMerchantId'
-						}
+							type: 'PAYMENT_GATEWAY',
+							parameters: {
+								'gateway': 'stripe',
+								'stripe:version': '2018-10-31',
+								'stripe:publishableKey': stripeKey
+							}
 						}
 					}
 				],
 				merchantInfo: {
-					merchantId: 'BCR2DN4T7LRLJQSS',
-					merchantName: 'UFP',
+					merchantId: 'BCR2DN4TUKTLNN3V',
+					merchantName: 'Únia futbalových profesionálov',
 				},
 				transactionInfo: {
 					totalPriceStatus: 'FINAL',
@@ -89,8 +90,8 @@
 						},
 					],
 					merchantInfo: {
-						merchantId: '12345678901234567890',
-						merchantName: 'Demo Merchant',
+						merchantId: 'BCR2DN4TUKTLNN3V',
+						merchantName: 'Únia futbalových profesionálov',
 					},
 					transactionInfo: {
 						totalPriceStatus: 'FINAL',
@@ -103,90 +104,94 @@
 			}
 		},
 		methods: {
-			onLoadPaymentData(event) {
+			async onLoadPaymentData(event) {
 				console.log('load payment data', event.detail.paymentMethodData);
 				
+				let token =  JSON.parse(event.detail.paymentMethodData.tokenizationData.token)
+				
 				// Create a payment method in Stripe using the Google Pay token
-				this.stripe.createPaymentMethod({
-					
+				this.stripe.createPaymentMethod({				
 						type: 'card',
 						card: {
-							token: event.detail.paymentMethodData.tokenizationData.token
-						}
-					
+							token:token.id
+						}					
 					}).then((result) => {
 						if (result.error) {
-							console.log(result.error)
-							
+							console.log(result.error)							
 							// Handle any errors that occurred during payment method creation
 						} else {
-							var paymentMethod = result.paymentMethod;
-							console.log(paymentMethod)
-							
+							var paymentMethod = result.paymentMethod;							
+							console.log(paymentMethod)							
 							// Process the payment method or send it to your server for further processing
-						}
-					});
 
-				let data = {
-					returnUrl: window.location.origin + '/' + this.$i18n.locale + '/wallet/pay-status',
-					productId: this.product.id,
-					priceId: this.product.default_price,
-					description: this.product.name,
-					userId: this.user.id,
-					productName: this.product.name, 
-					methodId: event.detail.paymentMethodData.tokenizationData.token,
-					email: this.user.email,
-					varSymbol: this.user.var_symbol,
-					stripeToken: event.detail.paymentMethodData.tokenizationData.token,
-					result: event.detail.paymentMethodData.tokenizationData.token
-					/* amount: this.product.amount_decimal,
-					//billing_details: { name: 'fero' },
-					//returnUrl: window.location.href,*/
-				}
+							let data = {
+								returnUrl: window.location.origin + '/' + this.$i18n.locale + '/wallet/pay-status',
+								productId: this.product.id,
+								priceId: this.product.default_price,
+								description: this.product.name,
+								userId: this.user.id,
+								productName: this.product.name, 
+								methodId: paymentMethod.id,
+								email: this.user.email,
+								varSymbol: this.user.var_symbol,
+								stripeToken: token.id,
+								result: paymentMethod,
+								googlePay: true
+								/* amount: this.product.amount_decimal,
+								//billing_details: { name: 'fero' },
+								//returnUrl: window.location.href,*/
+							}
+							
+							console.log(data)
+								
+							axios.post( this.url , data, {
+								headers: {
+									'Content-Type': 'application/json',
+									Authorization: 'Bearer ' + User.getToken()
+								}
+							}).then( response => {
+									console.log(response)
+								
+									window.localStorage.setItem("cs", response.data.charge.client_secret)
+									window.localStorage.setItem("pay-id", response.data.payment_id)
+
+									const action = response.data.charge.next_action;
+									if (action && action.type === 'redirect_to_url') {
+										window.location = action.redirect_to_url.url;
+									}
+
+									const success = response.data.charge.status
+									if ( success && success === 'succeeded' ) {
+										window.location = window.location.origin + '/' + this.$i18n.locale + '/wallet/pay-status'
+									} else {
+										Toast.fire({
+											icon: 'error',
+											timer: 8000,
+											title: response.data.charge.status
+										})								
+										this.loading = false
+										this.disablePay = false
+									}
+								})
+								.catch( error => {
+										Toast.fire({
+											icon: 'error',
+											timer: 5000,
+											title: "Couldn't connect Pay service"
+										})								
+										//this.loading = false
+										//this.disablePay = false
+							})
+						}
+				});
+
 				
-					
-				/* axios.post( this.url , data, {
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: 'Bearer ' + User.getToken()
-					}
-				}).then( response => {
-						window.localStorage.setItem("cs", response.data.charge.client_secret)
-						window.localStorage.setItem("pay-id", response.data.payment_id)
-
-						const action = response.data.charge.next_action;
-						if (action && action.type === 'redirect_to_url') {
-							window.location = action.redirect_to_url.url;
-						}
-
-						const success = response.data.charge.status
-						if ( success && success === 'succeeded' ) {
-							window.location = window.location.origin + '/' + this.$i18n.locale + '/wallet/pay-status'
-						} else {
-							Toast.fire({
-								icon: 'error',
-								timer: 8000,
-								title: response.data.charge.status
-							})								
-							this.loading = false
-							this.disablePay = false
-						}
-					})
-					.catch( error => {
-						Toast.fire({
-							icon: 'error',
-							timer: 5000,
-							title: "Couldn't connect Pay service"
-						})								
-						this.loading = false
-						this.disablePay = false
-					}) */
 			},
 			onError: event => {
-				console.error('error', event.error);
+				//console.error('error', event.error);
 			},
 			onPaymentDataAuthorized: paymentData => {
-				console.log('payment authorized', paymentData);
+				//console.log('payment authorized', paymentData);
 				return {
 					transactionState: 'SUCCESS',
 				};
@@ -195,10 +200,10 @@
 				//console.log('ready to pay change', event.detail);
 			},
 			onClick: () => {
-				console.log('click');
+				//console.log('click');
 			},
 			onClickPreventDefault: event => {
-				console.log('prevent default');
+				//console.log('prevent default');
 				event.preventDefault();
 			},
 			amountString() {
