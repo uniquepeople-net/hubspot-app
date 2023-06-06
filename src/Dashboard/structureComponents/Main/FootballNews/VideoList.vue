@@ -57,8 +57,6 @@
                     }, {}));
 
                     this.videoData = result
-                    
-                    
 				}				
 			).catch( error => {
 				Toast.fire({
@@ -78,7 +76,6 @@
         },
         methods: {
             handleClick( data, event ) {
-                console.log(data, event)
                 this.visibleDialog = true
                 this.embed = data.videos[0].embed
                 this.title = data.title
