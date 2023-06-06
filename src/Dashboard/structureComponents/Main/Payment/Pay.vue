@@ -14,7 +14,7 @@
 			<Divider />
 
 			<div v-if="method && method === 'google'" class="d-flex justify-content-center">
-				<GooglePay class="my-4" :product="payProduct"/>
+				<GooglePay class="my-4" :product="payProduct" :user="user" :url="paymentUrl" :stripeKey="stripePubKey"/>
 			</div>
 
 			<div v-if="method && method === 'card'">
@@ -58,7 +58,6 @@
 			stripePromise.then( response => {
 				this.stripeLoaded = true
 				this.stripe = response
-
 			})
 			if ( !this.payProduct ) {
 				this.$router.push({ name: 'wallet-info' })
