@@ -70,6 +70,27 @@ class Helpers {
 		})		
 	}
 
+	/**
+	 * Check trial version
+	 */
+	isTrial(date) {
+		if ( !date ) {
+			return true
+		} else {
+
+			let currentDate = Date.now();
+			const trialDate = new Date(date);
+
+			const differenceInMilliseconds = currentDate - trialDate;
+			const differenceInMinutes = Math.floor(differenceInMilliseconds / 60000);
+
+			//console.log(differenceInMinutes)
+
+			return false
+		
+		}
+	}
+
 	// Filter params by key 
 	filterParams( params, key, value ) {
 		let result = params.filter( param => param[key] === value )

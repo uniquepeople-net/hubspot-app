@@ -79,7 +79,10 @@ import SuccessPage from '../Dashboard/structureComponents/Main/Settings/Surveys/
 import AppSettings from '../Dashboard/structureComponents/Main/Settings/AppSettings/AppSettings.vue'
 import AppSettingsAll from '../Dashboard/structureComponents/Main/Settings/AppSettings/AppSettingsAll.vue'
 
+import BlockedPage from '../Dashboard/global/BlockedPage.vue'
+
 import NotFound from '../Dashboard/global/NotFound.vue';
+import Helpers from '../Helpers/Helpers';
 
 
 
@@ -110,7 +113,9 @@ export const routes = [
 
 			{ path: '/:lang/users', component: Users, name: 'users', redirect: { name: 'all-users' },
 				// Check if user has privileges to access this route
-				beforeEnter: (to, from, next) => Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() ),
+				beforeEnter: (to, from, next) => {
+					Helpers.checkAdmin( to, from, next, userProfileApiGwUrl, User.getToken() )
+				},
 
 				children: [
 					{ path: 'all', component: AllUsers, name: 'all-users' },
@@ -253,5 +258,7 @@ export const routes = [
 	
 	{ path: '/:lang/:pathMatch(.*)*', component: NotFound},
 	
+	{ path: '/:lang/blocked', component: BlockedPage, name: 'blocked-page' },
+
 	{ path: '/:lang/404', component: NotFound, name: '404' },
 ]

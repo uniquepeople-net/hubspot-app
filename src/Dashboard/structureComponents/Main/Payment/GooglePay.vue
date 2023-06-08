@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<google-pay-button
-			environment="TEST"
+			:buttonLocale="this.$i18n.locale"
+			environment="PRODUCTION"
 			button-type="pay"
 			v-bind:paymentRequest.prop="{
 				apiVersion: 2,
@@ -37,7 +38,8 @@
 			}"
 			v-on:loadpaymentdata="onLoadPaymentData"
 			v-on:error="onError"
-			v-on:readytopaychange="onReadyToPayChange">
+			v-on:readytopaychange="onReadyToPayChange"
+			v-on:click="onClick">
 		</google-pay-button>
 	</div>
 </template>
@@ -55,14 +57,24 @@
 			stripeKey: String
 		},
 		created() {
+			//console.log('created')
+			
 			const stripeKey = this.stripeKey;
 			const stripePromise = loadStripe(stripeKey)
 			stripePromise.then( response => {
 				this.stripeLoaded = true
 				this.stripe = response
-			})		
+			})
 		},
- 		data() {
+ 		unmounted() {
+			//console.log('script')
+			/* const script = document.querySelector('script[src="https://pay.google.com/gp/p/js/pay.js"]');
+			
+			if (script) {
+				script.parentNode.removeChild(script);
+			} */
+		},
+  		data() {
 			return {
 				stripe: null,
 				stripeLoaded: false,
@@ -105,7 +117,7 @@
 		},
 		methods: {
 			async onLoadPaymentData(event) {
-				console.log('load payment data', event.detail.paymentMethodData);
+				//console.log('load payment data', event.detail.paymentMethodData);
 				
 				let token =  JSON.parse(event.detail.paymentMethodData.tokenizationData.token)
 				
@@ -120,8 +132,7 @@
 							console.log(result.error)							
 							// Handle any errors that occurred during payment method creation
 						} else {
-							var paymentMethod = result.paymentMethod;							
-							console.log(paymentMethod)							
+							var paymentMethod = result.paymentMethod;														
 							// Process the payment method or send it to your server for further processing
 
 							let data = {
@@ -142,45 +153,41 @@
 								//returnUrl: window.location.href,*/
 							}
 							
-							console.log(data)
-								
 							axios.post( this.url , data, {
 								headers: {
 									'Content-Type': 'application/json',
 									Authorization: 'Bearer ' + User.getToken()
 								}
-							}).then( response => {
-									console.log(response)
-								
-									window.localStorage.setItem("cs", response.data.charge.client_secret)
-									window.localStorage.setItem("pay-id", response.data.payment_id)
+							}).then( response => {								
+								window.localStorage.setItem("cs", response.data.charge.client_secret)
+								window.localStorage.setItem("pay-id", response.data.payment_id)
 
-									const action = response.data.charge.next_action;
-									if (action && action.type === 'redirect_to_url') {
-										window.location = action.redirect_to_url.url;
-									}
+								const action = response.data.charge.next_action;
+								if (action && action.type === 'redirect_to_url') {
+									window.location = action.redirect_to_url.url;
+								}
 
-									const success = response.data.charge.status
-									if ( success && success === 'succeeded' ) {
-										window.location = window.location.origin + '/' + this.$i18n.locale + '/wallet/pay-status'
-									} else {
-										Toast.fire({
-											icon: 'error',
-											timer: 8000,
-											title: response.data.charge.status
-										})								
-										this.loading = false
-										this.disablePay = false
-									}
-								})
-								.catch( error => {
-										Toast.fire({
-											icon: 'error',
-											timer: 5000,
-											title: "Couldn't connect Pay service"
-										})								
-										//this.loading = false
-										//this.disablePay = false
+								const success = response.data.charge.status
+								if ( success && success === 'succeeded' ) {
+									window.location = window.location.origin + '/' + this.$i18n.locale + '/wallet/pay-status'
+								} else {
+									Toast.fire({
+										icon: 'error',
+										timer: 8000,
+										title: response.data.charge.status
+									})								
+									/* this.loading = false
+									this.disablePay = false */
+								}
+							})
+							.catch( error => {
+								Toast.fire({
+									icon: 'error',
+									timer: 5000,
+									title: "Couldn't connect Pay service"
+								})								
+								//this.loading = false
+								//this.disablePay = false
 							})
 						}
 				});

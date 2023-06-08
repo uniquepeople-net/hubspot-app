@@ -14,7 +14,9 @@
 			<Divider />
 
 			<div v-if="method && method === 'google'" class="d-flex justify-content-center">
-				<GooglePay class="my-4" :product="payProduct" :user="user" :url="googlePaymentUrl" :stripeKey="stripePubKey"/>
+				<GooglePay class="my-4" :product="payProduct" :user="user" 
+							:url="googlePaymentUrl" :stripeKey="stripePubKey"
+							/>
 			</div>
 
 			<div v-if="method && method === 'card'">
@@ -96,7 +98,6 @@
                         },
                     },
                 },
-
 			}
 		},
 		methods: {
