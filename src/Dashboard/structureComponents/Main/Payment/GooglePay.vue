@@ -2,7 +2,7 @@
 	<div>
 		<google-pay-button
 			:buttonLocale="this.$i18n.locale"
-			environment="PRODUCTION"
+			environment='PRODUCTION'
 			button-type="pay"
 			v-bind:paymentRequest.prop="{
 				apiVersion: 2,
@@ -46,8 +46,8 @@
  
  
 <script>
-	import '@google-pay/button-element';
 	import { loadStripe } from '@stripe/stripe-js'
+	import '@google-pay/button-element';
 
 	export default {
 		props: {

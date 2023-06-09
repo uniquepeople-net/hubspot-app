@@ -1,8 +1,8 @@
 <template>
 
 	<div>
-		<router-view v-if="!isTrial"></router-view>
-		<BlockedPage v-if="isTrial"/>
+		<router-view v-if="isTrial"></router-view>
+		<BlockedPage v-if="!isTrial"/>
 	</div>
 
 </template>
@@ -20,7 +20,7 @@
 		computed: {
 			...mapGetters({ user: 'user/user' }),
 			isTrial() {
-				return Helpers.isTrial(this.user.trial_date)
+				return Helpers.isTrial(this.user.trial_date, this.user.fee)
 			}
 		},
 		components: { BlockedPage }

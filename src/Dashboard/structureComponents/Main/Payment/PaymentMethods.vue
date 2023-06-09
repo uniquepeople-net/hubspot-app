@@ -5,7 +5,8 @@
 			
 				
 				<label :for="method.key" class="me-2 w-100 d-flex label-wrapper">
-					<i :class="`${method.icon} me-3`"></i>
+					<i v-if="method.key !== 'google'" :class="`${method.icon} me-3`"></i>
+					<GooglePayMark v-if="method.key === 'google'"/>
 					<span>{{ method.name }}</span>
 				</label>
 			
@@ -23,6 +24,7 @@
  
 <script>
 	import RadioButton from 'primevue/radiobutton'
+	import GooglePayMark from '../../../global/GooglePayMark.vue'
 
 	export default {
 		data() {
@@ -31,7 +33,7 @@
 				methods: [
 					{ name: this.$i18n.t('message.CreditDebitCard'), key: 'card', icon: 'bi bi-credit-card-2-back' },
 					{ name: 'Google Pay', key: 'google', icon: 'bi bi-google' },
-					{ name: 'Apple Pay', key: 'apple', icon: 'bi bi-apple' },
+					/* { name: 'Apple Pay', key: 'apple', icon: 'bi bi-apple' }, */
 				]
 			}
 		},
@@ -40,7 +42,7 @@
 				this.$emit('choosedMethod', this.selectedMethod)
 			}
 		},
-		components: { RadioButton }
+		components: { RadioButton, GooglePayMark }
 	}
 </script>
  
@@ -55,6 +57,12 @@
 	.label-wrapper {
 		padding: .5rem .5rem;
 		cursor: pointer;
+		display: flex;
+		align-items: center;
+		i {
+			font-size: 30px;
+			margin-left: 10px;
+		}
 	}
 	label {
 		flex: 1;

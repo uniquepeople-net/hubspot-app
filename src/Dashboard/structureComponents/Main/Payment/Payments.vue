@@ -30,6 +30,7 @@
 .fieldset {
 	:deep(legend) {
 		font-size: 1.2rem;
+		margin-bottom: 0;
 	}
 	.column-list {
 		position: relative;

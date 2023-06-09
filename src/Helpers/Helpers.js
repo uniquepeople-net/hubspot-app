@@ -73,21 +73,21 @@ class Helpers {
 	/**
 	 * Check trial version
 	 */
-	isTrial(date) {
-		if ( !date ) {
+	isTrial(date, fee) {
+		let currentDate = Date.now();
+		let trialDate = new Date(date);
+		let diffInMilliseconds = currentDate - trialDate;
+		let diffInMinutes = Math.floor(diffInMilliseconds / 60000);
+
+		// Set time to trial in minutes ( 10080 minutes = 1 week )
+		const trialTime = 10080;
+
+		if ( fee ) return true
+
+		if ( !date || trialTime > diffInMinutes ) {
 			return true
 		} else {
-
-			let currentDate = Date.now();
-			const trialDate = new Date(date);
-
-			const differenceInMilliseconds = currentDate - trialDate;
-			const differenceInMinutes = Math.floor(differenceInMilliseconds / 60000);
-
-			//console.log(differenceInMinutes)
-
 			return false
-		
 		}
 	}
 

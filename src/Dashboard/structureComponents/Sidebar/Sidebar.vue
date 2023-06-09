@@ -1,5 +1,6 @@
 <template>
 	
+	<SidebarBurger @click="visibleLeft = true"/>
 
 	<Sidebar v-model:visible="visibleLeft" class="sidebar" :modal="sidebarModal" :dismissable="sidebarModal">
 		<template v-slot:header class="sidebar-slot-header">
@@ -12,7 +13,8 @@
 				   ref="panelMenu" @panel-open="onPanelClick" />
 	</Sidebar>
 
-	<SidebarBurger @click="visibleLeft = true"/>
+
+	<SidebarTimer v-if="restTrialTime" class="trial-timer" :timeInSeconds="restTrialTime"/>
 
 </template>
  
@@ -21,6 +23,7 @@
 	import SidebarBurger from './SidebarBurger.vue';
 	import { mapGetters } from 'vuex';
 	import { sidebarMenu } from '../../../Helpers/Sidebar-menu';
+	import SidebarTimer from './SidebarTimer.vue';
 
 	export default {
 		mounted() {
@@ -100,6 +103,28 @@
 			...mapGetters({ user: 'user/user' }),
 			items() { 
 				return sidebarMenu( this.showItemByRole, this.checkwindowWidth, this.checkStatsIdexists, this.$i18n )
+			},
+			restTrialTime() {
+				let currentDate = Date.now();
+				let trialDate = new Date(this.user.trial_date);
+				let diffInMilliseconds = currentDate - trialDate;
+
+				let diffInMinutes = Math.floor(diffInMilliseconds / 60000);
+
+				// Set time to trial in minutes ( 10080 minutes = 1 week )
+				const trialTime = 10080;
+				let restTime = trialTime - diffInMinutes;
+
+				if ( this.user.fee ) return 0
+
+				if ( restTime <= 0 ) {
+					return 0.5
+				} else {
+					let timeInSeconds = restTime * 60
+					return timeInSeconds
+				}
+
+				
 			}
 		},
 		watch: {
@@ -107,7 +132,7 @@
 				this.$store.dispatch("appData/setActiveSidebar", data)
 			}
 		},
-		components: { SidebarBurger }
+		components: { SidebarBurger, SidebarTimer }
 	}
 </script>
 
@@ -116,6 +141,7 @@
 .sidebar {
 	width: 12rem !important;
 	border-radius: 0 50px 0 0;
+	box-shadow: var(--card-shadow) 1.95px 1.95px 0px;
 	.router-link-active-exact {
 		background: var(--bluegray-100);
 		background: #e9ecef;
@@ -195,6 +221,12 @@
 		order: 3;
 		margin-left: auto;
 	}
+}
+.trial-timer {
+	position: absolute;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 @media ( max-width: 576px ) {
 	.p-sidebar {
