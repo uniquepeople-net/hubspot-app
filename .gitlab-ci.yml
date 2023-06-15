@@ -12,7 +12,6 @@ build_node:
     - prod
   image: node:16
   script:
-    - cp .env .env
     - npm install
     - |
       if [[ "$CI_COMMIT_BRANCH" == "test" ]]; then

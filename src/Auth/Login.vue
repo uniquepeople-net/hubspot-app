@@ -21,14 +21,14 @@
 			<template v-slot:body>
 				<form action="index.html" @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
 					<div class="form-group position-relative has-icon-left mb-4 p-inputgroup mb-5 col-12">
-						<InputIcon icon="pi pi-envelope"></InputIcon>
+						<!-- <InputIcon icon="pi pi-envelope"></InputIcon> -->
 						<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
 									name="email" placeholder="Email"/>
 	
 						<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
 					</div>
 					<div class="form-group position-relative has-icon-left mb-4 p-inputgroup mb-5 col-12">
-						<InputIcon icon="pi pi-lock"></InputIcon>
+						<!-- <InputIcon icon="pi pi-lock"></InputIcon> -->
 						<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
 									name="password" :placeholder="$t('message.Password')" :feedback="false">
 						</Password>
@@ -36,21 +36,21 @@
 						<InputError :validator="v$.password" :submitted="submitted" :replace="$t('message.Password')"></InputError>
 					</div>
 					<div class="position-relative text-center mt-5">
-						<Button type="submit" :label="$t('message.LoginV')" class="submit-btn btn btn-primary btn-block btn-lg shadow-lg" :loading="loading"/>
+						<Button type="submit" :label="$t('message.LoginV')" class="submit-btn btn btn-primary btn-block btn-lg btn-border" :loading="loading"/>
 					</div>
 				</form>
-				<div class="text-center mt-5 text-lg fs-4">
-					<Button :label="$t('message.ForgotPassword') + ' ?'" 
-							class="font-bold p-button-raised p-button-secondary p-button-text"
-							@click="redirectForgot"></Button>
+				<div class="mt-4 center-center flex-column">
+					<span class="registered-text mb-3">{{ $t('message.Notregistered') + '?' }}</span>
+					<Button :label="$t('message.Create') + ' ' +  $t('message.Account')" 
+							@click="redirectRegister" class="btn-black"/>
 				</div>
 			</template>
 	
 			<template v-slot:footer>
-				<div class="mt-4 center-center">
-					<span class="registered-text">{{ $t('message.Notregistered') + '?' }}</span>
-					<Button :label="$t('message.Create') + ' ' +  $t('message.Account')" 
-							severity="secondary" text @click="redirectRegister"/>
+				<div class="text-center mt-5 text-lg fs-4">
+					<Button :label="$t('message.ForgotPassword') + ' ?'" 
+							class="font-bold p-button-raised p-button-secondary p-button-text"
+							@click="redirectForgot"></Button>
 				</div>
 			</template>
 	
@@ -177,9 +177,6 @@ export default {
 		}
 	}
 } */
-.submit-btn {
-	max-width: 25rem;
-}
 .spinner-grow {
 	top: 0;
 	bottom: 0;

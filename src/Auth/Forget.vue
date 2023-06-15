@@ -11,7 +11,7 @@
 			</div>
 			<template #footer>
 				<div class="flex justify-content-center">
-					<Button label="OK" @click="toggleDialog" class="p-button-text" />
+					<Button label="OK" @click="toggleDialog" class="p-button-text btn-border" />
 				</div>
 			</template>
 		</Dialog>
@@ -25,7 +25,7 @@
 			<template v-slot:body>
 				<form action="index.html" @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
 					<div class="form-group position-relative has-icon-left mb-4 p-inputgroup mb-5 col-12">
-						<InputIcon icon="pi pi-envelope"></InputIcon>
+						<!-- <InputIcon icon="pi pi-envelope"></InputIcon> -->
 						<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
 									name="email" placeholder="Email"/>
 	
@@ -33,7 +33,7 @@
 					</div>
 					
 					<div class="position-relative text-center mt-5">
-						<Button type="submit" :label="$t('message.Submit')" :loading="loading" class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg" />
+						<Button type="submit" :label="$t('message.Submit')" :loading="loading" class="submit-btn btn btn-primary btn-block btn-lg btn-black" />
 					</div>
 	
 				</form>

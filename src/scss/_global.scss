@@ -1,6 +1,11 @@
 :root {
+	--main-white: #ffffff; 
 	--card-bg: #f6f6f6;
-	--card-shadow: #e6e6e6;
+	--card-shadow: #e8e8e8;
+	--main-dark: #2a2a2a;
+	--input-border-color: #bbbbbb;
+	--btn-border: 1px solid var(--main-dark);
+	--input-border: 1px solid var(--card-bg);
 }
 a {
 	text-decoration: none;
@@ -10,6 +15,64 @@ a {
 	}
 }
 
+.btn-black, .btn-border {
+	width: 100%;
+	max-width: 25rem;
+	border-radius: 8px;
+	padding: 0.7rem 1rem;
+}
+
+.btn-black, .btn-black:enabled:hover, .btn-black:disabled {
+	background: var(--main-dark);
+	border: 1px solid var(--main-dark);
+}
+
+.btn-border, .btn-border:enabled:hover, .btn-border:disabled {
+	color: var(--main-dark);
+	background: var(--main-white);
+	border: 2px solid var(--main-dark);
+	transition: all .25s;
+}
+.btn-border:enabled:hover {
+	background: var(--card-bg);
+}
+.p-inputtext.p-component {
+	background-color: var(--card-bg);
+	border-radius: 8px;
+	border: var(--input-border);
+	box-shadow: var(--card-shadow) 0px 3px 3px;
+}
+.p-inputgroup input:first-child, .p-inputgroup input:last-child, 
+.p-inputgroup > .p-inputwrapper:last-child > .p-inputtext, .p-inputgroup > .p-inputwrapper:first-child > .p-inputtext {
+	border-radius: 8px;
+	border: var(--input-border);
+	box-shadow: var(--card-shadow) 0px 3px 3px;
+}
+.p-inputtext:-webkit-autofill, .p-inputtext:-webkit-autofill:active, .p-inputtext:-webkit-autofill:focus, .p-inputtext:-webkit-autofill:hover{
+	-webkit-transition: background-color 5000s ease-in-out 0s;
+    transition: background-color 5000s ease-in-out 0s;
+    //-webkit-text-fill-color: rgba(49,49,49,.619608);
+}
+.p-inputtext:enabled:focus, .p-inputtext:enabled:hover {
+	box-shadow: 0 0 0 0.2rem var(--card-shadow);
+    border-color: var(--input-border-color);
+}
+.p-password .p-icon {
+	padding: 13px;
+	width: 55px;
+	height: 45px;
+	top: 15%;
+}
+.p-dialog {
+	.p-dialog-header .p-dialog-header-icon {
+		min-width: 2rem;
+		max-width: 2rem;
+	}
+	.p-dialog-header .p-dialog-header-icon:hover, .p-dialog-header .p-dialog-header-icon:focus {
+		border: var(--input-border);
+		box-shadow: 0 0 0 0.2rem var(--card-shadow);
+	}
+}
 .card {
 	border-radius:12px;
 	overflow: hidden;
@@ -31,6 +94,7 @@ i {
 
 button {
 	max-width: 20rem !important;
+	min-width: 15rem;
 }
 
 ::placeholder {

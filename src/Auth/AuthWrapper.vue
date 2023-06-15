@@ -47,7 +47,7 @@
 	#auth #auth-left .auth-title{font-size:4rem;margin-bottom:1rem}
 	#auth #auth-left .auth-subtitle{color:#a8aebb;font-size:1.7rem;line-height:2.5rem}
 	#auth #auth-left .auth-logo{margin-bottom:2rem}
-	#auth #auth-left .auth-logo img{height:7rem}
+	#auth #auth-left .auth-logo img{height:14rem}
 	@media screen and (max-width:767px) {
 		#auth #auth-left{padding:5rem}
 	}

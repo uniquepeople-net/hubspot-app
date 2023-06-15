@@ -12,7 +12,7 @@
 			</div>
 			<template #footer>
 				<div class="flex justify-content-center">
-					<Button label="OK" @click="toggleDialog" class="p-button-text" />
+					<Button label="OK" @click="toggleDialog" class="font-bold p-button-raised p-button-secondary p-button-text" />
 				</div>
 			</template>
 		</Dialog>
@@ -29,7 +29,7 @@
 		
 								<div class="row">
 									<div class="inputgroup mb-5 col-12">
-										<InputIcon icon="pi pi-user"></InputIcon>
+										<!-- <InputIcon icon="pi pi-user"></InputIcon> -->
 										<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
 												name="name" :placeholder="$t('message.Name')"/>
 									
@@ -37,7 +37,7 @@
 									</div>
 		
 									<div class="inputgroup mb-5 col-12">
-										<InputIcon icon="pi pi-user"></InputIcon>
+										<!-- <InputIcon icon="pi pi-user"></InputIcon> -->
 										<InputText id="surname" v-model="v$.surname.$model" :class="{'p-invalid':v$.surname.$invalid && submitted}" 
 												name="surname" :placeholder="$t('message.Surname')"/>
 									
@@ -45,7 +45,7 @@
 									</div>
 		
 									<div class="inputgroup mb-5 col-12">
-										<InputIcon icon="pi pi-envelope"></InputIcon>
+										<!-- <InputIcon icon="pi pi-envelope"></InputIcon> -->
 										<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}"
 													name="email" placeholder="Email"/>
 				
@@ -64,7 +64,7 @@
 									</div> -->
 		
 									<div class="inputgroup mb-5 col-12">
-										<InputIcon icon="pi pi-lock"></InputIcon>
+										<!-- <InputIcon icon="pi pi-lock"></InputIcon> -->
 										<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
 												name="password" :placeholder="$t('message.Password')">
 											<template #header>
@@ -81,7 +81,7 @@
 									</div>
 
 									<div class="inputgroup mb-5 col-12">
-										<InputIcon icon="pi pi-lock"></InputIcon>
+										<!-- <InputIcon icon="pi pi-lock"></InputIcon> -->
 										<Password id="password_confirmation" v-model="v$.password_confirmation.$model" :class="{'p-invalid':v$.password_confirmation.$invalid && submitted}" toggleMask
 												name="password_confirmation" :placeholder="$t('message.ConfirmPassword')">
 											<template #header>
@@ -99,7 +99,7 @@
 		
 								<div class="position-relative text-center mt-2">
 									<Button type="submit" :label="$t('message.RegisterV')" 
-											class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg" :loading="loading"/>
+											class=" submit-btn btn btn-primary btn-block btn-lg btn-black" :loading="loading"/>
 								</div>
 		
 							</form>
@@ -108,10 +108,10 @@
 			</template>  
 
 			<template v-slot:footer>
-				<div class="mt-4 center-center">
-					<span class="registered-text">{{ $t('message.Alreadyaccount') + '?' }}</span>
-					<Button :label="$t('message.LoginV')" 
-							severity="secondary" text @click="redirectLogin"/>
+				<div class="mt-4 center-center flex-column">
+					<span class="registered-text mb-3">{{ $t('message.Alreadyaccount') + '?' }}</span>
+					<Button :label="$t('message.LoginV')" class="btn-border"
+							@click="redirectLogin"/>
 				</div>
 			</template>
 		</AuthWrapper>
@@ -252,13 +252,13 @@ export default {
 		bottom: -60%;
 	}
 	& > .p-button {
-		border-radius: 0 4px 4px 0;
+		//border-radius: 0 4px 4px 0;
 	} 
 	:deep(.p-dropdown) {
 		width: 100%;
 	}
 	:deep(.p-inputtext):not(#countryCode), :deep(.p-dropdown) {
-		border-radius: 0 6px 6px 0;
+		//border-radius: 0 6px 6px 0;
 	}
 }
 .p-togglebutton {
