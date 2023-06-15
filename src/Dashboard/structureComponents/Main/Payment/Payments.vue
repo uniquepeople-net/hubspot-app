@@ -1,26 +1,42 @@
 <template>
-	<Fieldset legend="Payments history" :toggleable="true" class="fieldset" :collapsed="true">		
-		<div class="row align-items-center" v-for="(payment, index) in payments" :style="index % 2 === 0 ? 'background: var(--gray-100)' : '' ">
-			<div class="col-4 column-list">{{payment.created_at_formatted}}</div>
-			<div class="col-3 column-list col-r-border">{{payment.product_name}}</div>
-			<div class="col-3 column-list col-r-border">{{formatPrice(payment.amount_decimal * 100)}}</div>
+	<Fieldset legend="Payments history" :toggleable="true" class="fieldset" :collapsed="true"
+				@update:collapsed="checkState">		
+		<div  	v-if="payments"
+				class="row align-items-center" v-for="(payment, index) in payments" :style="index % 2 === 0 ? 'background: var(--gray-100)' : '' ">
+			<div class="col-4 column-list">{{formatTimestamp(payment.created)}}</div>
+			<div class="col-3 column-list col-r-border">{{payment.description}}</div>
+			<div class="col-3 column-list col-r-border">{{formatPrice(payment.amount)}}</div>
 			<div class="col-2 column-list col-r-border">{{payment.status}}</div>
 		</div>
-	
-		<p v-if="!payments.length">No payments</p>
+		<Skeleton v-if="!payments" height="1.5rem" class="mb-2"></Skeleton>
+		<!-- <p v-if="!payments">No payments</p> -->
 	</Fieldset>
 </template>
  
  
 <script>
+	import { mapGetters } from 'vuex'
+
 	export default {
 		props: {
-			payments: Array
+			user: Object
 		},
 		methods: {
 			formatPrice(price) {
 				return Helpers.formatPrice(price)
+			},
+			formatTimestamp(data) {
+				let timestamp = data * 1000
+				return Helpers.formatDateToSk(timestamp, true)
+			},
+			checkState() {
+				if ( !this.payments ) {
+					this.$store.dispatch("payments/getListPayments", this.user.email );
+				}
 			}
+		},
+		computed: {
+			...mapGetters({ payments: 'payments/listPayments' })
 		}
 	}
 </script>

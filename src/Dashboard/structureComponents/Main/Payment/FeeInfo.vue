@@ -19,8 +19,7 @@
 			</div>
 		</template>
 		<template #footer>
-			<Payments v-if="payments" :payments="payments"/>
-			<Skeleton v-if="!payments" height="2rem" class="mb-2"></Skeleton>
+			<Payments :user="user"/>
 		</template>
 	</Card>
 </template>
@@ -33,10 +32,10 @@
 	export default {
 		props: ['user'],
 		created() {
-			this.$store.dispatch("payments/getPayments", this.user.id);	
+			//this.$store.dispatch("payments/getPayments", this.user.id);	
 		},
 		computed: {
-			...mapGetters({ payments: 'payments/payments' }),
+			...mapGetters({ payments: 'payments/payments'}),
 			fee() {
 				return this.user.fee ? this.$i18n.t('message.Paid') : this.$i18n.t('message.Unpaid')
 			},

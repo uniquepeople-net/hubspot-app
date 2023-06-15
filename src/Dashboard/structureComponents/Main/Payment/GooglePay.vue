@@ -57,7 +57,7 @@
 			stripeKey: String
 		},
 		created() {
-			//console.log('created')
+			//console.log(window.google.payments)
 			
 			const stripeKey = this.stripeKey;
 			const stripePromise = loadStripe(stripeKey)
@@ -195,7 +195,7 @@
 				
 			},
 			onError: event => {
-				//console.error('error', event.error);
+				console.error('error', event.error);
 			},
 			onPaymentDataAuthorized: paymentData => {
 				//console.log('payment authorized', paymentData);

@@ -101,10 +101,12 @@ class Helpers {
 
 
 	// format date
-	formatDateToSk(date) {
+	formatDateToSk(date, time = false) {
+		let timeData = time ? { hour: 'numeric', minute: 'numeric' } : null
+		let	options = { day: '2-digit',month: '2-digit',year: 'numeric', ...timeData }
+		
 		let newDate = new Date(date)
-		return newDate.toLocaleDateString('sk-SK', {
-			day: '2-digit',month: '2-digit',year: 'numeric'})
+		return newDate.toLocaleDateString('sk-SK', options)
 	}
 
 	// Get difference days between two dates

@@ -8,7 +8,8 @@ export default {
 		//stripePubKey: 'pk_test_51MEDDqCf79OEZcUi83xIfRoEvrH9sIa2h2aE2vkcaWjajZv4WfC2Y91HEek2gm2qMIAdD1yXjUjVBqY0TE256ZiA00ZlXgpZjo',
 		products: null,
 		payProduct: null,
-		payments: null
+		payments: null,
+		listPayments: null
 	}),
 
 	mutations: {
@@ -20,6 +21,9 @@ export default {
 		},
 		SETPAYMENTS( state, data ) {
 			state.payments = data;
+		},
+		SETLISTPAYMENTS( state, data ) {
+			state.listPayments = data;
 		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
@@ -64,7 +68,23 @@ export default {
 					context.commit("SETPAYMENTS", response.data)
 				})
 			
-		}
+		},
+		async getListPayments( context , email) {
+			let paymentsUrl = context.rootGetters['links/listPayments']
+
+			await User.refreshedToken();
+
+			await axios.post( paymentsUrl, {email}, {
+					headers: {
+						Authorization: 'Bearer ' + User.getToken()
+					}
+				}).then( response => {
+					console.log(response)
+									
+					context.commit("SETLISTPAYMENTS", response.data.data)
+				})
+			
+		},
 	},
 
 	getters: {
@@ -79,6 +99,9 @@ export default {
 		},
 		payments(state) {
 			return state.payments
+		},
+		listPayments(state) {
+			return state.listPayments
 		}
 	}
 }

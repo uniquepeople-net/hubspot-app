@@ -5,11 +5,14 @@ const { VueLoaderPlugin } = require('vue-loader')
 const webpack = require('webpack');
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
+//const { GenerateSW } = require('workbox-webpack-plugin');
+
 
 module.exports = {
     entry: {
         app: ['./src/main.js'],
-       	//mazer: ['./src/mazer.js'],
+		//'firebase-messaging-sw': "./firebase-messaging-sw.js",
+		//'firebase-messaging_on_background': "./firebase-messaging_on_background.js"
     },
     resolve: {
         extensions: [ '.js', '.vue' ],
@@ -101,5 +104,31 @@ module.exports = {
 		}),
         new webpack.HotModuleReplacementPlugin(),
 		new Dotenv(),
+		/* new GenerateSW({
+			// These are some common options, and not all are required.
+			// Consult the docs for more info.
+			exclude: [/.../, '...'],
+			navigateFallback: '...',
+			runtimeCaching: [
+			  {
+				urlPattern: /^https:\/\/www\.gstatic\.com\/firebasejs\/8\.10\.1\//,
+				handler: 'StaleWhileRevalidate',
+				options: {
+				  cacheName: 'firebase-js',
+				  expiration: {
+					maxEntries: 10,
+					maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
+				  },
+				},
+			  },
+			  {
+				urlPattern: /^http:\/\/localhost:5000\/firebase-messaging-sw\.js$/,
+				handler: 'NetworkFirst',
+				options: {
+				  cacheName: 'firebase-messaging-sw',
+				},
+			  },
+			],
+		  }), */
     ],
 };

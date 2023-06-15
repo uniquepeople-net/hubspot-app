@@ -7,10 +7,79 @@
 </template>
 
 <script>
+	//import { ref } from "vue";
+	/* import firebase from "./plugins/firebase-config";
+	import { getFirestore, collection, addDoc, getDoc } from "firebase/firestore";
+	import { getMessaging, getToken, onMessage } from "firebase/messaging"; */
 
 
-export default {
-}
+	export default {
+		setup() {
+				
+				// Get registration token. Initially this makes a network call, once retrieved
+				// subsequent calls to getToken will return from cache.
+				//const message = ref("");
+				/* const messaging = getMessaging();
+
+				
+
+				getToken(messaging, { vapidKey: 'BDXeh4-h57qX_9MjBmaRZhDR3_1JRzW-W8V55Iq-LVMnzDi8TN9jw-FZhAJOtcLn3bBg2u-YZeshiEy_chFDGUM' }).then((currentToken) => {
+					if (currentToken) {
+						// Send the token to your server and update the UI if necessary
+						console.log('token si:', currentToken )
+						
+						// ...
+					} else {
+						// Show permission request UI
+						console.log('No registration token available. Request permission to generate one.');
+						// ...
+					}
+				}).catch((err) => {
+					console.log('An error occurred while retrieving token. ', err);
+				// ...
+				});
+
+				onMessage(messaging, (payload) => {
+					console.log('Message received. ', payload);
+					// ...
+				});
+
+				const db = getFirestore(firebase); */
+
+				/* try {
+					const docRef = addDoc(collection(db, "test_collection"), {
+						name: "FErko",
+						surname: "Fericko"
+					});
+					console.log("Document written with ID: ", docRef);
+				} catch (e) {
+					console.error("Error adding document: ", e);
+				} */
+
+				
+
+				/* console.log( collection(db, 'test_collection'))
+				async function getTest(db) {
+
+		
+					const testCollection = collection(db, 'test_collection')
+					const collection = await getDocs(testCollection)
+		
+					return collection
+
+				} 
+
+				const coska = getTest(db)
+
+				console.log(coska) */
+				
+
+				return {
+					//message,
+					//sendMessage
+				};
+			},
+	}
 </script>
 
 <style lang="scss" scoped>

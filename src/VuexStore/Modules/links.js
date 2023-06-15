@@ -59,6 +59,7 @@ export default {
 		googlePayment:				DOMAIN_URL + '/api/google-payment', 
 		paymentUpdate:				DOMAIN_URL + '/api/payment/',
 		payments:					DOMAIN_URL + '/api/payments', 
+		listPayments:				DOMAIN_URL + '/api/list-payments', 
 	
 		// News links
 		redditSoccer:				'https://www.reddit.com/r/soccer/',
@@ -214,6 +215,9 @@ export default {
 		}, 
 		payments(state) {
 			return state.payments
+		}, 
+		listPayments(state) {
+			return state.listPayments
 		}, 
 
 		// News getters
