@@ -12,6 +12,7 @@ build_node:
     - prod
   image: node:16
   script:
+    - cp .env .env
     - npm install
     - |
       if [[ "$CI_COMMIT_BRANCH" == "test" ]]; then
@@ -29,7 +30,6 @@ deploy_test:
   image: alpine
   stage: deploy
   script:
-    - cp .env .env
     - apk add --no-cache --update nodejs npm rsync openssh sshpass
     #- npm install
     #- cp webpack.test.config.js webpack.config.js
