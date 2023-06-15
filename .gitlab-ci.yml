@@ -29,6 +29,7 @@ deploy_test:
   image: alpine
   stage: deploy
   script:
+    - cp .env .env
     - apk add --no-cache --update nodejs npm rsync openssh sshpass
     #- npm install
     #- cp webpack.test.config.js webpack.config.js
