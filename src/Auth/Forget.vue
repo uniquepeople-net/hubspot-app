@@ -11,7 +11,7 @@
 			</div>
 			<template #footer>
 				<div class="flex justify-content-center">
-					<Button label="OK" @click="toggleDialog" class="p-button-text btn-border" />
+					<Button label="OK" @click="toggleDialog" class="font-bold p-button-raised p-button-secondary p-button-text" />
 				</div>
 			</template>
 		</Dialog>

@@ -5,6 +5,7 @@
 	--main-dark: #2a2a2a;
 	--input-border-color: #bbbbbb;
 	--btn-border: 1px solid var(--main-dark);
+	--btn-border-radius:8px;
 	--input-border: 1px solid var(--card-bg);
 }
 a {
@@ -14,17 +15,18 @@ a {
 		color: inherit;
 	}
 }
-
+.btn-border-radius {
+	border-radius: var(--btn-border-radius);
+}
 .btn-black, .btn-border {
 	width: 100%;
 	max-width: 25rem;
-	border-radius: 8px;
+	border-radius: var(--btn-border-radius);
 	padding: 0.7rem 1rem;
 }
-
 .btn-black, .btn-black:enabled:hover, .btn-black:disabled {
 	background: var(--main-dark);
-	border: 1px solid var(--main-dark);
+	border: var(--btn-border);
 }
 
 .btn-border, .btn-border:enabled:hover, .btn-border:disabled {
@@ -38,13 +40,13 @@ a {
 }
 .p-inputtext.p-component {
 	background-color: var(--card-bg);
-	border-radius: 8px;
+	border-radius: var(--btn-border-radius);
 	border: var(--input-border);
 	box-shadow: var(--card-shadow) 0px 3px 3px;
 }
 .p-inputgroup input:first-child, .p-inputgroup input:last-child, 
 .p-inputgroup > .p-inputwrapper:last-child > .p-inputtext, .p-inputgroup > .p-inputwrapper:first-child > .p-inputtext {
-	border-radius: 8px;
+	border-radius: var(--btn-border-radius);
 	border: var(--input-border);
 	box-shadow: var(--card-shadow) 0px 3px 3px;
 }
@@ -73,11 +75,31 @@ a {
 		box-shadow: 0 0 0 0.2rem var(--card-shadow);
 	}
 }
+.p-sidebar-close.p-sidebar-icon {
+	min-width: 2rem;
+	max-width: 2rem;
+}
+.p-sidebar-icon:hover, .p-sidebar-icon:focus, 
+.p-dropdown.p-component:hover, .p-dropdown.p-component:focus,
+.p-dropdown:not(.p-disabled).p-focus {
+	border: var(--input-border);
+	box-shadow: 0 0 0 0.2rem var(--card-shadow);
+}
+.card-header {
+	background: var(--main-white);
+	h1, h2, h3, h4 ,h5, h6 {
+		margin-bottom: 0;
+	}
+}
+.p-dropdown.p-component {
+	border-radius: var(--btn-border-radius);
+	background-color: var(--card-bg);
+}
 .card {
 	border-radius:12px;
 	overflow: hidden;
 	box-shadow: 0 2px 4px 0 rgb(14 30 37 / 12%), 0 2px 16px 0 rgb(14 30 37 / 32%);
-	background-color: var(--card-bg);
+	//background-color: var(--card-bg);
 	box-shadow: var(--card-shadow) 1.95px 1.95px 0px;
 	border: 1px solid var(--card-shadow);
 }

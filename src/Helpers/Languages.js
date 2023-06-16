@@ -146,6 +146,7 @@ export const messages = {
 		Youraccountisregisteredundername: 'Your account is registered under name:',
 		andemail: 'and we have sent verify link on your email:',
 		Alreadyaccount: 'Already have account',
+		GlobalNews: 'Global News'
 	  },
 	  validations: {
         required: "This field is required.",
@@ -301,6 +302,7 @@ export const messages = {
 		Youraccountisregisteredundername: 'Váš účet je zaregistrovaný pod menom:',
 		andemail: 'a poslali sme potvrdzovací link na Váš email:',
 		Alreadyaccount: 'Máte už účet',
+		GlobalNews: 'Správy zo sveta',
 	  },
 	  validations: {
         required: "Toto pole je nevyhnutné.",

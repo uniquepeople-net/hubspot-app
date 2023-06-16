@@ -29,7 +29,7 @@
 
 						<div class="row">
 							<div class="inputgroup mb-5 col-12">
-								<InputIcon icon="pi pi-user"></InputIcon>
+								<!-- <InputIcon icon="pi pi-user"></InputIcon> -->
 								<span class="p-float-label w-100">
 									<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
 											name="name" :placeholder="$t('message.Name')"/>
@@ -40,7 +40,7 @@
 							</div>
 
 							<div class="inputgroup mb-5 col-12">
-								<InputIcon icon="pi pi-user"></InputIcon>
+								<!-- <InputIcon icon="pi pi-user"></InputIcon> -->
 								<span class="p-float-label w-100">
 									<InputText id="surname" v-model="v$.surname.$model" :class="{'p-invalid':v$.surname.$invalid && submitted}" 
 										   name="surname" :placeholder="$t('message.Surname')"/>
@@ -51,7 +51,7 @@
 							</div>
 
 							<div class="inputgroup mb-5 col-12">
-								<InputIcon icon="bi bi-house"></InputIcon>
+								<!-- <InputIcon icon="bi bi-house"></InputIcon> -->
 								<span class="p-float-label w-100">
 									<InputText id="club" v-model="v$.club.$model" :class="{'p-invalid':v$.club.$invalid && submitted}" 
 											name="club" :placeholder="$t('message.Club')"/>
@@ -62,7 +62,7 @@
 							</div>
 		
 							<div class="inputgroup mb-5 col-12">
-								<InputIcon icon="pi pi-envelope"></InputIcon>
+								<!-- <InputIcon icon="pi pi-envelope"></InputIcon> -->
 								<span class="p-float-label w-100">
 									<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
 										   		name="email" placeholder="Email"/>
@@ -73,8 +73,8 @@
 							</div>
 
 							<div class="inputgroup mb-5 col-12" :class="admin && 'col-xl-6'">
-								<InputIcon icon="bi bi-telephone"></InputIcon>
-								<span class="p-float-label">
+								<!-- <InputIcon icon="bi bi-telephone"></InputIcon> -->
+								<span class="p-float-label me-2">
 									<InputMask id="countryCode" v-model="v$.countryCode.$model" :class="{'p-invalid':v$.countryCode.$invalid && submitted}" 
 											   name="countryCode" placeholder="+9999" mask="+99?99"/>
 									<label for="countryCode">{{ $t('message.Code') }}</label>
@@ -90,19 +90,19 @@
 							</div>
 
 							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
-								<InputIcon icon="bi bi-activity"></InputIcon>
-								<ToggleButton v-model="active" onLabel="Active member" offLabel="Inactive member" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${active ? 'bg-info' : 'bg-warning'} p-togglebtn-active`"/>
+								<!-- <InputIcon icon="bi bi-activity"></InputIcon> -->
+								<ToggleButton v-model="active" onLabel="Active member" offLabel="Inactive member" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${active ? 'bg-info' : 'bg-warning'} p-togglebtn-active btn-border-radius`"/>
 							</div>
 
 							<div class="inputgroup mb-5 col-12 align-items-center" v-if="admin">
 								<span class="p-float-label w-100">
-									<Calendar name="calendar" inputId="icon" v-model="memberFrom" :showIcon="true" dateFormat="dd.mm.yy" class="calendar"/>
+									<Calendar name="calendar" inputId="icon" v-model="memberFrom" :showIcon="false" dateFormat="dd.mm.yy" class="calendar"/>
 									<label for="calendar">Member from</label>
 								</span>
 							</div>
 		
 							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
-								<InputIcon icon="bi bi-bar-chart-fill"></InputIcon>
+								<!-- <InputIcon icon="bi bi-bar-chart-fill"></InputIcon> -->
 								<span class="p-float-label w-100">
 									<InputText id="instatId" v-model="v$.instatId.$model" :class="{'p-invalid':v$.instatId.$invalid && submitted}" aria-describedby="email-error"
 												name="instatId" placeholder="Stat ID"/>
@@ -112,12 +112,12 @@
 							</div>
 		
 							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
-								<InputIcon icon="pi pi-euro"></InputIcon>
-								<ToggleButton v-model="paid" onLabel="Paid" offLabel="UnPaid" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${paid ? 'bg-success' : 'bg-danger'} p-togglebtn`"/>
+								<!-- <InputIcon icon="pi pi-euro"></InputIcon> -->
+								<ToggleButton v-model="paid" onLabel="Paid" offLabel="UnPaid" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${paid ? 'bg-success' : 'bg-danger'} p-togglebtn btn-border-radius`"/>
 							</div>
 		
 							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
-								<InputIcon icon="bi bi-person-lines-fill"></InputIcon>
+								<!-- <InputIcon icon="bi bi-person-lines-fill"></InputIcon> -->
 								<span class="p-float-label w-100">
 									<Dropdown name="dropdown" v-model="role" :options="roles" optionLabel="name" optionValue="id" placeholder="Select a Role"/>
 									<label for="dropdown">User Role</label>
@@ -138,7 +138,7 @@
 						</div>
 
 						<div class="position-relative text-center mt-2">
-							<Button type="submit" :loading="loading" label="Submit" class="submit-btn btn btn-primary btn-block btn-lg shadow-lg" :disabled="loading"/>
+							<Button type="submit" :loading="loading" label="Submit" class="submit-btn btn btn-primary btn-block btn-lg shadow-lg btn-black" :disabled="loading"/>
 						</div>
 
 					</form>
@@ -307,15 +307,14 @@ export default {
 		top: 100%;
 	}
 	& > .p-button {
-		border-radius: 0 4px 4px 0;
+		//border-radius: 0 4px 4px 0;
 	} 
 	:deep(.p-dropdown) {
 		width: 100%;
 	}
 	:deep(.p-inputtext), :deep(.p-dropdown) {
-		border-radius: 0 6px 6px 0;
+		//border-radius: 0 6px 6px 0;
 	}
-	 
 }
 .p-togglebtn {
 	max-width: 12rem;
@@ -323,15 +322,14 @@ export default {
 	.p-button-icon-left {
 		color: #ffffff;
 	}
-	
 }
 .p-togglebtn-active {
 	max-width: 12rem;
 }
 .p-togglebutton.p-button:not(.p-disabled):not(.p-highlight):hover {
-		background: inherit;
-		color: inherit;
-	}
+	background: inherit;
+	color: inherit;
+}
 .submit-btn {
 	max-width: 100%;
 }
@@ -345,7 +343,7 @@ export default {
 		background: #e9ecef;
 	}
 	:deep(.p-inputtext) {
-		border-radius: 6px 0 0 6px;
+		//border-radius: 6px 0 0 6px;
 	}
 }
 #countryCode {
@@ -359,7 +357,7 @@ export default {
 }
 .p-float-label {
 	& label {
-		opacity: 0;
+		opacity: .5;
 	}
 	input:focus ~ label, input.p-filled ~ label {
 		opacity: 1;

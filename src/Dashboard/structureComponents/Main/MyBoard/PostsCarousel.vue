@@ -1,27 +1,23 @@
 <template>
 	<Carousel :value="posts" :numVisible="3" :numScroll="1" :showNavigators="false" 
-			  :responsiveOptions="responsiveOptions" class="custom-carousel" :circular="false" 
-			  :autoplayInterval="7000" :showIndicators="true">
+			  :responsiveOptions="responsiveOptions" class="custom-carousel" :circular="true" 
+			  :autoplayInterval="6000" :showIndicators="false">
 		<template #header>
 			<h5 class="mb-4">{{$t("message.ufpNews")}}</h5>
 		</template>
-		<template #item="slotProps">
-			
-				<div class="post-item">
+		<template #item="slotProps">			
+				<div class="post-item mx-3 card">
 					<a :href="slotProps.data.link">
-						<div class="post-item-content text-center">
+						<div class="post-item-content">
 							<div class="mb-3">
 								<img class="carousel-img" :src="slotProps.data.yoast_head_json.og_image[0].url" :alt="slotProps.data.title.rendered" />
 							</div>
 							<div>
-								
-									<h5 class="mb-1">{{slotProps.data.title.rendered}}</h5>
-														
+								<h6 class="mb-1 p-3">{{slotProps.data.title.rendered}}</h6>					
 							</div>
 						</div>
 					</a>
-				</div>
-			
+				</div>	
 		</template>
 	</Carousel>
 
@@ -79,22 +75,40 @@
  
 <style lang='scss' scoped>
 .custom-carousel {
+	:deep(.p-carousel-items-content) {
+		padding-bottom: .5rem;
+	}
+	:deep(.p-carousel-indicators) {
+		.p-link {
+			min-width: 1.5rem;
+			height: 1.5rem;
+			border-radius: var(--btn-border-radius);
+		}
+		.p-highlight button{
+			background: var(--input-border-color);
+			box-shadow: 0 0 0 0.2rem var(--card-shadow);
+		}
+	}
 	:deep(.carousel-img) {
 		width: 100%;
 		height: 200px;
 		object-fit: cover;
 		margin: auto;
-		border-radius: 15px;
+	}
+	.post-item {
+		background: var(--card-bg);
 	}
 }
 
 @media( min-width: 576px ) {
 	.custom-carousel {
 		:deep(.carousel-img) {
-			width: 90%;
-			height: 350px;
+			height: 300px;
 			object-fit: cover;
 			margin: auto;
+		}
+		.post-item {
+			height: 100%;
 		}
 	}
 }

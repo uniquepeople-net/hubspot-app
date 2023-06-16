@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<DocumentsData v-if="docs" :docs="docs" :admin="false"/>
-		<LoadingIcon v-if="!docs"/>
+		<LoadingIcon v-if="!docs" :error="error"/>
 	</div>
 </template>
  
@@ -15,7 +15,8 @@
 			this.$store.dispatch("documents/getDocuments")		
 		},
 		computed: {
-			...mapGetters({ docs: 'documents/documents' })
+			...mapGetters({ docs: 'documents/documents',
+							error: 'documents/error' })
 		},
 		components: { DocumentsData }
 	}

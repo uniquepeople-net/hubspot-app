@@ -54,19 +54,7 @@
 		},
 		methods: {
 			timeBeforePosted(time) {				
-				let currentTime = new Date( Date.now() )
-				let date = new Date(time * 1000)
-				
-				let diffTime = (currentTime - date) / 1000 / 3600
-				let returnTime
-
-				if ( diffTime < 1 ) {
-					returnTime = Math.round( diffTime * 60 ) + ' minutes'
-				} else {
-					returnTime = Math.round(diffTime) + ' hours'
-				}
-
-				return returnTime
+				return Helpers.timeBeforePosted(time)
 			},
 			linkToNews(link) {
 				if (Helpers.isValidHttpUrl(link)) {
