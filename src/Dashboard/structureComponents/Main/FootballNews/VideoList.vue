@@ -43,20 +43,37 @@
 			}).then(
 				resp => {
 					this.videoData = resp.data
+
+					// Sort data by competition id
                     this.videoData.sort( (a, b) => {
                         return a.competition.id - b.competition.id
                     })
-                    const result = Object.values(this.videoData.reduce((acc, obj) => {
+                    
+					// Create in object arrays of matches with same id 
+					const result = Object.values(this.videoData.reduce((acc, obj) => {
                         const id = obj.competition.id;
                         if (acc[id]) {
-                            acc[id].push(obj);
+							acc[id].push(obj);
                         } else {
-                            acc[id] = [obj];
+							acc[id] = [obj];
                         }
                         return acc;
                     }, {}));
 
-                    this.videoData = result
+					// Sort arrays in result based on the "date" value in each array
+					const sortedResult = {};
+					const sortedArrayKeys = Object.keys(result).sort((a, b) => {
+						const maxDateA = new Date(Math.max(...result[a].map(obj => new Date(obj.date))));
+						const maxDateB = new Date(Math.max(...result[b].map(obj => new Date(obj.date))));
+						
+						return maxDateB - maxDateA;
+					});
+
+					sortedArrayKeys.forEach( (key, index) => {
+						sortedResult[index] = result[key];
+					});
+
+					this.videoData = sortedResult
 				}				
 			).catch( error => {
 				Toast.fire({
