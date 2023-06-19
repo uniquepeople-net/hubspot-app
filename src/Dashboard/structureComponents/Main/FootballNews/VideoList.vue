@@ -1,5 +1,6 @@
 <template>
     <div>
+		<span>{{app}}</span>
         <span v-for="( video, index ) in videoData">
             <h5 class="mt-4">{{ video[0].competition.name }}</h5>
             
@@ -88,7 +89,8 @@
                 videoData: [],
                 visibleDialog: false,
                 embed: null,
-                title: null
+                title: null,
+				app: process.env.VUE_APP_URL
             }
         },
         methods: {
