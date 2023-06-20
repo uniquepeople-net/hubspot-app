@@ -7,6 +7,10 @@
 	--btn-border: 1px solid var(--main-dark);
 	--btn-border-radius:8px;
 	--input-border: 1px solid var(--card-bg);
+	--font-main: 'Inter', sans-serif; 
+}
+body {
+	font-family: var(--font-main);
 }
 a {
 	text-decoration: none;
@@ -14,6 +18,9 @@ a {
 	&:hover {
 		color: inherit;
 	}
+}
+.p-component {
+	font-family: unset;
 }
 .btn-border-radius {
 	border-radius: var(--btn-border-radius);
@@ -94,8 +101,10 @@ a {
 .p-dropdown.p-component {
 	border-radius: var(--btn-border-radius);
 	background-color: var(--card-bg);
+	box-shadow: var(--card-shadow) 0px 3px 3px;
+	border: var(--input-border);
 }
-.card {
+.card, .main-bar {
 	border-radius:12px;
 	overflow: hidden;
 	box-shadow: 0 2px 4px 0 rgb(14 30 37 / 12%), 0 2px 16px 0 rgb(14 30 37 / 32%);
@@ -116,7 +125,7 @@ i {
 
 button {
 	max-width: 20rem !important;
-	min-width: 15rem;
+	//min-width: 15rem;
 }
 
 ::placeholder {

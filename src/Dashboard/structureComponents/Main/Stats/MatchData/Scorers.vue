@@ -1,16 +1,18 @@
 <template>
 	<div>
 		<div v-for="scorer in scorers" :class="`scorer-wrap justify-content-${position === 'left' ? 'start' : 'end'}`">
-			<img v-if="position === 'left'" v-for="goal in Number(scorer.goals)  + Number(scorer.ownGoals)" class="soccer-ball" src="../../../../../../assets/images/football.png" alt="">
+			<Football v-if="position === 'left'" v-for="goal in Number(scorer.goals)  + Number(scorer.ownGoals)" class="soccer-ball" />
 			<span class="scorer-name mx-1">{{scorer.player.shortName}}</span>
-			<img v-if="position === 'right'" v-for="goal in Number(scorer.goals)  + Number(scorer.ownGoals)" class="soccer-ball" src="../../../../../../assets/images/football.png" alt="">
+			<Football v-if="position === 'right'" v-for="goal in Number(scorer.goals)  + Number(scorer.ownGoals)" class="soccer-ball" />
 		</div>
 	</div>
 </template>
  
  
 <script>
+	import Football from '../Vectors/Football.vue'
 	export default {
+		components: { Football },
 		props: {
 			scorers: Array,
 			position: String

@@ -27,75 +27,100 @@
 
 						<div class="row">
 							<div class="inputgroup mb-5 col-12 col-lg-6">
-								<InputIcon icon="pi pi-user"></InputIcon>
-								<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
-										name="name" placeholder="Name"/>
+								<!-- <InputIcon icon="pi pi-user"></InputIcon> -->
+								<span class="p-float-label w-100">
+									<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
+											name="name" :placeholder="$t('message.Name')"/>
+									<label for="name">{{$t('message.Name')}}</label>
+								</span>
 							
 								<InputError :validator="v$.name" :submitted="submitted" replace="Name"></InputError>
 							</div>
 
 							<div class="inputgroup mb-5 col-12 col-lg-6">
-								<InputIcon icon="pi pi-user"></InputIcon>
-								<InputText id="surname" v-model="v$.surname.$model" :class="{'p-invalid':v$.surname.$invalid && submitted}" 
-										name="surname" placeholder="Surname"/>
+								<!-- <InputIcon icon="pi pi-user"></InputIcon> -->
+								<span class="p-float-label w-100">
+									<InputText id="surname" v-model="v$.surname.$model" :class="{'p-invalid':v$.surname.$invalid && submitted}" 
+											name="surname" :placeholder="$t('message.Surname')"/>
+									<label for="surname">{{$t('message.Surname')}}</label>
+								</span>
 							
 								<InputError :validator="v$.surname" :submitted="submitted" replace="Surname"></InputError>
 							</div>
 		
 							<div class="inputgroup mb-5 col-12 col-lg-6">
-								<InputIcon icon="bi bi-house"></InputIcon>
-								<InputText id="club" v-model="v$.club.$model" :class="{'p-invalid':v$.club.$invalid && submitted}" 
-										   name="club" placeholder="Club"/>
+								<!-- <InputIcon icon="bi bi-house"></InputIcon> -->
+								<span class="p-float-label w-100">
+									<InputText id="club" v-model="v$.club.$model" :class="{'p-invalid':v$.club.$invalid && submitted}" 
+											   name="club" :placeholder="$t('message.Club')"/>
+									<label for="club">{{$t('message.Club')}}</label>
+								</span>
 							
 								<InputError :validator="v$.club" :submitted="submitted" replace="Club"></InputError>
 							</div>
 
 							<div class="inputgroup mb-5 col-12 col-lg-6">
-								<InputIcon icon="pi pi-envelope"></InputIcon>
-								<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}"
-											name="email" placeholder="Email"/>
+								<!-- <InputIcon icon="pi pi-envelope"></InputIcon> -->
+								<span class="p-float-label w-100">
+									<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}"
+												name="email" placeholder="Email"/>
+									<label for="email">Email</label>
+								</span>
 		
 								<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
 							</div>
 
 							<div class="inputgroup mb-5 col-12 col-lg-6">
-								<InputIcon icon="bi bi-telephone"></InputIcon>
-								<InputMask id="countryCode" v-model="v$.countryCode.$model" :class="{'p-invalid':v$.countryCode.$invalid && submitted}" 
-										   name="countryCode" placeholder="+9999" mask="+99?99"/>
+								<!-- <InputIcon icon="bi bi-telephone"></InputIcon> -->
+								<span class="p-float-label me-2">
+									<InputMask id="countryCode" v-model="v$.countryCode.$model" :class="{'p-invalid':v$.countryCode.$invalid && submitted}" 
+											   name="countryCode" placeholder="+9999" mask="+99?99"/>
+									<label for="countryCode">{{ $t('message.Code') }}</label>
+								</span>
 								<InputError :validator="v$.countryCode" :submitted="submitted" replace="countryCode"></InputError>
-								<InputMask id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
-										   name="phoneNum" placeholder="999 999 999" mask="999999999" autoClear/>
+								<span class="p-float-label w-100">
+									<InputMask id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
+											   name="phoneNum" placeholder="999 999 999" mask="999999999" autoClear/>
+									<label for="phoneNum">{{ $t('message.Phonenumber') }}</label>
+								</span>
 							
 								<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
 							</div>
 
 							<div class="inputgroup mb-5 col-12 col-lg-6 justify-content-center">
-								<InputIcon icon="bi bi-activity"></InputIcon>
-								<ToggleButton v-model="active" onLabel="Active member" offLabel="Inactive member" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${active ? 'bg-info' : 'bg-warning'} p-togglebtn-active`"/>
+								<!-- <InputIcon icon="bi bi-activity"></InputIcon> -->
+								<ToggleButton v-model="active" :onLabel="$t('message.Active') + ' ' + $t('message.member')" 
+											  :offLabel="$t('message.Inactive') + ' ' + $t('message.member')" 
+											  onIcon="pi pi-check" offIcon="pi pi-times" 
+											  :class="`${active ? 'bg-info' : 'bg-warning'} p-togglebtn-active btn-border-radius`"/>
 							</div>
 		
 							<div class="inputgroup mb-5 col-12 col-lg-6 align-items-center">
-								<label for="icon">Member from:&nbsp;</label>
-								<Calendar inputId="icon" v-model="memberFrom" :showIcon="true" dateFormat="dd.mm.yy" class="calendar"/>
+								<label for="icon">{{ $t('message.MemberFrom') + ': '}}</label>
+								<Calendar inputId="icon" v-model="memberFrom" :showIcon="false" dateFormat="dd.mm.yy" 
+										  class="calendar" :placeholder="$t('message.Date')"/>
 								<InputError :validator="v$.memberFrom" :submitted="submitted" replace="Member from date"></InputError>
 							</div>
 
 							<div class="inputgroup mb-5 col-12 col-lg-6">
-								<InputIcon icon="bi bi-bar-chart-fill"></InputIcon>
-								<InputText id="instatId" v-model="v$.instatId.$model" :class="{'p-invalid':v$.instatId.$invalid && submitted}" 
-											name="instatId" placeholder="Stat ID"/>
+								<!-- <InputIcon icon="bi bi-bar-chart-fill"></InputIcon> -->
+								<span class="p-float-label w-100">
+									<InputText id="instatId" v-model="v$.instatId.$model" :class="{'p-invalid':v$.instatId.$invalid && submitted}" 
+												name="instatId" placeholder="Stat ID"/>
+									<label for="instatId">Stat ID</label>
+								</span>
 		
 								<InputError :validator="v$.instatId" :submitted="submitted" replace="Instat ID"></InputError>
 							</div>
 		
 							<div class="inputgroup mb-5 col-12 col-lg-6 justify-content-center">
-								<InputIcon icon="pi pi-euro"></InputIcon>
-								<ToggleButton v-model="paid" onLabel="Paid" offLabel="UnPaid" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${paid ? 'bg-success' : 'bg-danger'} p-togglebutton`"/>
+								<!-- <InputIcon icon="pi pi-euro"></InputIcon> -->
+								<ToggleButton v-model="paid" :onLabel="$t('message.Paid')" :offLabel="$t('message.Unpaid')" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${paid ? 'bg-success' : 'bg-danger'} p-togglebutton btn-border-radius`"/>
 							</div>
 		
 							<div class="inputgroup mb-5 col-12 col-lg-6">
-								<InputIcon icon="bi bi-person-lines-fill"></InputIcon>
-								<Dropdown v-model="role" :options="roles" optionLabel="name" optionValue="id" placeholder="Select a Role"/>
+								<!-- <InputIcon icon="bi bi-person-lines-fill"></InputIcon> -->
+								<Dropdown v-model="role" :options="roles" optionLabel="name" optionValue="id" :placeholder="$t('message.SelectaRole')"/>
 								
 								<InputError :validator="v$.role" :submitted="submitted" replace="Role"></InputError>
 							</div>
@@ -109,25 +134,28 @@
 							</div> -->
 
 							<div class="inputgroup mb-5 col-12 col-xxl-6">
-								<InputIcon icon="pi pi-lock"></InputIcon>
-								<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
-										name="password" placeholder="Password">
-									<template #header>
-										<h6>Pick a password</h6>
-									</template>
-									<template #footer="sp">
-										{{sp.level}}
-										<PasswordSuggestions></PasswordSuggestions>
-									</template>
-								</Password>
-								<Button label="Generate" @click="generatePswd" class="p-button-secondary"/> 
+								<!-- <InputIcon icon="pi pi-lock"></InputIcon> -->
+								<span class="p-float-label w-100">
+									<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
+											name="password" :placeholder="$t('message.Password')">
+										<template #header>
+											<h6>Pick a password</h6>
+										</template>
+										<template #footer="sp">
+											{{sp.level}}
+											<PasswordSuggestions></PasswordSuggestions>
+										</template>
+									</Password>
+									<label for="dropdown">{{$t('message.Password')}}</label>
+								</span>
+								<Button :label="$t('message.Generate')" @click="generatePswd" class="p-button-secondary btn-border-radius generate-btn"/> 
 				
 								<InputError :validator="v$.password" :submitted="submitted" replace="Password"></InputError>
 							</div>
 						</div>
 
 						<div class="position-relative text-center mt-2">
-							<Button type="submit" label="Submit" class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg" />
+							<Button type="submit" :label="$t('message.Submit')" class=" submit-btn btn btn-primary btn-block btn-lg shadow-lg btn-black" />
 							<div v-if="loading" class="spinner-grow position-absolute" role="status"></div>
 						</div>
 
@@ -173,7 +201,7 @@ export default {
             showMessage: false,
 			paid: false,
 			role: '',
-			roles: [{ name: 'User', id: 3 }, { name: 'Editor', id: 2 }, { name: 'Admin', id:1 } ],
+			roles: [{ name: 'User', id: 3 }, { name: 'Editor', id: 2 }, { name: 'Admin', id: 1 } ],
 			response: null,
 			loading: false
         }
@@ -287,14 +315,8 @@ export default {
 		position: absolute;
 		bottom: -60%;
 	}
-	& > .p-button {
-		border-radius: 0 4px 4px 0;
-	} 
 	:deep(.p-dropdown) {
 		width: 100%;
-	}
-	:deep(.p-inputtext):not(#countryCode), :deep(.p-dropdown) {
-		border-radius: 0 6px 6px 0;
 	}
 }
 .p-togglebutton {
@@ -304,7 +326,7 @@ export default {
 	max-width: 25rem;
 }
 .p-button-secondary {
-	max-width: 6rem !important;
+	max-width: 7rem !important;
 }
 .p-togglebtn-active {
 	max-width: 12rem;
@@ -319,8 +341,12 @@ export default {
 		background: #e9ecef;
 	}
 	:deep(.p-inputtext) {
-		border-radius: 6px 0 0 6px;
+		//border-radius: 6px 0 0 6px;
 	}
+}
+.generate-btn {
+	width: 10rem;
+    min-width: unset;
 }
 .spinner-grow {
 	top: 0;
@@ -329,6 +355,14 @@ export default {
 	margin-left: .5rem;
 }
 #countryCode {
-	max-width: 6rem;
+	max-width: 8rem;
+}
+.p-float-label {
+	& label {
+		opacity: .5;
+	}
+	input:focus ~ label, input.p-filled ~ label {
+		opacity: 1;
+	}
 }
 </style>

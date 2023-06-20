@@ -93,7 +93,7 @@
 		<template #footer>
 			<div class="d-flex flex-column flex-sm-row justify-content-between">
 				<BulkActions :selected="selectedUsers"/>
-				<Button :label="$t('message.addNewUser')" icon="pi pi-user-plus" class="p-button-raised p-button-info" @click="addNewUser"/>
+				<Button :label="$t('message.addNewUser')" icon="pi pi-user-plus" class="p-button-raised p-button-info btn-border-radius" @click="addNewUser"/>
 			</div>
 		</template>
 	</DataTable>

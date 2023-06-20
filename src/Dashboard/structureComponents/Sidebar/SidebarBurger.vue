@@ -26,7 +26,7 @@
 		top: 3rem;
 		left: 1rem;
 		padding: 0rem 1rem;
-		border: 1px solid #6c757d;
+		//border: 1px solid #6c757d;
 		border-radius: 8px;
 		z-index: 999;
 		cursor: pointer;

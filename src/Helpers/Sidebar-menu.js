@@ -68,7 +68,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 			},
 		]
 	},
-	{
+	/* {
 		key: '6',
 		label: i18n.t("message.Footballnews"),
 		icon: 'bi bi-cup-hot',
@@ -85,7 +85,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 				command: () => sidebarHide()
 			},
 		]
-	},
+	}, */
 	{
 		key: '7',
 		label: i18n.t("message.Settings"),

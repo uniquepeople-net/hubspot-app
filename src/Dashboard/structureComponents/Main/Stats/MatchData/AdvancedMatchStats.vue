@@ -15,15 +15,17 @@
 			</div>
 		</div>
 		<div class="mt-3">
-			<AdvancedMatchStatsBar v-for="stat in advStatBars" :title="stat.label" :values="stat.values"/>
+			<!-- <AdvancedMatchStatsBar v-for="stat in advStatBars" :title="stat.label" :values="stat.values"/> -->
+			<MatchStatBar v-for="stat in advStatBars" :title="stat.label" :values="stat.values"/>
 		</div>
 	</div>
 </template>
  
  
 <script>
-	import AdvancedMatchStatsBar from './AdvancedMatchStatsBar.vue'
+	/* import AdvancedMatchStatsBar from './AdvancedMatchStatsBar.vue' */
 	import AdvancedMatchStatsChart from './AdvancedMatchStatsChart.vue'
+	import MatchStatBar from './MatchStatBar.vue';
 	
 	export default {
 		props: {
@@ -65,7 +67,7 @@
 				]
 			}	
 		},
-		components: { AdvancedMatchStatsChart, AdvancedMatchStatsBar },
+		components: { AdvancedMatchStatsChart, /* AdvancedMatchStatsBar, */ MatchStatBar },
 	}
 </script>
  

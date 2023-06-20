@@ -3,7 +3,7 @@
 		<div class="d-flex justify-content-between justify-content-sm-start">
 			<Dropdown v-model="selectedAction" :options="actions" optionLabel="name" :placeholder="$t('message.SelectanAction')" />
 			<Button v-if="selectedAction" :label="selectedAction.name" :icon="selectedAction.icon" 
-					class="p-button-raised p-button-success ms-3" @click="commitAction(selectedAction.route)"
+					class="p-button-raised p-button-success ms-3 btn-border-radius" @click="commitAction(selectedAction.route)"
 					:disabled="selectedAction && (!selected || selected.length === 0)"/>
 		</div>
 		<small class="error" v-if="selectedAction && (!selected || selected.length === 0)">{{ $t('message.Nouserschosen') }}</small>

@@ -105,7 +105,7 @@
 		text-align: center;
 		span {
 			padding: 0.4rem 1rem;
-			background: #495057;
+			background:var(--main-dark);
 			color: #f8f9fa;
 			border-radius: 8px;
 			font-weight: 700;
@@ -131,6 +131,9 @@
 				padding: 0.3rem .9rem;
 				font-size: 1.3rem;
 			}
+		}
+		:deep(.card-body) {
+			padding: 0;
 		}
 	}
 }
