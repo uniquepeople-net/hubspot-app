@@ -1,12 +1,18 @@
 <template>
-	<div class="row g-1 mt-2 stat-wrapper">
-		<div :class="`col-6 bar-left ${bgClass(values.team1, values.team2)} }`">
-			<ProgressBar :value="calculateValue(values.team1)"> {{ values.team1 }} </ProgressBar>
+	<div class="mt-4 stat-wrapper">
+		<div class="bar-dark" :style="`width: ${calculateValue(values.team1, false)}%; ${values.team2 === 0 ? 'border-top-right-radius:inherit;' : ''}`">
 		</div>
-		<div :class="`col-6 bar-right ${bgClass(values.team2, values.team1)}`">
-			<ProgressBar :value="calculateValue(values.team2)">{{ values.team2 }}</ProgressBar>
+		<div class="bar-black" :style="`width: ${calculateValue(values.team2, false)}%; ${values.team1 === 0 ? 'border-top-left-radius:inherit;' : ''}`">
 		</div>
-		<h6 class="title mb-0">{{title}}</h6>
+		<div class="d-flex justify-content-between align-items-center w-100 p-2">
+			<span class="value-num ms-3">
+				{{ values.team1 }}<span v-if="percentage">%</span>
+			</span>
+			<h6 class="title mb-0">{{ title }}</h6>
+			<span class="value-num me-3">
+				{{ values.team2 }}<span v-if="percentage">%</span>
+			</span>
+		</div>
 	</div>
 </template>
  
@@ -17,21 +23,23 @@
 	export default {
 		props: {
 			title: String,
-			values: Object
+			values: Object,
+			percentage: Boolean
 		},
 		data() {
 			return {
 			}
 		},
 		methods: {
-			calculateValue(team) {
+			calculateValue(team, num = true) {
 				let team1Value = this.values.team1
 				let team2Value = this.values.team2
+				let value = team / ((team1Value + team2Value) / 100)
 
-				return team / ((team1Value + team2Value) / 100)
+				return value
 			},
 			bgClass( team1, team2 ) {
-				return (team1 > team2 || team1 === team2) ? 'bar-light' : 'bar-dark'
+				return (team1 > team2 || team1 === team2) ? 'bar-black' : 'bar-dark'
 			}
 		},
 		components: { ProgressBar },
@@ -44,48 +52,34 @@
 	background: var(--card-bg);
 	border-radius: var(--btn-border-radius);
 	box-shadow: var(--card-shadow) 1.95px 1.95px 0px;
-}
-.bar-dark {
-	:deep(.p-progressbar-value) {
-		background: var(--bluegray-500);
-		border-radius: 100px;
+	display: flex;
+	flex-wrap: wrap;
+	color: var(--main-dark);
+	.bar-dark, .bar-black {
+		height: 7px;
+		display: inline-block;
+	}
+	.bar-dark {
+		border-top-left-radius: inherit;
+		background: var(--stat-chart-bg);
+	}
+	.bar-black	{
+		background: var(--main-dark);
+		border-top-right-radius: inherit;
+	}
+	.title {
+		font-size: 1rem;
+		font-weight: 500;
+	}
+	.value-num {
+		font-size: 24px;
+		font-weight: 600;
 	}
 }
-.bar-light	{
-	:deep(.p-progressbar-value) {
-		background: var(--bluegray-700);
-		border-radius: 100px;
-	}
-}
-.bar-left {
-	:deep(.p-progressbar-value) {
-		right: 0;
-		justify-content: end;
-		.p-progressbar-label {
-			font-weight: 600;
-			margin-right: .5rem;
-		}
-	}
-}
-.bar-right {
-	:deep(.p-progressbar-value) {
-		justify-content: start;
-		.p-progressbar-label {
-			font-weight: 600;
-			margin-left: .5rem;
-		}
-	}
-}
-.title {
-	font-size: .8rem;
-	text-align: center;
-}
-:deep(.p-progressbar) {
-	border-radius: 100px;
-}
+
 @media(min-width: 576px) {
 	.title {
-		font-size: 1.1rem;
+		font-size: rem(24);
 	}
 }
 </style>

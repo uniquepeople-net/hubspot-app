@@ -1,8 +1,6 @@
 <template>
-	<Card class="card match-card" v-if="match">
-			<!-- <template #title>
-				<div class="card-header"><h5>{{ displayMatchStats ? 'Match Info' : 'Player Info'}}</h5></div>
-			</template> -->
+	<div>
+		<Card class="card match-card" v-if="match">
 			<template #content>
 				<div  class="card-body">
 					<div class="row position-relative">
@@ -15,29 +13,35 @@
 							<img v-if="team2" class="team-logo" :src="team2.team.imageDataURL ? team2.team.imageDataURL : ''" alt="">
 							<h6 class="team-name text-center fw-bold mb-md-3">{{ team2.team.officialName }}</h6>
 						</div>
-
+	
 						<div class="col-6 mt-3">
 							<Scorers :scorers="scorersTeam1" position="right"/>
 						</div>
-
+	
 						<div class="col-6 mt-3">
 							<Scorers :scorers="scorersTeam2" position="left"/>
 						</div>
-
+	
 						<div class="result position-absolute">
 							<p class="date mb-1">{{ matchDate(match.dateutc) }}</p>
 							<span>{{ modifyResult(match.label) }}</span>
 						</div>
 					</div>					
-
+	
 					<AdvancedData class="mt-5" :id="match.wyId" v-if="displayMatchStats"/>
-
+	
 					<AdvancedDataPlayer class="mt-5" :id="match.wyId" v-if="!displayMatchStats"/>
-
+	
 					<Skeleton v-if="!match" width="5rem" height="2.5rem" class="result position-absolute"></Skeleton>					
 				</div>
 			</template>
-		</Card>  
+		</Card> 
+	
+		<div v-if="!match" class="text-center mt-5">
+			<StatMessage />
+		</div>
+		
+	</div>
 </template>
  
  
@@ -46,6 +50,8 @@
 	import AdvancedData from '../structureComponents/Main/Stats/MatchData/AdvancedData.vue';
 	import AdvancedDataPlayer from '../structureComponents/Main/Stats/PlayerData/AdvancedDataPlayer.vue';
 	import Scorers from '../structureComponents/Main/Stats/MatchData/Scorers.vue';
+	import QuestionMark from '../structureComponents/Main/Stats/Vectors/QuestionMark.vue';
+	import StatMessage from '../structureComponents/Main/Stats/StatMessage.vue';
 
 	export default {
 		props: ['displayMatchStats'],
@@ -71,7 +77,7 @@
 							scorersTeam1: 'stats/scorersTeam1',
 							scorersTeam2: 'stats/scorersTeam2' })
 		},
-		components: { Scorers, AdvancedData, AdvancedDataPlayer }
+		components: { Scorers, AdvancedData, AdvancedDataPlayer, QuestionMark, StatMessage }
 	}
 </script>
  

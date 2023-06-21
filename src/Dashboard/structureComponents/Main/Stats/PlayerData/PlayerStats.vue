@@ -7,6 +7,9 @@
 							  :btnLabel="$t('message.MatchStats')" btnRoute="match"/>
 
 				<PlayerStatsData v-if="match" :id="user.instat_id" :matchId="match.wyId"/>
+				<div v-if="!match" class="text-center mt-5">
+					<StatMessage />
+				</div>
 			</div>
 		</div>
 	</div>
@@ -17,6 +20,7 @@
 	import { mapGetters } from 'vuex';
 	import MatchSelects from '../MatchSelects.vue'
 	import PlayerStatsData from './PlayerStatsData.vue';
+	import StatMessage from '../StatMessage.vue'
 
 	export default {
 		data() {
@@ -32,7 +36,7 @@
 							matches: 'stats/playerMatches',
 							seasons: 'stats/playerCareer' }),
 		},
-		components: { MatchSelects, PlayerStatsData },
+		components: { MatchSelects, PlayerStatsData, StatMessage },
 	}
 </script>
  

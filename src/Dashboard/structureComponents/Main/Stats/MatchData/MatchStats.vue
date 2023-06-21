@@ -17,8 +17,6 @@
 	import { mapGetters } from 'vuex';
 	import MatchSelects from '../MatchSelects.vue'
 	import MatchCard from '../../../../global/MatchCard.vue'
-	import PlayerStats from '../PlayerData/PlayerStats.vue'
-	import MatchCardPlayer from '../../../../global/MatchCardPlayer.vue'
 
 	export default {
 		data() {
@@ -32,7 +30,7 @@
 			...mapGetters({ matches: 'stats/playerMatches',
 							seasons: 'stats/playerCareer' }),
 		},
-		components: { MatchSelects, MatchCard, PlayerStats, MatchCardPlayer },
+		components: { MatchSelects, MatchCard },
 	}
 </script>
  

@@ -1,6 +1,6 @@
 <template>
 	<TabView class="tab-view">
-		<TabPanel :header="$t('message.STATS')">
+		<TabPanel :header="$t('message.PERSONAL')">
 			<AdvancedPlayerStats v-if="playerStats" :stats="playerStats"/>
 		</TabPanel>
 		<TabPanel :header="$t('message.TEAM')">

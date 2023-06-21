@@ -1,0 +1,4 @@
+@function rem($font-size, $context: 16) {
+    @return calc($font-size/$context) + rem;
+}
+

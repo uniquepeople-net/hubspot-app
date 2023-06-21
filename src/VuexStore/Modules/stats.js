@@ -180,6 +180,7 @@ export default {
 					context.commit("SETPLAYERSTATS", response.data)
 				})
 				.catch( error => {
+					context.commit("SETPLAYERSTATS", null)
 					Toast.fire({
 						icon: 'error',
 						timer: 5000,

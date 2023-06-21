@@ -18,7 +18,7 @@ export default {
 		updateFee:				DOMAIN_URL + '/api/users/update-fee/',
 
 
-		// Instat API
+		// Wyscout API
 		statBasicUrl:			'https://apirest.wyscout.com/v3/',				 
 		statAreas:				'areas',
 		competitionsListSvk:	'competitions?areaId=SVK',

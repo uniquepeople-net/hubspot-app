@@ -52,8 +52,7 @@
 							class="font-bold p-button-raised p-button-secondary p-button-text"
 							@click="redirectForgot"></Button>
 				</div>
-			</template>
-	
+			</template>	
 		</AuthWrapper>
 	</div>
 </template>

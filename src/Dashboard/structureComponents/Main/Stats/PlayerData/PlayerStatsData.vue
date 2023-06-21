@@ -6,7 +6,6 @@
  
  
 <script>
-	import { mapGetters } from 'vuex';
 	import MatchCard from '../../../../global/MatchCard.vue'
 
 	export default {
@@ -18,9 +17,7 @@
 		methods: {
  
 		},
-		computed: {
-			...mapGetters({ match: 'stats/matchDetails' }),
-		},
+		
 		components: { MatchCard }
 	}
 </script>
