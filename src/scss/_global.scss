@@ -10,10 +10,14 @@
 	--font-main: 'Inter', sans-serif; 
 	--stat-chart-bg: #3370EC;
 	--text-light-color: #8C8C8C;
+	--header-light-color: #D9D9D9;
 }
+
+@import "./mixins";
 
 body {
 	font-family: var(--font-main);
+	color: var(--main-dark);
 }
 a {
 	text-decoration: none;
@@ -23,7 +27,30 @@ a {
 	}
 }
 h1, h2, h3, h4, h5, h6 {
-	color: var(--main-dark);
+}
+.header-main {
+	font-size: rem(20);
+	font-weight: 600;
+}
+.header-light {
+	color: var(--header-light-color);
+	text-align: center;
+	font-size: rem(52);
+	font-weight: 700;
+}
+.text-data {
+	font-size: rem(16);
+	font-weight: 500;
+	line-height: 130%;
+}
+.text-value {
+	font-size: rem(24);
+	font-weight: 600;
+}
+.text-sm-bold {
+	font-size: rem(12);
+	font-weight: 700;
+	line-height: 130%;
 }
 .p-component {
 	font-family: unset;
@@ -43,7 +70,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-border, .btn-border:enabled:hover, .btn-border:disabled {
-	color: var(--main-dark);
 	background: var(--main-white);
 	border: 2px solid var(--main-dark);
 	transition: all .25s;
@@ -122,7 +148,7 @@ h1, h2, h3, h4, h5, h6 {
 	background-color: var(--card-bg);
 	border: 0;
 	border-radius: var(--btn-border-radius);
-	box-shadow: var(--card-shadow) 0px 3px 3px;
+	box-shadow: var(--card-shadow) 1.95px 1.95px 0px;
 }
 .center-center {
 	display: flex;

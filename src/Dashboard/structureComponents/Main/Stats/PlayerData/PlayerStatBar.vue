@@ -1,6 +1,6 @@
 <template>
 	<div :class="`player-stat-bar ${small && 'small-type'}`">
-		<h6 class="title mb-3">{{title + ' (' + completeData + ')'}}</h6>
+		<h6 class="title">{{title + ' (' + completeData + ')'}}</h6>
 		<div>
 			<div class="player-stat-bar--chart bar-dark" 
 				 :style="`width: ${calculateValue(data1, false)}%; ${data2 === 0 ? 'border-radius:9px 9px 9px 9px;' : ''}`"></div>
@@ -65,6 +65,7 @@
 	.title {
 		font-size: rem(20);
 		font-weight: 600;
+		margin-bottom: 1rem;
 	}
 	&--card {
 		display: flex;
@@ -101,6 +102,7 @@
 .small-type {
 	.title {
 		font-size: rem(14);
+		margin-block: .5rem;
 	}
 	& .card-title {
 		span {

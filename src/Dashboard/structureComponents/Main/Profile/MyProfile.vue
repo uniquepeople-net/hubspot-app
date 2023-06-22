@@ -30,7 +30,7 @@
  
 <script>
 	import { mapGetters } from 'vuex'; 
-import NavLang from '../../NavHeader/NavLang.vue';
+	import NavLang from '../../NavHeader/NavLang.vue';
 	import ChangePasswordCard from '../Users/ChangePasswordCard.vue';
 	import DataCard from '../Users/DataCard.vue';
 

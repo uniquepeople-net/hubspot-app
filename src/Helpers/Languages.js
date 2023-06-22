@@ -160,6 +160,7 @@ export const messages = {
 		OffTarget: 'Off Target',
 		Successful: 'Successful',
 		Failed: 'Failed',
+		Other: 'Other',
 	  },
 	  validations: {
         required: "This field is required.",
@@ -328,6 +329,7 @@ export const messages = {
 		OffTarget: 'Mimo brány',
 		Successful: 'Úspešné',
 		Failed: 'Neúspešné',
+		Other: 'Ďalšie',
 	  },
 	  validations: {
         required: "Toto pole je nevyhnutné.",
