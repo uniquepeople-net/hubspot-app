@@ -16,8 +16,10 @@ build_node:
     - |
       if [[ "$CI_COMMIT_BRANCH" == "test" ]]; then
         cp webpack.test.config.js webpack.config.js
+        cp .env.test .env
       elif [[ "$CI_COMMIT_BRANCH" == "prod" ]]; then
         cp webpack.prod.config.js webpack.config.js
+        cp .env.prod .env
       fi
     - npm run build
   artifacts:
