@@ -70,6 +70,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-border, .btn-border:enabled:hover, .btn-border:disabled {
+	color: var(--main-dark);
 	background: var(--main-white);
 	border: 2px solid var(--main-dark);
 	transition: all .25s;
