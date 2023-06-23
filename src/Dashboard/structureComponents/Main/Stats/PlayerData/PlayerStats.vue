@@ -10,6 +10,8 @@
 				<div v-if="!match" class="text-center mt-5">
 					<StatMessage />
 				</div>
+
+				<PLayerSeasonStats />
 			</div>
 		</div>
 	</div>
@@ -21,6 +23,7 @@
 	import MatchSelects from '../MatchSelects.vue'
 	import PlayerStatsData from './PlayerStatsData.vue';
 	import StatMessage from '../StatMessage.vue'
+	import PLayerSeasonStats from './PLayerSeasonStats.vue';
 
 	export default {
 		data() {
@@ -36,7 +39,7 @@
 							matches: 'stats/playerMatches',
 							seasons: 'stats/playerCareer' }),
 		},
-		components: { MatchSelects, PlayerStatsData, StatMessage },
+		components: { MatchSelects, PlayerStatsData, StatMessage, PLayerSeasonStats },
 	}
 </script>
  

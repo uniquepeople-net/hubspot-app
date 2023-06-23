@@ -1,13 +1,15 @@
 <template>
 	<div>
 		<PostsCarousel />
-		<NewsCard class="mt-1 mt-lg-3"/>
+		<NewsCard />
+		<PLayerSeasonStats />	
 	</div>
 </template>
  
  
 <script>
 	import NewsCard from '../FootballNews/NewsCard.vue'
+	import PLayerSeasonStats from '../Stats/PlayerData/PLayerSeasonStats.vue'
 	import PostsCarousel from './PostsCarousel.vue'
 	
 	export default {
@@ -19,7 +21,7 @@
 		methods: {
 			
 		},
-		components: { PostsCarousel, NewsCard },
+		components: { PostsCarousel, NewsCard, PLayerSeasonStats },
 	}
 </script>
  

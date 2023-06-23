@@ -1,5 +1,6 @@
 <template>
-		<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
+		<!-- <Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" 
+				position="top" modal>
             <div class="flex align-items-center flex-column pt-6 px-3">
                 <i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
                 <i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
@@ -13,7 +14,9 @@
                     <Button label="OK" @click="toggleDialog" class="p-button-text" />
                 </div>
             </template>
-        </Dialog>
+        </Dialog> -->
+
+		<CustomDialog :visible="showMessage" :response="response" @hideDialog="hideDialog"/>
 
 		<Card class="card">
 			<template #title>
@@ -156,6 +159,7 @@ import DeleteItem from "./DeleteItem.vue";
 import Calendar from 'primevue/calendar'
 import InputMask from 'primevue/inputmask'
 import LoadingIcon from '../../../global/LoadingIcon.vue';
+import CustomDialog from '../../../global/CustomDialog.vue';
 
 // Custom country code validation
 const customCountryCode = {
@@ -208,6 +212,9 @@ export default {
         }
     },
     methods: {
+		hideDialog() {
+			this.showMessage = false
+		},
         handleSubmit(isFormValid) {
             this.submitted = true;
 
@@ -285,7 +292,7 @@ export default {
 			}
 		}
 	},
-	components: { DeleteItem, Calendar, InputMask, LoadingIcon }
+	components: { DeleteItem, Calendar, InputMask, LoadingIcon, CustomDialog }
 }
 </script>
 

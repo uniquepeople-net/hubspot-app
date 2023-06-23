@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<Card class="card mx-3" v-if="redditNews">
+	<div class="news-card mt-4 mx-3 mx-lg-auto">
+		<Card class="card" v-if="redditNews">
 			<template #title>
 				<div class="card-header"><h5>{{ $t('message.GlobalNews') }}</h5></div>
 			</template>
@@ -20,7 +20,7 @@
  
 <script>
 	import { mapGetters } from 'vuex'
-import LoadingIcon from '../../../global/LoadingIcon.vue';
+	import LoadingIcon from '../../../global/LoadingIcon.vue';
 
 	export default {
 	components: { LoadingIcon },
@@ -80,5 +80,9 @@ import LoadingIcon from '../../../global/LoadingIcon.vue';
 		margin-bottom: 1.2rem;
 		font-size: .9rem;
 	}
+}
+.news-card {
+	max-width: 992px;
+	margin: 3rem auto;
 }
 </style>

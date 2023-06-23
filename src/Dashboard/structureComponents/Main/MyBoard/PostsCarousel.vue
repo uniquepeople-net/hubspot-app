@@ -3,7 +3,7 @@
 			  :responsiveOptions="responsiveOptions" class="custom-carousel" :circular="true" 
 			  :autoplayInterval="6000" :showIndicators="false">
 		<template #header>
-			<h5 class="mb-4">{{$t("message.ufpNews")}}</h5>
+			<h5 class="text-value mb-4">{{$t("message.ufpNews")}}</h5>
 		</template>
 		<template #item="slotProps">			
 				<div class="post-item mx-3 card">

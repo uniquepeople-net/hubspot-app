@@ -3,11 +3,16 @@
 		<div class="row h-100">
 			<div class="col-lg-12 col-12">
 				<div id="auth-left">
+					<BackButton v-if="!loginPage" class="back-button" route="login"/>
 					<NavLang class="auth-lang"/>
 
-					<div class="auth-logo text-center">
-						<a href="https://ufp.sk"><img src="https://ufp.sk/wp-content/uploads/2023/04/cropped-logo-transp.png" alt="Logo" class="logo"/></a>
+					<div class="auth-logo text-center" >
+						<a href="https://ufp.sk" v-if="!vectorImg">
+							<img src="https://ufp.sk/wp-content/uploads/2023/04/cropped-logo-transp.png" alt="Logo" class="logo"/>
+						</a>
+						<QuestionPhone  v-if="vectorImg"/>
 					</div>
+
 					
 					<slot name="title"></slot>
 				
@@ -25,16 +30,31 @@
  
  
 <script>
+	import BackButton from '../Dashboard/global/BackButton.vue'
+	import QuestionPhone from '../Dashboard/structureComponents/Main/Stats/Vectors/QuestionPhone.vue'
 	import NavLang from '../Dashboard/structureComponents/NavHeader/NavLang.vue'
+
+	
 	export default {
-	components: { NavLang },
+		created() {
+			let route = this.$route.name
+			if ( route === 'forgot' ) {
+				this.vectorImg = true
+			}
+			if ( route !== 'login' ) {
+				this.loginPage = false
+			}
+		},
 		data() {
 			return {
+				vectorImg: false,
+				loginPage: true
 			}
 		},
 		methods: {
- 
+			
 		},
+		components: { NavLang, QuestionPhone, BackButton },
 	}
 </script>
  
@@ -56,8 +76,13 @@
 	}
 	.auth-lang {
 		position: absolute;
-		top: 1rem;
-		left: 1rem;
+		top: 1.5rem;
+		right: 1.5rem;
+	}
+	.back-button {
+		position: absolute;
+		top: 1.5rem;
+		left: 1.5rem;
 	}
 	#auth-left {
 		max-width: 768px;

@@ -16,6 +16,8 @@
 			</template>
 		</Dialog>
 	
+		
+
 		<AuthWrapper>
 			<template v-slot:title>
 				<h1 class="auth-title mb-4">{{ $t('message.ForgotPassword') }}</h1>
@@ -35,10 +37,8 @@
 					<div class="position-relative text-center mt-5">
 						<Button type="submit" :label="$t('message.Submit')" :loading="loading" class="submit-btn btn btn-primary btn-block btn-lg btn-black" />
 					</div>
-	
 				</form>
 			</template>
-	
 		</AuthWrapper>
 	</div>
 </template>
@@ -49,6 +49,7 @@
 	import { required, email, minLength } from "../plugins/vuelidate-i18n";
 	import { useVuelidate } from "@vuelidate/core";
 	import AuthWrapper from './AuthWrapper.vue'
+	import BackButton from '../Dashboard/global/BackButton.vue';
 
 	export default {
 		setup: () => ({ v$: useVuelidate() }),
@@ -86,9 +87,6 @@
 					url: window.location.origin + '/' + this.$i18n.locale
 				}
 
-				console.log(data)
-				
-
 				axios.post( reqPassForgetUrl, data )
 					.then( response => {
 							this.loading = false
@@ -111,10 +109,11 @@
 					})
 			},
 			toggleDialog() {
+				//this.$router.go(-1);	
 				this.showMessage = !this.showMessage;
 			},
 		},
-		components: { AuthWrapper }
+		components: { AuthWrapper, BackButton }
 	}
 </script>
  

@@ -19,7 +19,8 @@ export default {
 		competitionsList: [],
 		competitionsDetail: {},
 		competitionsTeams: [],
-		teamSquad: []
+		teamSquad: [],
+		currentSeason: null,
 	}),
 
 	mutations: {
@@ -70,6 +71,9 @@ export default {
 		},
 		SETTEAMSQUAD( state, data) {
 			state.teamSquad = data
+		},
+		SETCURRENTSEASON( state, data) {
+			state.currentSeason = data
 		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
@@ -124,7 +128,24 @@ export default {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
 				.then( response => {
-					context.commit("SETPLAYERCAREER", response.data.career.reverse())
+					let reversedSeasons = response.data.career.reverse()
+					context.commit("SETPLAYERCAREER", reversedSeasons)
+					
+					const currentDate = new Date();
+					let currentSeason = {};
+
+					reversedSeasons.map( s => {
+						let endDate = new Date(s.season.endDate)
+						let startDate = new Date(s.season.startDate)
+						
+						if ( startDate < currentDate && endDate > currentDate ) {							
+							currentSeason = Object.entries(s).reduce((acc, [key, value]) => {
+								acc[key] = (acc[key] || 0) + value;
+								return acc;
+							}, { ...currentSeason });
+						}
+					})
+					context.commit("SETCURRENTSEASON", currentSeason)				
 				})
 				.catch( error => {
 					Toast.fire({
@@ -488,6 +509,9 @@ export default {
 		},
 		competitionsList(state) {
 			return state.competitionsList
-		}
+		},
+		currentSeason(state) {
+			return state.currentSeason
+		},
 	}
 }

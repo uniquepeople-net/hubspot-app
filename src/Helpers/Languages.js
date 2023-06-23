@@ -161,6 +161,7 @@ export const messages = {
 		Successful: 'Successful',
 		Failed: 'Failed',
 		Other: 'Other',
+		ThisSeason: 'This season',
 	  },
 	  validations: {
         required: "This field is required.",
@@ -330,6 +331,7 @@ export const messages = {
 		Successful: 'Úspešné',
 		Failed: 'Neúspešné',
 		Other: 'Ďalšie',
+		ThisSeason: 'Aktuálna sezóna',
 	  },
 	  validations: {
         required: "Toto pole je nevyhnutné.",

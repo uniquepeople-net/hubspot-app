@@ -47,10 +47,22 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: rem(24);
 	font-weight: 600;
 }
+.text-gt-bold {
+	font-size: rem(24);
+	font-weight: 700;
+}
 .text-sm-bold {
 	font-size: rem(12);
 	font-weight: 700;
 	line-height: 130%;
+}
+.text-bg-bold {
+	font-size: rem(32);
+	font-weight: 600;
+}
+.text-message {
+	font-size: rem(15);
+	text-align: center;
 }
 .p-component {
 	font-family: unset;

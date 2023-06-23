@@ -71,7 +71,7 @@
 	import SeasonPlayerData from './SeasonPlayerData.vue';
 
 	export default {
-	components: { SeasonPlayerData },
+		components: { SeasonPlayerData },
 		props: [ 'matches', 'seasons', 'btnLabel', 'btnRoute' ],
 		data() {
 			return {
