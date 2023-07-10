@@ -9,20 +9,22 @@
 	
 			<template v-slot:body>
 				<form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
-					<div class="mb-4 p-inputgroup mb-5 col-12">
-						<!-- <InputIcon icon="pi pi-envelope"></InputIcon> -->
-						<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
-									name="email" placeholder="Email"/>
-	
-						<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
-					</div>
-					<div class="mb-4 p-inputgroup mb-5 col-12">
-						<!-- <InputIcon icon="pi pi-lock"></InputIcon> -->
-						<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
-									name="password" :placeholder="$t('message.Password')" :feedback="false">
-						</Password>
+					<div class="row">
+						<div class="mb-4 p-inputgroup mb-5 col-12">
+							<!-- <InputIcon icon="pi pi-envelope"></InputIcon> -->
+							<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
+										name="email" placeholder="Email"/>
 		
-						<InputError :validator="v$.password" :submitted="submitted" :replace="$t('message.Password')"></InputError>
+							<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
+						</div>
+						<div class="mb-4 p-inputgroup mb-5 col-12">
+							<!-- <InputIcon icon="pi pi-lock"></InputIcon> -->
+							<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
+										name="password" :placeholder="$t('message.Password')" :feedback="false">
+							</Password>
+			
+							<InputError :validator="v$.password" :submitted="submitted" :replace="$t('message.Password')"></InputError>
+						</div>
 					</div>
 					<div class="position-relative text-center mt-5">
 						<Button type="submit" :label="$t('message.LoginV')" class="submit-btn btn btn-primary btn-block btn-lg btn-border" :loading="loading"/>

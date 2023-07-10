@@ -36,16 +36,16 @@
 								<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
 							</div>
 
-							<!-- <div class="inputgroup mb-5 col-12">
-								<InputIcon icon="bi bi-telephone"></InputIcon>
-								<InputMask id="countryCode" v-model="v$.countryCode.$model" :class="{'p-invalid':v$.countryCode.$invalid && submitted}" 
+							<div class="inputgroup mb-5 col-12">
+								<!-- <InputIcon icon="bi bi-telephone"></InputIcon> -->
+								<InputMask id="countryCode" v-model="v$.countryCode.$model" :class="{'p-invalid':v$.countryCode.$invalid && submitted, 'me-2': true }" 
 										name="countryCode" placeholder="+9999" mask="+99?99"/>
 								<InputError :validator="v$.countryCode" :submitted="submitted" replace="countryCode"></InputError>
 								<InputMask id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
-										name="phoneNum" placeholder="999 999 999" mask="999999999" autoClear/>
+										name="phoneNum" placeholder="999 999 999" mask="999999999"/>
 							
 								<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
-							</div> -->
+							</div>
 
 							<div class="inputgroup mb-5 col-12">
 								<!-- <InputIcon icon="pi pi-lock"></InputIcon> -->
@@ -79,6 +79,16 @@
 				
 								<InputError :validator="v$.password_confirmation" :submitted="submitted" replace="Password Confirmation"></InputError>
 							</div>
+
+							<div class="inputgroup mb-5 col-12" v-if="competitionsList">
+								<Dropdown v-model="selectedClub" :options="competitionsList" optionLabel="name" optionGroupLabel="name" optionGroupChildren="teams" placeholder="Select a Club" class="w-full md:w-14rem">
+									<template #optiongroup="slotProps">
+										<div class="flex align-items-center">
+											<div class="text-center">{{ slotProps.option.name }}</div>
+										</div>
+									</template>
+								</Dropdown>
+							</div>
 						</div>
 
 						<div class="position-relative text-center mt-2">
@@ -103,8 +113,8 @@
 </template>
 
 <script>
-import { numeric, helpers } from "@vuelidate/validators";
-import { required, email, minLength, sameAs } from "../plugins/vuelidate-i18n";
+import { helpers } from "@vuelidate/validators";
+import { required, email, minLength, sameAs, numeric } from "../plugins/vuelidate-i18n";
 import { useVuelidate } from "@vuelidate/core";
 import axios from 'axios';
 import { mapGetters } from 'vuex';
@@ -121,6 +131,9 @@ const customCountryCode = {
 
 export default {
     setup: () => ({ v$: useVuelidate() }),
+	created() {
+		this.$store.dispatch("stats/getAllCompetitionsTeams");
+	},
 	mounted() {
 		let regexp = /^([0|\+[0-9]{1,5})/
 	},
@@ -129,10 +142,11 @@ export default {
             name: '',
             surname: '',
             email: '@',
-			/* countryCode: '',
-			phoneNum: '', */
+			countryCode: '',
+			phoneNum: '',
             password: '',
 			password_confirmation: '',
+			selectedClub: null,
             submitted: false,
             showMessage: false,
 			response: null,
@@ -143,9 +157,9 @@ export default {
         return {
             name: { required, minLength: minLength(2) },
             surname: { required, minLength: minLength(2) },
-            email: {  required, email },
-			//countryCode: { customCountryCode },
-			//phoneNum: { numeric },
+            email: { required, email },
+			countryCode: { required, customCountryCode },
+			phoneNum: { required, numeric },
             password: { required,  minLength: minLength(8)},
 			password_confirmation: { required,  minLength: minLength(8), sameAs: sameAs(this.password)},
         }
@@ -167,8 +181,9 @@ export default {
 				name: this.name,
 				surname: this.surname,
 				email: this.email,
-				//countryCode: this.countryCode,
-				//phoneNum: this.phoneNum,
+				countryCode: this.countryCode,
+				phoneNum: this.phoneNum,
+				selectedClub: this.selectedClub,
 				password: this.password,
 				password_confirmation: this.password_confirmation
 			}
@@ -224,7 +239,8 @@ export default {
 		}
     },
 	computed: {
-		...mapGetters({ registersApiGwUrl: 'links/registerNewApiGwUrl' }),
+		...mapGetters({ registersApiGwUrl: 'links/registerNewApiGwUrl',
+						competitionsList: 'stats/allCompetitionsTeams' }),
 	},
 	components: { Calendar, InputMask, AuthWrapper, CustomDialog }
 }

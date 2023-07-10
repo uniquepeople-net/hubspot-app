@@ -21,6 +21,7 @@ export default {
 		competitionsTeams: [],
 		teamSquad: [],
 		currentSeason: null,
+		allCompetitionsTeams: null
 	}),
 
 	mutations: {
@@ -74,6 +75,9 @@ export default {
 		},
 		SETCURRENTSEASON( state, data) {
 			state.currentSeason = data
+		},
+		SETALLCOMPETITIONSTEAMS( state, data ) {
+			state.allCompetitionsTeams = data
 		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
@@ -353,7 +357,7 @@ export default {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
 			let competitionsListSvk = context.rootGetters['links/competitionsListSvk']
 
-			await User.refreshedToken();
+			//await User.refreshedToken();
 
 			await axios.get(statBasicUrl + competitionsListSvk, {
 				headers: {
@@ -465,6 +469,28 @@ export default {
 						title: "Unable to load womens teams"
 					})
 				})
+		},
+		async getAllCompetitionsTeams(context) {
+			await context.dispatch('getCompetitionsList');
+		  
+			let competitions = context.rootGetters['stats/competitionsList'];
+			console.log(competitions)
+			let competitionsIds = [775, 770, 772, 1530]
+
+			return Promise.all(
+				competitions.map(async (c) => {
+					await context.dispatch('getCompetitionsTeams', c.wyId);
+			
+					let teams = context.rootGetters['stats/competitionsTeams'];
+					let allTeamsObj = context.rootGetters['stats/allCompetitionsTeams'];
+					let actualTeams =  { name: c.name, teams: [...teams] };
+
+					if ( competitionsIds.includes(c.wyId) ) {
+						allTeamsObj = allTeamsObj ? [ ...allTeamsObj, actualTeams ] : [ actualTeams ]
+						context.commit("SETALLCOMPETITIONSTEAMS", allTeamsObj)
+					}
+				})
+			);
 		}
 	},
 
@@ -513,6 +539,9 @@ export default {
 		},
 		currentSeason(state) {
 			return state.currentSeason
+		},
+		allCompetitionsTeams(state) {
+			return state.allCompetitionsTeams
 		},
 	}
 }
