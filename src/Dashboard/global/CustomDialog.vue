@@ -29,10 +29,6 @@
 	import Warning from '../structureComponents/Main/Stats/Vectors/Warning.vue'
 	
 	export default {
-		created() {
-			console.log(this.response)
-			
-		},
 		props: {
 			visible: Boolean,
 			response: Object,

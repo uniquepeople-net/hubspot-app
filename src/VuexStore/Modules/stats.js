@@ -92,7 +92,8 @@ export default {
 				competitionsList: [],
 				competitionsDetail: {},
 				competitionsTeams: [],
-				teamSquad: []
+				teamSquad: [],
+				currentSeason: null,
 			})
 		}
 	},

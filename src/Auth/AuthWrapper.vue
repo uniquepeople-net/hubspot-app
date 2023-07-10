@@ -41,7 +41,7 @@
 			if ( route === 'forgot' ) {
 				this.vectorImg = true
 			}
-			if ( route !== 'login' ) {
+			if ( route !== 'login' && route !== 'intro') {
 				this.loginPage = false
 			}
 		},

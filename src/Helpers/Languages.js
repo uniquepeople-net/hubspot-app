@@ -162,6 +162,8 @@ export const messages = {
 		Failed: 'Failed',
 		Other: 'Other',
 		ThisSeason: 'This season',
+		WeProtectIntro: 'We protect your football interests',
+		WelcomeIntro: 'Welcome to the official app of the Union of Football Professionals in Slovakia.',
 	  },
 	  validations: {
         required: "This field is required.",
@@ -332,6 +334,8 @@ export const messages = {
 		Failed: 'Neúspešné',
 		Other: 'Ďalšie',
 		ThisSeason: 'Aktuálna sezóna',
+		WeProtectIntro: 'Chránime Vaše futbalové záujmy.',
+		WelcomeIntro: 'Vitajte na stránke oficiálnej aplikácie Únie Futbalových profesionálov Slovenska',
 	  },
 	  validations: {
         required: "Toto pole je nevyhnutné.",

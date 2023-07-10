@@ -23,7 +23,7 @@
 	export default {
 		created() {	
 			if (!User.loggedIn()) {
-				this.$router.push({ name: 'login' })				
+				this.$router.push({ name: 'intro' })				
 			} else {			
 				let currentRoute = this.$router.currentRoute._value.name;
 				if ( currentRoute === 'dashboard' ) {

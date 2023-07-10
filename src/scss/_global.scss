@@ -43,6 +43,11 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: 500;
 	line-height: 130%;
 }
+.text-description {
+	font-size: rem(18);
+	font-weight: 400;
+	line-height: 150%;
+}
 .text-value {
 	font-size: rem(24);
 	font-weight: 600;
@@ -96,7 +101,7 @@ h1, h2, h3, h4, h5, h6 {
 	border: var(--input-border);
 	box-shadow: var(--card-shadow) 0px 3px 3px;
 }
-.p-inputgroup input:first-child, .p-inputgroup input:last-child, 
+.p-inputgroup input:first-child, .p-inputgroup input:last-child, .p-inputgroup .p-float-label:first-child input,
 .p-inputgroup > .p-inputwrapper:last-child > .p-inputtext, .p-inputgroup > .p-inputwrapper:first-child > .p-inputtext {
 	border-radius: var(--btn-border-radius);
 	border: var(--input-border);

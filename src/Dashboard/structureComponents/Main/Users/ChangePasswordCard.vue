@@ -47,7 +47,7 @@
 									<PasswordSuggestions></PasswordSuggestions>
 								</template>
 							</Password>
-							<label for="old_password">{{$t('message.Newe') + ' ' + $t('message.Password')}}</label>
+							<label for="new_password">{{$t('message.Newe') + ' ' + $t('message.Password')}}</label>
 						</span>
 		
 						<InputError :validator="v$.new_password" :submitted="submitted" :replace="$t('message.Newe') + ' ' + $t('message.Password')"></InputError>
@@ -66,7 +66,7 @@
 									<PasswordSuggestions></PasswordSuggestions>
 								</template>
 							</Password>
-							<label for="old_password">{{$t('message.Confirm') + ' ' + $t('message.Newe')  + ' ' + $t('message.Password')}}</label>
+							<label for="password_confirmation">{{$t('message.Confirm') + ' ' + $t('message.Newe')  + ' ' + $t('message.Password')}}</label>
 						</span>
 		
 						<InputError :validator="v$.password_confirmation" :submitted="submitted" :replace="$t('message.Password') + ' ' + $t('message.Confirmation')"></InputError>

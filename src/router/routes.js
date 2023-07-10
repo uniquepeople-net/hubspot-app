@@ -8,6 +8,7 @@ let userProfileApiGwUrl = store.getters['links/userProfileApiGwUrl']
 import User from '../Helpers/User';
 
 // Components
+import Intro from '../Auth/Intro.vue';
 import Login from '../Auth/Login.vue';
 import Logout from '../Auth/Logout.vue';
 import Forget from '../Auth/Forget.vue';
@@ -239,6 +240,7 @@ export const routes = [
 		],
 	},
 
+	{ path: '/:lang/intro', component: Intro, name: 'intro' },
 	{ path: '/:lang/login', component: Login, name: 'login' },
     { path: '/:lang/logout', component: Logout, name:'logout' },
     { path: '/:lang/forgot', component: Forget, name:'forgot' },

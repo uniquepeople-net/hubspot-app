@@ -1,17 +1,6 @@
 <template>
 	<div>
-		<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
-	            <div class="flex align-items-center flex-column pt-6 px-3">
-	                <i class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
-	                <h5 class="mt-3">{{ error }}</h5>
-	            </div>
-	            <template #footer>
-	                <div class="flex justify-content-center">
-	                    <Button label="OK" @click="toggleDialog" class="p-button-text" />
-	                </div>
-	            </template>
-	    </Dialog>
-		
+		<CustomDialog :visible="showMessage" :response="response" @hideDialog="hideDialog"/>
 	
 		<AuthWrapper>
 			<template v-slot:title>
@@ -19,15 +8,15 @@
 			</template>
 	
 			<template v-slot:body>
-				<form action="index.html" @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
-					<div class="form-group position-relative has-icon-left mb-4 p-inputgroup mb-5 col-12">
+				<form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
+					<div class="mb-4 p-inputgroup mb-5 col-12">
 						<!-- <InputIcon icon="pi pi-envelope"></InputIcon> -->
 						<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
 									name="email" placeholder="Email"/>
 	
 						<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
 					</div>
-					<div class="form-group position-relative has-icon-left mb-4 p-inputgroup mb-5 col-12">
+					<div class="mb-4 p-inputgroup mb-5 col-12">
 						<!-- <InputIcon icon="pi pi-lock"></InputIcon> -->
 						<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
 									name="password" :placeholder="$t('message.Password')" :feedback="false">
@@ -62,7 +51,7 @@
 import { sameAs, numeric } from "@vuelidate/validators";
 import { required, email, minLength } from "../plugins/vuelidate-i18n";
 import { useVuelidate } from "@vuelidate/core";
-
+import CustomDialog from '../Dashboard/global/CustomDialog.vue'
 import AuthWrapper from '../Auth/AuthWrapper.vue';
 
 export default {
@@ -73,7 +62,7 @@ export default {
             password: '',
 			submitted: false,
             showMessage: false,
-			error: null,
+			response: null,
 			loading: false
         }
     },
@@ -84,6 +73,9 @@ export default {
         }
     },
     methods: {
+		hideDialog() {
+			this.showMessage = false
+		},
         handleSubmit(isFormValid) {
             this.submitted = true;
 
@@ -98,11 +90,11 @@ export default {
 							email: this.email,
 							password: this.password,										  
 				}).then(
-					response => {										
+					response => {									
 						this.toggleDialog();
 						this.loading = false
 						let data = response.data
-						this.error = response.data.message
+						this.response = data.status
 
 						if ( data.authorisation ) {
 							User.responseAfterLogin(data.authorisation.token)
@@ -119,7 +111,11 @@ export default {
 					if ( error.response.status >= 400 && error.response.status < 500 ) {
 						this.toggleDialog();
 						let data = error.response.data
-						this.error = data.message
+						this.response = data
+
+						//{error: {email: ["Invalid email"]}}
+						//{error: {error: ["Unauthorized"]}}
+
 					} else {
 						Toast.fire({
 							icon: 'error',
@@ -148,7 +144,7 @@ export default {
 			this.$router.push({name: 'register'})
 		}
     },
-	components: { AuthWrapper }
+	components: { AuthWrapper, CustomDialog }
 }
 </script>
  
