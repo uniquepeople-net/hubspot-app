@@ -2,7 +2,7 @@
 	<div id="auth">
 		<div class="row h-100">
 			<div class="col-lg-12 col-12">
-				<div id="auth-left">
+				<div id="auth-left" class="position-relative">
 					<BackButton v-if="!loginPage" class="back-button" route="login"/>
 					<NavLang class="auth-lang"/>
 

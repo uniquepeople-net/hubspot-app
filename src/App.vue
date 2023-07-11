@@ -84,7 +84,7 @@
 
 <style lang="scss" scoped>
 .fade-enter-active {
-	transition: opacity 1.5s;
+	transition: opacity 1s;
 }
 .fade-leave-active {
   	transition: all .1s;

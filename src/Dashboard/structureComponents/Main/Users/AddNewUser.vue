@@ -146,7 +146,7 @@
 											<PasswordSuggestions></PasswordSuggestions>
 										</template>
 									</Password>
-									<label for="dropdown">{{$t('message.Password')}}</label>
+									<label for="password">{{$t('message.Password')}}</label>
 								</span>
 								<Button :label="$t('message.Generate')" @click="generatePswd" class="p-button-secondary btn-border-radius generate-btn"/> 
 				

@@ -4,24 +4,28 @@
 	
 		<AuthWrapper>
 			<template v-slot:title>
-				<h1 class="auth-title mb-4">{{ $t('message.Login') }}</h1>
+				<h1 class="auth-title mb-5">{{ $t('message.Login') }}</h1>
 			</template>
 	
 			<template v-slot:body>
 				<form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
 					<div class="row">
 						<div class="mb-4 p-inputgroup mb-5 col-12">
-							<!-- <InputIcon icon="pi pi-envelope"></InputIcon> -->
-							<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
-										name="email" placeholder="Email"/>
-		
+							<span class="p-float-label w-100">
+								<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
+											name="email" placeholder="Email"/>
+			
+								<label for="email">Email</label>
+							</span>
 							<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
 						</div>
 						<div class="mb-4 p-inputgroup mb-5 col-12">
-							<!-- <InputIcon icon="pi pi-lock"></InputIcon> -->
-							<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
-										name="password" :placeholder="$t('message.Password')" :feedback="false">
-							</Password>
+							<span class="p-float-label w-100">
+								<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
+											name="password" :placeholder="$t('message.Password')" :feedback="false">
+								</Password>
+								<label for="password">{{$t('message.Password')}}</label>
+							</span>
 			
 							<InputError :validator="v$.password" :submitted="submitted" :replace="$t('message.Password')"></InputError>
 						</div>

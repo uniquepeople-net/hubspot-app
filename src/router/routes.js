@@ -81,6 +81,8 @@ import AppSettings from '../Dashboard/structureComponents/Main/Settings/AppSetti
 import AppSettingsAll from '../Dashboard/structureComponents/Main/Settings/AppSettings/AppSettingsAll.vue'
 
 import BlockedPage from '../Dashboard/global/BlockedPage.vue'
+import TermsOfUse from '../Dashboard/global/TermsOfUse.vue'
+import PrivacyPolicy from '../Dashboard/global/PrivacyPolicy.vue'
 
 import NotFound from '../Dashboard/global/NotFound.vue';
 import Helpers from '../Helpers/Helpers';
@@ -261,6 +263,10 @@ export const routes = [
 	{ path: '/:lang/:pathMatch(.*)*', component: NotFound},
 	
 	{ path: '/:lang/blocked', component: BlockedPage, name: 'blocked-page' },
+
+	{ path: '/:lang/terms-of-use', component: TermsOfUse, name: 'terms' },
+
+	{ path: '/:lang/privacy-policy', component: PrivacyPolicy, name: 'privacy' },
 
 	{ path: '/:lang/404', component: NotFound, name: '404' },
 ]

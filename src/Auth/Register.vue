@@ -13,7 +13,6 @@
 					<form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
 						<div class="row">
 							<div class="inputgroup mb-5 col-12">
-								<!-- <InputIcon icon="pi pi-user"></InputIcon> -->
 								<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
 										name="name" :placeholder="$t('message.Name')"/>
 							
@@ -21,7 +20,6 @@
 							</div>
 
 							<div class="inputgroup mb-5 col-12">
-								<!-- <InputIcon icon="pi pi-user"></InputIcon> -->
 								<InputText id="surname" v-model="v$.surname.$model" :class="{'p-invalid':v$.surname.$invalid && submitted}" 
 										name="surname" :placeholder="$t('message.Surname')"/>
 							
@@ -29,7 +27,6 @@
 							</div>
 
 							<div class="inputgroup mb-5 col-12">
-								<!-- <InputIcon icon="pi pi-envelope"></InputIcon> -->
 								<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}"
 											name="email" placeholder="Email"/>
 		
@@ -37,18 +34,6 @@
 							</div>
 
 							<div class="inputgroup mb-5 col-12">
-								<!-- <InputIcon icon="bi bi-telephone"></InputIcon> -->
-								<InputMask id="countryCode" v-model="v$.countryCode.$model" :class="{'p-invalid':v$.countryCode.$invalid && submitted, 'me-2': true }" 
-										name="countryCode" placeholder="+9999" mask="+99?99"/>
-								<InputError :validator="v$.countryCode" :submitted="submitted" replace="countryCode"></InputError>
-								<InputMask id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
-										name="phoneNum" placeholder="999 999 999" mask="999999999"/>
-							
-								<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
-							</div>
-
-							<div class="inputgroup mb-5 col-12">
-								<!-- <InputIcon icon="pi pi-lock"></InputIcon> -->
 								<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
 										name="password" :placeholder="$t('message.Password')">
 									<template #header>
@@ -65,7 +50,6 @@
 							</div>
 
 							<div class="inputgroup mb-5 col-12">
-								<!-- <InputIcon icon="pi pi-lock"></InputIcon> -->
 								<Password id="password_confirmation" v-model="v$.password_confirmation.$model" :class="{'p-invalid':v$.password_confirmation.$invalid && submitted}" toggleMask
 										name="password_confirmation" :placeholder="$t('message.ConfirmPassword')">
 									<template #header>
@@ -80,8 +64,21 @@
 								<InputError :validator="v$.password_confirmation" :submitted="submitted" replace="Password Confirmation"></InputError>
 							</div>
 
-							<div class="inputgroup mb-5 col-12" v-if="competitionsList">
-								<Dropdown v-model="selectedClub" :options="competitionsList" optionLabel="name" optionGroupLabel="name" optionGroupChildren="teams" placeholder="Select a Club" class="w-full md:w-14rem">
+							<div class="inputgroup mb-5 col-12">
+								<InputMask id="countryCode" v-model="v$.countryCode.$model" :class="{'p-invalid':v$.countryCode.$invalid && submitted, 'me-2': true }" 
+										name="countryCode" placeholder="+9999" mask="+99?99"/>
+								<InputError :validator="v$.countryCode" :submitted="submitted" replace="countryCode"></InputError>
+								<InputMask id="phoneNum" v-model="v$.phoneNum.$model" :class="{'p-invalid':v$.phoneNum.$invalid && submitted}" 
+										name="phoneNum" placeholder="999 999 999" mask="999999999"/>
+							
+								<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
+							</div>
+
+							<div class="inputgroup mb-5 col-12 flex-column" v-if="competitionsList">
+								<h6 class="text-data">{{ $t('message.Myclubis') + ':' }}</h6>
+								<Dropdown v-model="selectedClub" filter :options="competitionsList" optionLabel="name" optionGroupLabel="name" 
+										  optionGroupChildren="teams" :placeholder="$t('message.Select') + ' ' + $t('message.Club')" 
+										  class="w-full md:w-14rem" @update:modelValue="updateClub">
 									<template #optiongroup="slotProps">
 										<div class="flex align-items-center">
 											<div class="text-center">{{ slotProps.option.name }}</div>
@@ -89,11 +86,26 @@
 									</template>
 								</Dropdown>
 							</div>
+
+							<div class="inputgroup mb-5 col-12 flex-column" v-if="selectedClub && selectedClub.otherClub">
+								<h6 class="text-data">{{ $t('message.NameOfClub') + ':' }}</h6>
+								<InputText id="club" v-model="selectedOtherClub" 
+										name="club" :placeholder="$t('message.Club')"/>
+							
+								<InputError :validator="v$.name" :submitted="submitted" replace="Name"></InputError>
+							</div>
+
 						</div>
 
-						<div class="position-relative text-center mt-2">
+						<div class="position-relative text-center mt-2 d-flex flex-column align-items-center">
 							<Button type="submit" :label="$t('message.RegisterV')" 
 									class=" submit-btn btn btn-primary btn-block btn-lg btn-black" :loading="loading"/>
+							<span class="registered-text">
+								{{ $t('message.AgreeToTerms') }}
+								<router-link class="t-underscore" :to="{ name: 'terms' }">{{ $t('message.TermsOfUse') }}</router-link>
+								{{ ' ' + $t('message.and') + ' ' }}
+								<router-link class="t-underscore" :to="{ name: 'privacy' }">{{ $t('message.PrivacyPolicy') }}</router-link>
+							</span>
 						</div>
 
 					</form>
@@ -103,7 +115,7 @@
 
 			<template v-slot:footer>
 				<div class="mt-4 center-center flex-column">
-					<span class="registered-text mb-3">{{ $t('message.Alreadyaccount') + '?' }}</span>
+					<div class="registered-text mb-3">{{ $t('message.Alreadyaccount') + '?' }}</div>
 					<Button :label="$t('message.LoginV')" class="btn-border"
 							@click="redirectLogin"/>
 				</div>
@@ -147,6 +159,7 @@ export default {
             password: '',
 			password_confirmation: '',
 			selectedClub: null,
+			selectedOtherClub: null,
             submitted: false,
             showMessage: false,
 			response: null,
@@ -183,7 +196,8 @@ export default {
 				email: this.email,
 				countryCode: this.countryCode,
 				phoneNum: this.phoneNum,
-				selectedClub: this.selectedClub,
+				club: this.selectedOtherClub ? this.selectedOtherClub : 
+						( this.selectedClub && !('noClub' in this.selectedClub) ? this.selectedClub.name : null ),
 				password: this.password,
 				password_confirmation: this.password_confirmation
 			}
@@ -204,7 +218,6 @@ export default {
 			this.instat_id = ''
 			this.countryCode = ''
 			this.phoneNum = ''
-			//this.varSymbol = ''
 			this.memberFrom = ''
 			this.club = ''
 			this.role = ''
@@ -236,11 +249,25 @@ export default {
 		},
 		redirectLogin() {
 			this.$router.push({ name: 'login' })
+		},
+		updateClub(event) {
+			this.selectedOtherClub = !('otherClub' in event) ? null : this.selectedOtherClub		
 		}
     },
 	computed: {
 		...mapGetters({ registersApiGwUrl: 'links/registerNewApiGwUrl',
 						competitionsList: 'stats/allCompetitionsTeams' }),
+	},
+	watch: {
+		competitionsList: function(data) {
+			if ( data ) {
+				data.sort((a,b) => {
+					if( a.name === 'Super Liga' ) return -1
+				})
+				data.unshift({ name: '', 
+								teams: [{ name: this.$i18n.t('message.WithoutClub'), noClub: true }, {name: this.$i18n.t('message.OtherClub'), otherClub: true }] }) 
+			}
+		}
 	},
 	components: { Calendar, InputMask, AuthWrapper, CustomDialog }
 }
@@ -279,5 +306,9 @@ export default {
 }
 #countryCode {
 	max-width: 6rem;
+}
+.t-underscore {
+	text-decoration: underline;
+	cursor: pointer;
 }
 </style>

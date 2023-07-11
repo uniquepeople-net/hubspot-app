@@ -472,22 +472,24 @@ export default {
 		},
 		async getAllCompetitionsTeams(context) {
 			await context.dispatch('getCompetitionsList');
-		  
 			let competitions = context.rootGetters['stats/competitionsList'];
-			console.log(competitions)
 			let competitionsIds = [775, 770, 772, 1530]
+			let allTeamsObj;
 
 			return Promise.all(
-				competitions.map(async (c) => {
+				competitions.map(async (c, index, array) => {
 					await context.dispatch('getCompetitionsTeams', c.wyId);
 			
 					let teams = context.rootGetters['stats/competitionsTeams'];
-					let allTeamsObj = context.rootGetters['stats/allCompetitionsTeams'];
+					//let allTeamsObj = context.rootGetters['stats/allCompetitionsTeams'];
 					let actualTeams =  { name: c.name, teams: [...teams] };
 
 					if ( competitionsIds.includes(c.wyId) ) {
 						allTeamsObj = allTeamsObj ? [ ...allTeamsObj, actualTeams ] : [ actualTeams ]
-						context.commit("SETALLCOMPETITIONSTEAMS", allTeamsObj)
+						
+						if (allTeamsObj.length === competitionsIds.length) {
+							context.commit("SETALLCOMPETITIONSTEAMS", allTeamsObj)
+						}
 					}
 				})
 			);
