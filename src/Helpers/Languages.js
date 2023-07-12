@@ -174,6 +174,10 @@ export const messages = {
 			TermsOfUse: 'Terms of Use',
 			and: 'and',
 			PrivacyPolicy: 'Privacy Policy',
+			Templates: 'Templates',
+			AddTo: 'Add',
+			Start: 'Start',
+			End: 'End',
 		},
 		validations: {
 			required: "This field is required. ",
@@ -357,6 +361,10 @@ export const messages = {
 			TermsOfUse: 'Zásadami používania',
 			and: 'a',
 			PrivacyPolicy: 'Zásadami ochrany osobných údajov',
+			Templates: 'Šablóny',
+			AddTo: 'Pripojiť na',
+			Start: 'Začiatok',
+			End: 'Koniec',
 		},
 		validations: {
 			required: "Toto pole je nevyhnutné. ",

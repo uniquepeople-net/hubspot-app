@@ -7,6 +7,8 @@ export default {
 		specificEmail: null,
 		unreadEmails: null,
 		unreadEmailsCount: null,
+		dynamicData: null,
+		templates: null
 	}),
 
 	mutations: {
@@ -25,6 +27,12 @@ export default {
 		SETUNREADEMAILSCOUNT( state, data ) {
 			state.unreadEmailsCount = data;
 		},
+		SETDYNAMICDATA( state, data ) {
+			state.dynamicData = data;
+		},
+		SETTEMPLATES( state, data ) {
+			state.templates = data;
+		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
 			// https://github.com/vuejs/vuex/issues/1118
@@ -34,6 +42,8 @@ export default {
 				specificEmail: null,
 				unreadEmails: null,
 				unreadEmailsCount: null,
+				dynamicData: null,
+				templates: null
 			})
 		}
 	},
@@ -115,6 +125,46 @@ export default {
 							title: 'Unable to get email'
 						})
 					})
+		},
+		async getDynamicData(context) {
+			let dynamicDataLink = context.rootGetters['links/dynamicData'];
+
+			await User.refreshedToken();
+
+			await axios.get( dynamicDataLink,  {
+						headers: {
+							Authorization: 'Bearer ' + User.getToken()
+						}
+					})
+					.then( response => {
+						context.commit("SETDYNAMICDATA", response.data)
+					})
+					.catch( error =>  {
+						Toast.fire({
+							icon: 'error',
+							title: 'Unable to get dynamic data for creating email'
+						})
+					})
+		}, 
+		async getTemplates(context) {
+			let templatesLink = context.rootGetters['links/templates'];
+
+			await User.refreshedToken();
+
+			await axios.get( templatesLink,  {
+						headers: {
+							Authorization: 'Bearer ' + User.getToken()
+						}
+					})
+					.then( response => {
+						context.commit("SETTEMPLATES", response.data)
+					})
+					.catch( error =>  {
+						Toast.fire({
+							icon: 'error',
+							title: 'Unable to get email templates'
+						})
+					})
 		} 
 	},
 
@@ -133,6 +183,12 @@ export default {
 		},
 		unreadEmailsCount(state) {
 			return state.unreadEmailsCount
+		},
+		dynamicData(state) {
+			return state.dynamicData
+		},
+		templates(state) {
+			return state.templates
 		}
 	}
 }

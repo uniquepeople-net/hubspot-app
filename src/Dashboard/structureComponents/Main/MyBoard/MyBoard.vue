@@ -2,7 +2,7 @@
 	<div>
 		<PostsCarousel />
 		<NewsCard />
-		<PLayerSeasonStats />	
+		<PLayerSeasonStats v-if="user.instat_id"/>	
 	</div>
 </template>
  
@@ -11,6 +11,7 @@
 	import NewsCard from '../FootballNews/NewsCard.vue'
 	import PLayerSeasonStats from '../Stats/PlayerData/PLayerSeasonStats.vue'
 	import PostsCarousel from './PostsCarousel.vue'
+	import { mapGetters } from 'vuex'
 	
 	export default {
 		data() {
@@ -20,6 +21,9 @@
 		},
 		methods: {
 			
+		},
+		computed: {
+			...mapGetters({ user: 'user/user' })
 		},
 		components: { PostsCarousel, NewsCard, PLayerSeasonStats },
 	}

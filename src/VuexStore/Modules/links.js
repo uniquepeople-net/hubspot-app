@@ -47,6 +47,9 @@ export default {
 		getEmailsUrl: 				DOMAIN_URL + '/api/emails/',
 		getSpecificEmail: 			DOMAIN_URL + '/api/email/',
 		deleteEmails:				DOMAIN_URL + '/api/delete-emails',
+		dynamicData:				DOMAIN_URL + '/api/dynamic-data',
+
+		templates: 					DOMAIN_URL + '/api/templates',
 
 		// Products service routes
 		allProducts:				DOMAIN_URL + '/api/product',		
@@ -190,6 +193,12 @@ export default {
 		},
 		deleteEmails(state) {
 			return state.deleteEmails
+		},
+		dynamicData(state) {
+			return state.dynamicData
+		},
+		templates(state) {
+			return state.templates
 		},
 
 		// Products service routes getters

@@ -100,7 +100,7 @@
 						<div class="position-relative text-center mt-2 d-flex flex-column align-items-center">
 							<Button type="submit" :label="$t('message.RegisterV')" 
 									class=" submit-btn btn btn-primary btn-block btn-lg btn-black" :loading="loading"/>
-							<span class="registered-text">
+							<span class="registered-text mt-2">
 								{{ $t('message.AgreeToTerms') }}
 								<router-link class="t-underscore" :to="{ name: 'terms' }">{{ $t('message.TermsOfUse') }}</router-link>
 								{{ ' ' + $t('message.and') + ' ' }}
@@ -115,7 +115,7 @@
 
 			<template v-slot:footer>
 				<div class="mt-4 center-center flex-column">
-					<div class="registered-text mb-3">{{ $t('message.Alreadyaccount') + '?' }}</div>
+					<div class="registered-text mb-2">{{ $t('message.Alreadyaccount') + '?' }}</div>
 					<Button :label="$t('message.LoginV')" class="btn-border"
 							@click="redirectLogin"/>
 				</div>

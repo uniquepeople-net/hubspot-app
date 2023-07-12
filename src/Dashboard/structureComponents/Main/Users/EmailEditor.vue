@@ -54,28 +54,15 @@
 					</template>
 				</Card>	
 			</div>
+
 			<div class="col-12 col-md-6">
-				<Card class="card">
-					<template #title>
-						<h5 class="card-header d-flex justify-content-between align-items-center">
-							Dynamic data
-							<Button icon="bi bi-plus-lg" class="p-button-rounded p-button-success p-button-outlined" 
-									@click="addItem"/>
-						</h5>
-					</template>
-					<template #content>
-						<div v-for="(dynamic, index) in dynamicArr" class="my-2 d-flex">
-							<Dropdown v-model="dynamic.data" :options="dynamicData" :key="index"
-									optionLabel="name" optionValue="value" placeholder="Select an Value" 
-									:class="`dynamic-dropdown ${submitted && !dynamic.data && 'p-invalid' }`"/>
-							<InputText id="value" v-model="dynamic.value" :class="`ms-1 dynamic-input ${submitted && !dynamic.value && 'p-invalid'}`"
-									name="value" placeholder="Value" />
-							<Button icon="bi bi-dash-lg" class="p-button-rounded p-button-danger p-button-text remove-btn" 
-									@click="removeItem(index)"/>
-						</div>
-					</template>
-				</Card>
-			</div>		
+				<DynamicData :submitted="submitted" @dynamicArr="emitDynamicArr"/>
+			</div>
+
+			<div class="col-12 col-md-6">
+				<EmailTemplates @prependTemplate="prependTemplate" @appendTemplate="appendTemplate"/>
+			</div>
+
 		</div>
 	</div>		
 </template>
@@ -92,6 +79,8 @@
 	import Editor from 'primevue/editor'
 	import Listbox from 'primevue/listbox';
 	import FileUploadCard from './FileUploadCard.vue';
+	import EmailTemplates from './EmailTemplates.vue';
+	import DynamicData from './DynamicData.vue';
 
 	export default {
 		setup: () => ({ v$: useVuelidate() }),
@@ -99,7 +88,7 @@
 			return {
 				value: `<div>
 							<div>
-								<img src="https://api.QRGenerator.sk/by-square/pay/qr.png?iban=SK2709000000005112386457&amount=40&currency=EUR&vs={symbol}&payment_note=ufp-clenske-2023&due_date=2023-06-03&size=256&transparent=false" alt="QR kod"/>
+								<img src="https://api.QRGenerator.sk/by-square/pay/qr.png?iban=SK2709000000005112386457&amount=40&currency=EUR&vs={$_dynamic_var_symbol_$}&payment_note=ufp-clenske-2023&due_date=2023-06-03&size=256&transparent=false" alt="QR kod"/>
 							</div>
 							<h3 style="font-weight:bold;">Únia futbalových profesionálov</h3>
 							<div><img src="https://ufp.sk/wp-content/uploads/2023/04/cropped-logo-transp.png" alt="logo Ufp"></div>
@@ -114,18 +103,6 @@
 				showMessage: false,
 				editorMode: 'HTML',
 				dynamicArr: [],
-				dynamicData: [
-					{  name: 'Name', value: 'name'},
-					{  name: 'Surname', value: 'surname'},
-					{  name: 'Var. symbol', value: 'var_symbol'},
-					{  name: 'Email', value: 'email'},
-					{  name: 'Club', value: 'club'},
-					{  name: 'Country code', value: 'country_code'},
-					{  name: 'Tel number', value: 'tel_number'},
-					{  name: 'Birth date', value: 'birth_date'},
-					{  name: 'Member from', value: 'member_from'},
-					{  name: 'Stat id', value: 'instat_id' },
-				],
 				selectedDynamicData: null,
 				response: null
 			}
@@ -138,17 +115,6 @@
 			}
 		},
 		methods: {
-			addItem() {
-				if ( this.dynamicArr.length === this.dynamicData.length) {
-					return
-				} else {
- 					let obj = { data: '', value: '' }
-					this.dynamicArr.push(obj)
-				} 
-			},
-			removeItem(index) {
-				this.dynamicArr = this.dynamicArr.filter( (d, i) => i !== index )
-			},
 			async sendEmails(isFormValid) {
 				this.submitted = true;
 				let someEmptyDynamic = this.dynamicArr.some( d => d.data === '' || d.value === '' )
@@ -235,12 +201,21 @@
 					this.editorMode = 'HTML';
 				}
 			},
+			emitDynamicArr(e) {
+				this.dynamicArr = e
+			},
+			prependTemplate(data) {
+				this.value = data + this.value			
+			},
+			appendTemplate(data) {
+				this.value = this.value + data
+			}
 		},
 		computed: {
 			...mapGetters({ emails: 'appData/getUsers',
 							user: 'user/user' }),
 		},
-		components: { Editor, Listbox, FileUploadCard }
+		components: { Editor, Listbox, FileUploadCard, EmailTemplates, DynamicData }
 	}
 </script>
  
@@ -258,11 +233,5 @@
 		weight: 400;
 	}
 	color: var(--red-600);
-}
-.dynamic-dropdown, .dynamic-input {
-	width: 43%;
-}
-.remove-btn {
-	//width: auto;
 }
 </style>

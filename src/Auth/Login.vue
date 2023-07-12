@@ -68,7 +68,7 @@ export default {
             password: '',
 			submitted: false,
             showMessage: false,
-			response: null,
+			response: {},
 			loading: false
         }
     },
@@ -100,7 +100,7 @@ export default {
 						this.toggleDialog();
 						this.loading = false
 						let data = response.data
-						this.response = data.status
+						this.response = data
 
 						if ( data.authorisation ) {
 							User.responseAfterLogin(data.authorisation.token)
@@ -118,10 +118,6 @@ export default {
 						this.toggleDialog();
 						let data = error.response.data
 						this.response = data
-
-						//{error: {email: ["Invalid email"]}}
-						//{error: {error: ["Unauthorized"]}}
-
 					} else {
 						Toast.fire({
 							icon: 'error',
