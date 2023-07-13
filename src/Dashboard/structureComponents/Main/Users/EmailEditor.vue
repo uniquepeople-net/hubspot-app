@@ -60,7 +60,7 @@
 			</div>
 
 			<div class="col-12 col-md-6">
-				<EmailTemplates @prependTemplate="prependTemplate" @appendTemplate="appendTemplate"/>
+				<EmailTemplates @prependTemplate="prependTemplate" @appendTemplate="appendTemplate" :content="value"/>
 			</div>
 
 		</div>
