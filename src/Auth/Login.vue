@@ -102,12 +102,16 @@ export default {
 						let data = response.data
 						this.response = data
 
+
+
 						if ( data.authorisation ) {
 							User.responseAfterLogin(data.authorisation.token)
 							Toast.fire({
 								icon: 'success',
 								title: 'Signed in successfully'
 							})
+
+							this.$store.dispatch("user/getLoginUser", response.data.user);
 							//this.$router.go(-1)
 							this.$router.push('/');							
 						}

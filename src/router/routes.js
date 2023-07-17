@@ -15,6 +15,8 @@ import Forget from '../Auth/Forget.vue';
 import UpdatePassword	from '../Auth/UpdatePassword.vue';
 import Register from '../Auth/Register.vue';
 
+import Tutorial from '../Dashboard/Tutorial.vue';
+
 import Dashboard from '../Dashboard/Dashboard.vue';
 
 import MyBoard from '../Dashboard/structureComponents/Main/MyBoard/MyBoard.vue';
@@ -248,6 +250,8 @@ export const routes = [
     { path: '/:lang/forgot', component: Forget, name:'forgot' },
     { path: '/:lang/update-password', component: UpdatePassword, name:'update-password' },
     { path: '/:lang/register', component: Register, name:'register' },
+    
+	{ path: '/:lang/tutorial', component: Tutorial, name: 'tutorial' },
 
 	{ path: '/:lang/survey/:slug', component: Survey, name:'survey', props: true ,
 	

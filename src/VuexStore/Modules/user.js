@@ -4,10 +4,14 @@ export default {
 	namespaced: true,
 	state: () => ({
 		user: {},
-		unAuth: false
+		unAuth: false,
+		loginUser: null
 	}),
 
 	mutations: {
+		SETLOGINUSER( state, data ) {
+			state.loginUser = data
+		},
 		SETUSER( state, data ) {
 			state.user = {...data.user, memberships: [...data.memberships]};
 			state.user.fee = Boolean(state.user.fee)			
@@ -20,6 +24,7 @@ export default {
 			// https://github.com/vuejs/vuex/issues/1118
 			Object.assign(state, { 
 					user:{},
+					loginUser: null
 			})
 		}
 	},
@@ -47,12 +52,17 @@ export default {
 				.catch( error => {
 					context.commit("SETUNAUTH", true)
 				})			
-
-
+		},
+		getLoginUser( context, data ) {
+			data.first_login = Boolean(data.first_login)
+			context.commit("SETLOGINUSER", data)
 		}
 	},
 
 	getters: {
+		loginUser(state) {
+			return state.loginUser
+		},
 		user(state) {
 			return state.user
 		},

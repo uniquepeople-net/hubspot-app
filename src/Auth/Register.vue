@@ -171,8 +171,8 @@ export default {
             name: { required, minLength: minLength(2) },
             surname: { required, minLength: minLength(2) },
             email: { required, email },
-			countryCode: { required, customCountryCode },
-			phoneNum: { required, numeric },
+			countryCode: { customCountryCode },
+			phoneNum: { numeric },
             password: { required,  minLength: minLength(8)},
 			password_confirmation: { required,  minLength: minLength(8), sameAs: sameAs(this.password)},
         }

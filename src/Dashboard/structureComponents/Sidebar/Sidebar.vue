@@ -123,8 +123,6 @@
 					let timeInSeconds = restTime * 60
 					return timeInSeconds
 				}
-
-				
 			}
 		},
 		watch: {

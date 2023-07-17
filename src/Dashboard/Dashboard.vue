@@ -26,10 +26,16 @@
 				this.$router.push({ name: 'intro' })				
 			} else {			
 				let currentRoute = this.$router.currentRoute._value.name;
-				if ( currentRoute === 'dashboard' ) {
-					this.$router.push({ name: 'my-board' })
+				
+				// check the first login of newly registered user
+				if ( this.loginUser && this.loginUser.first_login === true ) {
+					this.$router.push({ name: 'tutorial' })
 				} else {
-					this.$router.push({ name: currentRoute })
+					if ( currentRoute === 'dashboard' ) {
+						this.$router.push({ name: 'my-board' })
+					} else {
+						this.$router.push({ name: currentRoute })
+					}
 				}
 		
 				this.$store.dispatch("user/getUser");
@@ -46,7 +52,8 @@
 			}
 		},
 		computed: {
-			...mapGetters({ unAuth: 'user/unAuth',
+			...mapGetters({ loginUser: 'user/loginUser',
+							unAuth: 'user/unAuth',
 							user: 'user/user',
 							activeSidebar: 'appData/activeSidebar'}),
 		},

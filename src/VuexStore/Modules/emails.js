@@ -108,10 +108,11 @@ export default {
 		},
 		async getSpecificEmail(context, data) {
 			let getSpecificEmail = context.rootGetters['links/getSpecificEmail'];
+			let user = context.rootGetters['user/user']
 
 			await User.refreshedToken();
 
-			await axios.get( getSpecificEmail + data.recipientId + '/' + data.emailId, {
+			await axios.post( getSpecificEmail + data.recipientId + '/' + data.emailId, user , {
 						headers: {
 							Authorization: 'Bearer ' + User.getToken()
 						}
