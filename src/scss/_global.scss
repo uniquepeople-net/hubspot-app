@@ -65,9 +65,28 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: rem(32);
 	font-weight: 600;
 }
+.text-link {
+	font-size: rem(15);
+	font-weight: 500;
+	line-height: 150%;
+}
 .text-message {
 	font-size: rem(15);
 	text-align: center;
+}
+.text-undertitle {
+	font-size: rem(15);
+	font-weight: 400;
+	line-height: 150%;
+}
+.full-screen {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 1REM;
 }
 .p-component {
 	font-family: unset;
@@ -138,7 +157,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 .p-sidebar-icon:hover, .p-sidebar-icon:focus, 
 .p-dropdown.p-component:hover, .p-dropdown.p-component:focus,
-.p-dropdown:not(.p-disabled).p-focus {
+.p-dropdown:not(.p-disabled).p-focus,
+.p-button:focus {
 	border: var(--input-border);
 	box-shadow: 0 0 0 0.2rem var(--card-shadow);
 }
@@ -167,6 +187,11 @@ h1, h2, h3, h4, h5, h6 {
 	border: 0;
 	border-radius: var(--btn-border-radius);
 	box-shadow: var(--card-shadow) 1.95px 1.95px 0px;
+}
+.back-button {
+	position: absolute;
+	top: 1.5rem;
+	left: 1.5rem;
 }
 .center-center {
 	display: flex;

@@ -1,6 +1,6 @@
 import { router } from '../main'
 import CryptoJS from 'crypto-js'
-
+import User from './User'
 
 class Helpers {
 
@@ -68,6 +68,17 @@ class Helpers {
 				router.push('/login')
 			}
 		})		
+	}
+
+	/**
+	 *  Check user is logged in
+	 */
+	checkLoggedUser(to, from, next) {	
+		if ( User.loggedIn() ) {
+			next()
+		} else {
+			next('en/intro')
+		}
 	}
 
 	/**

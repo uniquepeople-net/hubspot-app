@@ -15,7 +15,9 @@ import Forget from '../Auth/Forget.vue';
 import UpdatePassword	from '../Auth/UpdatePassword.vue';
 import Register from '../Auth/Register.vue';
 
-import Tutorial from '../Dashboard/Tutorial.vue';
+import Tutorial from '../Dashboard/global/Tutorial/Tutorial.vue';
+import SetNotifications from '../Dashboard/global/Tutorial/SetNotifications.vue'
+import Checkout from '../Dashboard/global/Tutorial/Checkout.vue'
 
 import Dashboard from '../Dashboard/Dashboard.vue';
 
@@ -99,6 +101,7 @@ export const routes = [
     },
 
 	{ path: '/:lang', component: Dashboard, name: 'dashboard',
+		
 		children: [
 
 			{ path: '/:lang/my-board', component: MyBoard, name: 'my-board' },
@@ -250,8 +253,15 @@ export const routes = [
     { path: '/:lang/forgot', component: Forget, name:'forgot' },
     { path: '/:lang/update-password', component: UpdatePassword, name:'update-password' },
     { path: '/:lang/register', component: Register, name:'register' },
-    
-	{ path: '/:lang/tutorial', component: Tutorial, name: 'tutorial' },
+
+	{ path: '/:lang/tutorial', component: Tutorial, name: 'tutorial',
+		beforeEnter: (to, from, next) => Helpers.checkLoggedUser(to, from, next) },
+
+	{ path: '/:lang/notifications', component: SetNotifications, name: 'notifictions',
+		beforeEnter: (to, from, next) => Helpers.checkLoggedUser(to, from, next) },
+
+	{ path: '/:lang/checkout', component: Checkout, name: 'checkout',
+		beforeEnter: (to, from, next) => Helpers.checkLoggedUser(to, from, next) },
 
 	{ path: '/:lang/survey/:slug', component: Survey, name:'survey', props: true ,
 	
@@ -264,7 +274,9 @@ export const routes = [
 	{ path: '/:lang/success', component: SuccessPage, name:'success', props: true },
 	
 	
-	{ path: '/:lang/:pathMatch(.*)*', component: NotFound},
+	{ path: '/:lang/:pathMatch(.*)*', component: NotFound, name: 'not-found'},
+	
+	{ path: '/:pathMatch(.*)*', component: NotFound , redirect: { name: 'not-found', params: { lang: 'en' } } },
 	
 	{ path: '/:lang/blocked', component: BlockedPage, name: 'blocked-page' },
 

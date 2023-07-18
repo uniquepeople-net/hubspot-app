@@ -1,7 +1,7 @@
 <template>
-	<Carousel :value="posts" :numVisible="3" :numScroll="1" :showNavigators="false" 
+	<Carousel :value="posts" :showNavigators="false" :showIndicators="false"
 			  :responsiveOptions="responsiveOptions" class="custom-carousel" :circular="true" 
-			  :autoplayInterval="6000" :showIndicators="false">
+			  :autoplayInterval="6000" >
 		<template #header>
 			<h5 class="text-value mb-4">{{$t("message.ufpNews")}}</h5>
 		</template>
@@ -50,7 +50,7 @@
 					},
 					{
 						breakpoint: '2000px',
-						numVisible: 3,
+						numVisible: 3.5,
 						numScroll: 1
 					},
 					{

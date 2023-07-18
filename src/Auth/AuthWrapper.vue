@@ -79,11 +79,6 @@
 		top: 1.5rem;
 		right: 1.5rem;
 	}
-	.back-button {
-		position: absolute;
-		top: 1.5rem;
-		left: 1.5rem;
-	}
 	#auth-left {
 		max-width: 768px;
 		margin: auto;
