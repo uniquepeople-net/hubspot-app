@@ -201,6 +201,7 @@ export const messages = {
 			NotNow: 'NOT NOW',
 			MembershipDesc: 'By subscribing, you will have an access to app features including personal statistics, team statistics, legal support from UFP lawyers, benefits from UFP partners and much more! (The specific features you receive will depend on the package you select)',
 			Help: 'Help',
+			Board: 'Board',
 		},
 		validations: {
 			required: "This field is required. ",
@@ -411,6 +412,7 @@ export const messages = {
 			NotNow: 'NESKÔR',
 			MembershipDesc: 'Predplatením získate prístup k funkciám aplikácie vrátane osobných, tímových štatistík, právnym službám od právnikov UFP, výhodam od prtnerov UFP a ešte oveľa viac! (Konkrétne funkcie sú naviazane na balíček, ktorý si vyberiete)',
 			Help: 'Pomoc',
+			Board: 'Predsedníctvo',
 		},
 		validations: {
 			required: "Toto pole je nevyhnutné. ",

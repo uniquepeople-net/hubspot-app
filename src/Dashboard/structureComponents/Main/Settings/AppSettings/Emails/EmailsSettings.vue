@@ -3,7 +3,7 @@
 		<Card class="card">
 			<template #title>
 				<div class="card-header d-flex justify-content-between align-items-center">
-					<h5><span class="fw-normal">Emails</span></h5>
+					<h5>Emails</h5>
 				</div>
 			</template>
 
@@ -34,7 +34,7 @@
 
 			<template #footer>
 				<div class="card-header d-flex justify-content-between align-items-center">
-					<h6><span class="fw-normal">Add Emails</span></h6>
+					<h6>Add Emails</h6>
 				</div>
 				<AppSettingsAdd :existingEmails="emailsData"/>
 			</template>
@@ -45,9 +45,9 @@
  
 <script>
 	import { mapGetters } from 'vuex';
-	import ToggleIcon from '../../../../global/ToggleIcon.vue';
-	import DeleteItem from '../../Users/DeleteItem.vue';
-	import AppSettingsAdd from './AppSettingsAdd.vue';
+	import ToggleIcon from '../../../../../global/ToggleIcon.vue';
+	import DeleteItem from '../../../Users/DeleteItem.vue';
+	import AppSettingsAdd from './EmailSettingsAdd.vue';
 
 	export default {
 		created() {
@@ -87,9 +87,8 @@
 		components: { ToggleIcon, AppSettingsAdd, DeleteItem },
 	}
 </script>
- 
- 
 
-AppSettingsAdd<style lang='scss' scoped>
+
+<style lang='scss' scoped>
 
 </style>

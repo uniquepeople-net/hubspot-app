@@ -1,12 +1,14 @@
 <template>
 	<div>
-		<AppSettingsEmails />
+		<EmailsSettings />
+		<BoardSettings class="mt-4"/>
 	</div>
 </template>
  
  
 <script>
-	import AppSettingsEmails from './AppSettingsEmails.vue'
+	import BoardSettings from './Board/BoardSettings.vue'
+	import EmailsSettings from './Emails/EmailsSettings.vue'
 
 	export default {
 		data() {
@@ -16,7 +18,7 @@
 		methods: {
 			
 		},
-		components: { AppSettingsEmails },
+		components: { EmailsSettings, BoardSettings },
 	}
 </script>
  

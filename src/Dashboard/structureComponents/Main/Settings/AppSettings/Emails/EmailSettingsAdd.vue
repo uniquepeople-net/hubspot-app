@@ -23,7 +23,6 @@
 
 				<div class="row" v-for="(d, index) in data" :key="index">
 					<div class="inputgroup col-12 col-lg-6 mb-5 mb-lg-0 position-relative">
-						<InputIcon icon="pi pi-envelope"></InputIcon>
 						<InputText id="email" v-model="d.email" :class="{'p-invalid':validateEmail(d.email), 'w-100': true}"
 									name="email" placeholder="Email"/>
 
@@ -31,7 +30,6 @@
 					</div>
 
 					<div class="inputgroup col-12 col-lg-6">
-						<InputIcon icon="bi bi-card-heading"></InputIcon>
 						<InputText id="title" v-model="d.title" :class="{'p-invalid':validateTitle(d.title), 'w-100': true}" 
 								name="title" placeholder="Title"/>
 					
@@ -67,7 +65,7 @@
 import axios from 'axios';
 import { mapGetters } from 'vuex';
 
-import ToggleIcon from '../../../../global/ToggleIcon.vue';
+import ToggleIcon from '../../../../../global/ToggleIcon.vue';
 
 
 export default {

@@ -82,6 +82,9 @@ export default {
 		// Emails settings links
 		emailsSet:					DOMAIN_URL + '/api/settings-emails',
 
+		// Board settings links
+		boardGroups:				DOMAIN_URL + '/api/settings-board',		
+
 		// Surveys links
 		surveys:					DOMAIN_URL + '/api/surveys',
 		addSurvey:					DOMAIN_URL + '/api/surveys/store',
@@ -266,6 +269,11 @@ export default {
 		// Emails settings getters
 		emailsSet( state ) {
 			return state.emailsSet
+		},
+
+		// Board settings getters
+		boardGroups( state ) {
+			return state.boardGroups
 		},
 
 		// Surveys getters

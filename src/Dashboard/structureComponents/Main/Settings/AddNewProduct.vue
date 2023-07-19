@@ -17,7 +17,7 @@
 		<Card class="card">
 			<template #title>
 				<div class="card-header d-flex justify-content-between align-items-center">
-					<h5><span class="fw-light">Add New Product</span></h5>
+					<h5>Add New Product</h5>
 				</div>
 			</template>
 			<template #content>

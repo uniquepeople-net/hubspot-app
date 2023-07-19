@@ -37,7 +37,7 @@
 	color: var(--green-600);
 }
 .toggle-inactive {
-	transform: rotate(180deg) translateY(-2px);	
+	transform: rotate(180deg) translateY(2px);	
 	color: var(--red-700);
 }
 </style>
