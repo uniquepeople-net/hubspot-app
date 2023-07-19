@@ -1,37 +1,41 @@
 <template>
-	<div class="tutorial-wrapper position-relative">
-		<BackButton class="back-button" @click="prevTab"/>
-		<p class="skip-link text-link" @click="completeTutorial">{{ $t('message.Skip') }}</p>
-		<TabView class="tutorial-steps" v-model:activeIndex="active" ref="tabview">
-			<TabPanel v-for="(tab, index) in tabs" :key="index">
-				<template #header>
-					<CircleFull v-if="active >= index" />
-					<CircleBorder v-if="active < index" />
-				</template>
-				<TutorialPage>
-					<template v-slot:vector>
-						<component :is="tab.vector"/>
+	<div>
+		<div class="tutorial-wrapper position-relative" v-if="user">
+			<BackButton class="back-button" @click="prevTab" v-if="active !== 0"/>
+			<p class="skip-link text-link" @click="completeTutorial">{{ $t('message.Skip') }}</p>
+			<TabView class="tutorial-steps" v-model:activeIndex="active" ref="tabview">
+				<TabPanel v-for="(tab, index) in tabs" :key="index">
+					<template #header>
+						<CircleFull v-if="active >= index" />
+						<CircleBorder v-if="active < index" />
 					</template>
-					<template v-slot:title>
-						<h2 class="text-gt-bold mt-5 mb-4">{{tab.title}}</h2>
-					</template>
-					<template v-slot:description>
-						<p class="">{{tab.description}}</p>
-					</template>
-					<template v-slot:vector2 v-if="index === 0">
-						<div class="wyscout-logo center-center">
-							<Wyscout />
-						</div>
-					</template>
-				</TutorialPage>
-			</TabPanel>
-		</TabView>
-		<Button label="Next" class="btn-black mb-5" @click="nextTab"/>
+					<TutorialPage>
+						<template v-slot:vector>
+							<component :is="tab.vector"/>
+						</template>
+						<template v-slot:title>
+							<h2 class="text-gt-bold mt-5 mb-4">{{tab.title}}</h2>
+						</template>
+						<template v-slot:description>
+							<p class="">{{tab.description}}</p>
+						</template>
+						<template v-slot:vector2 v-if="index === 0">
+							<div class="wyscout-logo center-center">
+								<Wyscout />
+							</div>
+						</template>
+					</TutorialPage>
+				</TabPanel>
+			</TabView>
+			<Button label="Next" class="btn-black mb-5" @click="nextTab"/>
+		</div>
+		<LoadingIcon v-if="!user"/>
 	</div>
 </template>
  
  
 <script>
+	import { mapGetters } from 'vuex'
 	import TabView from 'primevue/tabview';
 	import TabPanel from 'primevue/tabpanel';
 	import CircleBorder from '../../structureComponents/Main/Stats/Vectors/CircleBorder.vue';
@@ -44,8 +48,12 @@
 	import Surveys from '../../structureComponents/Main/Stats/Vectors/Surveys.vue'
 	import Wyscout from '../../structureComponents/Main/Stats/Vectors/Wyscout.vue'
 	import BackButton from '../BackButton.vue';
+	import LoadingIcon from '../LoadingIcon.vue';
 
 	export default {
+		created() {
+			this.$store.dispatch("user/getUser");
+		},
 		mounted() {
 			this.tabsCount = this.$refs.tabview.tabs.length
 		},
@@ -73,11 +81,31 @@
 				this.active = this.active > 0 ? this.active - 1 : this.active
 			},
 			completeTutorial() {
+				this.updateFirstLogin()
 				this.$router.push({ name: 'notifictions' })
+			},
+			updateFirstLogin() {
+				
+				axios.post( this.updateFirstLoginLink + this.user.id, { first_login: false }, {
+					headers: {
+						Authorization: 'Bearer ' + User.getToken()
+					}
+				}).then( response => {
+					return true
+				}).catch( error => {
+					Toast.fire({
+						icon: 'error',
+						title: 'Unable to update (first login) user data'
+					})
+				})
 			}
 		},
+		computed: {
+			...mapGetters({ updateFirstLoginLink: 'links/updateFirstLogin',
+							user: 'user/user' })
+		},
 		components: { TabView, TabPanel, CircleBorder, CircleFull, TutorialPage, Wyscout,
-					  ReviewStats, News, Connection, Payment, Surveys, BackButton }
+					  ReviewStats, News, Connection, Payment, Surveys, BackButton, LoadingIcon }
 	}
 </script>
  

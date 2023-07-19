@@ -8,7 +8,7 @@
 				<Notifications />
 			</div>
 		</div>
-		<div class="notif-btns center-center flex-column">
+		<div class="notif-btns center-center flex-column mb-3">
 			<Button :label="$t('message.TurnOnNotif')" class="btn-black mb-3 mt-5"/>
 			<Button :label="$t('message.NotNow')" class="btn-border" @click="nextRoute"/>
 		</div>
@@ -21,7 +21,7 @@
 	import Notifications from '../../structureComponents/Main/Stats/Vectors/Notifications.vue'
 
 	export default {
-		created() {
+		mounted() {
 			//this.$router.push({ name: 'checkout' })
 		},
 		data() {

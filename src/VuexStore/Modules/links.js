@@ -10,12 +10,13 @@ export default {
 		registerNewApiGwUrl: 	DOMAIN_URL + '/api/register-new',
 		reqPassForget:			DOMAIN_URL + '/api/req-password-reset',
 		updatePassword:			DOMAIN_URL + '/api/update-password',
-
+		
 		// Users api routes
 		getAllUsers: 			DOMAIN_URL + '/api/users-all',
 		specificUser:			DOMAIN_URL + '/api/users/',
 		profileUser:			DOMAIN_URL + '/api/users/update',
 		updateFee:				DOMAIN_URL + '/api/users/update-fee/',
+		updateFirstLogin:		DOMAIN_URL + '/api/users/update-first-login/',
 
 
 		// Wyscout API
@@ -134,6 +135,9 @@ export default {
 		},
 		updateFee(state) {
 			return state.updateFee
+		},
+		updateFirstLogin(state) {
+			return state.updateFirstLogin
 		},
 
 		// Wyscout API

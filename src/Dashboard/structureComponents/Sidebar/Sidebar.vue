@@ -3,10 +3,13 @@
 	<SidebarBurger @click="visibleLeft = true"/>
 
 	<Sidebar v-model:visible="visibleLeft" class="sidebar" :modal="sidebarModal" :dismissable="sidebarModal">
-		<template v-slot:header class="sidebar-slot-header">
+		<!-- <template v-slot:header class="sidebar-slot-header">
 			<div class="logo">
 				<a href="https://ufp.sk"><img src="https://ufp.sk/wp-content/uploads/2023/04/cropped-logo-transp.png" alt="Logo" srcset="" /></a>
 			</div>
+		</template> -->
+		<template v-slot:closeicon>
+			<BackButton class="sidebar-back-btn" title="Menu"/>
 		</template>
 
 		<PanelMenu v-model:expandedKeys="expandedKeys" v-if="items" :model="items" 
@@ -24,12 +27,15 @@
 	import { mapGetters } from 'vuex';
 	import { sidebarMenu } from '../../../Helpers/Sidebar-menu';
 	import SidebarTimer from './SidebarTimer.vue';
+	import BackButton from '../../global/BackButton.vue';
 
 	export default {
 		mounted() {
 			this.checkwindowWidth()
+			this.expandedKeys = this.items
 			this.$nextTick(() => {
 				this.expandActivePanel()
+				this.expandAll()
 			});
 		},
 		data() {
@@ -81,6 +87,7 @@
 				})
 
 				this.expandedKeys = foundedObj
+
 				if ( this.expandedKeys ) {
 					this.expandNode(this.expandedKeys);
 				}
@@ -94,9 +101,14 @@
 					}
 				}
 			},
+			expandAll() {
+				this.items.forEach(item => {
+					this.expandNode(item);
+				});
+			},
 			onPanelClick(event) {
-				this.expandedKeys = event.item
-				this.expandNode(event.item)				
+				/* this.expandedKeys = event.item
+				this.expandNode(event.item)	 */			
 			}
 		},
 		computed: {
@@ -130,19 +142,20 @@
 				this.$store.dispatch("appData/setActiveSidebar", data)
 			}
 		},
-		components: { SidebarBurger, SidebarTimer }
+		components: { SidebarBurger, SidebarTimer, BackButton }
 	}
 </script>
 
 
 <style lang='scss'>
-.sidebar {
-	width: 12rem !important;
-	border-radius: 0 50px 0 0;
+.sidebar.p-sidebar {
+	width: 15rem !important;
 	box-shadow: var(--card-shadow) 1.95px 1.95px 0px;
+	.sidebar-back-btn {
+		position: static;
+	}
 	.router-link-active-exact {
-		background: var(--bluegray-100);
-		background: #e9ecef;
+		background: var(--gray-100);
 		transition: all .2s;
 		//transform: scaleX(1.1);
 		//box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
@@ -150,13 +163,21 @@
 		//box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 		//box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 		//box-shadow: var(--teal-50) 0px 4px 16px 0px inset, rgba(17, 17, 26, 0.05) 0px 8px 32px 0px;
-		border-radius: 8px;
+		//border-radius: 8px;
 	}
 	& .p-sidebar-header {
 		justify-content: space-between;
-		.logo img {
-			width: 65px;
+		.p-sidebar-icon {
+			width: auto;
+			color: var(--main-dark);
 		}
+		.p-sidebar-icon:enabled:hover, .p-sidebar-icon:focus {
+			background: unset;
+			box-shadow: unset;
+		}
+		/* .logo img {
+			width: 65px;
+		} */
 	}
 	& .p-sidebar-content {
 		& .p-panelmenu.p-component {
@@ -164,18 +185,18 @@
 			.p-panelmenu-header {
 				position: relative;
 			}
+			.p-panelmenu-header:focus {
+				border: 0;
+			}
 			.p-panelmenu-panel {
-				margin-bottom: .5rem;
+				margin-bottom: 1rem;
 				.p-panelmenu-header-content {
 					border: 0;
-					border-radius: 8px;
-					box-shadow: var(--card-shadow) 1.95px 1.95px 0px;
+					//border-radius: 8px;
+					//box-shadow: var(--card-shadow) 1.95px 1.95px 0px;
 				}
 				.p-toggleable-content {
 					margin-left: 2px;
-					.p-menuitem-content {
-						border-radius: 8px;
-					}
 					.p-panelmenu-content {
 						border-radius: 0 0 8px 8px;
 						border: 0;
@@ -183,12 +204,22 @@
 				}
 			}
 			.p-panelmenu-header-content {
-				background-color: var(--card-bg);
+				background-color: unset;
 			}
 		}
 		.p-panelmenu-header-action {
 			position: relative;
 			flex-direction: column;
+			color: var(--main-dark);
+			padding-left: 0;
+			svg {
+				visibility: hidden;
+			}
+			.p-menuitem-text {
+				font-weight: 600;
+				font-size: 24px;
+				width: 100%;
+			}
 			& .p-menuitem-icon {
 				font-size: 1.7rem;
 				margin: 0 !important;
@@ -204,16 +235,20 @@
 			}
 		}
 		& .p-submenu-list {
+			& .p-menuitem-link {
+				padding: .5rem 0;
+				border-bottom: 1px solid var(--text-light-color);
+				display: flex;
+				flex-direction: row-reverse;
+				justify-content: space-between;
+			}
 			& .p-menuitem-text {
+				font-size: 18px;
 				font-weight: 400;
+				line-height: 150%;
 				text-align: left;
 			}
 		}
-	}
-	.p-menuitem-text {
-		font-weight: 500;
-		width: 100%;
-		text-align: center;
 	}
 	.pi-chevron-right, .pi-chevron-down {
 		order: 3;
@@ -227,13 +262,16 @@
 	justify-content: center;
 }
 @media ( max-width: 576px ) {
+	.sidebar.p-sidebar {
+		width: 576px !important;
+	}
 	.p-sidebar {
 		& .p-sidebar-content {
 			& .p-panelmenu.p-component {
 				margin-top: 0rem;
 			}
 			.p-panelmenu-header-action { 
-				padding: .8rem !important;
+				//padding: .8rem !important;
 				.p-menuitem-icon {
 					font-size: 1.2rem;
 				}

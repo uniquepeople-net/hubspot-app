@@ -244,6 +244,10 @@ export const routes = [
 				]
 			},
 
+			{ path: '/:lang/legal/terms-of-use', component: TermsOfUse, name: 'legal-terms' },
+
+			{ path: '/:lang/legal/privacy-policy', component: PrivacyPolicy, name: 'legal-privacy' },
+
 		],
 	},
 
@@ -273,16 +277,15 @@ export const routes = [
 	
 	{ path: '/:lang/success', component: SuccessPage, name:'success', props: true },
 	
-	
+	{ path: '/:lang/terms-of-use', component: TermsOfUse, name: 'terms' },
+
+	{ path: '/:lang/privacy-policy', component: PrivacyPolicy, name: 'privacy' },
+
 	{ path: '/:lang/:pathMatch(.*)*', component: NotFound, name: 'not-found'},
 	
 	{ path: '/:pathMatch(.*)*', component: NotFound , redirect: { name: 'not-found', params: { lang: 'en' } } },
 	
 	{ path: '/:lang/blocked', component: BlockedPage, name: 'blocked-page' },
-
-	{ path: '/:lang/terms-of-use', component: TermsOfUse, name: 'terms' },
-
-	{ path: '/:lang/privacy-policy', component: PrivacyPolicy, name: 'privacy' },
 
 	{ path: '/:lang/404', component: NotFound, name: '404' },
 ]

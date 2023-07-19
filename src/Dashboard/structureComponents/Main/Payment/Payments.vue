@@ -1,8 +1,8 @@
 <template>
 	<Fieldset legend="Payments history" :toggleable="true" class="fieldset" :collapsed="true"
 				@update:collapsed="checkState">		
-		<div  	v-if="payments"
-				class="row align-items-center" v-for="(payment, index) in payments" :style="index % 2 === 0 ? 'background: var(--gray-100)' : '' ">
+		<div v-if="payments" v-for="(payment, index) in payments"
+			 class="row align-items-center" :style="index % 2 === 0 ? 'background: var(--gray-100)' : '' ">
 			<div class="col-4 column-list">{{formatTimestamp(payment.created)}}</div>
 			<div class="col-3 column-list col-r-border">{{payment.description}}</div>
 			<div class="col-3 column-list col-r-border">{{formatPrice(payment.amount)}}</div>

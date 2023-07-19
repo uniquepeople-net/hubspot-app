@@ -95,7 +95,7 @@
 		padding: 1rem 2rem;
 	}
 	.main-active-sidebar {
-		margin-left: 12rem;
+		margin-left: 15rem;
 	}
 }
 /* .fade-enter-active {

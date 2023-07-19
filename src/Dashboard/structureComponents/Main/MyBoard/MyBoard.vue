@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<PostsCarousel />
-		<NewsCard />
+		<!-- <NewsCard /> -->
 		<PLayerSeasonStats v-if="user.instat_id"/>	
 	</div>
 </template>

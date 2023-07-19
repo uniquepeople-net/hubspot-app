@@ -50,7 +50,7 @@
 					},
 					{
 						breakpoint: '2000px',
-						numVisible: 3.5,
+						numVisible: 3,
 						numScroll: 1
 					},
 					{
