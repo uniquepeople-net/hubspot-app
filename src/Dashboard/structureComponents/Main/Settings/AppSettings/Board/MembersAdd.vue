@@ -126,12 +126,12 @@
 					description: this.description
 				}
 
-				this.addBoardMember( data )	
+				//this.addBoardMember( data )	
 			},
 			uploadedFiles(e) {
 				this.files = e;
 			},
-			addBoardMember(  )
+			//addBoardMember(  )
 		},
 		computed: {
 			...mapGetters({ groups: 'boardSet/boardGroups' })
