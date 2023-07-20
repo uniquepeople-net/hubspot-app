@@ -83,7 +83,8 @@ export default {
 		emailsSet:					DOMAIN_URL + '/api/settings-emails',
 
 		// Board settings links
-		boardGroups:				DOMAIN_URL + '/api/settings-board',		
+		boardGroups:				DOMAIN_URL + '/api/settings-board',
+		boardMembers:				DOMAIN_URL + '/api/settings-board-members',	
 
 		// Surveys links
 		surveys:					DOMAIN_URL + '/api/surveys',
@@ -274,6 +275,9 @@ export default {
 		// Board settings getters
 		boardGroups( state ) {
 			return state.boardGroups
+		},
+		boardMembers( state ) {
+			return state.boardMembers
 		},
 
 		// Surveys getters

@@ -3,7 +3,7 @@
 		<Card class="card">
 			<template #title>
 				<div class="card-header d-flex justify-content-between align-items-center">
-					<h5>Emails</h5>
+					<h5>{{ $t('message.Emails') }}</h5>
 				</div>
 			</template>
 
@@ -33,8 +33,8 @@
 			</template>
 
 			<template #footer>
-				<div class="card-header d-flex justify-content-between align-items-center">
-					<h6>Add Emails</h6>
+				<div class="d-flex justify-content-between align-items-center mb-4">
+					<h5>{{ $t('message.AddEmails') }}</h5>
 				</div>
 				<AppSettingsAdd :existingEmails="emailsData"/>
 			</template>

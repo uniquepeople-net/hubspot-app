@@ -27,7 +27,6 @@
 		},
 		data() {
 			return {
-				groupsData: [],
 			}
 		},
 		methods: {

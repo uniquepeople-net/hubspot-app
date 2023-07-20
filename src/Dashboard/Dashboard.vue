@@ -79,7 +79,7 @@
  
 <style lang='scss' scoped>
 .dashboard {
-	//background-color: rgb(243, 243, 243);
+	background-color: rgb(243, 243, 243);
 	min-height: 100vh;
 }
 #main {

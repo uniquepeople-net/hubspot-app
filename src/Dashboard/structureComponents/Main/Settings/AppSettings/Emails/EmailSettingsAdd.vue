@@ -1,19 +1,7 @@
 <template>
 	<div>
-		<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
-			<div class="flex align-items-center flex-column pt-6 px-3">
-				<i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
-				<i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
-				<h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
-				<h6 v-if="response.error" v-for="(error, index) in response.error" class="mt-3">{{ index + ': ' + error[0].replace('validation.', '') }}</h6>
-			</div>
-			<template #footer>
-				<div class="flex justify-content-center">
-					<Button label="OK" @click="toggleDialog" class="p-button-text" />
-				</div>
-			</template>
-		</Dialog>
 
+		<CustomDialog :visible="showMessage" :response="response" @hideDialog="hideDialog"/>
 	    
 		<div class="card-body">
 				<div class="text-center my-4">
@@ -53,7 +41,7 @@
 
 				<div class="position-relative text-center mt-2">
 					<Button type="submit" :label="$t('message.Submit')" 
-							class="submit-btn btn btn-primary btn-block btn-lg shadow-lg" :loading="loading"
+							class="btn-black shadow-lg w-auto" :loading="loading"
 							@click="handleSubmit"/>
 				</div>
 		</div>
@@ -64,8 +52,8 @@
 <script>
 import axios from 'axios';
 import { mapGetters } from 'vuex';
-
 import ToggleIcon from '../../../../../global/ToggleIcon.vue';
+import CustomDialog from '../../../../../global/CustomDialog.vue';
 
 
 export default {
@@ -84,6 +72,9 @@ export default {
         }
     },
     methods: {
+		hideDialog() {
+			this.showMessage = false
+		},
 		addItem() {
 			let obj = { email: '@', title: '', report: false, contact: false }
 			this.data.push(obj)
@@ -138,9 +129,6 @@ export default {
         },
         toggleDialog() {
             this.showMessage = !this.showMessage;
-            if ( this.response && this.response.status === 'success') {
-				//this.resetForm()				
-			}
         },
         resetForm() {
             this.title = ''
@@ -179,12 +167,13 @@ export default {
 	computed: {
 		...mapGetters({ sendEmailsUrl: 'links/emailsSet' }),
 	},
-	components: { ToggleIcon }
+	components: { ToggleIcon, CustomDialog }
 }
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="scss"
+CustomDialog scoped>
 .inputgroup {
 	position: relative;
 	display: flex;

@@ -219,3 +219,38 @@ button {
 		display: none;
 	}
 }
+
+
+/* Webkit-based browsers (Chrome, Safari) */
+/* You can adjust the colors and dimensions as per your design */
+/* You can add more vendor prefixes if needed for other browsers */
+::-webkit-scrollbar {
+	width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+	background-color: #ffffff;
+	border-radius: 5px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+	background-color: #888;
+	border-radius: 5px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+	background-color: #555;
+  }
+  
+  /* Firefox and Edge */
+  /* You can adjust the colors and dimensions as per your design */
+  /* The 'scrollbar-width' property is not supported in all browsers yet */
+  /* You can add more vendor prefixes if needed for other browsers */
+  /* For now, this property is mainly supported in Firefox and Edge */
+  body {
+	scrollbar-width: thin; /* 'thin' or 'auto' */
+	scrollbar-color: #888 #f1f1f1; /* thumb color and track color */
+	scrollbar-arrow-color: #888;
+  }
+  
+  
