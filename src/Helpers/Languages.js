@@ -212,6 +212,7 @@ export const messages = {
 			Description: 'Description',
 			Image: 'Image',
 			GroupS: 'group',
+			Addp: 'Add',
 		},
 		validations: {
 			required: "This field is required. ",
@@ -433,11 +434,12 @@ export const messages = {
 			Description: 'Popis',
 			Image: 'obrázok',
 			GroupS: 'skupinu',
+			Addp: 'Pridajte',
 		},
 		validations: {
-			required: "Toto pole je nevyhnutné. ",
+			required: "Toto pole je potrebné vyplniť. ",
 			email: "Vložte platný email. ",
-			minLength: `Minimálna dĺžka {minLength} znakov. `,
+			minLength: `Minimálna dĺžka{minLength} znakov. `,
 			sameAs: `Heslá sa nezhodujú. `,
 			numeric: "Musí byť číslo. ",
 		},

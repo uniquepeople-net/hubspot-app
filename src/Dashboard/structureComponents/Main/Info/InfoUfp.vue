@@ -1,12 +1,14 @@
 <template>
 	<div>
-		<h2 class="mb-4">{{ $t('message.Contactus') }}</h2>
+		<h5 class="mb-4 text-gt-bold">{{ $t('message.Contact') }}</h5>
+		<BoardMembers class="mb-5"/>
 		<ContactForm />
 	</div>
 </template>
  
  
 <script>
+	import BoardMembers from './BoardMembers.vue';
 	import ContactForm from './ContactForm.vue';
 
 	export default {
@@ -17,7 +19,7 @@
 		methods: {
  
 		},
-		components: { ContactForm }
+		components: { ContactForm, BoardMembers }
 	}
 </script>
  

@@ -4,10 +4,11 @@
 			<template #title>
 				<div class="card-header d-flex justify-content-between align-items-center">
 					<h5>{{ $t('message.Emails') }}</h5>
+					<OpenBlockIcon :collapsed="collapsed" @click="() => { collapsed = !collapsed }" />
 				</div>
 			</template>
 
-			<template #content>
+			<template #content v-if="collapsed">
 				<Skeleton v-if="!emails" height="2rem" class="mb-2"></Skeleton>
 				<DataTable v-if="emails" :value="emailsData" tableStyle="min-width: 50rem">
 					<Column field="email" header="Email"></Column>
@@ -32,7 +33,7 @@
 				</DataTable>
 			</template>
 
-			<template #footer>
+			<template #footer v-if="collapsed">
 				<div class="d-flex justify-content-between align-items-center mb-4">
 					<h5>{{ $t('message.AddEmails') }}</h5>
 				</div>
@@ -45,6 +46,7 @@
  
 <script>
 	import { mapGetters } from 'vuex';
+	import OpenBlockIcon from '../../../../../global/OpenBlockIcon.vue';
 	import ToggleIcon from '../../../../../global/ToggleIcon.vue';
 	import DeleteItem from '../../../Users/DeleteItem.vue';
 	import AppSettingsAdd from './EmailSettingsAdd.vue';
@@ -55,7 +57,8 @@
 		},
 		data() {
 			return {
-				emailsData: []
+				emailsData: [],
+				collapsed: false
 			}
 		},
 		methods: {
@@ -84,7 +87,7 @@
 				}
 			}
 		},
-		components: { ToggleIcon, AppSettingsAdd, DeleteItem },
+		components: { ToggleIcon, AppSettingsAdd, DeleteItem, OpenBlockIcon },
 	}
 </script>
 

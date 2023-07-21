@@ -23,8 +23,8 @@
 			<Column style="width:50px">
 				<template #body="slotProps">
 					<DeleteItem :delete="true" :itemId="slotProps.data.id" 
-								:itemName="slotProps.data.name" callback="boardSet/getBoardmembers"
-								item="board group" url="/api/settings-board/" redirectRoute="app-settings">
+								:itemName="slotProps.data.name" callback="boardSet/getBoardMembers"
+								item="board member" url="/api/settings-board-members/" redirectRoute="app-settings">
 					</DeleteItem>
 				</template>
 			</Column>

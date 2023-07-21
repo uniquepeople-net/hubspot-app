@@ -3,6 +3,7 @@ export default {
 	state: () => ({
 		boardGroups: null,
 		boardMembers: null,
+		groupsMembers: null
 	}),
 	mutations: {
 		SETBOARDGROUPS( state, data ) {

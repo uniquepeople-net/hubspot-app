@@ -54,11 +54,16 @@
 
 
 			<div v-if="groups" class="inputgroup col-12 col-lg-6 col-xl-4" >
-				<MultiSelect v-model="selectedGroups" :options="groups" optionLabel="name" :placeholder="$t('message.Select') + ' ' + $t('message.GroupS')"
-            				:maxSelectedLabels="3" class="w-full md:w-20rem" />
+				<span class="p-float-label w-100">
+					<MultiSelect id="selectedGroups" v-model="v$.selectedGroups.$model" :options="groups" optionLabel="name" :placeholder="$t('message.Select') + ' ' + $t('message.GroupS')"
+            				:maxSelectedLabels="3" :class="{'p-invalid':v$.selectedGroups.$invalid && submitted, 'w-full':true}"/>
+					<label for="selectedGroups">{{ $t('message.Select') + ' ' + $t('message.GroupS') }}</label>
+				</span>
+				<InputError :validator="v$.selectedGroups" :submitted="submitted" :replace="$t('message.Description')"></InputError>
 			</div>
-			<div class="inputgroup col-12">
+			<div class="inputgroup col-12 position-relative">
 				<FileUploadCard @files="uploadedFiles($event)" :fileLimit="1"/>
+				<small v-if="!files && submitted" class="error-msg">{{ $t('message.Addp') + ' ' + $t('message.Image') }}</small>
 			</div>
 
 			<div class="position-relative text-center mt-3">
@@ -103,13 +108,14 @@
 				phone_num: { minLength: minLength( 2 ) },
 				description: { minLength: minLength( 2 ) },
 				email: { email },
+				selectedGroups: { required }
 			}
 		},
 		methods: {
 			hideDialog() {
 				this.showMessage = false
 			},
-			handleSubmit(isFormValid) {
+			async handleSubmit(isFormValid) {
 				this.submitted = true;
 
 				if (!isFormValid) {
@@ -118,23 +124,50 @@
 
 				this.loading = true
 
-				let data = {
-					name: this.name,
-					position: this.position,
-					phone_num: this.phone_num,
-					email: this.email,
-					description: this.description
-				}
+				const data = new FormData()
+				
+				this.files && this.files.map( file =>  {
+					data.append('files[]', file)
+				})
 
-				//this.addBoardMember( data )	
+				data.append('name', this.name)
+				data.append('position', this.position)
+				data.append('phone_num', this.phone_num)
+				data.append('description', this.description)
+				data.append('email', this.email)
+
+				Helpers.appendArrToFormData(this.selectedGroups, data, 'groups')
+
+				await User.refreshedToken();
+
+				await axios.post( this.boardMembersUrl, data, {
+					headers: {
+							Authorization: 'Bearer ' + User.getToken(),							
+							'Content-Type': 'multipart/form-data'							
+					}
+				}).then( response => {
+					this.$store.dispatch('boardSet/getBoardMembers')
+					this.response = response.data
+					this.toggleDialog()
+					this.loading = false
+				}).catch( error => {
+						this.loading = false
+						Toast.fire({
+							icon: 'error',
+							title: 'Unable to save new member'
+						})
+					})
 			},
 			uploadedFiles(e) {
 				this.files = e;
 			},
-			//addBoardMember(  )
+			toggleDialog() {
+				this.showMessage = !this.showMessage
+			}
 		},
 		computed: {
-			...mapGetters({ groups: 'boardSet/boardGroups' })
+			...mapGetters({ groups: 'boardSet/boardGroups',
+							boardMembersUrl: 'links/boardMembers' })
 		},
 		components: { CustomDialog, FileUploadCard, MultiSelect }
 	}
@@ -142,4 +175,16 @@
  
  
 <style lang='scss' scoped>
+.error-msg {
+	position: absolute;
+	top: 100%;
+	font: {
+		size: .8rem;
+		weight: 400;
+	}
+	color: var(--red-600);
+}
+.invalid-border {
+	border: 1px solid var(--red-600);
+}
 </style>
