@@ -69,7 +69,7 @@ import AddNewGroup from '../Dashboard/structureComponents/Main/Settings/AddNewGr
 import DocumentsSet from '../Dashboard/structureComponents/Main/Settings/Documents/Documents.vue'
 import AddNewDoc from '../Dashboard/structureComponents/Main/Settings/Documents/AddNewDocument.vue';
 import DocsAll from '../Dashboard/structureComponents/Main/Settings/Documents/DocumentsAll.vue';
-
+import FAQ from '../Dashboard/structureComponents/Main/Settings/AppSettings/FAQ/FAQ.vue';
 
 import Survey from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/Survey.vue';
 
@@ -117,8 +117,6 @@ export const routes = [
 				] 
 			},
 
-			{ path: '/:lang/documents', component: Documents, name: 'documents' },
-
 			{ path: '/:lang/users', component: Users, name: 'users', redirect: { name: 'all-users' },
 				// Check if user has privileges to access this route
 				beforeEnter: (to, from, next) => {
@@ -155,12 +153,14 @@ export const routes = [
 
 			},
 						
-			{ path: '/:lang/info', component: Info, name: 'info', redirect: { name: 'info-ufp' },
+			{ path: '/:lang/help', component: Info, name: 'info', redirect: { name: 'info-ufp' },
 
 				children: [
-					{ path: 'ufp', component: InfoUfp, name: 'info-ufp' },
+					{ path: 'contact', component: InfoUfp, name: 'info-ufp' },
 
-					//{ path: 'other', component: InfoOther, name: 'info-other' },
+					{ path: 'documents', component: Documents, name: 'documents' },
+
+					{ path: 'faq', component: FAQ, name: 'faq' },
 				]
 
 			},

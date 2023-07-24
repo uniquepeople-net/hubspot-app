@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="px-4">
 		<i class="pi pi-angle-down" v-if="!collapsed"></i>
 		<i class="pi pi-angle-up" v-if="collapsed"></i>
 	</div>

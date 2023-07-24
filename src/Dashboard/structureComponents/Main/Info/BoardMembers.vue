@@ -1,13 +1,13 @@
 <template>
 	<div>
-		<div v-if="groupsMembers" >
-			<div class="row g-3" v-for="(group, indexG) in groupsMembers" :key="group.id">
+		<div v-if="groups" >
+			<div class="row g-3" v-for="(group, indexG) in groups" :key="group.id">
 				<h5 :class="{'mt-5': indexG !== 0, 'text-value': true}">{{ group.name }}</h5>
-				<BoardMemberItem v-for="(member, indexM) in group.members" :key="member.id" 
+				<BoardMemberItem v-for="(member, indexM) in group.board_members" :key="member.id" 
 								class="col-12 col-lg-6 col-xl-4" :member="member"/>
 			</div>
 		</div>
-		<LoadingIcon v-if="!groupsMembers"/>
+		<LoadingIcon v-if="!groups || !members"/>
 	</div>
 </template>
  
@@ -38,7 +38,7 @@ import LoadingIcon from '../../../global/LoadingIcon.vue'
 		computed: {
 			...mapGetters({ members: 'boardSet/boardMembers',
 							groups: 'boardSet/boardGroups' }),
-			groupsMembers() {
+			/* groupsMembers() {
 				( this.groups && this.members ) && this.groups.map( group => {
 					group.members = []
 					this.members.map( member => {
@@ -50,7 +50,7 @@ import LoadingIcon from '../../../global/LoadingIcon.vue'
 					})
 				})
 				return this.groups
-			}
+			} */
 			
 		},
 		components: { BoardMemberItem, LoadingIcon },

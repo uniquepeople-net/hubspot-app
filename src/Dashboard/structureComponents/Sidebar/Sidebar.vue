@@ -181,7 +181,6 @@
 	}
 	& .p-sidebar-content {
 		& .p-panelmenu.p-component {
-			margin-top: 1rem;
 			.p-panelmenu-header {
 				position: relative;
 			}
@@ -189,7 +188,7 @@
 				border: 0;
 			}
 			.p-panelmenu-panel {
-				margin-bottom: 1rem;
+				margin-bottom: .5rem;
 				.p-panelmenu-header-content {
 					border: 0;
 					//border-radius: 8px;
@@ -212,6 +211,7 @@
 			flex-direction: column;
 			color: var(--main-dark);
 			padding-left: 0;
+			padding-bottom: 0;
 			svg {
 				visibility: hidden;
 			}

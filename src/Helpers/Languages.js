@@ -213,6 +213,8 @@ export const messages = {
 			Image: 'Image',
 			GroupS: 'group',
 			Addp: 'Add',
+			Question: 'Question',
+			Answer: 'Answer',
 		},
 		validations: {
 			required: "This field is required. ",
@@ -435,6 +437,8 @@ export const messages = {
 			Image: 'obrázok',
 			GroupS: 'skupinu',
 			Addp: 'Pridajte',
+			Question: 'Otázka',
+			Answer: 'Odpoveď',
 		},
 		validations: {
 			required: "Toto pole je potrebné vyplniť. ",

@@ -2,46 +2,46 @@ export default {
 	namespaced: true,
 
 	state: () => ({
-		groups: null,
+		faq: null,
 	}),
 
 	mutations: {
-		SETGROUPS( state, data ) {
-			state.groups = data;
+		SETFAQ( state, data ) {
+			state.faq = data;
 		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
 			// https://github.com/vuejs/vuex/issues/1118
 			Object.assign(state, {
-				groups: null,
+				faq: null,
 			})
 		}
 	},
 
 	actions: {
-		async getGroups(context, data) {
-			let groupsUrl = context.rootGetters['links/groups']
+		async getFaq(context, data) {
+			let faqUrl = context.rootGetters['links/faq']
 
 			await User.refreshedToken();
 
-			await axios.get( groupsUrl, {
+			await axios.get( faqUrl, {
 						headers: {
 							Authorization: 'Bearer ' + User.getToken()
 						}
-					}).then( groups => {
-						context.commit("SETGROUPS", groups.data)
+					}).then( faq => {
+						context.commit("SETFAQ", faq.data)
 					}).catch( error => {
 						Toast.fire({
 							icon: 'error',
-							title: 'Unable to get groups'
+							title: 'Unable to get FAQ'
 						})
 					})
 		},
 	},
 
 	getters: {
-		groups(state) {
-			return state.groups
+		faq(state) {
+			return state.faq
 		},
 	}
 }

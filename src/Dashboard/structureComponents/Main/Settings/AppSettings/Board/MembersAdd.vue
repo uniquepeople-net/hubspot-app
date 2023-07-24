@@ -6,7 +6,7 @@
 			<h5>{{ $t('message.AddMembers') }}</h5>
 		</div>
 		
-		<form @submit.prevent="handleSubmit(!v$.$invalid)" class="row g-3 gy-4 p-fluid">
+		<form @submit.prevent="handleSubmit(!v$.$invalid)" class="row g-3 gy-5 p-fluid">
 			<div class="inputgroup col-12 col-lg-6 col-xl-4" >
 				<span class="p-float-label w-100">
 					<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted, 'w-100':true}"
@@ -25,7 +25,16 @@
 				<InputError :validator="v$.position" :submitted="submitted" replace="Position"></InputError>
 			</div>
 
-			<div class="inputgroup col-12 col-lg-6 col-xl-4">
+			<div class="inputgroup col-12 col-lg-3 col-xl-2">
+				<span class="p-float-label w-100">
+					<InputText id="order" v-model="v$.order.$model" :class="{'p-invalid':v$.order.$invalid && submitted, 'w-100':true}" 
+						name="order" :placeholder="$t('message.Order')"/>
+					<label for="order">{{$t('message.Order')}}</label>
+				</span>
+				<InputError :validator="v$.order" :submitted="submitted" replace="Order"></InputError>
+			</div>
+
+			<div class="inputgroup col-12 col-lg-3 col-xl-2">
 				<span class="p-float-label w-100">
 					<InputText id="phone_num" v-model="v$.phone_num.$model" :class="{'p-invalid':v$.phone_num.$invalid && submitted, 'w-100':true}" 
 						name="phone_num" :placeholder="$t('message.Phonenumber')"/>
@@ -91,6 +100,7 @@
 				name: '',
 				position: '',
 				phone_num: '',
+				order: '',
 				email: '',
 				description: '',
 				files: null,
@@ -106,6 +116,7 @@
 				name: { required, minLength: minLength( 2 ) },
 				position: { required, minLength: minLength( 2 ) },
 				phone_num: { minLength: minLength( 2 ) },
+				order: { required, numeric },
 				description: { minLength: minLength( 2 ) },
 				email: { email },
 				selectedGroups: { required }
@@ -133,6 +144,7 @@
 				data.append('name', this.name)
 				data.append('position', this.position)
 				data.append('phone_num', this.phone_num)
+				data.append('order', this.order)
 				data.append('description', this.description)
 				data.append('email', this.email)
 

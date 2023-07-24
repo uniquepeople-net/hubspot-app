@@ -296,7 +296,7 @@ export default {
 			})
 		},
 		generatePswd() {
-			this.password = Helpers.generatePasswd(12)
+			this.password = Helpers.generatePasswd(20)
 		}
     },
 	computed: {

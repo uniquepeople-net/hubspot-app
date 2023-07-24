@@ -30,14 +30,6 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 	},
 	{
 		key: '3',
-		label: i18n.t("message.Documents"),
-		/* icon: 'bi bi-file-earmark-text', */
-		to: { name: 'documents', params: { lang: i18n.locale } },
-		class: 'documents-t',		// for testing purpose
-		command: () => sidebarHide()
-	},
-	{
-		key: '4',
 		label: i18n.t("message.users"),
 		visible: checkRole,
 		class: 'users-t',		// for testing purpose
@@ -57,7 +49,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 		]
 	},
 	{
-		key: '5',
+		key: '4',
 		label: 'Info',
 		/* icon: 'bi bi-info-circle', */
 		class: 'info-t',		// for testing purpose
@@ -71,7 +63,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 		]
 	},
 	/* {
-		key: '6',
+		key: '5',
 		label: i18n.t("message.Footballnews"),
 		icon: 'bi bi-cup-hot',
 		class: 'news-t',		// for testing purpose
@@ -91,7 +83,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 		]
 	}, */
 	{
-		key: '7',
+		key: '6',
 		label: i18n.t("message.Settings"),
 		/* icon: 'bi-gear-wide-connected', */
 		visible: checkRole,
@@ -132,7 +124,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 		]
 	},
 	{
-		key: '8',
+		key: '7',
 		label: i18n.t("message.Help"),
 		/* icon: 'bi-phone', */
 		class: 'contact-t',		// for testing purpose
@@ -145,10 +137,24 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 				icon: 'pi pi-angle-right',
 				command: () => sidebarHide()
 			},
+			{
+				label: i18n.t("message.Documents"),
+				to: { name: 'documents', params: { lang: i18n.locale } },
+				icon: 'pi pi-angle-right',
+				class: 'documents-t',		// for testing purpose
+				command: () => sidebarHide()
+			},
+			{
+				label: "FAQ",
+				to: { name: 'faq' },
+				icon: 'pi pi-angle-right',
+				class: 'faq-t',		// for testing purpose
+				command: () => sidebarHide()
+			},
 		]
 	},
 	{
-		key: '9',
+		key: '8',
 		label: /* i18n.t("message.Legal") */'Legal',
 		class: 'legal-t',		// for testing purpose
 		items: [

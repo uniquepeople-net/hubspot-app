@@ -86,6 +86,9 @@ export default {
 		boardGroups:				DOMAIN_URL + '/api/settings-board',
 		boardMembers:				DOMAIN_URL + '/api/settings-board-members',	
 
+		// FAQ settings links
+		faq: 						DOMAIN_URL + '/api/settings-faq',
+
 		// Surveys links
 		surveys:					DOMAIN_URL + '/api/surveys',
 		addSurvey:					DOMAIN_URL + '/api/surveys/store',
@@ -278,6 +281,11 @@ export default {
 		},
 		boardMembers( state ) {
 			return state.boardMembers
+		},
+
+		// FAQ settings getters
+		faq( state ) {
+			return state.faq
 		},
 
 		// Surveys getters

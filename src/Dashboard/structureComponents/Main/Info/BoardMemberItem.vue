@@ -41,6 +41,7 @@
 <style lang='scss' scoped>
 .member-item {
 	//max-height: 120px;
+	overflow: hidden;
 	img {
 		width: 116px;
 		height: 116px;

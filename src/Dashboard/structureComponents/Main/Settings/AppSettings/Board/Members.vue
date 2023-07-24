@@ -7,6 +7,7 @@
 		<DataTable v-if="members" :value="members" >
 			<Column field="name" header="Name"></Column>
 			<Column field="position" header="Position"></Column>
+			<Column field="order" header="Order"></Column>
 			<Column field="phone_num" header="Phone number"></Column>
 			<Column field="email" header="Email"></Column>
 			<Column field="description" header="description"></Column>
