@@ -15,7 +15,7 @@
 			<Column style="width:50px">
 				<template #body="slotProps">
 					<DeleteItem :delete="true" :itemId="slotProps.data.id" 
-								:itemName="slotProps.data.question" callback="boardSet/getBoardMembers"
+								:itemName="slotProps.data.question" callback="faqSet/getFaq"
 								item="FAQ" url="/api/settings-faq/" redirectRoute="app-settings">
 					</DeleteItem>
 				</template>

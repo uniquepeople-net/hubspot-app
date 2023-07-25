@@ -13,7 +13,19 @@
 				</div>
 			</div>
 		</a>
-		<Menu id="overlay_menu" ref="menu" :model="items" :popup="true" class="mt-2 menu-profile"/>
+		<Menu id="overlay_menu" ref="menu" :model="items" :popup="true" class="mt-2 menu-profile">
+			<template #item="{item}">
+				<router-link :to="item.to">
+					<div :class="`p-menuitem-link ${item.notice ? 'pb-0' : ''}`">
+						<div class="d-flex flex-column">
+							<span class="text-data">{{ item.label }}</span>
+							<span class="text-sm-notice menuitem-notice" v-if="item.notice">{{item.notice}}</span>
+						</div>
+						<i :class="item.icon"></i>
+					</div>
+				</router-link>
+			</template>
+		</Menu>
 	</div>
 </template>
  
@@ -36,13 +48,42 @@
 				return [                   
                     {
                         label: this.$i18n.t("message.Profile"),
-                        icon: 'pi pi-user-edit',
-						to:	{ name: 'my-profile' }
+                        icon: 'pi pi-angle-right',
+						to:	{ name: 'my-profile' },
+						notice: this.$i18n.t("message.ProfileNotice"),
                     },
+					{
+						separator: true,
+					},
                     {
-                        label: this.$i18n.t("message.Wallet"),
-                        icon: 'pi pi-euro',
+                        label: this.$i18n.t("message.Payments"),
+                        icon: 'pi pi-angle-right',
 						to: { name: 'wallet-info' },
+						notice: this.$i18n.t("message.PaymentsNotice"),
+                        command: () => {
+                            //this.$toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000});
+                        }
+                    },
+					{
+						separator: true,
+					},
+                    /* {
+                        label: this.$i18n.t("message.Notifications"),
+                        icon: 'pi pi-angle-right',
+						//to: { name: 'wallet-info' },
+						notice: this.$i18n.t("message.NotificationsNotice"),
+                        command: () => {
+                            //this.$toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000});
+                        }
+                    },
+					{
+						separator: true,
+					}, */
+                    {
+                        label: this.$i18n.t("message.Change") + ' ' + this.$i18n.t("message.Language"),
+                        icon: 'pi pi-angle-right',
+						to: { name: 'languages' },
+						notice: this.$i18n.t("message.LanguageNotice"),
                         command: () => {
                             //this.$toast.add({ severity: 'warn', summary: 'Delete', detail: 'Data Deleted', life: 3000});
                         }
@@ -52,8 +93,9 @@
 					},
 					{
                         label: this.$i18n.t("message.Logout"),
-                        icon: 'pi pi-sign-out',
+                        icon: 'pi pi-angle-right',
                         to: { name: 'logout' },
+						//notice: this.$i18n.t("message.LogoutNotice")
 						/* style: {
 							background: '#fa9c9c',
 						} */
@@ -66,7 +108,7 @@
 </script>
  
  
-<style lang='scss' scoped>
+<style lang='scss'>
 .avatar-md {
 	img {
 		width: 50px;
@@ -74,4 +116,27 @@
 		border-radius: 50%;
 	}
 }
+.p-menu.menu-profile {
+	width: auto;
+	padding: 0;
+	.p-menuitem-separator {
+		margin: 0;
+	}
+	.p-menuitem {
+		background: var(--main-white);
+		.p-menuitem-content {
+			padding-bottom: .25rem;
+			background: var(--main-white);
+		}
+		.p-menuitem-link {
+			display: flex;
+			justify-content: space-between;
+		}
+	}
+	.menuitem-notice {
+		padding-right: 2rem;
+		color: var(--text-light-color);
+	}
+}
+
 </style>

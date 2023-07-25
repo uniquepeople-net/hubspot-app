@@ -1,6 +1,6 @@
 <template>
 	<div class="loading-icon">
-		<svg v-if="!error" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgb(241, 242, 243, 0); display: block; shape-rendering: auto;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+		<svg v-if="!error && !timeout" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgb(241, 242, 243, 0); display: block; shape-rendering: auto;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
 			<g transform="rotate(0 50 50)">
 			<rect x="48" y="22.5" rx="2" ry="2.6" width="4" height="13" fill="#a7abae">
 				<animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="1.2195121951219512s" begin="-1.132404181184669s" repeatCount="indefinite"></animate>
@@ -59,14 +59,29 @@
 			</rect>
 			</g>
 		</svg>
-		<div v-if="error" class="my-5 text-center"><h4 class="fw-normal">No data !</h4></div>
+		<div v-if="error || timeout" class="my-5 text-center"><h4 class="fw-normal py-5">No data !</h4></div>
 	</div>
 </template>
  
  
 <script>
 	export default {
-		props: ['error']
+		mounted() {
+			this.timeoutF()
+		},
+		props: ['error'],
+		data() {
+			return {
+				timeout: false
+			}
+		},
+		methods: {
+			timeoutF() {
+				setTimeout( () => {
+					this.timeout = true
+				}, 20000);
+			}
+		}
 	}
 </script>
  

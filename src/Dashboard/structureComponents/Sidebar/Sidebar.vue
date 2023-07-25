@@ -31,10 +31,12 @@
 
 	export default {
 		mounted() {
-			this.checkwindowWidth()
-			this.expandedKeys = this.items
+			this.sidebarHide()
+			//this.expandedKeys = this.items
+			this.expandedKeys = sidebarMenu( this.showItemByRole(), this.sidebarHide(), this.checkStatsIdexists, this.$i18n )				
+			
 			this.$nextTick(() => {
-				this.expandActivePanel()
+				//this.expandActivePanel()
 				this.expandAll()
 			});
 		},
@@ -49,7 +51,7 @@
 			showItemByRole() {
 				return this.user.role_id === 1 ? true : false
 			},
-			checkwindowWidth() {
+			sidebarHide() {
 				let windowWidth = window.innerWidth;
 				if ( windowWidth >= 991 ) {
 					this.visibleLeft = true
@@ -93,7 +95,7 @@
 				}
 			},
 			expandNode(node) {
-				if (node.items && node.items.length) {
+				if (node.items && node.items.length) {					
 					this.expandedKeys[node.key] = true;
 
 					for (let child of node.items) {
@@ -113,8 +115,8 @@
 		},
 		computed: {
 			...mapGetters({ user: 'user/user' }),
-			items() { 
-				return sidebarMenu( this.showItemByRole, this.checkwindowWidth, this.checkStatsIdexists, this.$i18n )
+			items() { 				
+				return sidebarMenu( this.showItemByRole(), this.sidebarHide, this.checkStatsIdexists, this.$i18n )
 			},
 			restTrialTime() {
 				let currentDate = Date.now();
@@ -156,7 +158,7 @@
 	}
 	.router-link-active-exact {
 		background: var(--gray-100);
-		transition: all .2s;
+		//transition: all .2s;
 		//transform: scaleX(1.1);
 		//box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 		//box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
@@ -210,8 +212,7 @@
 			position: relative;
 			flex-direction: column;
 			color: var(--main-dark);
-			padding-left: 0;
-			padding-bottom: 0;
+			padding: .5rem 1rem .5rem 0;
 			svg {
 				visibility: hidden;
 			}

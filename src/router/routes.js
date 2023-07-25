@@ -37,6 +37,7 @@ import Wallet from '../Dashboard/structureComponents/Main/Payment/Wallet.vue';
 import WalletInfo from '../Dashboard/structureComponents/Main/Payment/WalletInfo.vue'
 import Pay from '../Dashboard/structureComponents/Main/Payment/Pay.vue'
 import PayStatus from '../Dashboard/structureComponents/Main/Payment/PayStatus.vue'
+import LanguagesSelect from '../Dashboard/global/LanguagesSelect.vue';
 
 import Documents from '../Dashboard/structureComponents/Main/Documents/Documents.vue';
 
@@ -247,6 +248,8 @@ export const routes = [
 			{ path: '/:lang/legal/terms-of-use', component: TermsOfUse, name: 'legal-terms' },
 
 			{ path: '/:lang/legal/privacy-policy', component: PrivacyPolicy, name: 'legal-privacy' },
+
+			{ path: '/:lang/languages', component: LanguagesSelect, name: 'languages' },
 
 		],
 	},

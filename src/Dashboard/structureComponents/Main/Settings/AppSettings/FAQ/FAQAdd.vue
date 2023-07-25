@@ -63,6 +63,50 @@
 			hideDialog() {
 				this.showMessage = false
 			},
+			async handleSubmit(isFormValid) {
+				this.submitted = true;
+
+				if (!isFormValid) {
+					return;
+				}
+
+				this.loading = true
+			
+				let data = {
+					question: this.question,
+					answer: this.answer
+				}
+
+				this.submitData(data);
+			},
+			submitData(data) {
+				axios.post( this.faqUrl, data, {
+					headers: {
+						Authorization: 'Bearer ' + User.getToken()
+					}
+				}).then( response => {
+					this.response = response.data
+					this.toggleDialog()
+					this.loading = false
+					this.submitted = false
+					this.showMessage = true
+					this.$store.dispatch('faqSet/getFaq')
+				}).catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 4000,
+						title: "Unable to add FAQ"
+					})
+					this.submitted = false
+					this.loading = false
+				})
+			},
+			toggleDialog() {
+				this.showMessage = !this.showMessage
+			}
+		},
+		computed: {
+			...mapGetters({faqUrl: 'links/faq' })
 		},
 		components: { CustomDialog }
 	}

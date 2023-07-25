@@ -1,7 +1,6 @@
 <template>
 	<div>
-		<span v-if="language === 'en'" class="lang-btn" @click="switchLanguage('sk')">
-			<!-- <i class="bi bi-translate"></i> -->
+		<!-- <span v-if="language === 'en'" class="lang-btn" @click="switchLanguage('sk')">
 			<span class="img-wrapper">
 				<img class="active-img" src="../../../../assets/images/united-kingdom.png" alt="slovak-lang">
 				<img class="inactive-img" src="../../../../assets/images/slovakia.png" alt="slovak-lang">
@@ -12,7 +11,6 @@
 			</span>
 		</span>
 		<span v-if="language === 'sk'" class="lang-btn" @click="switchLanguage('en')">
-			<!-- <i class="bi bi-translate"></i> -->
 			<span class="img-wrapper">
 				<img class="inactive-img" src="../../../../assets/images/united-kingdom.png" alt="slovak-lang">
 				<img class="active-img" src="../../../../assets/images/slovakia.png" alt="slovak-lang">
@@ -21,7 +19,21 @@
 				<span class="ps-1 f-size text-center">SK</span>
 				<span class="ps-1 f-inactive text-center">EN</span>
 			</span>
-		</span>
+		</span> -->
+		<div class="mb-4 d-flex justify-content-between lang-switch" @click="switchLanguage('en')">
+			<p class="text-undertitle">
+				English
+				<span class="text-sm-notice"></span>
+			</p>
+			<i class="pi pi-check" v-if="language === 'en'"></i>
+		</div>
+		<div class="mb-4 d-flex justify-content-between lang-switch" @click="switchLanguage('sk')">
+			<p class="text-undertitle">
+				Slovenčina
+				<span class="text-sm-notice d-block">Slovak</span>
+			</p>
+			<i class="pi pi-check" v-if="language === 'sk'"></i>
+		</div>
 	</div>
 </template>
  
@@ -34,6 +46,7 @@
 				this.$router.push('/' + lang + currentPath.substring(3));
 				this.$i18n.locale = lang;
 				localStorage.setItem('lang', lang)
+				this.$router.push({ name: 'my-board' })
 			}
 		},
 		computed: {
@@ -77,5 +90,14 @@
 		z-index: 10;
 		width: 25px
 	}
+}
+.text-sm-notice {
+	color: var(--text-light-color);
+}
+.lang-switch {
+	cursor: pointer;
+}
+.pi-check {
+	color: var(--stat-chart-bg);
 }
 </style>

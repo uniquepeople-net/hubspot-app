@@ -20,15 +20,13 @@
 					<form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
 	
 						<div class="row">
-							<!-- <div class="inputgroup mb-5 col-12">
-								<InputIcon icon="pi pi-user"></InputIcon>
-								<InputText id="name" name="name" :placeholder="user.name" disabled/>
+							<div class="inputgroup mb-5 col-12" v-if="!anonymous">
+								<InputText id="name" name="name" :placeholder="user.name + ' ' + user.surname" disabled/>
 							</div>
 		
-							<div class="inputgroup mb-5 col-12">
-								<InputIcon icon="pi pi-envelope"></InputIcon>
+							<div class="inputgroup mb-5 col-12" v-if="!anonymous">
 								<InputText id="email" name="email" :placeholder="user.email" disabled/>
-							</div> -->
+							</div>
 	
 							<div class="mb-5 col-12">
 								<Textarea :autoResize="true" rows="5" cols="30" v-model="v$.textArea.$model" 
@@ -36,18 +34,23 @@
 								<InputError :validator="v$.textArea" :submitted="submitted" replace="Text"></InputError>
 							</div>
 	
-							<div class="select-rec mb-5 col-12" v-if="recipients">
+							<div class="select-rec mb-4 col-12" v-if="recipients">
 								<h5 class="me-3">{{ $t('message.To') + ':' }}</h5>
 								<Dropdown v-model="v$.selectedRecipient.$model" :options="recipients" :class="{'p-invalid':v$.selectedRecipient.$invalid && submitted}"
 										  optionLabel="title" optionValue="email" :placeholder="$t('message.SelectRecipient')" />
 								<InputError :validator="v$.selectedRecipient" :submitted="submitted" replace="Recipient"></InputError>
 							</div>
 						</div>
-	
+
+						<div class="mb-3 d-flex align-items-center cf-checkbox">
+							<Checkbox v-model="anonymous" id="anonymous"  name="anonymous" :binary="true" :value="$t('message.SendAnonymously')"/>
+							<label for="anonymous" class="ms-2">{{ $t('message.SendAnonymously') }}</label>
+						</div>
+						<p class="text-sm-notice">{{ $t('message.AnonymousNotice') }}</p>
+
 						<div class="send-email">
 							<Button type="submit" :label="$t('message.SendEmail')" class="mt-2 submit-btn btn-black" 
 									:disabled="disabledBtn" :loading="spinner"/>
-							<!-- <div v-if="spinner" class="spinner-grow" style="width: 2.5rem; height: 2.5rem;" role="status"></div> -->						
 						</div>
 	
 					</form>
@@ -59,9 +62,11 @@
  
  
 <script>
-	import { required, email, minLength, maxLength } from "@vuelidate/validators";
+	//import { required, email, minLength, maxLength } from "@vuelidate/validators";
+	import { required, email, minLength, maxLength } from "../../../../plugins/vuelidate-i18n";
 	import { useVuelidate } from "@vuelidate/core";
 	import { mapGetters } from 'vuex'; 
+	import Checkbox from 'primevue/checkbox';
 
 	export default {
 		created() {
@@ -75,7 +80,8 @@
 				submitted: false,
 				disabledBtn: false,
 				spinner: false,
-				showMessage: false
+				showMessage: false,
+				anonymous: false
 			}
 		},
 		validations() {
@@ -96,10 +102,10 @@
 				this.spinner = true;
 
 				let data = {
-					name: this.user.name,
+					name: this.anonymous ? 'Anonymous' : this.user.name + ' ' + this.user.surname,
 					body: this.textArea,
-					email: this.user.email,
-					fromUserId: this.user.id,
+					email: this.anonymous ? null : this.user.email,
+					fromUserId: this.anonymous ? null : this.user.id,
 					recipient: this.selectedRecipient,
 					recipientData: this.getName()
 				}
@@ -111,6 +117,7 @@
 			
 				if(!this.showMessage) {
 					this.resetForm();
+					this.submitted = false;
 				}
 			},
 			resetForm() {
@@ -120,7 +127,7 @@
 			getName() {
 				let selected = this.recipients.filter( rec => rec.email === this.selectedRecipient )
 				return selected[0]
-			}
+			},
 		},
 		computed: {
 			...mapGetters({ user: 'user/user',
@@ -138,7 +145,8 @@
 					this.toggleDialog()
 				}
 			}
-		}
+		},
+		components: { Checkbox }
 	}
 </script>
  
@@ -163,6 +171,14 @@
 			position: absolute;
 			bottom: -50%;
 		}
+	}
+	:deep(.p-checkbox-box.p-highlight), :deep(.p-checkbox-box.p-highlight):hover {
+			background: var(--main-dark);
+			border-color: var(--main-dark);
+	}
+	:deep(.p-checkbox-box):hover, :deep(.p-checkbox-focused), :deep(.p-focus) {
+		border-color: var(--main-dark);
+		box-shadow: var(--card-shadow) 0px 3px 3px; 
 	}
 	
 	.send-email {

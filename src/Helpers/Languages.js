@@ -1,5 +1,5 @@
 export const messages = {
-		en: {
+	en: {
 		message: {
 			myboard: 'Board',
 			stats: 'Stats',
@@ -215,6 +215,17 @@ export const messages = {
 			Addp: 'Add',
 			Question: 'Question',
 			Answer: 'Answer',
+			SendAnonymously: 'Send message anonymously',
+			AnonymousNotice: "*Don't worry, we truly won't receive any information about you, and we can't figure out who sent the message. However, please keep in mind that we won't be able to reply to your message since we don't know who it's from.",
+			Payments: "Payments",
+			ProfileNotice: "Edit your profile information",
+			PaymentsNotice: "See your current and previous payments",
+			LogoutNotice: "Logout from application",
+			Notifications: "Notifications",
+			NotificationsNotice: "Get alerted for important events",
+			LanguageNotice: "Edit your language preferences",
+			English: "English",
+			Slovak: "Slovak",
 		},
 		validations: {
 			required: "This field is required. ",
@@ -223,8 +234,8 @@ export const messages = {
 			sameAs: "Passwords don't match. ",
 			numeric: `Must be numeric. `,
 		},
-		},
-		sk: {
+	},
+	sk: {
 		message: {
 			myboard: 'Nástenka',
 			stats: 'Štatistiky',
@@ -439,6 +450,17 @@ export const messages = {
 			Addp: 'Pridajte',
 			Question: 'Otázka',
 			Answer: 'Odpoveď',
+			SendAnonymously: 'Poslať správu anonymne',
+			AnonymousNotice: '*Pri anonymnom odosielaní emailu nebudeme prijímať o Vás žiadne informácie. Vezmite do úvahy, že nie je možné Vám odpovedať keďže nebudeme vedieť od koho sme správu prijali.',
+			Payments: 'Platby',
+			ProfileNotice: 'Zmena Vašich osobných informácií',
+			PaymentsNotice: 'Zoznam Vašich platieb',
+			LogoutNotice: 'Odhlásenie z aplikácie',
+			Notifications: 'Upozornenia',
+			NotificationsNotice: 'Upozornenia o dôležitých udalostiach',
+			LanguageNotice: 'Zmena jazyka aplikácia',
+			English: 'Angličtina',
+			Slovak: 'Slovenčina',
 		},
 		validations: {
 			required: "Toto pole je potrebné vyplniť. ",
