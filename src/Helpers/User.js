@@ -64,7 +64,7 @@ class User {
 			if ( error.response.status >= 400 && error.response.status < 500 ) {
 				Toast.fire({
 					icon: 'error',
-					timer: 7000,
+					timer: 5000,
 					title: 'Expired token, Log In again'
 				})
 				this.clearStorage()
@@ -72,7 +72,7 @@ class User {
 			} else {
 				Toast.fire({
 					icon: 'error',
-					timer: 7000,
+					timer: 5000,
 					title: 'Server error'
 				})
 				this.clearStorage()

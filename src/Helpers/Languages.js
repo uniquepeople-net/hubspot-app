@@ -226,6 +226,7 @@ export const messages = {
 			LanguageNotice: "Edit your language preferences",
 			English: "English",
 			Slovak: "Slovak",
+			DateOfPayment: "Date of payment",
 		},
 		validations: {
 			required: "This field is required. ",
@@ -461,6 +462,7 @@ export const messages = {
 			LanguageNotice: 'Zmena jazyka aplikácia',
 			English: 'Angličtina',
 			Slovak: 'Slovenčina',
+			DateOfPayment: 'Dátum platby',
 		},
 		validations: {
 			required: "Toto pole je potrebné vyplniť. ",

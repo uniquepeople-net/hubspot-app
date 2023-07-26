@@ -1,33 +1,34 @@
 <template>
-	<Card class="card">
-		<template #title>
-			<div class="card-header">
-				<h5>Pay Info</h5>				
+	
+	<div class="fee-info">
+		
+		<h5 class="text-gt-bold">{{ $t('message.Payments') }}</h5>				
+	
+		<div class="d-flex align-items-center justify-content-between">
+			<h6><span class="fw-normal me-4">{{ $t('message.Yearly') + ' ' + $t('message.fee') + ':'}}</span> {{ fee }}</h6>
+			<div class="mx-4">
+				<i v-if="user.fee" class="pi pi-check-circle" :style="{fontSize: '2rem', color: 'var(--green-400)' }"></i>
+				<i v-if="!user.fee" class="pi pi-times-circle" :style="{fontSize: '2rem', color: 'var(--red-400)' }"></i>
 			</div>
-		</template>
-		<template #content>
-			<div class="d-flex align-items-center justify-content-between">
-				<h6><span class="fw-normal me-4">{{ $t('message.Yearly') + ' ' + $t('message.fee') + ':'}}</span> {{ fee }}</h6>
-				<div class="mx-4">
-					<i v-if="user.fee" class="pi pi-check-circle" :style="{fontSize: '2rem', color: 'var(--green-400)' }"></i>
-					<i v-if="!user.fee" class="pi pi-times-circle" :style="{fontSize: '2rem', color: 'var(--red-400)' }"></i>
-				</div>
-			</div>
+		</div>
 
-			<div class="d-flex align-items-center justify-content-between">
-				<h6><span class="fw-normal me-4">{{ $t('message.Membership') + ':'}}</span> {{ membership }}</h6>
-			</div>
-		</template>
-		<template #footer>
-			<Payments :user="user"/>
-		</template>
-	</Card>
+		<div class="d-flex align-items-center justify-content-between">
+			<h6><span class="fw-normal me-4">{{ $t('message.Membership') + ':'}}</span> {{ membership }}</h6>
+		</div>
+
+		<CancelSubscription :user="user"/>
+	
+		<Payments :user="user"/>
+	</div>
+		
 </template>
  
  
 <script>
 	import { mapGetters } from 'vuex'
+	import CancelSubscription from './Subscriptions.vue'
 	import Payments from './Payments.vue'
+	
 
 	export default {
 		props: ['user'],
@@ -44,13 +45,14 @@
 				return membershipObj[0].name
 			}
 		},
-		components: { Payments }
+		components: { Payments, CancelSubscription }
 	}
 </script>
  
  
 <style lang='scss' scoped>
-.card {
+.fee-info {
 	max-width: 768px;
+	margin: auto;
 }
 </style>

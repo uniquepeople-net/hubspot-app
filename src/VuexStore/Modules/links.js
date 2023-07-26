@@ -64,6 +64,9 @@ export default {
 		paymentUpdate:				DOMAIN_URL + '/api/payment/',
 		payments:					DOMAIN_URL + '/api/payments', 
 		listPayments:				DOMAIN_URL + '/api/list-payments', 
+
+		// Subscriptions routes
+		subscriptions: 				DOMAIN_URL + '/api/subscription',
 	
 		// News links
 		redditSoccer:				'https://www.reddit.com/r/soccer/',
@@ -239,6 +242,9 @@ export default {
 		listPayments(state) {
 			return state.listPayments
 		}, 
+		subscriptions( state ) {
+			return state.subscriptions
+		},
 
 		// News getters
 		redditSoccer(state) {

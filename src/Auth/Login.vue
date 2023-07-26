@@ -125,7 +125,7 @@ export default {
 					} else {
 						Toast.fire({
 							icon: 'error',
-							timer: 7000,
+							timer: 5000,
 							title: 'Server error, try again later'
 						}) 
 					}

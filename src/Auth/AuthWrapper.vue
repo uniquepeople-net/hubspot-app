@@ -4,7 +4,7 @@
 			<div class="col-lg-12 col-12">
 				<div id="auth-left" class="position-relative">
 					<BackButton v-if="!loginPage" class="back-button" route="login"/>
-					<NavLang class="auth-lang"/>
+					<NavLang class="auth-lang" :auth="true"/>
 
 					<div class="auth-logo text-center" >
 						<a href="https://ufp.sk" v-if="!vectorImg">
@@ -76,8 +76,12 @@
 	}
 	.auth-lang {
 		position: absolute;
-		top: 1.5rem;
-		right: 1.5rem;
+		top: 1rem;
+		left: 1rem;
+		:deep(.text-undertitle), :deep(.lang-switch) {
+			margin-bottom: .25rem !important;
+			font-size: .8rem;
+		}
 	}
 	#auth-left {
 		max-width: 768px;

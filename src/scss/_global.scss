@@ -1,5 +1,5 @@
 :root {
-	--bg-color: #f3f3f3;
+	--bg-color: #f8f8f8;
 	--main-white: #ffffff; 
 	--card-bg: #f6f6f6;
 	--card-shadow: #e8e8e8;
@@ -12,6 +12,7 @@
 	--stat-chart-bg: #3370EC;
 	--text-light-color: #8C8C8C;
 	--header-light-color: #D9D9D9;
+	--color-failed: #F33;
 }
 
 @import "./mixins";
@@ -84,6 +85,10 @@ h1, h2, h3, h4, h5, h6 {
 	font-size: rem(12);
 	font-weight: 400;
 	line-height: 150%;
+}
+.text-subtitle {
+	font-size: rem(14);
+	font-weight: 400;
 }
 .full-screen {
 	width: 100vw;

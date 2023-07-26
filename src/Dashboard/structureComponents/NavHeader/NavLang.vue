@@ -40,13 +40,18 @@
  
 <script>
 	export default {
+		props: {
+			auth: Boolean
+		},
 		methods: {
 			switchLanguage(lang) {
 				const currentPath = this.$route.path
 				this.$router.push('/' + lang + currentPath.substring(3));
 				this.$i18n.locale = lang;
 				localStorage.setItem('lang', lang)
-				this.$router.push({ name: 'my-board' })
+				if ( !auth ) {
+					this.$router.push({ name: 'my-board' })
+				}
 			}
 		},
 		computed: {
