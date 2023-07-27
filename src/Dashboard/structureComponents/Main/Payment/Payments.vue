@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<Accordion :multiple="true" :activeIndex="activeIndex" v-if="payments" expandIcon="pi pi-chevron-down" 
-					class="payment-acc" collapseIcon="pi pi-chevron-up" @tab-open="openedTabIndex" @tab-close="closedTabIndex" >
+		<Accordion :multiple="true" v-model:activeIndex="activeIndex" v-if="payments" expandIcon="pi pi-chevron-down" 
+					class="payment-acc" collapseIcon="pi pi-chevron-up">
 			<AccordionTab  v-for="(payment, index) in payments" :key="payment.id" :headerClass="`${activeIndex === index ? 'opened-tab' : ''}`">
 				<template #header>
 					<div class="acc-tab-header1">
@@ -10,7 +10,7 @@
 						</span>
 						<span class="d-flex align-items-center">
 							<CircleCheck v-if="payment.status === 'succeeded'" class="me-3"/>
-							<CircleFailed v-if="payment.status !== 'succeeded'"/>
+							<CircleFailed v-if="payment.status !== 'succeeded'" class="me-3"/>
 						</span>
 					</div>
 				</template>
@@ -135,14 +135,6 @@
 		padding-top: 1rem;
 		border-top: 1px solid var(--text-light-color);
 	}
-}
-
-@media ( min-width: 576px ) {
-	
-}
-
-@media ( min-width: 768px ) {
-	
 }
 
 </style>

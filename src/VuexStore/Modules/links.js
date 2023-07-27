@@ -67,6 +67,7 @@ export default {
 
 		// Subscriptions routes
 		subscriptions: 				DOMAIN_URL + '/api/subscription',
+		subscriptionCancel: 		DOMAIN_URL + '/api/subscription-cancel/',
 	
 		// News links
 		redditSoccer:				'https://www.reddit.com/r/soccer/',
@@ -244,6 +245,9 @@ export default {
 		}, 
 		subscriptions( state ) {
 			return state.subscriptions
+		},
+		subscriptionCancel( state ) {
+			return state.subscriptionCancel
 		},
 
 		// News getters

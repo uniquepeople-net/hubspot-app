@@ -16,7 +16,7 @@
 			<h6><span class="fw-normal me-4">{{ $t('message.Membership') + ':'}}</span> {{ membership }}</h6>
 		</div>
 
-		<CancelSubscription :user="user"/>
+		<Subscriptions :user="user"/>
 	
 		<Payments :user="user"/>
 	</div>
@@ -26,7 +26,7 @@
  
 <script>
 	import { mapGetters } from 'vuex'
-	import CancelSubscription from './Subscriptions.vue'
+	import Subscriptions from './Subscriptions.vue'
 	import Payments from './Payments.vue'
 	
 
@@ -45,7 +45,7 @@
 				return membershipObj[0].name
 			}
 		},
-		components: { Payments, CancelSubscription }
+		components: { Payments, Subscriptions }
 	}
 </script>
  

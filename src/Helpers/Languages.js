@@ -227,6 +227,10 @@ export const messages = {
 			English: "English",
 			Slovak: "Slovak",
 			DateOfPayment: "Date of payment",
+			Subscription: "Subscription",
+			DateOfStart: "Date of start",
+			NextBillingDate: "Next billing date",
+			Cancel: "Cancel",
 		},
 		validations: {
 			required: "This field is required. ",
@@ -463,6 +467,10 @@ export const messages = {
 			English: 'Angličtina',
 			Slovak: 'Slovenčina',
 			DateOfPayment: 'Dátum platby',
+			Subscription: 'Predplatné',
+			DateOfStart: 'Dátum vytvorenia predplatného',
+			NextBillingDate: 'Dátum nasledujúcej platby',
+			Cancel: 'Zrušiť',
 		},
 		validations: {
 			required: "Toto pole je potrebné vyplniť. ",

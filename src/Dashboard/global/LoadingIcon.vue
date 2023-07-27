@@ -1,5 +1,5 @@
 <template>
-	<div class="loading-icon">
+	<div class="loading-icon" v-if="!disapear">
 		<svg v-if="!error && !timeout" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="margin: auto; background: rgb(241, 242, 243, 0); display: block; shape-rendering: auto;" width="200px" height="200px" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
 			<g transform="rotate(0 50 50)">
 			<rect x="48" y="22.5" rx="2" ry="2.6" width="4" height="13" fill="#a7abae">
@@ -69,16 +69,20 @@
 		mounted() {
 			this.timeoutF()
 		},
-		props: ['error', 'title'],
+		props: ['error', 'title', 'hide'],
 		data() {
 			return {
-				timeout: false
+				timeout: false,
+				disapear: false
 			}
 		},
 		methods: {
 			timeoutF() {
 				setTimeout( () => {
 					this.timeout = true
+					if ( this.hide ) {
+						this.disapear = true
+					}
 				}, 20000);
 			}
 		}
