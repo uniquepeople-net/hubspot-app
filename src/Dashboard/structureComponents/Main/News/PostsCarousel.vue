@@ -1,47 +1,42 @@
 <template>
-	<Carousel :value="posts" :showNavigators="false" :showIndicators="false"
-			  :responsiveOptions="responsiveOptions" class="custom-carousel" :circular="true" 
-			  :autoplayInterval="6000" >
-		<template #header>
-			<h5 class="text-value mb-4">{{$t("message.ufpNews")}}</h5>
-		</template>
-		<template #item="slotProps">			
-				<div class="post-item mx-3 card">
-					<a :href="slotProps.data.link">
-						<div class="post-item-content">
-							<div class="mb-3">
-								<img class="carousel-img" :src="slotProps.data.yoast_head_json.og_image[0].url" :alt="slotProps.data.title.rendered" />
+	<div>
+		<Carousel :value="posts" :showNavigators="false" :showIndicators="false"
+				  :responsiveOptions="responsiveOptions" class="custom-carousel" :circular="true" 
+				  :autoplayInterval="60000" v-if="posts">
+			<template #header>
+				<h5 class="text-value mb-4 text-gt-bold">{{$t("message.ufpNews")}}</h5>
+			</template>
+			<template #item="slotProps">			
+					<div class="post-item mx-1 mx-sm-3 card">
+						<a :href="slotProps.data.link">
+							<div class="post-item-content">
+								<div>
+									<img class="carousel-img" :src="slotProps.data.yoast_head_json.og_image[0].url" :alt="slotProps.data.title.rendered" />
+								</div>
+								<div>
+									<h6 class="mb-1 p-3">{{slotProps.data.title.rendered}}</h6>					
+								</div>
 							</div>
-							<div>
-								<h6 class="mb-1 p-3">{{slotProps.data.title.rendered}}</h6>					
-							</div>
-						</div>
-					</a>
-				</div>	
-		</template>
-	</Carousel>
-
-	<LoadingIcon v-if="!posts"/>
-
+						</a>
+					</div>	
+			</template>
+		</Carousel>
+	
+		<LoadingIcon v-if="!posts" :title="$t('message.posts')"/>
+	</div>
 </template>
  
  
 <script>
+	import { mapGetters } from 'vuex'
+
 	export default {
 		created() {
-			axios.get('https://ufp.sk/wp-json/wp/v2/posts')
-				.then( response => this.posts = response.data )
-				.catch( error => {
-					Toast.fire({
-						icon: 'error',
-						timer: 5000,
-						title: "Couldn't load UPF feed"
-					})
-				} )
+			this.$store.dispatch("news/getUfpNews");
 		},
 		data() {
 			return {
-				posts: null,
+				//posts: null,
 				responsiveOptions: [
 					{
 						breakpoint: '3200px',
@@ -69,6 +64,9 @@
 		methods: {
  
 		},
+		computed: {
+			...mapGetters({ posts: 'news/ufpNews' })
+		}
 	}
 </script>
  

@@ -30,12 +30,10 @@
 					</div>
 					<div class="text-end mt-4 cancel-sub">
 						<Button :label="$t('message.Cancel') + ' ' + $t('message.Subscription')" 
-								@click="cancelSubscription(subscription.id)" class="btn-black w-auto"/>
-					
+								@click="cancelSubscription(subscription.id)" class="btn-black w-auto"
+								:loading="loading"/>
 					</div>
-
 				</template>
-				
 			</AccordionTab>
 		</Accordion>
 		<LoadingIcon v-if="!subscriptions" title="subscriptions" :hide="true"/>
@@ -67,7 +65,7 @@
 				activeIndex: [],
 				showMessage: null,
 				response: null,
-
+				loading: false
 			}
 		},
 		methods: {
@@ -112,7 +110,8 @@
 					.then( response => {
 						this.toggleDialog()
 						this.response = response.data
-						this.loading = false					
+						this.loading = false
+						this.$store.dispatch("payments/getSubscriptions", this.user.email );					
 					}).catch( error => {
 						this.loading = false
 						Toast.fire({

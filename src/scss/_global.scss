@@ -100,6 +100,11 @@ h1, h2, h3, h4, h5, h6 {
 	align-items: center;
 	padding: 1REM;
 }
+.text-light-gray {
+	font-size: rem(15);
+	font-weight: 400;
+	color: var(--text-light-color);
+}
 .p-component {
 	font-family: unset;
 }

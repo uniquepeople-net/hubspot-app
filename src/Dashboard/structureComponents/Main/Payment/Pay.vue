@@ -155,7 +155,7 @@
 									window.location = window.location.origin + '/' + this.$i18n.locale + '/wallet/pay-status'
 								} else {
 									Toast.fire({
-										icon: 'error',
+										icon: 'warning',
 										timer: 8000,
 										title: response.data.charge.status
 									})								

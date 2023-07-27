@@ -2,7 +2,7 @@
 	<div v-if="show" class="dashboard">
 		<Sidebar />
 
-		<div id="main" :class="activeSidebar ? 'main-active-sidebar' : ''">
+		<div id="main" :class="`pt-0 ${activeSidebar ? 'main-active-sidebar' : ''}`">
 			<NavHeader class="navbar"/>	
 			
 			<router-view></router-view>

@@ -1,22 +1,22 @@
 <template>
-	<div>
-		<PostsCarousel />
-	</div>
+	
+	<router-view></router-view>
+	
 </template>
  
  
 <script>
-	import PostsCarousel from "../News/PostsCarousel.vue"
-
+	//import NewsCard from '../FootballNews/NewsCard.vue'
+	
 	export default {
 		data() {
 			return {
+				
 				}
 		},
 		methods: {
 			
 		},
-		components: { PostsCarousel }
 	}
 </script>
  

@@ -1,13 +1,13 @@
 export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 	
 	return [
-	{
+	/* {
 		key: '1',
 		label: i18n.t("message.myboard"),
 		to:	{ name: 'my-board', params: { lang: i18n.locale } },
 		class: 'my-board-t',	// for testing purpose
 		command: () => sidebarHide()
-	},
+	}, */
 	{
 		key: '2',
 		label: i18n.t("message.stats"),
@@ -30,6 +30,19 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 	},
 	{
 		key: '3',
+		label: i18n.t("message.General"),
+		class: 'general-t',		// for testing purpose
+		items: [
+			{
+				label: i18n.t("message.News"),
+				to:	{ name: 'news', params: { lang: i18n.locale } },
+				icon: 'pi pi-angle-right',
+				command: () => sidebarHide()
+			},
+		]
+	},
+	{
+		key: '4',
 		label: i18n.t("message.users"),
 		visible: checkRole,
 		class: 'users-t',		// for testing purpose
@@ -49,7 +62,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 		]
 	},
 	{
-		key: '4',
+		key: '5',
 		label: 'Info',
 		/* icon: 'bi bi-info-circle', */
 		class: 'info-t',		// for testing purpose
@@ -63,7 +76,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 		]
 	},
 	/* {
-		key: '5',
+		key: '6',
 		label: i18n.t("message.Footballnews"),
 		icon: 'bi bi-cup-hot',
 		class: 'news-t',		// for testing purpose
@@ -83,7 +96,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 		]
 	}, */
 	{
-		key: '6',
+		key: '7',
 		label: i18n.t("message.Settings"),
 		/* icon: 'bi-gear-wide-connected', */
 		visible: checkRole,
@@ -124,7 +137,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 		]
 	},
 	{
-		key: '7',
+		key: '8',
 		label: i18n.t("message.Help"),
 		/* icon: 'bi-phone', */
 		class: 'contact-t',		// for testing purpose
@@ -154,7 +167,7 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 		]
 	},
 	{
-		key: '8',
+		key: '9',
 		label: /* i18n.t("message.Legal") */'Legal',
 		class: 'legal-t',		// for testing purpose
 		items: [

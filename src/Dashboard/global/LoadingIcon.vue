@@ -59,7 +59,7 @@
 			</rect>
 			</g>
 		</svg>
-		<div v-if="error || timeout" class="my-5 text-center"><h4 class="fw-normal py-5">{{ `'No ${title ? title : 'data'} !'`}}</h4></div>
+		<div v-if="error || timeout" class="my-5 text-center"><h4 class="fw-normal py-5">{{ `${$t('message.No')} ${title ? title : 'data'} !`}}</h4></div>
 	</div>
 </template>
  

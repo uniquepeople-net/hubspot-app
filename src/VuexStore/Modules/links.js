@@ -71,6 +71,7 @@ export default {
 	
 		// News links
 		redditSoccer:				'https://www.reddit.com/r/soccer/',
+		ufpNews:					'https://ufp.sk/wp-json/wp/v2/posts',
 
 		// Groups links
 		groups:						DOMAIN_URL + '/api/groups',
@@ -253,6 +254,9 @@ export default {
 		// News getters
 		redditSoccer(state) {
 			return state.redditSoccer
+		},
+		ufpNews(state) {
+			return state.ufpNews
 		},
 
 		// Groups getters

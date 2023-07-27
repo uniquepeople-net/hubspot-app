@@ -21,7 +21,10 @@ import Checkout from '../Dashboard/global/Tutorial/Checkout.vue'
 
 import Dashboard from '../Dashboard/Dashboard.vue';
 
-import MyBoard from '../Dashboard/structureComponents/Main/MyBoard/MyBoard.vue';
+import MyBoard from '../Dashboard/structureComponents/Main/MyBoard/MyBoard.vue'
+import News from '../Dashboard/structureComponents/Main/News/News.vue';
+import NewsList from '../Dashboard/structureComponents/Main/News/NewsList.vue';
+import PostSpecific from '../Dashboard/structureComponents/Main/News/PostSpecific.vue';
 
 import Users from '../Dashboard/structureComponents/Main/Users/Users.vue'
 import AllUsers from '../Dashboard/structureComponents/Main/Users/AllUsers.vue'
@@ -105,7 +108,18 @@ export const routes = [
 		
 		children: [
 
-			{ path: '/:lang/my-board', component: MyBoard, name: 'my-board' },
+			{ path: '/:lang/board', component: MyBoard, name: 'my-board' },
+
+			{ path: '/:lang/news', component: News, name: 'news', redirect: { name: 'news-list' },
+				
+				children: [
+					
+					{ path: 'list', component: NewsList, name: 'news-list' },
+
+					{ path: ':post_id', component: PostSpecific, name: 'specific-post', props: true },
+
+				]  
+			},
 
 			{ path: '/:lang/stats', component: Stats, name: 'stats', redirect: { name: 'match' },
 				
