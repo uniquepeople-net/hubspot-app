@@ -86,21 +86,23 @@ export default {
 				})
 		},
 		async getSpecArticle( context, id ) {
-			let ufpNewsLink = context.rootGetters['links/ufpNews']
+			if ( id ) {
+				let ufpNewsLink = context.rootGetters['links/ufpNews']
 
-			await User.refreshedToken();
+				await User.refreshedToken();
 
-			await axios.get(ufpNewsLink + '/' + id)
-				.then( response => {
-					context.commit("SETSPECIFICPOST", response.data) 
-				})
-				.catch( error => {
-					Toast.fire({
-						icon: 'error',
-						timer: 4000,
-						title: "Couldn't load this article"
+				await axios.get(ufpNewsLink + '/' + id)
+					.then( response => {
+						context.commit("SETSPECIFICPOST", response.data) 
 					})
-				})
+					.catch( error => {
+						Toast.fire({
+							icon: 'error',
+							timer: 4000,
+							title: "Couldn't load this article"
+						})
+					})
+			}
 		},
 		clearArticle(context) {
 			context.commit("SETSPECIFICPOST", null)

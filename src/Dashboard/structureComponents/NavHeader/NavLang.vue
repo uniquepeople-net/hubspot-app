@@ -49,7 +49,7 @@
 				this.$router.push('/' + lang + currentPath.substring(3));
 				this.$i18n.locale = lang;
 				localStorage.setItem('lang', lang)
-				if ( !auth ) {
+				if ( !this.auth ) {
 					this.$router.push({ name: 'my-board' })
 				}
 			}

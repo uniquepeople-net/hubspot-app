@@ -87,6 +87,10 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: 400;
 	line-height: 150%;
 }
+.text-x-small {
+	font-size: rem(10);
+	font-weight: 400;
+}
 .text-subtitle {
 	font-size: rem(14);
 	font-weight: 400;
@@ -207,17 +211,19 @@ h1, h2, h3, h4, h5, h6 {
 	border-radius: var(--btn-border-radius);
 	box-shadow: var(--card-shadow) 1.95px 1.95px 0px;
 }
-.back-button {
-	position: absolute;
-	top: 1.5rem;
-	left: 1.5rem;
+.bg-card-custom {
+	background-color: var(--card-bg);
+	border: 0;
 }
 .center-center {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-
+.sm-width-screen {
+	max-width: 576px;
+	margin: auto;
+}
 i {
 	font-style: normal;
 }
@@ -230,10 +236,21 @@ button {
 ::placeholder {
 	color: rgb(184, 184, 184);
 }
-
+iframe {
+	max-width: 100%;
+	max-height: 250px;
+}
+img {
+	max-width: 100%;
+	height: auto;
+}
 @media( min-width: 992px ) {
 	.p-sidebar-mask.p-component-overlay {
 		display: none;
+	}
+	iframe {
+		max-width: 100%;
+		max-height: 1000px;
 	}
 }
 
@@ -269,5 +286,4 @@ button {
 	scrollbar-color: #888 #f1f1f1; /* thumb color and track color */
 	scrollbar-arrow-color: #888;
   }
-  
   

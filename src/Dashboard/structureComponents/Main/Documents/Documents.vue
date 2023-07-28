@@ -8,6 +8,7 @@
  
 <script>
 	import { mapGetters } from 'vuex'
+import BackButton from '../../../global/BackButton.vue'
 	import DocumentsData from './DocumentsData.vue'
 
 	export default {
@@ -18,7 +19,7 @@
 			...mapGetters({ docs: 'documents/documents',
 							error: 'documents/error' })
 		},
-		components: { DocumentsData }
+		components: { DocumentsData, BackButton }
 	}
 </script>
  

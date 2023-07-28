@@ -2,13 +2,13 @@
 	<div>
 		<Carousel :value="posts" :showNavigators="false" :showIndicators="false"
 				  :responsiveOptions="responsiveOptions" class="custom-carousel" :circular="true" 
-				  :autoplayInterval="60000" v-if="posts">
+				  :autoplayInterval="6000" v-if="posts" verticalViewPortHeight="200">
 			<template #header>
 				<h5 class="text-value mb-4 text-gt-bold">{{$t("message.ufpNews")}}</h5>
 			</template>
-			<template #item="slotProps">			
+			<template #item="slotProps">
+				<router-link :to="{name: 'specific-post', params: {post_id: slotProps.data.id}}">			
 					<div class="post-item mx-1 mx-sm-3 card">
-						<a :href="slotProps.data.link">
 							<div class="post-item-content">
 								<div>
 									<img class="carousel-img" :src="slotProps.data.yoast_head_json.og_image[0].url" :alt="slotProps.data.title.rendered" />
@@ -17,8 +17,8 @@
 									<h6 class="mb-1 p-3">{{slotProps.data.title.rendered}}</h6>					
 								</div>
 							</div>
-						</a>
-					</div>	
+					</div>
+				</router-link>	
 			</template>
 		</Carousel>
 	

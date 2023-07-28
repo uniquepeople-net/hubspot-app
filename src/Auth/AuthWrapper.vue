@@ -3,7 +3,7 @@
 		<div class="row h-100">
 			<div class="col-lg-12 col-12">
 				<div id="auth-left" class="position-relative">
-					<BackButton v-if="!loginPage" class="back-button" route="login"/>
+					<BackButton v-if="!loginPage" class="back-button" route="login" position="absolute"/>
 					<NavLang class="auth-lang" :auth="true"/>
 
 					<div class="auth-logo text-center" >
@@ -74,10 +74,14 @@
 	@media screen and (max-width:576px) { 
 		#auth #auth-left{padding:4rem 3rem}
 	}
+	.back-button {
+		top: 1.5rem;
+		left: 1.5rem;
+	}
 	.auth-lang {
 		position: absolute;
 		top: 1rem;
-		left: 1rem;
+		right: 1rem;
 		:deep(.text-undertitle), :deep(.lang-switch) {
 			margin-bottom: .25rem !important;
 			font-size: .8rem;

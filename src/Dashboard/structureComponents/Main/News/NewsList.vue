@@ -1,7 +1,6 @@
 <template>
 	<div class="news-page">
-		<!-- <PostsCarousel /> -->
-		<!-- <NewsCard /> -->
+		
 		<!-- <PLayerSeasonStats v-if="user.instat_id"/> -->
 		<NewsMain v-if="posts" :post="posts[0]"/>
 
@@ -23,7 +22,6 @@
  
 <script>
 	import PLayerSeasonStats from '../Stats/PlayerData/PLayerSeasonStats.vue'
-	import PostsCarousel from './PostsCarousel.vue'
 	import { mapGetters } from 'vuex'
 	import NewsMain from './NewsMain.vue'
 	import NewsSubMain from './NewsSubMain.vue'
@@ -56,7 +54,7 @@
 				return this.posts.filter( ( post, index ) => index !== 0 && index !== 1 && index !== 2 )
 			}
 		},
-		components: { PostsCarousel, PLayerSeasonStats, NewsMain, NewsSubMain, LoadingIcon, NewsSmall },
+		components: { PLayerSeasonStats, NewsMain, NewsSubMain, LoadingIcon, NewsSmall },
 	}
 </script>
  

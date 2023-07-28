@@ -9,7 +9,7 @@
 			</div>
 		</template> -->
 		<template v-slot:closeicon>
-			<BackButton class="sidebar-back-btn" title="Menu"/>
+			<BackButton class="sidebar-back-btn" title="Menu" position="static"/>
 		</template>
 
 		<PanelMenu v-model:expandedKeys="expandedKeys" v-if="items" :model="items" 

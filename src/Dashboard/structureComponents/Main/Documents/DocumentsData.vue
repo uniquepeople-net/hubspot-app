@@ -1,28 +1,22 @@
 <template>
-	<Card class="card">
-		<template #title>
-			<div class="card-header">
-				<h5>{{ $t('message.Documents')}}</h5>
-			</div>
-		</template>
-		<template #content>
-			<div v-for="(doc, index) in docs" class="file-wrapper">
-				<a :href="doc.url" class="d-flex align-items-center" download>
-					<i class="bi bi-cloud-arrow-down icon"></i>
-					<p class="file-title w-auto">{{ doc.title }}</p>
-				</a>
-				<!-- <i class="bi bi-trash px-3" v-if="admin" @click="deleteFile(doc.id)"></i> -->
-				<DeleteItem v-if="delete" :delete="delete" :itemId="doc.id" 
-								:itemName="doc.title" item="document" url="/api/documents/"
-								redirectRoute="docs-all" :callback="'documents/getDocuments'"/>
-			</div>
-			<p v-if="docs.length === 0" class="text-center m-0">No files</p>
-		</template>
-	</Card>
+	<div>
+		<div v-for="(doc, index) in docs" class="file-wrapper main-bar p-3 sm-width-screen mb-3 bg-card-custom">
+			<a :href="doc.url" class="d-flex align-items-center" download>
+				<Document />
+				<p class="file-title w-auto text-data">{{ doc.title }}</p>
+			</a>
+			<!-- <i class="bi bi-trash px-3" v-if="admin" @click="deleteFile(doc.id)"></i> -->
+			<DeleteItem v-if="delete" :delete="delete" :itemId="doc.id" 
+							:itemName="doc.title" item="document" url="/api/documents/"
+							redirectRoute="docs-all" :callback="'documents/getDocuments'"/>
+		</div>
+		<p v-if="docs.length === 0" class="text-center m-0">No files</p>
+	</div>
 </template>
  
  
 <script>
+	import Document from '../Stats/Vectors/Document.vue';
 	import DeleteItem from '../Users/DeleteItem.vue';
 
 	export default {
@@ -38,11 +32,10 @@
 		},
 		methods: {
 			deleteFile(id) {
-				console.log(id)
 				this.delete = true
 			}
 		},
-		components: { DeleteItem }
+		components: { DeleteItem, Document }
 	}
 </script>
  
