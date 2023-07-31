@@ -18,8 +18,15 @@
 							  @change="handleChange()" :class="{'p-invalid': submitted && competition === null}"/>
 				</div>
 
+				<!-- <div v-if="type === 2" class="d-flex flex-column mb-5 col-12 col-lg-6">
+					<label for="competition">Competitions</label>
+					<Dropdown inputId="competition" v-model="competition" :options="competitionsList" 
+							  optionLabel="name" optionValue="wyId" placeholder="Select Competition"
+							  @change="handleChange()" :class="{'p-invalid': submitted && competition === null}"/>
+				</div> -->
+
 				<div class="d-flex mb-5 col-12 col-lg-6">
-					<InputIcon icon="bi bi-chat-square-text"></InputIcon>
+					<!-- <InputIcon icon="bi bi-chat-square-text"></InputIcon> -->
 					<Textarea id="message" v-model="message" rows="2"
 							name="message" placeholder="Success message" @change="handleChange()"/>
 				

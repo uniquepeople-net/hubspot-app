@@ -8,7 +8,7 @@
 			<!-- <i class="bi bi-trash px-3" v-if="admin" @click="deleteFile(doc.id)"></i> -->
 			<DeleteItem v-if="delete" :delete="delete" :itemId="doc.id" 
 							:itemName="doc.title" item="document" url="/api/documents/"
-							redirectRoute="docs-all" :callback="'documents/getDocuments'"/>
+							redirectRoute="docs-all" :callback="'documents/getDocsCategories'"/>
 		</div>
 		<p v-if="docs.length === 0" class="text-center m-0">No files</p>
 	</div>

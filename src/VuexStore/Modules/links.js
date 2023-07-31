@@ -83,6 +83,7 @@ export default {
 
 		// Documents links
 		documents:					DOMAIN_URL + '/api/documents',
+		docsCategories:				DOMAIN_URL + '/api/documents-categories',
 
 		// Emails settings links
 		emailsSet:					DOMAIN_URL + '/api/settings-emails',
@@ -96,6 +97,7 @@ export default {
 
 		// Surveys links
 		surveys:					DOMAIN_URL + '/api/surveys',
+		surveysTop11:				DOMAIN_URL + '/api/surveys-top11',
 		addSurvey:					DOMAIN_URL + '/api/surveys/store',
 		updateSurvey:				DOMAIN_URL + '/api/surveys/',
 		questionTypes:				DOMAIN_URL + '/api/question-types',
@@ -283,6 +285,9 @@ export default {
 		documents( state ) {
 			return state.documents
 		},
+		docsCategories( state ) {
+			return state.docsCategories
+		},
 
 		// Emails settings getters
 		emailsSet( state ) {
@@ -311,6 +316,9 @@ export default {
 		},
 		surveys(state) {
 			return state.surveys
+		},
+		surveysTop11(state) {
+			return state.surveysTop11
 		},
 		questionTypes(state) {
 			return state.questionTypes

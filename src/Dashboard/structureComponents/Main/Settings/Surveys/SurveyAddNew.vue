@@ -26,7 +26,7 @@
 	
 							<div class="row">
 								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-pencil"></InputIcon>
+									<!-- <InputIcon icon="bi bi-pencil"></InputIcon> -->
 									<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
 											name="name" placeholder="Name"/>
 								
@@ -34,7 +34,7 @@
 								</div>
 
 								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-pen"></InputIcon>
+									<!-- <InputIcon icon="bi bi-pen"></InputIcon> -->
 									<InputText id="description" v-model="v$.description.$model" :class="{'p-invalid':v$.description.$invalid && submitted}" 
 											name="description" placeholder="Description"/>
 								
@@ -43,23 +43,23 @@
 
 								<div class="inputgroup mb-5 col-12 align-items-center col-lg-6">
 									<label for="start">Start date:&nbsp;</label>
-									<Calendar inputId="start" v-model="v$.startDate.$model" :showIcon="true" dateFormat="dd.mm.yy" class="calendar" :class="{'p-invalid':v$.startDate.$invalid && submitted}"/>
+									<Calendar inputId="start" v-model="v$.startDate.$model" dateFormat="dd.mm.yy" class="calendar" :class="{'p-invalid':v$.startDate.$invalid && submitted}"/>
 									<InputError :validator="v$.startDate" :submitted="submitted" replace="Start date"></InputError>
 								</div>
 
 								<div class="inputgroup mb-5 col-12 align-items-center col-lg-6">
 									<label for="finish">Finish date:&nbsp;</label>
-									<Calendar inputId="finish" v-model="v$.finishDate.$model" :showIcon="true" dateFormat="dd.mm.yy" class="calendar" :class="{'p-invalid':v$.finishDate.$invalid && submitted}"/>
+									<Calendar inputId="finish" v-model="v$.finishDate.$model" dateFormat="dd.mm.yy" class="calendar" :class="{'p-invalid':v$.finishDate.$invalid && submitted}"/>
 									<InputError :validator="v$.finishDate" :submitted="submitted" replace="Finish date"></InputError>
 								</div>
 
 								<div class="inputgroup mb-5 col-12 col-lg-6 justify-content-center">
-									<InputIcon icon="bi bi-activity"></InputIcon>
+									<!-- <InputIcon icon="bi bi-activity"></InputIcon> -->
 									<ToggleButton v-model="active" onLabel="Active" offLabel="Inactive" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${active ? 'bg-success' : 'bg-danger'} p-togglebtn-active`"/>
 								</div>
 
 								<div class="inputgroup mb-5 col-12 col-lg-6 justify-content-center">
-									<InputIcon icon="bi bi-key"></InputIcon>
+									<!-- <InputIcon icon="bi bi-key"></InputIcon> -->
 									<ToggleButton v-model="public" onLabel="Public" offLabel="Private" onIcon="bi bi-unlock" offIcon="bi bi-lock" :class="`${public ? 'bg-warning' : 'bg-info'} p-togglebtn-active`"/>
 								</div>
 			

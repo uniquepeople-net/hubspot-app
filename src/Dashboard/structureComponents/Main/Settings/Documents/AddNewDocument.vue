@@ -25,11 +25,14 @@
 						<div v-for="(item, index) in filesData" class="mt-3">
 							<p class="mb-1">{{item.file.name}}</p>
 							<InputText v-model="item.title" class="w-100" placeholder="Title"/>
+							<Dropdown v-model="item.category" :options="categories" optionLabel="name" 
+									  :placeholder="$t('message.Select') + ' ' + $t('message.CategoryU')" class="mt-3 w-100"/>
+							<Divider class="my-4"/>
 						</div>
 					</template>
 				</Card>
 				<Button label="Upload Documents" :loading="loading" icon="bi bi-send-check" 
-					class="ps-3 p-button-raised p-button-success mt-3" @click="uploadDocs"/>
+					class="ps-3 p-button-raised mt-3 btn-black" @click="uploadDocs"/>
 			</div>
 		</div>
 	</div>
@@ -37,9 +40,13 @@
  
  
 <script>
+	import { mapGetters } from 'vuex'
 	import FileUploadCard from '../../Users/FileUploadCard.vue';
 
 	export default {
+		created() {
+			this.$store.dispatch("documents/getDocsCategories")		
+		},
 		data() {
 			return {
 				files: [],
@@ -53,7 +60,7 @@
 			uploadedFiles(e) {
 				this.files = e
 				this.filesData = this.files.map( file => {
-					return { file, title: '' }
+					return { file, title: '', category: '' }
 				})
 			},
 			async uploadDocs() {
@@ -63,7 +70,8 @@
 				this.files && this.files.map( ( file, index ) =>  {
 					data.append('files[]', file)
 					data.append('title[]', this.filesData[index].title)
-				})
+					data.append('categoryId[]', this.filesData[index].category.id)
+				})				
 
 				await axios.post( DOMAIN_URL + '/api/documents', data, {
 					headers: {
@@ -87,6 +95,9 @@
             	this.showMessage = !this.showMessage;
         	},
 		},
+		computed: {
+			...mapGetters({ categories: 'documents/docsCategories'})
+		},
 		components: { FileUploadCard },
 	}
 </script>
@@ -98,7 +109,7 @@
 }
 @media (min-width: 576px) {
 	.files-titles {
-		margin-top : 5rem;
+		margin-top : 0rem;
 	}
 }
 </style>

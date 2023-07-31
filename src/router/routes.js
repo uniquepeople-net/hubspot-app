@@ -85,6 +85,9 @@ import AnswerStep from '../Dashboard/structureComponents/Main/Settings/Surveys/A
 import AnswerResults from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/AnswerResults.vue';
 import SuccessPage from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/SuccessPage.vue';
 
+import TOP11 from '../Dashboard/structureComponents/Main/TOP11/Top11.vue'
+import TOP11List from '../Dashboard/structureComponents/Main/TOP11/Top11List.vue'
+
 import AppSettings from '../Dashboard/structureComponents/Main/Settings/AppSettings/AppSettings.vue'
 import AppSettingsAll from '../Dashboard/structureComponents/Main/Settings/AppSettings/AppSettingsAll.vue'
 
@@ -164,6 +167,15 @@ export const routes = [
 					{ path: 'pay', component: Pay, name: 'wallet-pay' },
 					
 					{ path: 'pay-status', component: PayStatus, name: 'wallet-pay-status' },
+				]
+
+			},
+
+			{ path: '/:lang/top-11', component: TOP11, name: 'top-11', redirect: { name: 'wallet-info' },
+
+				children: [
+					{ path: 'list', component: TOP11List, name: 'top-11-list' },
+
 				]
 
 			},

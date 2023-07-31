@@ -1,14 +1,14 @@
 <template>
 	<div>
-		<TabView class="tab-view sm-width-screen" v-if="categories">
-			<TabPanel v-for="category in categories" :header="category.name">
+		<TabView class="tab-view sm-width-screen" v-if="top11">
+			<TabPanel v-for="gender in top11" :header="gender.gender.toUpperCase()">
 					
-				<DocumentsData v-if="category.documents" :docs="category.documents" :admin="false"/>
+				<Top11Items :items="gender.surveys"/>
 				
 			</TabPanel>		
 		</TabView>
 
-		<LoadingIcon v-if="!categories" :error="error"/>
+		<LoadingIcon v-if="!top11"/>
 	</div>
 </template>
  
@@ -17,19 +17,23 @@
 	import { mapGetters } from 'vuex'
 	import TabView from 'primevue/tabview'
 	import TabPanel from 'primevue/tabpanel'
-	import BackButton from '../../../global/BackButton.vue'
-	import DocumentsData from './DocumentsData.vue'
+	import Top11Items from './Top11Items.vue'
 
 	export default {
 		created() {
-			//this.$store.dispatch("documents/getDocuments")		
-			this.$store.dispatch("documents/getDocsCategories")		
+			this.$store.dispatch("surveys/getSurveysTop11");
+		},
+		data() {
+			return {
+			}
+		},
+		methods: {
+ 
 		},
 		computed: {
-			...mapGetters({ categories: 'documents/docsCategories',
-							error: 'documents/error' })
+			...mapGetters({ top11: 'surveys/surveysTop11' })
 		},
-		components: { DocumentsData, BackButton, TabView, TabPanel }
+		components: { TabView, TabPanel, Top11Items }
 	}
 </script>
  

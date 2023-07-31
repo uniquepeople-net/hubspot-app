@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<PostsCarousel />
-		<SquareMenu class="mt-4"/>
+		<SquareMenu class="mt-2 sm-width-screen"/>
 	</div>
 </template>
  

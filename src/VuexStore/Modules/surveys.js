@@ -5,6 +5,7 @@ export default {
 
 	state: () => ({
 		surveys: null,
+		surveysTop11: null,
 		questionTypes: null,
 		positions: null,
 		types: null,
@@ -12,12 +13,15 @@ export default {
 		specificSurvey: null,
 		specificSurveyBySlug: null,
 		fulfilledSurvey: [],
-		specificResults: null
+		specificResults: null,
 	}),
 
 	mutations: {
 		SETSURVEYS( state, data ) {
 			state.surveys = data;
+		},
+		SETSURVEYSTOP11( state, data ) {
+			state.surveysTop11 = data;
 		},
 		SETQUESTTYPES( state, data ) {
 			state.questionTypes = data
@@ -60,6 +64,7 @@ export default {
 			// https://github.com/vuejs/vuex/issues/1118
 			Object.assign(state, { 
 				surveys: null,
+				surveysTop11: null,
 				questionTypes: null,
 				positions: null,
 				newSurvey: {},
@@ -417,6 +422,25 @@ export default {
 					})
 				})
 		},
+		async getSurveysTop11( context ) {
+			let surveysTop11Url = context.rootGetters['links/surveysTop11']
+
+			await User.refreshedToken();
+			
+			await axios.get( surveysTop11Url, {
+						headers: {
+							Authorization: 'Bearer ' + User.getToken()
+					}})
+					.then( response =>  {
+						context.commit("SETSURVEYSTOP11", response.data)	
+					})
+					.catch( error => {
+						Toast.fire({
+							icon: 'error',
+							title: 'Unable to get TOP 11 surveys'
+						})
+					})
+		},
 		resetSpecificResults(context) {
 			context.commit("RESETSPECIFICRESULTS")
 		},
@@ -432,6 +456,9 @@ export default {
 	getters: {
 		surveys(state) {
 			return state.surveys
+		},
+		surveysTop11(state) {
+			return state.surveysTop11
 		},
 		questionTypes(state) {
 			return state.questionTypes
