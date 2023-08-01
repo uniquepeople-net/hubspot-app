@@ -87,6 +87,7 @@ import SuccessPage from '../Dashboard/structureComponents/Main/Settings/Surveys/
 
 import TOP11 from '../Dashboard/structureComponents/Main/TOP11/Top11.vue'
 import TOP11List from '../Dashboard/structureComponents/Main/TOP11/Top11List.vue'
+import TOP11Specific from '../Dashboard/structureComponents/Main/TOP11/Top11Specific.vue'
 
 import AppSettings from '../Dashboard/structureComponents/Main/Settings/AppSettings/AppSettings.vue'
 import AppSettingsAll from '../Dashboard/structureComponents/Main/Settings/AppSettings/AppSettingsAll.vue'
@@ -171,11 +172,12 @@ export const routes = [
 
 			},
 
-			{ path: '/:lang/top-11', component: TOP11, name: 'top-11', redirect: { name: 'wallet-info' },
+			{ path: '/:lang/top-11', component: TOP11, name: 'top-11', redirect: { name: 'top-11-list' },
 
 				children: [
 					{ path: 'list', component: TOP11List, name: 'top-11-list' },
 
+					{ path: ':top_id', component: TOP11Specific, name: 'specific-top' , props: true },
 				]
 
 			},

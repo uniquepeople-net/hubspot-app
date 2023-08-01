@@ -12,7 +12,7 @@
 					<FAQs />
 				</div>
 				
-				<div class="col-12 mt-4">
+				<div class="col-12 mt-4 add-bg p-1">
 					<FAQAdd />
 				</div>
 			</div>

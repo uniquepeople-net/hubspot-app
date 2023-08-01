@@ -34,10 +34,12 @@
 			</template>
 
 			<template #footer v-if="collapsed">
-				<div class="d-flex justify-content-between align-items-center mb-4">
-					<h5>{{ $t('message.AddEmails') }}</h5>
+				<div class="add-bg p-1">
+					<div class="d-flex justify-content-between align-items-center mb-4">
+						<h5>{{ $t('message.AddEmails') }}</h5>
+					</div>
+					<AppSettingsAdd :existingEmails="emailsData"/>
 				</div>
-				<AppSettingsAdd :existingEmails="emailsData"/>
 			</template>
 		</Card>
 	</div>

@@ -11,7 +11,7 @@
 				<div class="col-12 col-xl-6 mb-4 mb-xl-0">
 					<Groups />
 				</div>
-				<div class="col-12 col-xl-6">
+				<div class="col-12 col-xl-6 add-bg p-1">
 					<GroupsAdd />
 				</div>
 
@@ -20,7 +20,7 @@
 				<div class="col-12 mb-4">
 					<Members />
 				</div>
-				<div class="col-12">
+				<div class="col-12 add-bg p-1">
 					<MembersAdd />
 				</div>
 			</div>

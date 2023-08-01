@@ -3,6 +3,7 @@
 		<EmailsSettings />
 		<BoardSettings class="mt-4"/>
 		<FAQSettings class="mt-4"/>
+		<Top11Settings class="mt-4"/>
 	</div>
 </template>
  
@@ -11,6 +12,7 @@
 	import BoardSettings from './Board/BoardSettings.vue'
 	import EmailsSettings from './Emails/EmailsSettings.vue'
 	import FAQSettings from './FAQ/FAQSettings.vue'
+	import Top11Settings from './Top11/Top11Settings.vue'
 
 	export default {
 		data() {
@@ -20,7 +22,7 @@
 		methods: {
 			
 		},
-		components: { EmailsSettings, BoardSettings, FAQSettings },
+		components: { EmailsSettings, BoardSettings, FAQSettings, Top11Settings },
 	}
 </script>
  

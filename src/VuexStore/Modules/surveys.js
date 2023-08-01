@@ -6,6 +6,7 @@ export default {
 	state: () => ({
 		surveys: null,
 		surveysTop11: null,
+		surveysTop11Spec: null,
 		questionTypes: null,
 		positions: null,
 		types: null,
@@ -22,6 +23,9 @@ export default {
 		},
 		SETSURVEYSTOP11( state, data ) {
 			state.surveysTop11 = data;
+		},
+		SETSURVEYSTOP11SPEC( state, data ) {
+			state.surveysTop11Spec = data;
 		},
 		SETQUESTTYPES( state, data ) {
 			state.questionTypes = data
@@ -65,6 +69,7 @@ export default {
 			Object.assign(state, { 
 				surveys: null,
 				surveysTop11: null,
+				surveysTop11Spec: null,
 				questionTypes: null,
 				positions: null,
 				newSurvey: {},
@@ -441,6 +446,25 @@ export default {
 						})
 					})
 		},
+		async getSurveysTop11Spec( context, id ) {
+			let surveysTop11Url = context.rootGetters['links/surveysTop11']
+
+			await User.refreshedToken();
+			
+			await axios.get( surveysTop11Url + '/' + id, {
+						headers: {
+							Authorization: 'Bearer ' + User.getToken()
+					}})
+					.then( response =>  {
+						context.commit("SETSURVEYSTOP11SPEC", response.data)	
+					})
+					.catch( error => {
+						Toast.fire({
+							icon: 'error',
+							title: 'Unable to get TOP 11 survey'
+						})
+					})
+		},
 		resetSpecificResults(context) {
 			context.commit("RESETSPECIFICRESULTS")
 		},
@@ -459,6 +483,9 @@ export default {
 		},
 		surveysTop11(state) {
 			return state.surveysTop11
+		},
+		surveysTop11Spec(state) {
+			return state.surveysTop11Spec
 		},
 		questionTypes(state) {
 			return state.questionTypes

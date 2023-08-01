@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<TabView class="tab-view sm-width-screen" v-if="top11">
-			<TabPanel v-for="gender in top11" :header="gender.gender.toUpperCase()">
+			<TabPanel v-for="gender in top11.genders" :header="gender.gender.toUpperCase()">
 					
-				<Top11Items :items="gender.surveys"/>
+				<Top11Items :items="gender.topelevens"/>
 				
 			</TabPanel>		
 		</TabView>
