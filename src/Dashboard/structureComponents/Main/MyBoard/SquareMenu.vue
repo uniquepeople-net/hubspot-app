@@ -1,6 +1,6 @@
 <template>
 	<div class="row g-3">
-		<SquareItem v-for="item in items" class="col-4" :label="item.label" :description="item.description" :route="item.route">
+		<SquareItem v-for="(item, index) in items" class="col-4" :label="item.label" :description="item.description" :route="item.route" :key="index">
 			<template v-slot:vector>
 				<component :is="item.vector"/>	
 			</template>
@@ -25,14 +25,15 @@
 		data() {
 			return {
 				items: [
+					{ label: this.$i18n.t('message.News'), description: 'UFP' + this.$i18n.t('message.News'),  vector: 'Stats', route: 'stats' },
 					{ label: this.$i18n.t('message.Stats'), description: this.$i18n.t('message.PersonalTeam'),  vector: 'Stats', route: 'stats' },
-					{ label: this.$i18n.t('message.Payments'), description: this.$i18n.t('message.MembershipFee'),  vector: 'Payments', route: 'wallet-info' },
-					{ label: this.$i18n.t('message.Player'), description: this.$i18n.t('message.PlayerProfile'),  vector: 'PlayerShirt', route: 'my-profile' },
-					{ label: this.$i18n.t('message.Events'), description: 'UFP ' + this.$i18n.t('message.Events'),  vector: 'Calendar', route: 'my-board' },
 					{ label: this.$i18n.t('message.Media'), description: 'UFP ' + this.$i18n.t('message.Podcasts'),  vector: 'Media', route: 'my-board' },
+					/* { label: this.$i18n.t('message.Player'), description: this.$i18n.t('message.PlayerProfile'),  vector: 'PlayerShirt', route: 'my-profile' }, */
+					{ label: this.$i18n.t('message.Events'), description: 'UFP ' + this.$i18n.t('message.Events'),  vector: 'Calendar', route: 'my-board' },
 					{ label: 'Top 11', description: 'UFP Top 11',  vector: 'Award', route: 'top-11-list' },
-					{ label: this.$i18n.t('message.Documents'), description: 'UFP ' + this.$i18n.t('message.Documents'),  vector: 'Document', route: 'documents' },
 					{ label: this.$i18n.t('message.Agency'), description: 'UFP ' + this.$i18n.t('message.Agency'),  vector: 'Hammer', route: 'my-board' },
+					{ label: this.$i18n.t('message.Documents'), description: 'UFP ' + this.$i18n.t('message.Documents'),  vector: 'Document', route: 'documents' },
+					{ label: this.$i18n.t('message.Payments'), description: this.$i18n.t('message.MembershipFee'),  vector: 'Payments', route: 'wallet-info' },
 					{ label: this.$i18n.t('message.Contact'), description: 'UFP ' + this.$i18n.t('message.Contact'),  vector: 'Contact', route: 'info-ufp' },
 				]
 			}

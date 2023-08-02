@@ -21,8 +21,8 @@
 	import Notifications from '../../structureComponents/Main/Stats/Vectors/Notifications.vue'
 
 	export default {
-		mounted() {
-			//this.$router.push({ name: 'checkout' })
+		created() {
+			this.$router.push({ name: 'checkout' })
 		},
 		data() {
 			return {

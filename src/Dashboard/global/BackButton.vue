@@ -17,7 +17,11 @@
 		},
 		methods: {
 			redirectBack() {
-				this.$router.push({ name: this.route })
+				//if ( localStorage.getItem('menu') === 'false' ) {
+					this.$router.push({ name: this.route })
+				/* } else {
+					console.log('asd')
+				} */
 			}
 		},
 	}

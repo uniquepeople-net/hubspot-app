@@ -1,5 +1,7 @@
 <template>
 	<div>
+		<BackButton title="TOP 11" route="my-board" class="mb-4"/>
+
 		<TabView class="tab-view sm-width-screen" v-if="top11">
 			<TabPanel v-for="gender in top11.genders" :header="gender.gender.toUpperCase()">
 					
@@ -18,6 +20,7 @@
 	import TabView from 'primevue/tabview'
 	import TabPanel from 'primevue/tabpanel'
 	import Top11Items from './Top11Items.vue'
+	import BackButton from '../../../global/BackButton.vue'
 
 	export default {
 		created() {
@@ -33,7 +36,7 @@
 		computed: {
 			...mapGetters({ top11: 'surveys/surveysTop11' })
 		},
-		components: { TabView, TabPanel, Top11Items }
+		components: { TabView, TabPanel, Top11Items, BackButton }
 	}
 </script>
  

@@ -82,7 +82,7 @@
 			},
 			completeTutorial() {
 				this.updateFirstLogin()
-				this.$router.push({ name: 'notifictions' })
+				this.$router.push({ name: 'checkout' })
 			},
 			updateFirstLogin() {
 				
@@ -124,6 +124,11 @@
 		right: 1.5rem;
 		cursor: pointer;
 	}
+	.back-button {
+		position: absolute;
+		left: 1.5rem;
+		top: 1.5rem;
+	}
 	.tutorial-steps {
 		display: flex;
 		flex-direction: column-reverse;
@@ -147,6 +152,9 @@
 		}
 		:deep(.p-tabview-panels) {
 			height: 100%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
 		}
 	}
 }

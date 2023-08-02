@@ -7,14 +7,6 @@
 		</div>
 
 		<form @submit.prevent="handleSubmit(!v$.$invalid)" class="row g-3 gy-4 p-fluid">
-			
-				<!-- <span class="p-float-label w-100">
-					<InputText id="question" v-model="v$.question.$model" :class="{'p-invalid':v$.question.$invalid && submitted, 'w-100':true}"
-							name="question" :placeholder="$t('message.Question')"/>
-					<label for="question">{{$t('message.Question')}}</label>
-				</span>
-				<InputError :validator="v$.question" :submitted="submitted" replace="Question"></InputError> -->
-
 
 				<div class="inputgroup col-12 col-lg-6 col-xl-4">
 					<span class="p-float-label w-100">
@@ -256,18 +248,15 @@
 					data.append('files[]', file)
 				})
 
-				let defendersArr = this.filterMapArr( [ this.defender1, this.defender2, this.defender3, this.defender4 ] )
+				this.filterMapArr( [ this.defender1, this.defender2, this.defender3, this.defender4 ], 'defenders[]', data )
 					
-				let midfieldersArr = this.filterMapArr( [ this.midfielder1, this.midfielder2, this.midfielder3, this.midfielder4 ] )
+				this.filterMapArr( [ this.midfielder1, this.midfielder2, this.midfielder3, this.midfielder4 ], 'midfielders[]', data )
 					
-				let strikersArr = this.filterMapArr( [ this.striker1, this.striker2, this.striker3, this.striker4 ] )
+				this.filterMapArr( [ this.striker1, this.striker2, this.striker3, this.striker4 ], 'strikers[]', data )
 
 				data.append('gender', this.gender)
 				data.append('season', this.season)
 				data.append('goalkeeper', this.goalkeeper)
-				data.append('defenders[]', defendersArr)
-				data.append('midfielders[]', midfieldersArr)
-				data.append('strikers[]', strikersArr)		
 
 				await axios.post( DOMAIN_URL + '/api/surveys-top11', data, {
 						headers: {
@@ -300,9 +289,10 @@
 					return { file }
 				})
 			},
-			filterMapArr( array ) {
+			filterMapArr( array, arrayName, data ) {
 				return array && array
 								.filter( item => item !== '' )
+								.map( item => data.append( arrayName, item ) )
 			}
 		},
 		components: { CustomDialog, FileUploadCard }

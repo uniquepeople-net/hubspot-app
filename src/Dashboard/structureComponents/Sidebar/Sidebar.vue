@@ -153,6 +153,7 @@
 .sidebar.p-sidebar {
 	width: 15rem !important;
 	box-shadow: var(--card-shadow) 1.95px 1.95px 0px;
+	background: var(--card-bg);
 	.sidebar-back-btn {
 		position: static;
 	}
@@ -190,7 +191,7 @@
 				border: 0;
 			}
 			.p-panelmenu-panel {
-				margin-bottom: .5rem;
+				margin-bottom: .7rem;
 				.p-panelmenu-header-content {
 					border: 0;
 					//border-radius: 8px;
@@ -201,6 +202,8 @@
 					.p-panelmenu-content {
 						border-radius: 0 0 8px 8px;
 						border: 0;
+						padding: 0;
+						background: var(--card-bg);
 					}
 				}
 			}
@@ -265,24 +268,18 @@
 @media ( max-width: 576px ) {
 	.sidebar.p-sidebar {
 		width: 576px !important;
-	}
-	.p-sidebar {
+		background: var(--main-white);
 		& .p-sidebar-content {
 			& .p-panelmenu.p-component {
 				margin-top: 0rem;
+				.p-panelmenu-panel .p-toggleable-content .p-panelmenu-content {
+					background: var(--main-white);
+				}
 			}
 			.p-panelmenu-header-action { 
-				//padding: .8rem !important;
 				.p-menuitem-icon {
 					font-size: 1.2rem;
 				}
-				.p-menuitem-text {
-					font-size: .8rem;
-				}
-
-			}
-			.p-menuitem-link {
-				font-size: .8rem;
 			}
 		}
 		

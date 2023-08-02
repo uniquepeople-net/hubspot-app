@@ -48,13 +48,21 @@ router.beforeEach((to, from, next) => {
 		i18n.locale = 'en' // set default locale if the language is not valid
 		i18n.global.locale = 'en'
 	}
-	// Redirect to language-specific URL if language is different from the current URL
-	if (language !== lang) {
-		const newPath = `/${language}${to.path.substring(3)}`
-		next(newPath)
-	  } else {
-		next()
-	  }
+	
+	// Check router redirect to another route
+	/* if (to !== from) {
+		// Perform actions or checks before navigation
+		localStorage.setItem('menu', false) */
+		
+		// Redirect to language-specific URL if language is different from the current URL
+		if (language !== lang) {
+			const newPath = `/${language}${to.path.substring(3)}`
+			next(newPath)
+		} else {
+			next()
+		}
+
+	  /* } */
 })
 
 // SweetAlert 2

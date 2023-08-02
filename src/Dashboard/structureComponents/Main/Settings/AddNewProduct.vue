@@ -64,7 +64,7 @@
 								</div>
 								
 								<div class="col-12 col-lg-6 offset-lg-6">
-									<Button type="submit" label="Add Product" class="mt-2 submit-btn" />
+									<Button type="submit" label="Add Product" class="mt-2 submit-btn btn-black" :loading="loading"/>
 								</div>
 							</div>
 	
@@ -107,7 +107,8 @@
 				submitted: false,
 				showMessage: false,
 				response: null,
-				delete: true
+				delete: true,
+				loading: false
 			}
 		},
 		validations() {
@@ -121,6 +122,7 @@
 		methods: {
 			handleSubmit(isFormValid) {
 				this.submitted = true;
+				this.loading = true
 
 				if (!isFormValid) {
 					return;
@@ -149,11 +151,13 @@
 									Authorization: 'Bearer ' + User.getToken()
 								}
 							}).then( response => {
-								this.response = response.data								
+								this.response = response.data
+								this.loading = false								
 								this.toggleDialog();
 								this.$store.dispatch("payments/getProducts");
 							})
 				} catch (err) {
+					this.loading = false
 					Toast.fire({
 						icon: 'error',
 						timer: 5000,
@@ -179,7 +183,7 @@
 	display: flex;
 	& span.error-msg {
 		position: absolute;
-		bottom: -60%;
+		top: 100%;
 	}
 	& > .p-button {
 		border-radius: 0 4px 4px 0;

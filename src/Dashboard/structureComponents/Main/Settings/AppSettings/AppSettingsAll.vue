@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<EmailsSettings />
-		<BoardSettings class="mt-4"/>
-		<FAQSettings class="mt-4"/>
-		<Top11Settings class="mt-4"/>
+		<BoardSettings class="mt-5"/>
+		<FAQSettings class="mt-5"/>
+		<Top11Settings class="mt-5"/>
 	</div>
 </template>
  

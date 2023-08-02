@@ -18,7 +18,9 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 				label: i18n.t("message.match"),
 				to: { name: 'match', params: { lang: i18n.locale } },
 				icon: 'pi pi-angle-right',
-				command: () => sidebarHide()
+				command: () => {
+					sidebarHide()
+				}
 			},
 			{ 
 				label: i18n.t("message.player"),
@@ -37,7 +39,10 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 				label: i18n.t("message.News"),
 				to:	{ name: 'news', params: { lang: i18n.locale } },
 				icon: 'pi pi-angle-right',
-				command: () => sidebarHide()
+				command: () => {
+					//localStorage.setItem('menu', true)
+					sidebarHide()
+				}
 			},
 		]
 	},

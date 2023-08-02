@@ -53,7 +53,9 @@ export default {
 							Authorization: 'Bearer ' + User.getToken()
 						}
 					}).then( response => {
-						context.commit("SETPRODUCTS", response.data)
+						let products = response.data.filter( item => item.active )
+						
+						context.commit("SETPRODUCTS", products)
 					}).catch( error => {
 						Toast.fire({
 							icon: 'error',

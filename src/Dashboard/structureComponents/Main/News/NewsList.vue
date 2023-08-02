@@ -1,5 +1,6 @@
 <template>
 	<div class="news-page">
+		<BackButton title="News" class="mb-4" route="my-board"/>
 		
 		<!-- <PLayerSeasonStats v-if="user.instat_id"/> -->
 		<NewsMain v-if="posts" :post="posts[0]"/>
@@ -27,6 +28,7 @@
 	import NewsSubMain from './NewsSubMain.vue'
 	import LoadingIcon from '../../../global/LoadingIcon.vue'
 	import NewsSmall from './NewsSmall.vue'
+	import BackButton from '../../../global/BackButton.vue'
 
 	export default {
 		created() {
@@ -54,7 +56,7 @@
 				return this.posts.filter( ( post, index ) => index !== 0 && index !== 1 && index !== 2 )
 			}
 		},
-		components: { PLayerSeasonStats, NewsMain, NewsSubMain, LoadingIcon, NewsSmall },
+		components: { PLayerSeasonStats, NewsMain, NewsSubMain, LoadingIcon, NewsSmall, BackButton },
 	}
 </script>
  
