@@ -2,19 +2,21 @@
 	<Card class="card">
 		<template #title>
 			<div class="card-header d-flex align-items-center justify-content-between">
-				<h4 class="m-0">{{ product.name }}</h4>				
+				<h4 class="m-0 text-gt-bold">{{ product.name }}</h4>				
 				<Tag class="mr-2" :severity="activityTag(product.active)" :value="activity(product.active)" rounded></Tag>
 			</div>	
 		</template>
 		<template #content>			
-			<h2 class="text-center">{{ formatPrice(product.price.unit_amount) }}</h2>
-			<Divider />
+			<h2 class="text-center header-main">{{ formatPrice(product.price.unit_amount) }}</h2>
+			<Divider class="my-2"/>
 			<div class="d-flex">
-				<h5 class="fw-light">Description: <span class="fw-normal">{{ product.description }}</span></h5>
+				<h5 class="text-link mb-0">Description: <span class="text-undertitle">{{ product.description }}</span></h5>
 			</div>
-			<Divider />
-			<h5 class="fw-light">Interval: <span class="fw-normal">{{ checkInterval(product.price) }}</span></h5>
-			<Divider />
+			<Divider class="my-2"/>
+			<h5 class="text-link mb-0">Interval: <span class="text-undertitle">{{ checkInterval(product.price) }}</span></h5>
+			<Divider class="my-2"/>
+			<h5 class="text-link mb-0">Membership: <span class="text-undertitle">{{ product.metadata.membership_name }}</span></h5>
+			<Divider class="my-2"/>
 		</template>
 		<template #footer>
 			<div v-if="!pay" class="d-flex justify-content-end edit-icon">
@@ -73,6 +75,9 @@
 .card {
 	:deep(.p-card-footer) {
 		padding: 0;
+	}
+	:deep(.p-card-content) {
+		padding-bottom: 0;
 	}
 	.pay-btn {
 		width: 100%;

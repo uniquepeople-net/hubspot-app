@@ -57,22 +57,12 @@
 			stripeKey: String
 		},
 		created() {
-			//console.log(window.google.payments)
-			
 			const stripeKey = this.stripeKey;
 			const stripePromise = loadStripe(stripeKey)
 			stripePromise.then( response => {
 				this.stripeLoaded = true
 				this.stripe = response
 			})
-		},
- 		unmounted() {
-			//console.log('script')
-			/* const script = document.querySelector('script[src="https://pay.google.com/gp/p/js/pay.js"]');
-			
-			if (script) {
-				script.parentNode.removeChild(script);
-			} */
 		},
   		data() {
 			return {
@@ -129,7 +119,6 @@
 						}					
 					}).then((result) => {
 						if (result.error) {
-							console.log(result.error)							
 							// Handle any errors that occurred during payment method creation
 						} else {
 							var paymentMethod = result.paymentMethod;														
@@ -195,7 +184,7 @@
 				
 			},
 			onError: event => {
-				console.error('error', event.error);
+				//console.error('error', event.error);
 			},
 			onPaymentDataAuthorized: paymentData => {
 				//console.log('payment authorized', paymentData);

@@ -33,14 +33,20 @@
 							<div class="row">
 
 								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-calendar2-event"></InputIcon>
-									<Dropdown v-model="interval" :options="intervals" optionLabel="name" optionValue="id" placeholder="Select an Interval" disabled/>
-									
+									<InputText id="interval" v-model="v$.interval.$model"  disabled
+												name="interval" />
 									<InputError :validator="v$.interval" :submitted="submitted" replace="interval"></InputError>
 								</div>
 
 								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-currency-euro"></InputIcon>
+
+									<InputText id="interval" v-model="v$.membership.$model"  disabled
+												name="interval" />
+									
+									<InputError :validator="v$.membership" :submitted="submitted" replace="membership"></InputError>
+								</div>
+
+								<div class="inputgroup mb-5 col-12 col-lg-6">
 									<InputText id="amount" v-model="v$.amount.$model" :class="{'p-invalid':v$.amount.$invalid && submitted}" disabled
 												name="amount" placeholder="Amount (example: 9.99)"/>
 			
@@ -48,7 +54,6 @@
 								</div>
 
 								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-pencil"></InputIcon>
 									<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
 											name="name" placeholder="Name"/>
 								
@@ -57,13 +62,10 @@
 			
 
 								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon v-if="!active" icon="bi bi-toggle-off"></InputIcon>
-									<InputIcon v-if="active" icon="bi bi-toggle-on"></InputIcon>
 									<ToggleButton v-model="active" onLabel="Active" offLabel="Inactive" :class="`${active ? 'bg-success' : 'bg-danger'} p-togglebutton`"/>
 								</div>
 	
 								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-info-circle"></InputIcon>
 									<Textarea id="description" v-model="v$.description.$model" :class="{'p-invalid':v$.description.$invalid && submitted}" 
 											name="description" placeholder="Description"/>
 								
@@ -71,7 +73,7 @@
 								</div>
 								
 								<div class="col-12 col-lg-6 offset-lg-6">
-									<Button type="submit" label="Update" class="mt-2 submit-btn" />
+									<Button type="submit" label="Update" class="mt-2 submit-btn btn-black" :loading="loading"/>
 								</div>
 							</div>
 	
@@ -105,6 +107,7 @@
 			this.active = Boolean(this.product.active)	
 			this.description = this.product.description
 			this.interval = this.product.price.recurring ? this.product.price.recurring.interval : this.product.price.type
+			this.membership = this.product.metadata ? this.product.metadata.membership_name : ''
 		},
  		setup: () => ({ v$: useVuelidate() }),
 		data() {
@@ -116,11 +119,13 @@
 				currency: 'EUR',
 				description: '',
 				interval: '',
+				membership: '',
 				intervals: [{ name: 'one-time', id: 'one_time' }, { name: 'yearly', id: 'year' }, { name: 'monthly', id: 'month' }, { name: 'weekly', id: 'week' } ],
 				submitted: false,
 				showMessage: false,
 				response: null,
-				delete: true
+				delete: true,
+				loading: false
 			}
 		},
 		validations() {
@@ -128,7 +133,8 @@
 				name: { required, minLength: minLength(3) },
 				amount: { required, customDecimal },
 				description: { required, minLength: minLength(3) },
-				interval: { required }
+				interval: { required },
+				membership: { required }
 			}
 		},
 		methods: {
@@ -139,6 +145,8 @@
 					return;
 				}
 				
+				this.loading = true
+
 				let data = {
 					name: this.name,
 					amount: this.amount,
@@ -169,7 +177,9 @@
 							this.product.active = data.active
 							this.product.description = data.description
 							this.toggleDialog();
+							this.loading = false
 						}).catch( error =>  {
+							this.loading = false
 							Toast.fire({
 								icon: 'error',
 								timer: 5000,
@@ -209,15 +219,12 @@
 	:deep(.p-dropdown) {
 		width: 100%;
 	}
-	:deep(.p-inputtext), :deep(.p-dropdown) {
-		border-radius: 0 6px 6px 0;
-	}
 }
 .p-togglebutton {
 	color: var(--gray-50);
 	max-width: 10rem;
+	max-height: 3rem;
+	border-radius: var(--btn-border-radius) !important;
 }
-.submit-btn {
-	max-width: 25rem;
-}
+
 </style>

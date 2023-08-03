@@ -18,6 +18,7 @@ import Register from '../Auth/Register.vue';
 import Tutorial from '../Dashboard/global/Tutorial/Tutorial.vue';
 import SetNotifications from '../Dashboard/global/Tutorial/SetNotifications.vue'
 import Checkout from '../Dashboard/global/Tutorial/Checkout.vue'
+import CheckoutPage from '../Dashboard/structureComponents/Main/Payment/CheckoutPage.vue'
 
 import Dashboard from '../Dashboard/Dashboard.vue';
 
@@ -164,6 +165,8 @@ export const routes = [
 
 				children: [
 					{ path: 'wallet-info', component: WalletInfo, name: 'wallet-info' },
+
+					{ path: 'checkout', component: CheckoutPage, name: 'wallet-checkout' },
 
 					{ path: 'pay', component: Pay, name: 'wallet-pay' },
 					

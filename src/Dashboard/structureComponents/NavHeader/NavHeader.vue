@@ -12,7 +12,7 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav ms-auto mb-lg-0 align-items-center">
 						
-						<NavWarning v-if="!user.fee" :linkTo="'wallet-info'"/>
+						<NavWarning v-if="!user.fee" :linkTo="'wallet-checkout'"/>
 
 						<NavMessages />
 

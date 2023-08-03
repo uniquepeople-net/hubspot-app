@@ -1,12 +1,7 @@
 <template>
-	<Card class="card mx-auto" v-if="payProduct">
-		<template #title>
-			<h5><span class="fw-light">Title: </span>{{ payProduct.name }}</h5>
-			<h5><span class="fw-light">Description: </span>{{ payProduct.description }}</h5>
-			<Divider />
-			<h5 class="text-center text-success">{{ formatPrice(payProduct.price.unit_amount) }}</h5>
-			<Divider />
-		</template>
+	<Card class="card mx-auto app-card" v-if="payProduct">
+		<!-- <template #title>
+		</template> -->
 		<template #content>
 			
 			<PaymentMethods @choosedMethod="choosedMethod"/>
@@ -14,7 +9,7 @@
 			<Divider />
 
 			<div v-if="method && method === 'google'" class="d-flex justify-content-center">
-				<GooglePay class="my-4" :product="payProduct" :user="user" 
+				<GooglePay class="my-4" :product="payProduct[0]" :user="user" 
 							:url="googlePaymentUrl" :stripeKey="stripePubKey"
 							/>
 			</div>
@@ -32,11 +27,8 @@
 				</div>
 			
 				<div class="d-flex justify-content-center">
-					<Button type="button" @click="pay" label="Pay" class="mt-5 pay-btn" 
-					        iconPos="right" icon="pi pi-search" :disabled="disablePay">
-						Pay
-						<div v-if="loading" class="spinner-grow" role="status">
-						</div>
+					<Button type="button" @click="pay" :label="buttonLabel()" class="mt-5 pay-btn btn-black" 
+					        iconPos="right" :disabled="disablePay" :loading="loading">
 					</Button>
 				</div>
 			</div>
@@ -53,6 +45,9 @@
 	import PaymentMethods from './PaymentMethods.vue'
 
 	export default {
+		props: {
+			payProduct: Array
+		},
 		created() {
 			//var stripeKey = process.env.STRIPE_PUB_LIVE_KEY;
 			var stripeKey = this.stripePubKey;
@@ -121,17 +116,17 @@
 					// Handle result.error or result.token
 						let data = {
 							returnUrl: window.location.origin + '/' + this.$i18n.locale + '/wallet/pay-status',
-							productId: this.payProduct.id,
-							priceId: this.payProduct.default_price,
-							description: this.payProduct.name,
+							productId: this.payProduct[0].id,
+							priceId: this.payProduct[0].default_price,
+							description: this.payProduct[0].name,
 							userId: this.user.id,
-							productName: this.payProduct.name, 
+							productName: this.payProduct[0].name, 
 							methodId: result.token.card.id,
 							email: this.user.email,
 							varSymbol: this.user.var_symbol,
 							stripeToken: result.token.id,
 							result: result.token
-							/* amount: this.payProduct.amount_decimal,
+							/* amount: this.payProduct[0].amount_decimal,
 							//billing_details: { name: 'fero' },
 							//returnUrl: window.location.href,*/
 						}
@@ -184,13 +179,21 @@
 			},
 			formatPrice(price) {
 				return Helpers.formatPrice(price)
-			}
+			},
+			buttonLabel() {
+				if ( this.payProduct.length ) {
+					let price = this.formatPrice(this.payProduct[0].price.unit_amount)
+					let interval = this.payProduct[0].price.recurring.interval === 'month' ? this.$i18n.t("message.month") : this.$i18n.t("message.year")
+					
+					return this.$i18n.t("message.PAY") + ' ' + price + '/' + interval
+				} else return this.$i18n.t("message.PAY")
+			},
 		},
 		computed: {
 			...mapGetters({ paymentUrl: 'links/payment',
 							googlePaymentUrl: 'links/googlePayment',
 							stripePubKey: 'payments/stripePubKey',
-							payProduct: 'payments/payProduct',
+							/* payProduct: 'payments/payProduct', */
 							user: 'user/user' })
 		},
 		components: { StripeElements, StripeElement, GooglePay, PaymentMethods }
@@ -201,6 +204,10 @@
 <style lang='scss' scoped>
 .card {
 	max-width: 576px;
+	background: var(--main-white);
+	:deep(.p-card-content) {
+		padding: 0;
+	}
 }
 .pay-btn {
 	min-width: 200px;

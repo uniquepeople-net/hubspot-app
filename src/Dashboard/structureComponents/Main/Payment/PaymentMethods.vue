@@ -1,22 +1,21 @@
 <template>
 	<div class="mb-5">
-		<h6 class="mb-4">{{ $t('message.Choose') + ' ' + $t('message.PaymentMethod') + ':' }}</h6>
-		<div v-for="method in methods" :key="method.key" class="my-3 methods-wrapper">
+		<!-- <h6 class="mb-4">{{ $t('message.Choose') + ' ' + $t('message.PaymentMethod') + ':' }}</h6> -->
+		<div v-for="method in methods" :key="method.key" class="my-3 methods-wrapper app-card" @click="choosedMethod">
 			
-				
 				<label :for="method.key" class="me-2 w-100 d-flex label-wrapper">
 					<i v-if="method.key !== 'google'" :class="`${method.icon} me-3`"></i>
 					<GooglePayMark v-if="method.key === 'google'"/>
 					<span>{{ method.name }}</span>
 				</label>
 			
-			<RadioButton v-model="selectedMethod" :inputId="method.key" name="pizza" :value="method.key" class="me-3"/>
+				<RadioButton v-model="selectedMethod" :inputId="method.key" name="pizza" :value="method.key" class="me-3 check-radio"/>
 		</div>
-
-		<div class="d-flex justify-content-center">
-			<Button :label="$t('message.Continue')" severity="success" text raised class="mt-5 mx-auto" 
+		
+		<!-- <div class="d-flex justify-content-center">
+			<Button :label="$t('message.Continue')" class="mt-5 mx-auto btn-border" 
 					@click="choosedMethod"/>
-		</div>
+		</div> -->
 		
 	</div>
 </template>
@@ -25,11 +24,13 @@
 <script>
 	import RadioButton from 'primevue/radiobutton'
 	import GooglePayMark from '../../../global/GooglePayMark.vue'
+	import CircleCheckFilled from '../Stats/Vectors/CircleCheckFilled.vue'
+	import CircleBorder from '../Stats/Vectors/CircleBorder.vue'
 
 	export default {
 		data() {
 			return {
-				selectedMethod: 'card',
+				selectedMethod: /* 'card' */'',
 				methods: [
 					{ name: this.$i18n.t('message.CreditDebitCard'), key: 'card', icon: 'bi bi-credit-card-2-back' },
 					{ name: 'Google Pay', key: 'google', icon: 'bi bi-google' },
@@ -40,9 +41,13 @@
 		methods: {
 			choosedMethod() {
 				this.$emit('choosedMethod', this.selectedMethod)
+			},
+			checkRadio(event) {
+				console.log(event)
+				
 			}
 		},
-		components: { RadioButton, GooglePayMark }
+		components: { RadioButton, GooglePayMark, CircleCheckFilled, CircleBorder }
 	}
 </script>
  
@@ -52,8 +57,17 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+	//box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 	cursor: pointer;
+	.check-radio {
+		:deep(.p-radiobutton-box.p-highlight) {
+			border-color: var(--main-dark);
+			background: var(--main-dark);
+		}
+		:deep(.p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover) {
+			border-color: var(--main-dark);
+		}
+	}
 	.label-wrapper {
 		padding: .5rem .5rem;
 		cursor: pointer;

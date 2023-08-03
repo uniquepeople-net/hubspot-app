@@ -26,7 +26,6 @@
 	
 							<div class="row">
 								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-pencil"></InputIcon>
 									<InputText id="name" v-model="v$.name.$model" :class="{'p-invalid':v$.name.$invalid && submitted}" 
 											name="name" placeholder="Name"/>
 								
@@ -34,7 +33,6 @@
 								</div>
 			
 								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-currency-euro"></InputIcon>
 									<InputText id="amount" v-model="v$.amount.$model" :class="{'p-invalid':v$.amount.$invalid && submitted}"
 												name="amount" placeholder="Amount with two decimals 99.99"/>
 			
@@ -42,7 +40,6 @@
 								</div>
 	
 								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-calendar2-event"></InputIcon>
 									<Dropdown v-model="v$.interval.$model" :options="intervals" :class="{'p-invalid':v$.interval.$invalid && submitted}"
 											  optionLabel="name" optionValue="id" placeholder="Select an Interval"/>
 									
@@ -50,13 +47,17 @@
 								</div>
 
 								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon v-if="!active" icon="bi bi-toggle-off"></InputIcon>
-									<InputIcon v-if="active" icon="bi bi-toggle-on"></InputIcon>
+									<Dropdown v-model="v$.membership.$model" :options="user.memberships" :class="{'p-invalid':v$.membership.$invalid && submitted}"
+											  optionLabel="name" optionValue="id" placeholder="Select an membership"/>
+									
+									<InputError :validator="v$.membership" :submitted="submitted" replace="membership"></InputError>
+								</div>
+
+								<div class="inputgroup mb-5 col-12 col-lg-6">
 									<ToggleButton v-model="active" onLabel="Active" offLabel="Inactive" :class="`${active ? 'bg-success' : 'bg-danger'} p-togglebutton`"/>
 								</div>
 	
 								<div class="inputgroup mb-5 col-12 col-lg-6">
-									<InputIcon icon="bi bi-info-circle"></InputIcon>
 									<Textarea id="description" v-model="v$.description.$model" :class="{'p-invalid':v$.description.$invalid && submitted}" 
 											name="description" placeholder="Description"/>
 								
@@ -104,6 +105,7 @@
 					{ name: 'weekly', id: 'week' }, 
 					{ name: 'daily', id: 'day' } 
 				],
+				membership: '',
 				submitted: false,
 				showMessage: false,
 				response: null,
@@ -116,24 +118,26 @@
 				name: { required, minLength: minLength(3) },
 				amount: { required, customDecimal },
 				description: { required, minLength: minLength(3) },
-				interval: { required }
+				interval: { required },
+				membership: { required }
 			}
 		},
 		methods: {
 			handleSubmit(isFormValid) {
 				this.submitted = true;
-				this.loading = true
 
 				if (!isFormValid) {
 					return;
 				}
+				this.loading = true
 				
 				let data = {
 					name: this.name,
 					amount: this.amount,
 					active: this.active,
 					description: this.description,
-					interval: this.interval
+					interval: this.interval,
+					membership: this.user.memberships.filter( item => item.id === this.membership )
 				}
 
 				this.addProduct( this.addProductUrl, data );
@@ -168,7 +172,8 @@
 			}
 		},
 		computed: {
-			...mapGetters({ addProductUrl: 'links/addProduct' })
+			...mapGetters({ addProductUrl: 'links/addProduct',
+							user: 'user/user' })
 		}
 	}
 </script>
@@ -191,15 +196,12 @@
 	:deep(.p-dropdown) {
 		width: 100%;
 	}
-	:deep(.p-inputtext), :deep(.p-dropdown) {
-		border-radius: 0 6px 6px 0;
-	}
 }
 .p-togglebutton {
 	color: var(--gray-50);
 	max-width: 10rem;
+	max-height: 3rem;
+	border-radius: var(--btn-border-radius) !important;
 }
-.submit-btn {
-	max-width: 25rem;
-}
+
 </style>

@@ -16,6 +16,11 @@
 			<h6><span class="fw-normal me-4">{{ $t('message.Membership') + ':'}}</span> {{ membership }}</h6>
 		</div>
 
+		<div class="my-4 center-center">
+			<Button v-if="!user.fee" :label="$t('message.Pay') + ' ' + $t('message.Fee')" 
+					class="btn-black" @click="redirectPay"/>
+		</div>
+
 		<Subscriptions :user="user"/>
 	
 		<Payments :user="user"/>
@@ -34,6 +39,11 @@
 		props: ['user'],
 		created() {
 			//this.$store.dispatch("payments/getPayments", this.user.id);	
+		},
+		methods: {
+			redirectPay() {
+				this.$router.push({ name: 'wallet-checkout' })
+			}
 		},
 		computed: {
 			...mapGetters({ payments: 'payments/payments'}),
