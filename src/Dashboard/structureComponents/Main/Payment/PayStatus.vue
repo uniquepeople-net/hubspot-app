@@ -1,19 +1,23 @@
 <template>
-	<Card class="card" v-if="status">
-		<template #content>
-			<div class="d-flex flex-column align-items-center">
-				<i v-if="statusBool" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
-	            <i v-if="!statusBool" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
-				<h3 class="mt-4">Payment {{ status }}</h3>
-			</div>
-		</template>
-	</Card>
+	<div>
+		<BackButton :title="$t('message.Payment')" class="mb-4" route="my-board"/>
+		<Card class="card" v-if="status">
+			<template #content>
+				<div class="d-flex flex-column align-items-center">
+					<i v-if="statusBool" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
+		            <i v-if="!statusBool" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
+					<h3 class="mt-4">Payment {{ status }}</h3>
+				</div>
+			</template>
+		</Card>
+	</div>
 </template>
  
  
 <script>
 	import { loadStripe } from '@stripe/stripe-js'
 	import { mapGetters } from 'vuex'
+	import BackButton from '../../../global/BackButton.vue'
 
 	export default {
 		created(){			
@@ -32,10 +36,11 @@
 							this.status = 'failed'
 						} else if (paymentIntent && paymentIntent.status === 'succeeded') {
 							this.status = paymentIntent.status
+							this.id = paymentIntent.id
 							window.localStorage.removeItem("cs")
 
 							// Update fee when payment is successful
-							axios.post( this.updateFeeUrl + this.user.id, { fee: true }, {
+							axios.post( this.updateFeeUrl + this.user.id, { fee: true, id: this.id }, {
 									headers: {
 										Authorization: 'Bearer ' + User.getToken()
 									}
@@ -86,6 +91,7 @@
 				return this.status == 'succeeded' ? true : false
 			}
 		},
+		components: { BackButton }
 	}
 </script>
  
