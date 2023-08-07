@@ -125,7 +125,10 @@
 							email: this.user.email,
 							varSymbol: this.user.var_symbol,
 							stripeToken: result.token.id,
-							result: result.token
+							result: result.token,
+							membership_id: this.payProduct[0].metadata.membership_id,
+							interval: this.payProduct[0].price.recurring ? this.payProduct[0].price.recurring.interval : null,
+							customer_id: this.user.stripe_customer_id
 							/* amount: this.payProduct[0].amount_decimal,
 							//billing_details: { name: 'fero' },
 							//returnUrl: window.location.href,*/
@@ -152,7 +155,7 @@
 									Toast.fire({
 										icon: 'warning',
 										timer: 8000,
-										title: response.data.charge.status
+										title: response.data.charge.status === 'requires_action' ? this.$i18n.t('message.RequireAction') : response.data.charge.status
 									})								
 									this.loading = false
 									this.disablePay = false

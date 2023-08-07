@@ -5,7 +5,7 @@
 		<h5 class="text-gt-bold">{{ $t('message.Payments') }}</h5>				
 	
 		<div class="d-flex align-items-center justify-content-between">
-			<h6><span class="fw-normal me-4">{{ $t('message.Yearly') + ' ' + $t('message.fee') + ':'}}</span> {{ fee }}</h6>
+			<h6><span class="fw-normal me-4">{{ $t('message.Fee') + ':'}}</span> {{ fee }}</h6>
 			<div class="mx-4">
 				<i v-if="user.fee" class="pi pi-check-circle" :style="{fontSize: '2rem', color: 'var(--green-400)' }"></i>
 				<i v-if="!user.fee" class="pi pi-times-circle" :style="{fontSize: '2rem', color: 'var(--red-400)' }"></i>

@@ -40,7 +40,7 @@
 							window.localStorage.removeItem("cs")
 
 							// Update fee when payment is successful
-							axios.post( this.updateFeeUrl + this.user.id, { fee: true, id: this.id }, {
+							axios.post( this.updateFeeUrl + this.user.id, { fee: true, id: this.id, payment_id: paymentId }, {
 									headers: {
 										Authorization: 'Bearer ' + User.getToken()
 									}

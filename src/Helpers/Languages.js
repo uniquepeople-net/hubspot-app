@@ -276,6 +276,7 @@ export const messages = {
 			MatchReports: 'Match reports',
 			Personal: 'Personal',
 			MatchVideos: 'Match videos',
+			RequireAction: 'Wait for automatic safe redirection.',
 		},
 		validations: {
 			required: "This field is required. ",
@@ -383,7 +384,7 @@ export const messages = {
 			Surname: 'Priezvisko',
 			Select: 'Vyberte',
 			Club: 'Klub',
-			Fee: 'Členské',
+			Fee: 'Členský poplatok',
 			State: 'Stav',
 			Activity: 'Aktivita',
 			Showing: 'Zobrazených',
@@ -561,6 +562,7 @@ export const messages = {
 			MatchReports: 'Reporty zo zápasov',
 			Personal: 'Osobné',
 			MatchVideos: 'Videá zápasov',
+			RequireAction: 'Počkajte na automatické bezpečnostné presmerovanie.',
 		},
 		validations: {
 			required: "Toto pole je potrebné vyplniť. ",

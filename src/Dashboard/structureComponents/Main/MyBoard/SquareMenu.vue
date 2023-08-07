@@ -20,12 +20,13 @@
 	import Document from '../Stats/Vectors/Document2.vue'
 	import Hammer from '../Stats/Vectors/Hammer.vue'
 	import Contact from '../Stats/Vectors/Contact.vue'
+	import News	from '../Stats/Vectors/News2.vue'
 
 	export default {
 		data() {
 			return {
 				items: [
-					{ label: this.$i18n.t('message.News'), description: 'UFP' + this.$i18n.t('message.News'),  vector: 'Stats', route: 'stats' },
+					{ label: this.$i18n.t('message.News'), description: 'UFP' + this.$i18n.t('message.News'),  vector: 'News', route: 'news' },
 					{ label: this.$i18n.t('message.Stats'), description: this.$i18n.t('message.PersonalTeam'),  vector: 'Stats', route: 'stats' },
 					{ label: this.$i18n.t('message.Media'), description: 'UFP ' + this.$i18n.t('message.Podcasts'),  vector: 'Media', route: 'my-board' },
 					/* { label: this.$i18n.t('message.Player'), description: this.$i18n.t('message.PlayerProfile'),  vector: 'PlayerShirt', route: 'my-profile' }, */
@@ -41,7 +42,7 @@
 		methods: {
 			
 		},
-		components: { SquareItem, Stats, Payments, PlayerShirt, Calendar, Media, Award, Document, Hammer, Contact },
+		components: { SquareItem, Stats, Payments, PlayerShirt, Calendar, Media, Award, Document, Hammer, Contact, News },
 	}
 </script>
  
