@@ -18,80 +18,80 @@ import Register from '../Auth/Register.vue';
 import Tutorial from '../Dashboard/global/Tutorial/Tutorial.vue';
 import SetNotifications from '../Dashboard/global/Tutorial/SetNotifications.vue'
 import Checkout from '../Dashboard/global/Tutorial/Checkout.vue'
-import CheckoutPage from '../Dashboard/structureComponents/Main/Payment/CheckoutPage.vue'
+import CheckoutPage from '../Dashboard/Structure/Main/Payment/CheckoutPage.vue'
 
 import Dashboard from '../Dashboard/Dashboard.vue';
 
-import MyBoard from '../Dashboard/structureComponents/Main/MyBoard/MyBoard.vue'
-import News from '../Dashboard/structureComponents/Main/News/News.vue';
-import NewsList from '../Dashboard/structureComponents/Main/News/NewsList.vue';
-import PostSpecific from '../Dashboard/structureComponents/Main/News/PostSpecific.vue';
+import MyBoard from '../Dashboard/Structure/Main/MyBoard/MyBoard.vue'
+import News from '../Dashboard/Structure/Main/News/News.vue';
+import NewsList from '../Dashboard/Structure/Main/News/NewsList.vue';
+import PostSpecific from '../Dashboard/Structure/Main/News/PostSpecific.vue';
 
-import Users from '../Dashboard/structureComponents/Main/Users/Users.vue'
-import AllUsers from '../Dashboard/structureComponents/Main/Users/AllUsers.vue'
-import AddNewUser from '../Dashboard/structureComponents/Main/Users/AddNewUser.vue'
-import SpecificUser from '../Dashboard/structureComponents/Main/Users/SpecificUser.vue'
-import EmailEditor from '../Dashboard/structureComponents/Main/Users/EmailEditor.vue'
-import AssignGroup from '../Dashboard/structureComponents/Main/Users/AssignGroup.vue'
-import DetachGroup from '../Dashboard/structureComponents/Main/Users/DetachGroup.vue'
+import Users from '../Dashboard/Structure/Main/Users/Users.vue'
+import AllUsers from '../Dashboard/Structure/Main/Users/AllUsers.vue'
+import AddNewUser from '../Dashboard/Structure/Main/Users/AddNewUser.vue'
+import SpecificUser from '../Dashboard/Structure/Main/Users/SpecificUser.vue'
+import EmailEditor from '../Dashboard/Structure/Main/Users/EmailEditor.vue'
+import AssignGroup from '../Dashboard/Structure/Main/Users/AssignGroup.vue'
+import DetachGroup from '../Dashboard/Structure/Main/Users/DetachGroup.vue'
 
-import Myprofile from '../Dashboard/structureComponents/Main/Profile/MyProfile.vue';
+import Myprofile from '../Dashboard/Structure/Main/Profile/MyProfile.vue';
 
-import Wallet from '../Dashboard/structureComponents/Main/Payment/Wallet.vue';
-import WalletInfo from '../Dashboard/structureComponents/Main/Payment/WalletInfo.vue'
-import Pay from '../Dashboard/structureComponents/Main/Payment/Pay.vue'
-import PayStatus from '../Dashboard/structureComponents/Main/Payment/PayStatus.vue'
+import Wallet from '../Dashboard/Structure/Main/Payment/Wallet.vue';
+import WalletInfo from '../Dashboard/Structure/Main/Payment/WalletInfo.vue'
+import Pay from '../Dashboard/Structure/Main/Payment/Pay.vue'
+import PayStatus from '../Dashboard/Structure/Main/Payment/PayStatus.vue'
 import LanguagesSelect from '../Dashboard/global/LanguagesSelect.vue';
 
-import Documents from '../Dashboard/structureComponents/Main/Documents/Documents.vue';
+import Documents from '../Dashboard/Structure/Main/Documents/Documents.vue';
 
-import Stats from '../Dashboard/structureComponents/Main/Stats/Stats.vue';
-import MatchStats from '../Dashboard/structureComponents/Main/Stats/MatchData/MatchStats.vue';
-import PlayerStats from '../Dashboard/structureComponents/Main/Stats/PlayerData/PlayerStats.vue';
+import Stats from '../Dashboard/Structure/Main/Stats/Stats.vue';
+import MatchStats from '../Dashboard/Structure/Main/Stats/MatchData/MatchStats.vue';
+import PlayerStats from '../Dashboard/Structure/Main/Stats/PlayerData/PlayerStats.vue';
 
-import Info from '../Dashboard/structureComponents/Main/Info/Info.vue';
-import InfoUfp from '../Dashboard/structureComponents/Main/Info/InfoUfp.vue';
-import InfoOther from '../Dashboard/structureComponents/Main/Info/InfoOther.vue';
+import Info from '../Dashboard/Structure/Main/Info/Info.vue';
+import InfoUfp from '../Dashboard/Structure/Main/Info/InfoUfp.vue';
+import InfoOther from '../Dashboard/Structure/Main/Info/InfoOther.vue';
 
-import Emails from '../Dashboard/structureComponents/Main/Emails/Emails.vue';
-import Inbox from '../Dashboard/structureComponents/Main/Emails/Inbox.vue';
-import SpecificEmail from '../Dashboard/structureComponents/Main/Emails/SpecificEmail.vue';
+import Emails from '../Dashboard/Structure/Main/Emails/Emails.vue';
+import Inbox from '../Dashboard/Structure/Main/Emails/Inbox.vue';
+import SpecificEmail from '../Dashboard/Structure/Main/Emails/SpecificEmail.vue';
 
 
-import FootballNews from '../Dashboard/structureComponents/Main/FootballNews/FootballNews.vue';
-import NewsRumors from '../Dashboard/structureComponents/Main/FootballNews/NewsRumors.vue';
-import VideoList from '../Dashboard/structureComponents/Main/FootballNews/VideoList.vue';
-import EmbedVideo from '../Dashboard/structureComponents/Main/FootballNews/EmbedVideo.vue';
+import FootballNews from '../Dashboard/Structure/Main/FootballNews/FootballNews.vue';
+import NewsRumors from '../Dashboard/Structure/Main/FootballNews/NewsRumors.vue';
+import VideoList from '../Dashboard/Structure/Main/FootballNews/VideoList.vue';
+import EmbedVideo from '../Dashboard/Structure/Main/FootballNews/EmbedVideo.vue';
 
-import Settings from '../Dashboard/structureComponents/Main/Settings/Settings.vue';
-import Products from '../Dashboard/structureComponents/Main/Settings/Products.vue';
-import ProductsAll from '../Dashboard/structureComponents/Main/Settings/ProductsAll.vue';
-import SpecificProduct from '../Dashboard/structureComponents/Main/Settings/SpecificProduct.vue';
-import AddNewProduct from '../Dashboard/structureComponents/Main/Settings/AddNewProduct.vue';
-import Groups from '../Dashboard/structureComponents/Main/Settings/Groups.vue';
-import GroupsAll from '../Dashboard/structureComponents/Main/Settings/GroupsAll.vue';
-import AddNewGroup from '../Dashboard/structureComponents/Main/Settings/AddNewGroup.vue';
-import DocumentsSet from '../Dashboard/structureComponents/Main/Settings/Documents/Documents.vue'
-import AddNewDoc from '../Dashboard/structureComponents/Main/Settings/Documents/AddNewDocument.vue';
-import DocsAll from '../Dashboard/structureComponents/Main/Settings/Documents/DocumentsAll.vue';
-import FAQ from '../Dashboard/structureComponents/Main/Settings/AppSettings/FAQ/FAQ.vue';
+import Settings from '../Dashboard/Structure/Main/Settings/Settings.vue';
+import Products from '../Dashboard/Structure/Main/Settings/Products.vue';
+import ProductsAll from '../Dashboard/Structure/Main/Settings/ProductsAll.vue';
+import SpecificProduct from '../Dashboard/Structure/Main/Settings/SpecificProduct.vue';
+import AddNewProduct from '../Dashboard/Structure/Main/Settings/AddNewProduct.vue';
+import Groups from '../Dashboard/Structure/Main/Settings/Groups.vue';
+import GroupsAll from '../Dashboard/Structure/Main/Settings/GroupsAll.vue';
+import AddNewGroup from '../Dashboard/Structure/Main/Settings/AddNewGroup.vue';
+import DocumentsSet from '../Dashboard/Structure/Main/Settings/Documents/Documents.vue'
+import AddNewDoc from '../Dashboard/Structure/Main/Settings/Documents/AddNewDocument.vue';
+import DocsAll from '../Dashboard/Structure/Main/Settings/Documents/DocumentsAll.vue';
+import FAQ from '../Dashboard/Structure/Main/Settings/AppSettings/FAQ/FAQ.vue';
 
-import Survey from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/Survey.vue';
+import Survey from '../Dashboard/Structure/Main/Settings/Surveys/AnswerSurvey/Survey.vue';
 
-import Surveys from '../Dashboard/structureComponents/Main/Settings/Surveys/Surveys.vue';
-import SurveysAll from '../Dashboard/structureComponents/Main/Settings/Surveys/SurveysAll.vue';
-import SurveyAddNew from '../Dashboard/structureComponents/Main/Settings/Surveys/SurveyAddNew.vue';
-import SurveySpecific from '../Dashboard/structureComponents/Main/Settings/Surveys/SurveySpecific.vue';
-import AnswerStep from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/AnswerStep.vue';
-import AnswerResults from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/AnswerResults.vue';
-import SuccessPage from '../Dashboard/structureComponents/Main/Settings/Surveys/AnswerSurvey/SuccessPage.vue';
+import Surveys from '../Dashboard/Structure/Main/Settings/Surveys/Surveys.vue';
+import SurveysAll from '../Dashboard/Structure/Main/Settings/Surveys/SurveysAll.vue';
+import SurveyAddNew from '../Dashboard/Structure/Main/Settings/Surveys/SurveyAddNew.vue';
+import SurveySpecific from '../Dashboard/Structure/Main/Settings/Surveys/SurveySpecific.vue';
+import AnswerStep from '../Dashboard/Structure/Main/Settings/Surveys/AnswerSurvey/AnswerStep.vue';
+import AnswerResults from '../Dashboard/Structure/Main/Settings/Surveys/AnswerSurvey/AnswerResults.vue';
+import SuccessPage from '../Dashboard/Structure/Main/Settings/Surveys/AnswerSurvey/SuccessPage.vue';
 
-import TOP11 from '../Dashboard/structureComponents/Main/TOP11/Top11.vue'
-import TOP11List from '../Dashboard/structureComponents/Main/TOP11/Top11List.vue'
-import TOP11Specific from '../Dashboard/structureComponents/Main/TOP11/Top11Specific.vue'
+import TOP11 from '../Dashboard/Structure/Main/TOP11/Top11.vue'
+import TOP11List from '../Dashboard/Structure/Main/TOP11/Top11List.vue'
+import TOP11Specific from '../Dashboard/Structure/Main/TOP11/Top11Specific.vue'
 
-import AppSettings from '../Dashboard/structureComponents/Main/Settings/AppSettings/AppSettings.vue'
-import AppSettingsAll from '../Dashboard/structureComponents/Main/Settings/AppSettings/AppSettingsAll.vue'
+import AppSettings from '../Dashboard/Structure/Main/Settings/AppSettings/AppSettings.vue'
+import AppSettingsAll from '../Dashboard/Structure/Main/Settings/AppSettings/AppSettingsAll.vue'
 
 import BlockedPage from '../Dashboard/global/BlockedPage.vue'
 import TermsOfUse from '../Dashboard/global/TermsOfUse.vue'

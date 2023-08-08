@@ -25,8 +25,8 @@
  
  
 <script>
-	import Check from '../structureComponents/Main/Stats/Vectors/Check.vue'
-	import Warning from '../structureComponents/Main/Stats/Vectors/Warning.vue'
+	import Check from '../Structure/Main/Stats/Vectors/Check.vue'
+	import Warning from '../Structure/Main/Stats/Vectors/Warning.vue'
 	
 	export default {
 		props: {

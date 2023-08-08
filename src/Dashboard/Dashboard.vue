@@ -17,8 +17,8 @@
  
 <script>	
 	import { mapGetters } from 'vuex'; 
-	import Sidebar from './structureComponents/Sidebar/Sidebar.vue'
-	import NavHeader from './structureComponents/NavHeader/NavHeader.vue';
+	import Sidebar from './Structure/Sidebar/Sidebar.vue'
+	import NavHeader from './Structure/NavHeader/NavHeader.vue';
 
 	export default {
 		created() {	

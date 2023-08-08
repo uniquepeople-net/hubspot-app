@@ -13,7 +13,7 @@
  
  
 <script>
-	import NavLang from '../structureComponents/NavHeader/NavLang.vue'
+	import NavLang from '../Structure/NavHeader/NavLang.vue'
 	
 
 	export default {

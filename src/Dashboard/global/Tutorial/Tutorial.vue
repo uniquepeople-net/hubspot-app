@@ -38,15 +38,15 @@
 	import { mapGetters } from 'vuex'
 	import TabView from 'primevue/tabview';
 	import TabPanel from 'primevue/tabpanel';
-	import CircleBorder from '../../structureComponents/Main/Stats/Vectors/CircleBorder.vue';
-	import CircleFull from '../../structureComponents/Main/Stats/Vectors/CircleFull.vue';
+	import CircleBorder from '../../Structure/Main/Stats/Vectors/CircleBorder.vue';
+	import CircleFull from '../../Structure/Main/Stats/Vectors/CircleFull.vue';
 	import TutorialPage from './TutorialPage.vue';
-	import ReviewStats from '../../structureComponents/Main/Stats/Vectors/ReviewStats.vue'
-	import News from '../../structureComponents/Main/Stats/Vectors/News.vue'
-	import Connection from '../../structureComponents/Main/Stats/Vectors/Connection.vue'
-	import Payment from '../../structureComponents/Main/Stats/Vectors/Payment.vue'
-	import Surveys from '../../structureComponents/Main/Stats/Vectors/Surveys.vue'
-	import Wyscout from '../../structureComponents/Main/Stats/Vectors/Wyscout.vue'
+	import ReviewStats from '../../Structure/Main/Stats/Vectors/ReviewStats.vue'
+	import News from '../../Structure/Main/Stats/Vectors/News.vue'
+	import Connection from '../../Structure/Main/Stats/Vectors/Connection.vue'
+	import Payment from '../../Structure/Main/Stats/Vectors/Payment.vue'
+	import Surveys from '../../Structure/Main/Stats/Vectors/Surveys.vue'
+	import Wyscout from '../../Structure/Main/Stats/Vectors/Wyscout.vue'
 	import BackButton from '../BackButton.vue';
 	import LoadingIcon from '../LoadingIcon.vue';
 

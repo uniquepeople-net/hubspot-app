@@ -47,11 +47,11 @@
  
 <script>
 	import { mapGetters } from 'vuex';
-	import AdvancedData from '../structureComponents/Main/Stats/MatchData/AdvancedData.vue';
-	import AdvancedDataPlayer from '../structureComponents/Main/Stats/PlayerData/AdvancedDataPlayer.vue';
-	import Scorers from '../structureComponents/Main/Stats/MatchData/Scorers.vue';
-	import QuestionMark from '../structureComponents/Main/Stats/Vectors/QuestionMark.vue';
-	import StatMessage from '../structureComponents/Main/Stats/StatMessage.vue';
+	import AdvancedData from '../Structure/Main/Stats/MatchData/AdvancedData.vue';
+	import AdvancedDataPlayer from '../Structure/Main/Stats/PlayerData/AdvancedDataPlayer.vue';
+	import Scorers from '../Structure/Main/Stats/MatchData/Scorers.vue';
+	import QuestionMark from '../Structure/Main/Stats/Vectors/QuestionMark.vue';
+	import StatMessage from '../Structure/Main/Stats/StatMessage.vue';
 
 	export default {
 		props: ['displayMatchStats'],

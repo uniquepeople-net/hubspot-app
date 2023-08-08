@@ -10,7 +10,7 @@
  
 <script>
 	import { mapGetters } from 'vuex'
-	import Checkout from '../../structureComponents/Main/Payment/Checkout.vue'
+	import Checkout from '../../Structure/Main/Payment/Checkout.vue'
 	import BackButton from '../BackButton.vue'
 
 	export default {

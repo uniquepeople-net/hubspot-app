@@ -18,7 +18,7 @@
  
 <script>
 	import BackButton from '../../global/BackButton.vue'
-	import Notifications from '../../structureComponents/Main/Stats/Vectors/Notifications.vue'
+	import Notifications from '../../Structure/Main/Stats/Vectors/Notifications.vue'
 
 	export default {
 		created() {

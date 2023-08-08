@@ -31,8 +31,8 @@
  
 <script>
 	import BackButton from '../Dashboard/global/BackButton.vue'
-	import QuestionPhone from '../Dashboard/structureComponents/Main/Stats/Vectors/QuestionPhone.vue'
-	import NavLang from '../Dashboard/structureComponents/NavHeader/NavLang.vue'
+	import QuestionPhone from '../Dashboard/Structure/Main/Stats/Vectors/QuestionPhone.vue'
+	import NavLang from '../Dashboard/Structure/NavHeader/NavLang.vue'
 
 	
 	export default {
