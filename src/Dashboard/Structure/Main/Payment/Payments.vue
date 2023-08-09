@@ -6,7 +6,7 @@
 				<template #header>
 					<div class="acc-tab-header1">
 						<span :class="`${ payment.status !== 'succeeded' ? 'failed' : '' }`">
-							{{hiddenCard(payment.metadata.last4)}}
+							{{hiddenCard(payment.pm_data.card.last4)}}
 						</span>
 						<span class="d-flex align-items-center">
 							<CircleCheck v-if="payment.status === 'succeeded'" class="me-3"/>
