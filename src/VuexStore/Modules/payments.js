@@ -89,12 +89,12 @@ export default {
 				})
 			
 		},
-		async getListPayments( context, email) {
+		async getListPayments( context, data) {
 			let paymentsUrl = context.rootGetters['links/listPayments']
 
 			await User.refreshedToken();
 
-			await axios.post( paymentsUrl, {email}, {
+			await axios.post( paymentsUrl, { email: data.email, customer_id: data.customer_id }, {
 					headers: {
 						Authorization: 'Bearer ' + User.getToken()
 					}
@@ -109,12 +109,12 @@ export default {
 				})
 			
 		},
-		async getSubscriptions( context, email) {
+		async getSubscriptions( context, data) {
 			let subscriptionsUrl = context.rootGetters['links/subscriptions']
 
 			await User.refreshedToken();
 
-			await axios.post( subscriptionsUrl, {email}, {
+			await axios.post( subscriptionsUrl, { email: data.email, customer_id: data.customer_id }, {
 					headers: {
 						Authorization: 'Bearer ' + User.getToken()
 					}

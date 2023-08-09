@@ -103,7 +103,7 @@
 					{ name: 'yearly', id: 'year' }, 
 					{ name: 'monthly', id: 'month' }, 
 					//{ name: 'weekly', id: 'week' }, 
-					//{ name: 'daily', id: 'day' } 
+					{ name: 'daily', id: 'day' } 
 				],
 				membership: '',
 				submitted: false,

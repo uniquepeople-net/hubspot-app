@@ -52,7 +52,7 @@
 
 	export default {
 		created() {
-			this.$store.dispatch("payments/getSubscriptions", this.user.email );
+			this.$store.dispatch("payments/getSubscriptions", { email: this.user.email, customer_id: this.user.stripe_customer_id } );
 		},
 		mounted() {
 			this.targetButtonRef = this.$refs.targetButton;
@@ -111,7 +111,7 @@
 						this.toggleDialog()
 						this.response = response.data
 						this.loading = false
-						this.$store.dispatch("payments/getSubscriptions", this.user.email );					
+						this.$store.dispatch("payments/getSubscriptions", { email: this.user.email, customer_id: this.user.stripe_customer_id } );					
 					}).catch( error => {
 						this.loading = false
 						Toast.fire({

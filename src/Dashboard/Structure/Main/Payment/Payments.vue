@@ -43,7 +43,7 @@
 
 	export default {
 		created() {
-			this.$store.dispatch("payments/getListPayments", this.user.email );
+			this.$store.dispatch("payments/getListPayments", { email: this.user.email, customer_id: this.user.stripe_customer_id } );
 		},
 		props: {
 			user: Object
@@ -63,7 +63,7 @@
 			},
 			checkState() {
 				if ( !this.payments ) {
-					this.$store.dispatch("payments/getListPayments", this.user.email );
+					this.$store.dispatch("payments/getListPayments", { email: this.user.email, customer_id: this.user.stripe_customer_id } );
 				}
 			},
 			hiddenCard(data) {
