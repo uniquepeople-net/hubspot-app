@@ -1,8 +1,8 @@
 <template>
 	<li class="nav-item dropdown me-3">
-		<a class="nav-link active dropdown-toggle text-gray-600 position-relative" href="#" data-bs-toggle="dropdown" aria-expanded="false" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu">
+		<a class="nav-link active text-gray-600 position-relative" href="#" data-bs-toggle="dropdown" aria-expanded="false" @click="toggle" aria-haspopup="false" aria-controls="overlay_menu">
 			<i class="bi bi-envelope bi-sub fs-4"></i>
-			<Badge v-if="unreadEmailsCount > 0" :value="unreadEmailsCount" severity="info" class="position-absolute top-0 start-0"/>
+			<Badge v-if="unreadEmailsCount > 0" :value="unreadEmailsCount" class="position-absolute nav-message-badge center-center"/>
 		</a>
 	</li>
 	<Menu id="overlay_menu" ref="menu" :model="items" :popup="true" class="mt-2 p-0 over_menu">
@@ -60,6 +60,17 @@
 <style lang='scss' scoped>
 .email-title, .email-footer {
 	padding: 0.75rem 1rem;
+}
+.nav-message-badge {
+	min-width: 12px;
+	max-width: 14px;
+	//height: 12px;
+	height: 12px;
+	font-size: 7px;
+	background: var(--red-600);
+	top: 10px;
+	right: 2px;
+	line-height: 12px;
 }
 .email-menu {
 	background: var(--surface-0);

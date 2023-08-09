@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h5 class="mb-4 text-gt-bold">{{ $t('message.Contact') }}</h5>
+		<BackButton :title="$t('message.Contact')" class="mb-4" route="my-board"/>
 		<BoardMembers class="mb-5"/>
 		<ContactForm />
 	</div>
@@ -8,6 +8,7 @@
  
  
 <script>
+	import BackButton from '../../../global/BackButton.vue';
 	import BoardMembers from './BoardMembers.vue';
 	import ContactForm from './ContactForm.vue';
 
@@ -19,7 +20,7 @@
 		methods: {
  
 		},
-		components: { ContactForm, BoardMembers }
+		components: { ContactForm, BoardMembers, BackButton }
 	}
 </script>
  

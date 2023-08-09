@@ -5,7 +5,6 @@
 		:rowsPerPageOptions="[10,25,50,100]" :currentPageReportTemplate="`${$t('message.Showing')} {first} ${$t('message.to')} {last} ${$t('message.of')} {totalRecords} ${$t('message.emailov')}`"
 		:globalFilterFields="['reply_name', 'reply_email', 'subject', 'created_at']" responsiveLayout="scroll">
 		<template #header>
-			<h5 class="mb-3">{{ $t('message.Emails') }}</h5>			
 			<div class="d-flex flex-column flex-sm-row justify-content-between align-items-center">
 				<span class="p-input-icon-left mb-3 mb-sm-0">
 					<i class="pi pi-search" />

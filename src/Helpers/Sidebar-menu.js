@@ -15,6 +15,12 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 		class: 'instat-t',		// for testing purpose
 		items: [
 			{ 
+				label: i18n.t("message.player"),
+				to: { name: 'player', params: { lang: i18n.locale } },
+				icon: 'pi pi-angle-right',
+				command: () => sidebarHide()
+			},
+			{ 
 				label: i18n.t("message.match"),
 				to: { name: 'match', params: { lang: i18n.locale } },
 				icon: 'pi pi-angle-right',
@@ -22,12 +28,6 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 					sidebarHide()
 				}
 			},
-			{ 
-				label: i18n.t("message.player"),
-				to: { name: 'player', params: { lang: i18n.locale } },
-				icon: 'pi pi-angle-right',
-				command: () => sidebarHide()
-			}
 		]
 	},
 	{

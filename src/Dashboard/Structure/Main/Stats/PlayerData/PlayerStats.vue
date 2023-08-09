@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h4 class="mb-4">{{ $t('message.Playerstats') }}</h4>
+		<BackButton :title="$t('message.Stats')" class="mb-4" route="my-board"/>
 		<div class="row justify-content-center">
 			<div class="col-12 col-lg-6">
 				<MatchSelects class="mb-4" :seasons="seasons" :matches="matches" 
@@ -24,6 +24,7 @@
 	import PlayerStatsData from './PlayerStatsData.vue';
 	import StatMessage from '../StatMessage.vue'
 	import PLayerSeasonStats from './PLayerSeasonStats.vue';
+	import BackButton from '../../../../global/BackButton.vue';
 
 	export default {
 		data() {
@@ -39,7 +40,7 @@
 							matches: 'stats/playerMatches',
 							seasons: 'stats/playerCareer' }),
 		},
-		components: { MatchSelects, PlayerStatsData, StatMessage, PLayerSeasonStats },
+		components: { MatchSelects, PlayerStatsData, StatMessage, PLayerSeasonStats, BackButton },
 	}
 </script>
  

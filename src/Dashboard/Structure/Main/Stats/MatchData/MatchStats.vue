@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h4 class="mb-4">{{ $t('message.MatchStats') }}</h4>
+		<BackButton :title="$t('message.Stats')" class="mb-4" route="my-board"/>
 		<div class="row justify-content-center">
 			<div class="col-12 col-lg-6">
 				<MatchSelects class="mb-4" :seasons="seasons" :matches="matches"
@@ -17,6 +17,7 @@
 	import { mapGetters } from 'vuex';
 	import MatchSelects from '../MatchSelects.vue'
 	import MatchCard from '../../../../global/MatchCard.vue'
+	import BackButton from '../../../../global/BackButton.vue';
 
 	export default {
 		data() {
@@ -30,10 +31,10 @@
 			...mapGetters({ matches: 'stats/playerMatches',
 							seasons: 'stats/playerCareer' }),
 		},
-		components: { MatchSelects, MatchCard },
+		components: { MatchSelects, MatchCard, BackButton },
 	}
 </script>
  
- 
+
 <style lang='scss' scoped>
 </style>
