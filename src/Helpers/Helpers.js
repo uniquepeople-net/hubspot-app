@@ -82,10 +82,14 @@ class Helpers {
 	}
 
 	/**
-	 * Check trial version
+	 * Check trial version resp. check fee is paid and fee_finish_date is more than current date
 	 */
-	isTrial(date, fee) {
+	isTrial(date, fee, fee_finish_date) {
 		let currentDate = Date.now();
+		let currentDateTime = new Date()
+		const daysInMilliseconds = 3 * (24 * 60 * 60 * 1000);							// 3 x one day in miliseconds
+		let debtDateTime = new Date(currentDateTime.getTime() - daysInMilliseconds)
+		let feeFinishDateTime = new Date(fee_finish_date)
 		let trialDate = new Date(date);
 		let diffInMilliseconds = currentDate - trialDate;
 		let diffInMinutes = Math.floor(diffInMilliseconds / 60000);
@@ -93,13 +97,18 @@ class Helpers {
 		// Set time to trial in minutes ( 10080 minutes = 1 week )
 		const trialTime = 10080;
 
-		if ( fee ) return true
-
-		if ( !date || trialTime > diffInMinutes ) {
+		//console.log(feeFinishDateTime, debtDateTime, feeFinishDateTime > debtDateTime)
+	
+		if ( fee && feeFinishDateTime > debtDateTime ) {
 			return true
 		} else {
-			return false
+			if ( !date || trialTime > diffInMinutes ) {
+				return true
+			} else {
+				return false
+			}
 		}
+
 	}
 
 	// Filter params by key 

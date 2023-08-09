@@ -20,7 +20,7 @@
 		computed: {
 			...mapGetters({ user: 'user/user' }),
 			isTrial() {
-				return Helpers.isTrial(this.user.trial_date, this.user.fee)
+				return Helpers.isTrial(this.user.trial_date, this.user.fee, this.user.fee_finish_date)
 			}
 		},
 		components: { BlockedPage }

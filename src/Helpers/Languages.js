@@ -277,6 +277,9 @@ export const messages = {
 			Personal: 'Personal',
 			MatchVideos: 'Match videos',
 			RequireAction: 'Wait for automatic safe redirection.',
+			PROCEEDTOPAYMENT: 'PROCEED TO PAYMENT',
+			NotPaidNotice: 'Your membership fee has not been paid.',
+			NotPaidNotice2: 'To regain access to your account, it is necessary to pay a membership fee.',
 		},
 		validations: {
 			required: "This field is required. ",
@@ -563,6 +566,9 @@ export const messages = {
 			Personal: 'Osobné',
 			MatchVideos: 'Videá zápasov',
 			RequireAction: 'Počkajte na automatické bezpečnostné presmerovanie.',
+			PROCEEDTOPAYMENT: 'VYKONAŤ PLATBU',
+			NotPaidNotice: 'Váš členský polatok nie je uhradený.',
+			NotPaidNotice2: 'Na získanie prístupu k službám je potrebné zaplatiť členský poplatok.',
 		},
 		validations: {
 			required: "Toto pole je potrebné vyplniť. ",

@@ -75,8 +75,6 @@
 
 	export default {
 		created() {
-			console.log('check')
-			
 			this.$store.dispatch('payments/getProducts')
 			
 			if ( Object.keys(this.user).length === 0 ) {
