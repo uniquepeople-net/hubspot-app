@@ -242,6 +242,7 @@ export const messages = {
 			Share: "Share",
 			MissedNews: "You may have missed...",
 			Player: "Player",
+			PLAYER: "PLAYER",
 			PersonalTeam: "Personal & Team",
 			MembershipFee: 'Membership Fee',
 			PlayerProfile: 'Player Profile',
@@ -280,6 +281,7 @@ export const messages = {
 			PROCEEDTOPAYMENT: 'PROCEED TO PAYMENT',
 			NotPaidNotice: 'Your membership fee has not been paid.',
 			NotPaidNotice2: 'To regain access to your account, it is necessary to pay a membership fee.',
+			FeeFinishDate: 'Fee finish date',
 		},
 		validations: {
 			required: "This field is required. ",
@@ -531,6 +533,7 @@ export const messages = {
 			Share: 'Zdieľať',
 			MissedNews: 'Ďalšie správy...',
 			Player: 'Hráč',
+			PLAYER: 'HRÁČ',
 			PersonalTeam: 'Osobné a tímové',
 			MembershipFee: 'Členský poplatok',
 			PlayerProfile: 'Hráčsky profil',
@@ -569,6 +572,7 @@ export const messages = {
 			PROCEEDTOPAYMENT: 'VYKONAŤ PLATBU',
 			NotPaidNotice: 'Váš členský polatok nie je uhradený.',
 			NotPaidNotice2: 'Na získanie prístupu k službám je potrebné zaplatiť členský poplatok.',
+			FeeFinishDate: 'Koniec predplatného',
 		},
 		validations: {
 			required: "Toto pole je potrebné vyplniť. ",

@@ -53,24 +53,24 @@ module.exports = {
 					isCustomElement: (tag) => tag === 'google-pay-button'
 				  }
 				}
-			  },
-            { 
-                test: /\.css$/, 
-                use: ['vue-style-loader', 'css-loader']
-            },
-			{
-				test: /\.scss$/,
-				use: [
-				  'vue-style-loader',
-				  'css-loader',
-				  'sass-loader'
-				]
 			},
 			{
 				test: /\.(jpg|png)$/,
 				use: {
 					loader: 'url-loader',
 				},
+			},
+            { 
+				test: /\.css$/, 
+                use: ['vue-style-loader', 'css-loader']
+            },
+			{
+				test: /\.scss$/,
+				use: [
+					'vue-style-loader',
+					'css-loader',
+					'sass-loader'
+				]
 			},
         ]
     },

@@ -59,7 +59,7 @@
 								<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
 							</div>
 
-							<div class="inputgroup mb-5 col-12" :class="admin && 'col-xl-6'">
+							<div class="inputgroup mb-5 col-12" :class="admin && 'col-lg-6'">
 								<!-- <InputIcon icon="bi bi-telephone"></InputIcon> -->
 								<span class="p-float-label me-2">
 									<InputMask id="countryCode" v-model="v$.countryCode.$model" :class="{'p-invalid':v$.countryCode.$invalid && submitted}" 
@@ -76,19 +76,7 @@
 								<InputError :validator="v$.phoneNum" :submitted="submitted" replace="Phone number"></InputError>
 							</div>
 
-							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
-								<!-- <InputIcon icon="bi bi-activity"></InputIcon> -->
-								<ToggleButton v-model="active" onLabel="Active member" offLabel="Inactive member" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${active ? 'bg-info' : 'bg-warning'} p-togglebtn-active btn-border-radius`"/>
-							</div>
-
-							<div class="inputgroup mb-5 col-12 align-items-center" v-if="admin">
-								<span class="p-float-label w-100">
-									<Calendar name="calendar" inputId="icon" v-model="memberFrom" :showIcon="false" dateFormat="dd.mm.yy" class="calendar"/>
-									<label for="calendar">Member from</label>
-								</span>
-							</div>
-		
-							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
+							<div class="inputgroup mb-5 col-12 col-lg-6" v-if="admin">
 								<!-- <InputIcon icon="bi bi-bar-chart-fill"></InputIcon> -->
 								<span class="p-float-label w-100">
 									<InputText id="instatId" v-model="v$.instatId.$model" :class="{'p-invalid':v$.instatId.$invalid && submitted}" aria-describedby="email-error"
@@ -97,10 +85,31 @@
 								</span>		
 								<InputError :validator="v$.instatId" :submitted="submitted" replace="Instat ID"></InputError>
 							</div>
+
+							<div class="inputgroup mb-5 col-12 col-lg-6" v-if="admin">
+								<!-- <InputIcon icon="bi bi-activity"></InputIcon> -->
+								<ToggleButton v-model="active" onLabel="Active member" offLabel="Inactive member" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${active ? 'bg-info' : 'bg-warning'} p-togglebtn-active btn-border-radius`"/>
+							</div>
+
+							<div class="inputgroup mb-5 col-12 col-lg-6 align-items-center" v-if="admin">
+								<span class="p-float-label w-100">
+									<Calendar name="calendar" inputId="icon" v-model="memberFrom" :showIcon="false" dateFormat="dd.mm.yy" class="calendar"/>
+									<label for="calendar">Member from</label>
+								</span>
+							</div>
 		
-							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
+							<div class="inputgroup mb-5 col-12 col-lg-6" v-if="admin">
 								<!-- <InputIcon icon="pi pi-euro"></InputIcon> -->
 								<ToggleButton v-model="paid" onLabel="Paid" offLabel="UnPaid" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${paid ? 'bg-success' : 'bg-danger'} p-togglebtn btn-border-radius`"/>
+							</div>
+
+							<div class="inputgroup mb-5 col-12 col-lg-6 align-items-center">
+								<span class="p-float-label w-100">
+									<Calendar inputId="feeFinishDate" v-model="v$.feeFinishDate.$model" :showIcon="false" dateFormat="dd.mm.yy" 
+										  class="calendar" :placeholder="$t('message.Date')" :class="{'p-invalid':v$.feeFinishDate.$invalid && submitted}"/>
+									<label for="feeFinishDate">{{ $t('message.FeeFinishDate')  + ': '}}</label>
+								</span>
+								<InputError :validator="v$.feeFinishDate" :submitted="submitted" :replace="$t('message.FeeFinishDate')"></InputError>
 							</div>
 		
 							<div class="inputgroup mb-5 col-12 col-xl-6" v-if="admin">
@@ -135,7 +144,7 @@
 </template>
 
 <script>
-import { email, required, sameAs, minLength, numeric, helpers } from "@vuelidate/validators";
+import { email, required, sameAs, minLength, numeric, helpers, requiredIf } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import axios from 'axios';
 import { mapGetters } from 'vuex';
@@ -169,6 +178,7 @@ export default {
 			phoneNum: this.userData.tel_number,
 			club: this.userData.club,
 			memberFrom: this.userData.member_from,
+			feeFinishDate: this.userData.fee_finish_date,
 			//varSymbol: this.userData.var_symbol,
 			instatId: this.userData.instat_id,
             submitted: false,
@@ -193,6 +203,8 @@ export default {
 			instatId: { numeric },
 			//varSymbol: { numeric },
 			role: { required },
+			memberFrom: { required },
+			feeFinishDate: { required: requiredIf(this.paid) },
         }
     },
     methods: {
@@ -220,6 +232,7 @@ export default {
 				club: this.club,
 				active: this.active,
 				memberFrom: this.memberFrom,
+				feeFinishDate: this.feeFinishDate,
 				//varSymbol: this.varSymbol
 			}
 			
@@ -272,6 +285,7 @@ export default {
 				this.role = data.role_id
 				this.active = data.active_member
 				this.memberFrom = data.member_from
+				this.feeFinishDate = data.fee_finish_date
 				//this.varSymbol = data.var_symbol 
 			}
 		}

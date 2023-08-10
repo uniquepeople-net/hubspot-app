@@ -117,6 +117,13 @@
 								<!-- <InputIcon icon="pi pi-euro"></InputIcon> -->
 								<ToggleButton v-model="paid" :onLabel="$t('message.Paid')" :offLabel="$t('message.Unpaid')" onIcon="pi pi-check" offIcon="pi pi-times" :class="`${paid ? 'bg-success' : 'bg-danger'} p-togglebutton btn-border-radius`"/>
 							</div>
+
+							<div class="inputgroup mb-5 col-12 col-lg-6 align-items-center">
+								<label for="feeFinishDate">{{ $t('message.FeeFinishDate')  + ': '}}</label>
+								<Calendar inputId="feeFinishDate" v-model="v$.feeFinishDate.$model" :showIcon="false" dateFormat="dd.mm.yy" 
+										  class="calendar" :placeholder="$t('message.Date')" :class="{'p-invalid':v$.feeFinishDate.$invalid && submitted}"/>
+								<InputError :validator="v$.feeFinishDate" :submitted="submitted" :replace="$t('message.FeeFinishDate')"></InputError>
+							</div>
 		
 							<div class="inputgroup mb-5 col-12 col-lg-6">
 								<!-- <InputIcon icon="bi bi-person-lines-fill"></InputIcon> -->
@@ -166,7 +173,7 @@
 </template>
 
 <script>
-import { email, required, sameAs, minLength, numeric, helpers } from "@vuelidate/validators";
+import { email, required, sameAs, minLength, numeric, helpers, requiredIf } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import axios from 'axios';
 import { mapGetters } from 'vuex';
@@ -193,6 +200,7 @@ export default {
 			phoneNum: '',
 			club: '',
 			memberFrom: '',
+			feeFinishDate: '',
 			//varSymbol: '',
 			active: true,
 			instatId: '',
@@ -219,6 +227,7 @@ export default {
             password: { required,  minLength: minLength(8)},
 			//varSymbol: { numeric, required },
 			memberFrom: { required },
+			feeFinishDate: { required: requiredIf(this.paid) },
         }
     },
     methods: {
@@ -243,6 +252,7 @@ export default {
 				club: this.club,
 				active: this.active,
 				memberFrom: this.memberFrom,
+				feeFinishDate: this.feeFinishDate,
 				//varSymbol: this.varSymbol,
 				password: this.password,
 			}
@@ -265,6 +275,7 @@ export default {
 			this.phoneNum = ''
 			//this.varSymbol = ''
 			this.memberFrom = ''
+			this.feeFinishDate = ''
 			this.club = ''
 			this.role = ''
 			this.fee = false

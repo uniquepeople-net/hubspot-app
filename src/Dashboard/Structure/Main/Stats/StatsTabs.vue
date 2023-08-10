@@ -1,0 +1,50 @@
+<template>
+	<div class="stats-tabs ufp-tabs">
+		<TabView>
+			<TabPanel :header="$t('message.PLAYER')">
+					
+				<PlayerStats />
+				
+			</TabPanel>		
+			<TabPanel :header="$t('message.TEAM')">
+					
+					
+				
+			</TabPanel>		
+		</TabView>
+	</div>
+</template>
+ 
+ 
+<script>
+	import { mapGetters } from 'vuex';
+	import TabView from 'primevue/tabview';
+	import TabPanel from 'primevue/tabpanel';
+	import PlayerStats from './PlayerStats/PlayerStats.vue';
+	
+
+	export default {
+		data() {
+			return {
+			}
+		},
+		methods: {
+ 
+		},
+		computed: {
+			...mapGetters({ user: 'user/user',
+							match: 'stats/matchDetails',
+							matches: 'stats/playerMatches',
+							seasons: 'stats/playerCareer' }),
+		},
+		components: { TabView, TabPanel, PlayerStats }
+	}
+</script>
+ 
+ 
+<style lang='scss' scoped>
+.stats-tabs {
+	max-width: 768px;
+	margin: auto;
+}
+</style>

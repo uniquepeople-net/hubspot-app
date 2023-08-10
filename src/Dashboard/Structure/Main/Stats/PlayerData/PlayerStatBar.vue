@@ -63,7 +63,7 @@
 	color: var(--main-dark);
 	margin: 1rem 0;
 	.title {
-		font-size: rem(20);
+		font-size: remsize(20);
 		font-weight: 600;
 		margin-bottom: 1rem;
 	}
@@ -82,13 +82,13 @@
 			}
 		}
 		.value {
-			font-size: rem(32);
+			font-size: remsize(32);
 			font-weight: 600;
 		}
 	}
 	&--chart {
 		display: inline-block;
-		height: rem(20);
+		height: remsize(20);
 	}
 	.bar-dark {
 		border-radius: 9px 0 0 9px;
@@ -101,19 +101,19 @@
 }
 .small-type {
 	.title {
-		font-size: rem(14);
+		font-size: remsize(14);
 		margin-block: .5rem;
 	}
 	& .card-title {
 		span {
-			font-size: rem(12);
+			font-size: remsize(12);
 		}
 	}
 	.value {
-		font-size: rem(23.5);
+		font-size: remsize(23, 16.5);
 	}
 	.player-stat-bar--chart {
-		height: rem(14);
+		height: remsize(14);
 	}
 }
 </style>

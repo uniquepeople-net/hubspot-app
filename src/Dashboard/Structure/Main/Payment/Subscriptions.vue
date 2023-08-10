@@ -31,7 +31,7 @@
 					<div class="text-end mt-4 cancel-sub">
 						<Button :label="$t('message.Cancel') + ' ' + $t('message.Subscription')" 
 								@click="cancelSubscription(subscription.id)" class="btn-black w-auto"
-								:loading="loading"/>
+								:loading="loading" v-if="subscription.status !== 'canceled'"/>
 					</div>
 				</template>
 			</AccordionTab>

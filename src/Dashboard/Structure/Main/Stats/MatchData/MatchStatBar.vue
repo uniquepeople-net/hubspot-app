@@ -48,6 +48,8 @@
  
  
 <style lang='scss' scoped>
+@import '../../../../../scss/_mixins.scss';
+
 .stat-wrapper {
 	background: var(--card-bg);
 	border-radius: var(--btn-border-radius);
@@ -79,7 +81,7 @@
 
 @media(min-width: 576px) {
 	.title {
-		font-size: rem(24);
+		font-size: remsize(24);
 	}
 }
 </style>

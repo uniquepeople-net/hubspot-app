@@ -46,6 +46,7 @@ import LanguagesSelect from '../Dashboard/global/LanguagesSelect.vue';
 import Documents from '../Dashboard/Structure/Main/Documents/Documents.vue';
 
 import Stats from '../Dashboard/Structure/Main/Stats/Stats.vue';
+import StatsTabs from '../Dashboard/Structure/Main/Stats/StatsTabs.vue';
 import MatchStats from '../Dashboard/Structure/Main/Stats/MatchData/MatchStats.vue';
 import PlayerStats from '../Dashboard/Structure/Main/Stats/PlayerData/PlayerStats.vue';
 
@@ -126,13 +127,15 @@ export const routes = [
 				]  
 			},
 
-			{ path: '/:lang/stats', component: Stats, name: 'stats', redirect: { name: 'match' },
+			{ path: '/:lang/stats', component: Stats, name: 'stats', redirect: { name: 'stats-data' },
 				
 				children: [
 					
-					{ path: 'match', component: MatchStats, name: 'match' },
+					{ path: 'data', component: StatsTabs, name: 'stats-data' },
 
-					{ path: 'player', component: PlayerStats, name: 'player' },
+					/* { path: 'match', component: MatchStats, name: 'match' },
+
+					{ path: 'player', component: PlayerStats, name: 'player' }, */
 
 				] 
 			},

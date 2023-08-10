@@ -1,10 +1,8 @@
 <template>
-
 	<div>
 		<router-view v-if="isTrial"></router-view>
 		<BlockedPage v-if="!isTrial"/>
 	</div>
-
 </template>
  
  

@@ -10,24 +10,24 @@ export const sidebarMenu = (checkRole, sidebarHide, isInstat, i18n) => {
 	}, */
 	{
 		key: '2',
-		label: i18n.t("message.stats"),
+		label: i18n.t("message.Personal"),
 		visible: isInstat,
 		class: 'instat-t',		// for testing purpose
 		items: [
 			{ 
-				label: i18n.t("message.player"),
-				to: { name: 'player', params: { lang: i18n.locale } },
+				label: i18n.t("message.stats"),
+				to: { name: 'stats-data', params: { lang: i18n.locale } },
 				icon: 'pi pi-angle-right',
 				command: () => sidebarHide()
 			},
-			{ 
+			/* { 
 				label: i18n.t("message.match"),
 				to: { name: 'match', params: { lang: i18n.locale } },
 				icon: 'pi pi-angle-right',
 				command: () => {
 					sidebarHide()
 				}
-			},
+			}, */
 		]
 	},
 	{

@@ -129,7 +129,7 @@
 				const trialTime = 10080;
 				let restTime = trialTime - diffInMinutes;
 
-				if ( this.user.fee ) return 0
+				if ( this.user.fee || this.user.fee_finish_date ) return 0
 
 				if ( restTime <= 0 ) {
 					return 0.5

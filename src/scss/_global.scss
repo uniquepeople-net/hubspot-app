@@ -34,70 +34,70 @@ h1, h2, h3, h4, h5, h6 {
 .header-light {
 	color: var(--header-light-color);
 	text-align: center;
-	font-size: rem(52);
+	font-size: remsize(52);
 	font-weight: 700;
 }
 .text-bg-bold {
-	font-size: rem(32);
+	font-size: remsize(32);
 	font-weight: 600;
 }
 .text-value {
-	font-size: rem(24);
+	font-size: remsize(24);
 	font-weight: 600;
 }
 .text-gt-bold {
-	font-size: rem(24);
+	font-size: remsize(24);
 	font-weight: 700;
 }
 .header-main {
-	font-size: rem(20);
+	font-size: remsize(20);
 	font-weight: 600;
 }
 .text-description {
-	font-size: rem(18);
+	font-size: remsize(18);
 	font-weight: 400;
 	line-height: 150%;
 }
 .text-data {
-	font-size: rem(16);
+	font-size: remsize(16);
 	font-weight: 500;
 	line-height: 130%;
 }
 .text-link {
-	font-size: rem(15);
+	font-size: remsize(15);
 	font-weight: 500;
 	line-height: 150%;
 }
 .text-message {
-	font-size: rem(15);
+	font-size: remsize(15);
 	text-align: center;
 }
 .text-undertitle {
-	font-size: rem(15);
+	font-size: remsize(15);
 	font-weight: 400;
 	line-height: 150%;
 }
 .text-subtitle {
-	font-size: rem(14);
+	font-size: remsize(14);
 	font-weight: 400;
 }
 .text-sm-bold {
-	font-size: rem(12);
+	font-size: remsize(12);
 	font-weight: 700;
 	line-height: 130%;
 }
 .text-sm-message {
-	font-size: rem(13);
+	font-size: remsize(13);
 	font-weight: 400;
 	line-height: 150%;
 }
 .text-sm-notice {
-	font-size: rem(12);
+	font-size: remsize(12);
 	font-weight: 400;
 	line-height: 150%;
 }
 .text-x-small {
-	font-size: rem(10);
+	font-size: remsize(10);
 	font-weight: 400;
 }
 .full-screen {
@@ -110,7 +110,7 @@ h1, h2, h3, h4, h5, h6 {
 	padding: 1REM;
 }
 .text-light-gray {
-	font-size: rem(15);
+	font-size: remsize(15);
 	font-weight: 400;
 	color: var(--text-light-color);
 }
@@ -192,7 +192,7 @@ h1, h2, h3, h4, h5, h6 {
 	background: var(--main-white);
 	h1, h2, h3, h4 ,h5, h6 {
 		margin-bottom: 0;
-		font-size: rem(24);
+		font-size: remsize(24);
 		font-weight: 700;
 	}
 }
@@ -230,10 +230,32 @@ h1, h2, h3, h4, h5, h6 {
 	margin: auto;
 }
 .tab-view .p-tabview-nav-link {
-	font-size: rem(20);
+	font-size: remsize(20);
 }
 .add-bg {
 	background: var(--green-50);
+}
+.ufp-tabs {
+	.p-tabview-nav {
+		.p-tabview-header {
+			flex: 1;
+			.p-tabview-nav-link {
+				justify-content: center;
+			}
+		}
+		.p-tabview-header.p-highlight {
+			.p-tabview-nav-link {
+				color: var(--stat-chart-bg);
+				border-color: var(--stat-chart-bg);
+			}
+			.p-tabview-nav-link:not(.p-disabled):focus {
+				box-shadow: unset
+			}
+		}
+	}
+}
+.grid-bg {
+	background-image: url('~/assets/images/grid.png');
 }
 i {
 	font-style: normal;
