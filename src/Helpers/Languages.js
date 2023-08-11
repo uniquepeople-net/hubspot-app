@@ -282,6 +282,11 @@ export const messages = {
 			NotPaidNotice: 'Your membership fee has not been paid.',
 			NotPaidNotice2: 'To regain access to your account, it is necessary to pay a membership fee.',
 			FeeFinishDate: 'Fee finish date',
+			Country: 'Country',
+			Age: 'Age',
+			Number: 'Number',
+			YourLastGames: 'Your last games',
+			SeeMore: 'See more',
 		},
 		validations: {
 			required: "This field is required. ",
@@ -573,6 +578,11 @@ export const messages = {
 			NotPaidNotice: 'Váš členský polatok nie je uhradený.',
 			NotPaidNotice2: 'Na získanie prístupu k službám je potrebné zaplatiť členský poplatok.',
 			FeeFinishDate: 'Koniec predplatného',
+			Country: 'Krajina',
+			Age: 'Vek',
+			Number: 'Číslo',
+			YourLastGames: 'Vaše posledné zápasy',
+			SeeMore: 'Ukázať viac',
 		},
 		validations: {
 			required: "Toto pole je potrebné vyplniť. ",

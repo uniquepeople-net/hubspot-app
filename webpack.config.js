@@ -22,6 +22,7 @@ module.exports = {
 		fullySpecified: false,
     },
     devtool: "eval",
+	//devtool: 'source-map',
     output: {
         filename: "[name].js",
         path: path.resolve(__dirname, "./dist"),
@@ -69,7 +70,18 @@ module.exports = {
 				use: [
 					'vue-style-loader',
 					'css-loader',
-					'sass-loader'
+					{
+						loader: 'resolve-url-loader',
+						options: {
+							debug: true
+						}
+					},
+					{
+						loader: 'sass-loader',
+						options: {
+						  sourceMap: true, // <-- !!IMPORTANT!!
+						}
+					}
 				]
 			},
         ]

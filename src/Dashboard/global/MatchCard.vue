@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Card class="card match-card" v-if="match">
+		<!-- <Card class="card match-card" v-if="match">
 			<template #content>
 				<div  class="card-body">
 					<div class="row position-relative">
@@ -35,11 +35,35 @@
 					<Skeleton v-if="!match" width="5rem" height="2.5rem" class="result position-absolute"></Skeleton>					
 				</div>
 			</template>
+		</Card>  -->
+		<Card class="card match-card" >
+			<template #content>
+				<div  class="card-body">
+					<div class="row position-relative">
+						<div class="col-4 collect ps-0">
+							<img class="team-logo" src="http://www.zpfutbal.sk/wp-content/uploads/2022/06/LogoFKZP-1.png" alt="">
+							<h6 class="text-sm-bold fw-bold mb-md-3 text-center px-1">ZP Sport Podbrezová</h6>
+						</div>
+						<div class="col-4"></div>
+						<div class="col-4 collect pe-0">
+							<img class="team-logo" src="http://www.zpfutbal.sk/wp-content/uploads/2022/06/LogoFKZP-1.png" alt="">
+							<h6 class="text-sm-bold text-center fw-bold mb-md-3 px-1">ZP Sport Podbrezová</h6>
+						</div>
+	
+						<div class="result position-absolute">
+							<p class="date mb-1">01. 3. 2023 16:00</p>
+							<span>2&nbsp;&nbsp;:&nbsp;&nbsp;2</span>
+						</div>
+					</div>					
+	
+					<Divider class="divider-light"/>				
+				</div>
+			</template>
 		</Card> 
 	
-		<div v-if="!match" class="text-center mt-5">
+		<!-- <div v-if="!match" class="text-center mt-5">
 			<StatMessage />
-		</div>
+		</div> -->
 		
 	</div>
 </template>
@@ -84,13 +108,14 @@
  
 <style lang='scss' scoped>
 .match-card {
-	//max-width: 576px;
-	.team-logo {
-		max-width: 80px;
-		margin-bottom: 1rem;
+	border: 0;
+	box-shadow: unset;
+	:deep(.p-card-body) {
+		padding: 0;
 	}
-	.team-name {
-		font-size: 1.2rem;
+	.team-logo {
+		max-width: 50px;
+		margin-bottom: .25rem;
 	}
 	.collect {
 		display: flex;
@@ -111,11 +136,13 @@
 		text-align: center;
 		span {
 			padding: 0.4rem 1rem;
+			width: auto;
+			min-width: 94px;
 			background:var(--main-dark);
 			color: #f8f9fa;
 			border-radius: 8px;
 			font-weight: 700;
-			font-size: 1.8rem;
+			font-size: 1.5rem;
 			display: inline-block;			
 		}
 		.date {
@@ -127,10 +154,7 @@
 @media( max-width: 576px ) {
 	.match-card {
 		.team-logo {
-			max-width: 50px;
-		}
-		.team-name {
-			font-size: 1rem;
+			max-width: 40px;
 		}
 		.result {
 			span {

@@ -46,5 +46,9 @@
 .stats-tabs {
 	max-width: 768px;
 	margin: auto;
+	:deep(.p-tabview-panels) {
+		padding-left: 0;
+		padding-right: 0;
+	}
 }
 </style>
