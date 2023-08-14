@@ -1,5 +1,5 @@
 <template>
-	<GridCard class="player-info">
+	<GridCard class="player-info" :gradient="225" padding="1rem">
 		<template #content>
 			<p class="text-bg-bolder m-0">ROBERT</p>
 			<p class="text-title-bold m-0">POLIEVKA</p>
@@ -56,6 +56,8 @@
  
 <style lang='scss' scoped>
 .player-info {
+	border-radius: 1rem;
+	overflow: hidden;
 	.club-img {
 		width: 20px;
 		height: auto;

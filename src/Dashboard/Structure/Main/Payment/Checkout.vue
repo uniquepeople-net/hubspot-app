@@ -35,12 +35,21 @@
 						  :price="getPrice('3')" :cycle="month ? $t('message.month') : $t('message.year')">
 			
 				<template #description>
-					<div class="mt-3">
+					<div class="mt-3 premium">
 						<span class="text-undertitle">{{ $t('message.Includes') + ':' }}</span>
-						<ul>
+						<ul class="mb-0">
 							<li class="text-undertitle">{{ $t('message.MatchReports') }}</li>
 							<li class="text-undertitle">{{ $t('message.Personal') + ' ' + $t('message.Stats')}}</li>
 							<li class="text-undertitle">{{ $t('message.MatchVideos') }}</li>
+						</ul>
+						<div class="row align-items-center w-100 m-auto">
+							<Divider class="divider"/>
+							<CirclePlus class="col-auto"/>
+							<Divider class="divider"/>
+						</div>
+						<ul class="mb-0">
+							<li class="text-undertitle">{{ $t('message.ComparisonWithOthers') }}</li>
+							<li class="text-undertitle">{{ $t('message.StatsOfOthers') }}</li>
 						</ul>
 					</div>
 				</template>
@@ -70,6 +79,7 @@
 	import LoadingIcon from '../../../global/LoadingIcon.vue'
 	import CircleBorder from '../Stats/Vectors/CircleBorder.vue'
 	import CircleCheckFilled from '../Stats/Vectors/CircleCheckFilled.vue'
+	import CirclePlus from '../Stats/Vectors/CirclePlus.vue'
 	import CheckoutItem from './CheckoutItem.vue'
 	import Pay from './Pay.vue'
 
@@ -143,13 +153,12 @@
 			...mapGetters({ products: 'payments/products',
 							user: 'user/user' })
 		},
-		components: { CircleCheckFilled, CircleBorder, CheckoutItem, Pay },
+		components: { CircleCheckFilled, CircleBorder, CheckoutItem, Pay, CirclePlus, LoadingIcon },
 	}
 </script>
  
  
-<style l,
-LoadingIconang='scss' scoped>
+<style lang='scss' scoped>
 .checkout-pay {
 	.app-card {
 		cursor: pointer;
@@ -161,6 +170,14 @@ LoadingIconang='scss' scoped>
 	}
 	.checked-border, .checkout-pay-method {
 		border: 2px solid var(--main-dark);
+	}
+	.premium {
+		.divider {
+			flex: 1;
+		}
+		:deep(.p-divider-horizontal)::before {
+			border-top: 1px solid var(--stat-chart-bg);
+		}
 	}
 }
 </style>

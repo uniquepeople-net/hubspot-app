@@ -34,5 +34,6 @@
 	padding-top: 3rem;
 	bottom: 1.8rem;
 	background: linear-gradient(0deg, rgba(255,255,255,0.9122023809523809) 61%, rgba(255,255,255,0) 100%);
+	cursor: pointer;
 }
 </style>

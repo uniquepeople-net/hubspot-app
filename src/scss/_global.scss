@@ -30,7 +30,12 @@ a {
 		color: inherit;
 	}
 }
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {}
+.color-main {
+	color: var(--main-dark);
+}
+.color-light {
+	color: var(--text-light-color);
 }
 .header-light {
 	color: var(--header-light-color);
@@ -70,6 +75,11 @@ h1, h2, h3, h4, h5, h6 {
 .text-data {
 	font-size: remsize(16);
 	font-weight: 500;
+	line-height: 130%;
+}
+.text-data-bold {
+	font-size: remsize(16);
+	font-weight: 700;
 	line-height: 130%;
 }
 .text-link {
