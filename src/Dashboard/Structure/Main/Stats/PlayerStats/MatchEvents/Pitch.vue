@@ -2,7 +2,7 @@
 	<div class="pitch-passes">
 		<Pitch />
 		
-		<Pass :transmitter="22" :receiver="16" :x1="100" :y1="100" :x2="50" :y2="0" />
+		<Pass :transmitter="22" :receiver="16" :x1="0" :y1="0" :x2="100" :y2="100" />
 		<!-- <Pass :transmitter="22" :receiver="8" :x1="50" :y1="50" :x2="100" :y2="0" /> -->
 	</div>
 </template>

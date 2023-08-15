@@ -33,14 +33,14 @@
 				let angle = this.calculateAngle( x1, y1, x2, y2 )
 
 				let halfMaxWidth = 19.5 / 2; // Half of the maximum width (9.75)
-				let widthCounted = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))
+				let width = Math.sqrt(Math.pow((x2 - x1) * 1.4016, 2) + Math.pow(y2 - y1, 2))
  
-				if ( widthCounted > 51 ) {
+				/* if ( widthCounted > 51 ) {
 					halfMaxWidth = 19.5
-				}
+				} */
 
 				// Map the angle to the width pattern
-				let result;
+				/* let result;
 				if (angle >= 0 && angle <= 90) {
 					result = (angle / 90) * halfMaxWidth * 2;
 				} else if (angle > 90 && angle <= 180) {
@@ -49,7 +49,7 @@
 					result = (angle - 180) / 90 * halfMaxWidth * 2;
 				} else {
 					result = halfMaxWidth * 2 - ((angle - 270) / 90) * halfMaxWidth * 2;
-				}
+				} */
 
 				/* if ( widthCounted > 50 ) {
 					result = result * 2.5 
@@ -59,8 +59,8 @@
 				
 
 				//let increase = (19.5 / 90) * angle
-				let width = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))  + result + '%' 
-				return width				
+				
+				return width + '%'			
 			}
 		},
 	}
