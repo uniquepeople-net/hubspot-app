@@ -4,9 +4,9 @@
 		<TabView>
 			<TabPanel v-for="stat in stats" :header="stat.title">
 
-					<div class="text-center">
-						<Pitch />
-					</div>
+				<Pitch>
+					
+				</Pitch>
 				
 			</TabPanel>				
 		</TabView>
@@ -18,7 +18,7 @@
 <script>
 	import TabView from 'primevue/tabview';
 	import TabPanel from 'primevue/tabpanel';
-import Pitch from '../../Vectors/Pitch.vue';
+	import Pitch from './Pitch.vue';
 
 	export default {
 		data() {

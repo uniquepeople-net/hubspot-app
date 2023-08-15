@@ -1,13 +1,29 @@
 <template>
 	<svg width="366" height="513" viewBox="0 0 366 513" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<path fill-rule="evenodd" clip-rule="evenodd" d="M1.00567 13.7414L364.229 13.7415L363.47 497.934L1.00563 498.696L1.00567 13.7414Z" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696"/>
+		<path fill-rule="evenodd" clip-rule="evenodd" d="M1.00567 0.7414L364.229 0.7415L363.47 511.934L1.00563 511.696L1.00567 0.7414Z" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696"/>
 		<path fill-rule="evenodd" clip-rule="evenodd" d="M181.478 293.206C171.874 293.206 162.663 289.309 155.872 282.372C149.081 275.436 145.266 266.028 145.266 256.219C145.266 246.409 149.081 237.001 155.872 230.065C162.663 223.128 171.874 219.231 181.478 219.231C191.082 219.231 200.292 223.128 207.083 230.065C213.874 237.001 217.689 246.409 217.689 256.219C217.689 266.028 213.874 275.436 207.083 282.372C200.292 289.309 191.082 293.206 181.478 293.206Z" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696" stroke-linejoin="round"/>
-		<path d="M100.929 13.4856L100.929 80.8787L262.784 80.8787L262.784 13.8835" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696"/>
-		<path d="M220.232 14.0087L220.232 37.484L145.764 36.7227L145.764 13.1221" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696"/>
-		<path d="M153.724 80.7535C166.073 102.07 199.442 101.218 211.601 80.6626" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696"/>
-		<path d="M100.839 498.441L100.929 432.32L262.784 432.32L262.784 498.134" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696"/>
-		<path d="M220.232 498.554L220.232 475.714L145.764 476.476L145.764 498.441" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696"/>
-		<path d="M153.726 432.172C166.074 410.856 198.99 411.708 211.148 432.263" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696"/>
+		
+		<!-- sestnastka -->
+		<path d="M70.929 0.4856L70.929 82.08L296.6 82.087L296.6 0.8835" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696"/>
+		
+		<!-- patka -->
+		<path d="M230.58 0.0087L230.58 30.78L135.42 30.78L135.42 0.1221" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696"/>
+		
+		
+		<!-- sestnastka -->
+		<path d="M70.929 511.441L70.929 430.92L292.6 430.92L292.6 511.134" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696"/>
+		
+		<!-- patka -->
+		<path d="M230.58 511.554L230.58 482.22L135.42 482.22L135.42 511.441" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696"/>
+		
+		<!-- obluk -->
+		<path d="M144.724 82.08C166.073 105.07 199.442 105.07 220.601 82.08" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696"/>
+		<!-- obluk -->
+		<path d="M144.724 430.92C166.074 407.856 198.99 407.708 220.601 430.92" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696"/>
+		
+		<circle cx="183" cy="56.43" r="4" fill="#8C8C8C" />
+		<circle cx="183" cy="456.57" r="4" fill="#8C8C8C" />
+
 		<path d="M364.229 256.599L218.399 256.599M1.76553 256.599L145.299 256.599" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696"/>
 		<path d="M187.674 249.038C187.674 250.185 186.82 251.152 185.682 251.294L163.614 254.05L168.374 248.896L185.115 246.782C186.473 246.61 187.674 247.669 187.674 249.038Z" fill="#8C8C8C" fill-opacity="0.6"/>
 		<path d="M185.657 251.093L185.682 251.294L185.657 251.093C186.694 250.964 187.472 250.083 187.472 249.038C187.472 247.791 186.378 246.826 185.14 246.983L185.14 246.983L168.473 249.088L164.138 253.781L185.657 251.093Z" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="0.404137"/>
