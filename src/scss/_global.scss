@@ -6,12 +6,13 @@
 	--main-dark: #2a2a2a;
 	--input-border-color: #bbbbbb;
 	--btn-border: 1px solid var(--main-dark);
-	--btn-border-radius:8px;
+	--btn-border-radius: 8px;
 	--input-border: 1px solid var(--card-bg);
 	--font-main: 'Inter', sans-serif; 
 	--stat-chart-bg: #3370EC;
 	--text-light-color: #8C8C8C;
 	--header-light-color: #D9D9D9;
+	--pitch-bg: #d9d9d933;
 	--color-failed: #F33;
 	--color-success: #24be0b;
 	--gradient-bg: #f6f7f6b0;
@@ -67,6 +68,10 @@ h1, h2, h3, h4, h5, h6 {}
 	font-size: remsize(20);
 	font-weight: 600;
 }
+.header-main-bold {
+	font-size: remsize(20);
+	font-weight: 700;
+}
 .text-description {
 	font-size: remsize(18);
 	font-weight: 400;
@@ -116,6 +121,11 @@ h1, h2, h3, h4, h5, h6 {}
 }
 .text-sm-notice {
 	font-size: remsize(12);
+	font-weight: 400;
+	line-height: 150%;
+}
+.text-xs-notice {
+	font-size: remsize(11);
 	font-weight: 400;
 	line-height: 150%;
 }
@@ -280,7 +290,9 @@ h1, h2, h3, h4, h5, h6 {}
 .divider-light::before {
 	border-top: 1px solid var(--card-bg) !important;
 }
-
+.divider-dark::before {
+	border-top: 1px solid var(--main-dark) !important;
+}
 i {
 	font-style: normal;
 }

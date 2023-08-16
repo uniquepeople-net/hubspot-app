@@ -5,12 +5,14 @@
 		<LastGames />
 		<MatchStats />
 		<MatchEvents />
+		<Comparison />
 	</div>
 </template>
  
  
 <script>
-	import LastGames from './LastGames.vue'
+	import Comparison from './Comparison/Comparison.vue'
+	import LastGames from '../Global/LastGames.vue'
 	import MatchEvents from './MatchEvents/MatchEvents.vue'
 	import MatchStats from './MatchStats.vue'
 	import PlayerInfo from './PlayerInfo.vue'
@@ -23,7 +25,7 @@
 		methods: {
 			
 		},
-		components: { PlayerInfo, LastGames, MatchStats, MatchEvents }
+		components: { PlayerInfo, LastGames, MatchStats, MatchEvents, Comparison }
 	}
 </script>
  

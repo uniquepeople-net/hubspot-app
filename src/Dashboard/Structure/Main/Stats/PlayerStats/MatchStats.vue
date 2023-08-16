@@ -50,7 +50,6 @@
 <style lang='scss' scoped>
 .individual-stat {
 	border-radius: var(--btn-border-radius);
-	overflow: hidden;
 	:deep(.p-divider-horizontal)::before {
 		border-top: 1px solid var(--main-dark);
 	}

@@ -4,7 +4,10 @@
 				 top: calc(${this.x1}%); left: calc(100% - ${this.y1}%); width:${passWidth(this.x1, this.y1, this.x2, this.y2)}`">
 		
 		<span class="transmitter text-sm-num center-center" :style="`transform:rotate(-${calculateAngle( this.x1, this.y1, this.x2, this.y2 ) }deg);`">{{ transmitter }}</span>
-		<span class="pass center-center"></span>
+		<span class="pass center-center">
+			<span></span>
+		</span>
+		<i class="pi pi-chevron-right icon-arrow"></i>
 		<span class="receiver text-sm-num center-center" :style="`transform:rotate(-${calculateAngle( this.x1, this.y1, this.x2, this.y2 ) }deg);`">{{ receiver }}</span>
 	
 	</div>
@@ -61,6 +64,21 @@
 				//let increase = (19.5 / 90) * angle
 				
 				return width + '%'			
+			},
+			calculateMove() {
+				let angle = this.calculateAngle( this.x1, this.y1, this.x2, this.y2 )
+				let result
+				if (angle >= 0 && angle <= 90) {
+					result = 12;
+				} else if (angle > 90 && angle <= 180) {
+					result = 12;
+				} else if (angle > 180 && angle <= 270) {
+					result = (angle - 180) / 90 * halfMaxWidth * 2;
+				} else {
+					result = halfMaxWidth * 2 - ((angle - 270) / 90) * halfMaxWidth * 2;
+				}
+
+				return result
 			}
 		},
 	}
@@ -74,12 +92,18 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	cursor: pointer;
 	.pass {
-		height: 3px;
+		height: 8px;
 		flex: 1;
-		background: var(--color-success);
+		span {
+			width: 100%;
+			height: 3px;
+			background: var(--color-success);
+		}
 	}
 	.receiver, .transmitter {
+		position: absolute;
 		color: var(--main-white);
 		border-radius: 50%;
 		width: 24px;
@@ -89,7 +113,13 @@
 		background: var(--stat-chart-bg);
 	}
 	.receiver {
+		right: 0;
 		background: var(--main-dark);
+	}
+	.icon-arrow {
+		position: absolute;
+		right: 20px;
+		color: var(--color-success);
 	}
 }
 </style>

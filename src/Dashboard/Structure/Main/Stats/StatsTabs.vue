@@ -8,7 +8,7 @@
 			</TabPanel>		
 			<TabPanel :header="$t('message.TEAM')">
 					
-					
+				<MatchStats />
 				
 			</TabPanel>		
 		</TabView>
@@ -21,6 +21,7 @@
 	import TabView from 'primevue/tabview';
 	import TabPanel from 'primevue/tabpanel';
 	import PlayerStats from './PlayerStats/PlayerStats.vue';
+	import MatchStats from './MatchStats/MatchStats.vue'
 	
 
 	export default {
@@ -37,7 +38,7 @@
 							matches: 'stats/playerMatches',
 							seasons: 'stats/playerCareer' }),
 		},
-		components: { TabView, TabPanel, PlayerStats }
+		components: { TabView, TabPanel, PlayerStats, MatchStats }
 	}
 </script>
  
