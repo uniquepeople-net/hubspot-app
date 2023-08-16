@@ -8,6 +8,8 @@
 	
 		<LineupsClub club="MFK Dukla Banská Bystrica" coach="Michal Ščasný"
 					 imgSrc="http://www.zpfutbal.sk/wp-content/uploads/2022/06/LogoFKZP-1.png"/>
+
+	
 	</div>
 </template>
  

@@ -20,8 +20,8 @@
 	import { mapGetters } from 'vuex';
 	import TabView from 'primevue/tabview';
 	import TabPanel from 'primevue/tabpanel';
-	import PlayerStats from './PlayerStats/PlayerStats.vue';
-	import MatchStats from './MatchStats/MatchStats.vue'
+	import PlayerStats from './Player/PlayerStats.vue';
+	import MatchStats from './Match/MatchStats.vue'
 	
 
 	export default {
@@ -33,10 +33,10 @@
  
 		},
 		computed: {
-			...mapGetters({ user: 'user/user',
+			/* ...mapGetters({ user: 'user/user',
 							match: 'stats/matchDetails',
 							matches: 'stats/playerMatches',
-							seasons: 'stats/playerCareer' }),
+							seasons: 'stats/playerCareer' }), */
 		},
 		components: { TabView, TabPanel, PlayerStats, MatchStats }
 	}

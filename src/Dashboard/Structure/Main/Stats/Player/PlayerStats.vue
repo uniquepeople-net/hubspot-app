@@ -11,6 +11,7 @@
  
  
 <script>
+	import { mapGetters } from 'vuex'
 	import Comparison from './Comparison/Comparison.vue'
 	import LastGames from '../Global/LastGames.vue'
 	import MatchEvents from './MatchEvents/MatchEvents.vue'
@@ -18,12 +19,18 @@
 	import PlayerInfo from './PlayerInfo.vue'
 	
 	export default {
+		created() {
+			this.$store.dispatch('stats/getPlayerCareer', this.user.instat_id )
+		},
 		data() {
 			return {
 				}
 		},
 		methods: {
 			
+		},
+		computed: {
+			...mapGetters({ user: 'user/user' })
 		},
 		components: { PlayerInfo, LastGames, MatchStats, MatchEvents, Comparison }
 	}

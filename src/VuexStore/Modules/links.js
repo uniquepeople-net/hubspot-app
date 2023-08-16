@@ -20,17 +20,20 @@ export default {
 
 
 		// Wyscout API
-		statBasicUrl:			'https://apirest.wyscout.com/v3/',				 
+		/* statBasicUrl:		'https://apirest.wyscout.com/v3/',				 
 		statAreas:				'areas',
 		competitionsListSvk:	'competitions?areaId=SVK',
 		competitionsFirstTeams:	'competitions/775/teams',
 		teamPlayers:			'teams/',
 		statPlayerMatches:		'&tpl=41&player_id=',
 		statTournamentSeason:	'&tournament_id=40&season_id=',
-		statMatch:				'&tpl=37&match_id=',
+		statMatch:				'&tpl=37&match_id=', */
+
+		// Wyscout Custom API
+		statBasicUrl:			'https://futbal-data.uniquepeople.sk/wyscout/api.php?action=',
 
 		// Own Stats API
-		/* statsBasic:					'https://futbal-data.uniquepeople.sk/api.php?action=',
+		/* statsBasic:				'https://futbal-data.uniquepeople.sk/api.php?action=',
 		lastMatchPlayerStats:		'get_player_stats_last_match&player_id=',
 		matchPlayerStats:			'get_player_stats_by_match&player_id=',
 		seasonsAll:					'get_player_seasons&player_id=',

@@ -129,7 +129,7 @@ export default {
 
 			await User.refreshedToken();
 
-			axios.get( statBasicUrl + 'players/' + id + '/career?details=season,competition', {
+			axios.get( statBasicUrl + 'get_player_career&player_id=' + id, {
 				headers: {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
@@ -166,7 +166,7 @@ export default {
 
 			await User.refreshedToken();
 
-			axios.get( statBasicUrl + 'players/' + id + '/matches', {
+			axios.get( statBasicUrl + 'get_player_matches&player_id=' + id, {
 				headers: {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})

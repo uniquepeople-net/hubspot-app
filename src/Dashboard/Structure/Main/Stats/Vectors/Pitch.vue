@@ -1,6 +1,6 @@
 <template>
 	<div class="position-relative pitch-vector">
-		<svg width="366" height="auto" viewBox="0 0 366 513" fill="none" xmlns="http://www.w3.org/2000/svg">
+		<svg width="366" height="513" viewBox="0 0 366 513" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<path fill-rule="evenodd" clip-rule="evenodd" d="M1.00567 0.7414L364.229 0.7415L363.47 511.934L1.00563 511.696L1.00567 0.7414Z" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696"/>
 			<path fill-rule="evenodd" clip-rule="evenodd" d="M181.478 293.206C171.874 293.206 162.663 289.309 155.872 282.372C149.081 275.436 145.266 266.028 145.266 256.219C145.266 246.409 149.081 237.001 155.872 230.065C162.663 223.128 171.874 219.231 181.478 219.231C191.082 219.231 200.292 223.128 207.083 230.065C213.874 237.001 217.689 246.409 217.689 256.219C217.689 266.028 213.874 275.436 207.083 282.372C200.292 289.309 191.082 293.206 181.478 293.206Z" stroke="#8C8C8C" stroke-opacity="0.6" stroke-width="2.00696" stroke-linejoin="round"/>
 			
@@ -65,6 +65,7 @@
 	margin: auto;
 	svg {
 		width: 100%;
+		height: auto;
 	}
 	.band1, .band2, .band3  {
 		position: absolute;
