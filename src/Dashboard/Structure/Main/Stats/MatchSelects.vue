@@ -86,7 +86,7 @@
 			},
 			selectMatch() {
 				this.$store.dispatch( "stats/getMatchDetails", this.selectedMatch.matchId );
-				this.$store.dispatch( "stats/getPalyerStats", { id: this.player.wyId, matchId: this.selectedMatch.matchId } )						
+				//this.$store.dispatch( "stats/getPalyerStats", { id: this.player.wyId, matchId: this.selectedMatch.matchId } )						
 			},
 			handleRedirect() {
 				this.$router.push({ name: this.btnRoute })

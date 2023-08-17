@@ -1,19 +1,25 @@
 <template>
 	<div :class="`chart ${dialogStat ? 'dialogStatClass' : ''}`" @click="$emit('getData', [this.title, this.accurate, this.inacurate])">
 		<Chart type="doughnut" :data="chartData" :options="options" />
-		<span class="value">{{ accurate + '/' + inacurate }}</span>
-		<span class="icons">
+		<span class="value text-data text-center">
+			{{ title }}
+			<span>{{percentage ? ' (%)' : ''}}</span>
+		</span>
+		<!-- <span class="icons">
 			<i class="bi bi-check2 mx-sm-1"></i>
 			<i class="bi bi-x mx-sm-1"></i>
-		</span>
-		<Fieldset class="title" :legend="title" :toggleable="dialogStat ? true : false" 
+		</span> -->
+		<!-- <Fieldset class="title" :legend="title" :toggleable="dialogStat ? true : false" 
 				  :collapsed="dialogStat ? false : true">
-		</Fieldset>
+		</Fieldset> -->
+		<GridCard :circle="true" class="circle-grid w-100 h-100" bgSize="4rem"/>
 	</div>
 </template>
  
  
 <script>
+	import GridCard from './GridCard.vue'
+
 	export default {
 		props: {
 			accurate: {
@@ -26,12 +32,17 @@
 				type: String
 			},
 			accColor: {
-				type: String
+				type: String,
+				default: '#3370EC'
 			},
 			inaccColor: {
-				type: String
+				type: String,
+				default: '#2a2a2a'
 			},
 			dialogStat: {
+				type: Boolean
+			},
+			percentage: {
 				type: Boolean
 			}
 		},
@@ -42,10 +53,11 @@
 					//labels: ['Accurate','Inaccurate'],
 					datasets: [
 						{
-							data: [this.accurate, this.inacurate],
-							backgroundColor: [this.accColor,this.inaccColor],
-							hoverBackgroundColor: [this.accColor,this.inaccColor],
-							borderColor: [this.accColor, this.inaccColor]
+							data: [this.accurate, .5, this.inacurate, .5],
+							backgroundColor: [this.accColor, 'transparent', this.inaccColor, 'transparent'],
+							hoverBackgroundColor: [this.accColor, 'transparent', this.inaccColor, 'transparent'],
+							borderColor: [this.accColor, 'transparent', this.inaccColor, 'transparent'],
+							borderWidth: 0, // Add space between segments
 						}
 					]
 				},
@@ -58,12 +70,16 @@
 							}
 						}
 					},
-					circumference: '270',
-					rotation: '-135',
-					cutout: '60%'
+					circumference: '360',
+					rotation: '180',
+					cutout: '85%',
+					layout: {
+						padding: -10
+					}
 				},
 			}
-		}
+		},
+		components: { GridCard }
 	}
 </script>
 
@@ -76,12 +92,12 @@
 	position: relative;
 	.value, .title, .icons {
 		position: absolute;
+		z-index: 20;
 		left: 50%;
 	}
 	.value {
-		top: calc( 45% + 1.5rem );
+		top: 50%;
 		transform: translate(-50%, -50%);
-		font-size: 1.5rem;
 	}
 	.icons {
 		top: 38%;
@@ -129,6 +145,16 @@
 			padding-top: 0;
 		}
 	}
+	:deep(.p-chart) {
+		z-index: 10;
+	}
+	.circle-grid {
+		position: absolute;
+		z-index: 5;
+		top: 0;
+		border-radius: 50%;
+		box-shadow: unset;
+	}
 }
 .dialogStatClass {
 	width: 270px !important;
@@ -136,10 +162,6 @@
 		:deep(.p-fieldset-legend) {
 			padding: .8rem;
 		}
-	}
-	.value {
-		font-size: 2.5rem;
-		top: calc( 45% + 2rem );
 	}
 }
 
@@ -150,10 +172,6 @@
 			:deep(.p-fieldset-legend) {
 				padding: .5rem;
 			}
-		}
-		.value {
-			font-size: 2rem;
-			top: calc( 45% + 1.75rem );
 		}
 		.icons {
 			font-size: 1.5rem;
@@ -168,10 +186,6 @@
 			:deep(.p-fieldset-legend) {
 				padding: .8rem;
 			}
-		}
-		.value {
-			font-size: 2.5rem;
-			top: calc( 45% + 2rem );
 		}
 	}
 }

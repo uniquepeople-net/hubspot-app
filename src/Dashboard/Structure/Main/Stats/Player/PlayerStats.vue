@@ -2,7 +2,8 @@
 	<div>
 		<PlayerInfo class="mt-3"/>
 		<Divider class="my-4 divider-light"/>
-		<LastGames />
+		<LastGames v-if="!specificMatch" @selectedMatch="selectedMatch"/>
+		<MatchCard v-if="specificMatch"/>
 		<MatchStats />
 		<MatchEvents />
 		<Comparison />
@@ -17,6 +18,7 @@
 	import MatchEvents from './MatchEvents/MatchEvents.vue'
 	import MatchStats from './MatchStats.vue'
 	import PlayerInfo from './PlayerInfo.vue'
+	import MatchCard from '../../../../global/MatchCard.vue'
 	
 	export default {
 		created() {
@@ -24,15 +26,18 @@
 		},
 		data() {
 			return {
-				}
+				specificMatch: false
+			}
 		},
 		methods: {
-			
+			selectedMatch(id) {
+				this.specificMatch = true
+			}
 		},
 		computed: {
 			...mapGetters({ user: 'user/user' })
 		},
-		components: { PlayerInfo, LastGames, MatchStats, MatchEvents, Comparison }
+		components: { PlayerInfo, LastGames, MatchStats, MatchEvents, Comparison, MatchCard }
 	}
 </script>
  

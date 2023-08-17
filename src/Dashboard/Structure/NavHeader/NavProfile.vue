@@ -9,6 +9,7 @@
 					<div class="avatar avatar-md">
 						<img v-if="!playerDetails" src="../../../../assets/images/ndplayer_100x130.png" />
 						<img v-if="playerDetails" :src="playerDetails.imageDataURL" />
+						<!-- <Profile /> -->
 					</div>
 				</div>
 			</div>
@@ -33,6 +34,7 @@
 <script>
 	import { mapGetters } from 'vuex';
 	import {loadStripe} from '@stripe/stripe-js';
+	import Profile from '../Main/Stats/Vectors/Profile.vue';
 	//import { i18n } from '../../../plugins/vuelidate-i18n'
 
 	export default {
@@ -102,8 +104,8 @@
                     }
 				]
 			}
-
 		},
+		components: { Profile },
 	}
 </script>
  

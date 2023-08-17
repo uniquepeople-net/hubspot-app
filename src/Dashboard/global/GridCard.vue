@@ -15,7 +15,9 @@
 				default: 225
 			},
 			bgSize: String,
-			padding: String
+			padding: String,
+			circle: Boolean,
+			repeat: Boolean
 		},
 		data() {
 			return {
@@ -23,8 +25,16 @@
 		},
 		computed: {
 			gradientStyle() {
+				let background
+				if ( this.circle ) {
+					background = `radial-gradient(circle at center,var(--card-bg) 35%, transparent 70% ),linear-gradient(225deg,var(--gradient-bg) 0%,var(--gradient-bg) 35.08%)`
+				} else if ( this.repeat ) {
+					background = `linear-gradient(90deg, var(--card-bg) 0%, var(--gradient-bg) 40.08%), radial-gradient(circle at center, var(--card-bg) 20%, transparent 35%), linear-gradient(270deg, var(--card-bg) 0%, var(--gradient-bg) 40.08%)`
+				} else {
+					background = `linear-gradient(${this.gradient}deg, var(--gradient-bg) 0%, var(--card-bg) 35.08%)`
+				}
 				return {
-					background: `linear-gradient(${this.gradient}deg, var(--gradient-bg) 0%, var(--card-bg) 35.08%)`,
+					background: background,
 					padding: this.padding
 				};
 			},
@@ -47,9 +57,10 @@
 	.grid-gradient {
 		width: 100%;
 		height: 100%;
-		background: rgb(232,232,232);
+		background: rgba(232, 232, 232, 0.336);
 		//background: linear-gradient(45deg, rgba(232,232,232,1) 75%, rgba(255,255,255,0) 100%);
 		//background: linear-gradient(225deg, var(--gradient-bg) 0%, var(--card-bg) 35.08%);
+		//background: repeating-linear-gradient(90deg, var(--gradient-bg), transparent 33%, var(--card-bg) 33%, var(--card-bg) 70px);
 	}
 }
 </style>

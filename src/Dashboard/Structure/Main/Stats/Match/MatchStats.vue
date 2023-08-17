@@ -2,12 +2,14 @@
 	<div>
 		<LastGames />
 		<LineUps />
+		<AdvStats />
 	</div>
 </template>
  
  
 <script>
 	import LastGames from "../Global/LastGames.vue"
+	import AdvStats from './AdvStats/AdvStats.vue'
 	import LineUps from './Lineups/Lineups.vue'
 
 	export default {
@@ -18,7 +20,7 @@
 		methods: {
  
 		},
-		components: { LastGames, LineUps }
+		components: { LastGames, LineUps, AdvStats }
 	}
 </script>
  

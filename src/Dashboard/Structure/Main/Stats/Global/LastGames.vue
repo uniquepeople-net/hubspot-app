@@ -2,11 +2,9 @@
 	<div class="position-relative">
 		<h5 class="text-value">{{ $t('message.YourLastGames') }}</h5>
 		<div v-if="matches">
-			<MatchCard />
-			<MatchCard />
-			<MatchCard />
+			<MatchCard v-for="match in matchesLimit" @click="selectMatch(match.matchId)" class="match-card"/>
 			<div class="text-center see-more w-100">
-				<span class="text-sm-bold"><u>{{ $t('message.SeeMore') }}</u></span>
+				<span class="text-sm-bold" @click="seeMore"><u>{{ $t('message.SeeMore') }}</u></span>
 			</div>
 			<Divider class="divider-light mt-0"/>
 		</div>
@@ -26,16 +24,29 @@
 		},
 		data() {
 			return {
+				seeMatches: 6,
+				selectedMatch: null
 			}
 		},
 		methods: {
-			
+			seeMore() {
+				this.seeMatches = this.seeMatches + 3
+			},
+			selectMatch(id) {
+				this.selectedMatch = id
+				this.$emit('selectedMatch', this.selectedMatch)
+			}
 		},
 		computed: {
 			...mapGetters({ user: 'user/user',
 							matches: 'stats/playerMatches' }),
 			matchesLimit() {
-				return this.matches.splice(0, 3)
+				let showedMatches = this.matches.slice(0, this.seeMatches)
+				this.selectedMatch = showedMatches[0].matchId
+				/* showedMatches.map( item => {
+					this.$store.dispatch('stats/getMatchDetails', item.matchId )
+				}) */
+				return showedMatches
 			}
 		},
 		components: { MatchCard, LoadingIcon }
@@ -44,6 +55,9 @@
  
  
 <style lang='scss' scoped>
+.match-card {
+	cursor: pointer;
+}
 .see-more {
 	position: absolute;
 	padding-top: 3rem;

@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<h5>{{ $t('message.Lineups') }}</h5>
+	<div class="mt-5">
+		<h5 class="text-value">{{ $t('message.Lineups') }}</h5>
 		<LineupsClub club="ZP Sport Podbrezová" coach="Roman Skuhravý"
 					 imgSrc="http://www.zpfutbal.sk/wp-content/uploads/2022/06/LogoFKZP-1.png"/>
 		

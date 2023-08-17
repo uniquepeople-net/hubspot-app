@@ -308,6 +308,9 @@ export const messages = {
 			PlayerComparison: 'Player comparison',
 			SearchPlayer: 'Search for a player',
 			Coach: 'Coach',
+			Attack: 'Attack',
+			Defence: 'Defence',
+			Transitions: 'Transitions',
 		},
 		validations: {
 			required: "This field is required. ",
@@ -625,6 +628,9 @@ export const messages = {
 			PlayerComparison: 'Porovnanie hráčov',
 			SearchPlayer: 'Vyhľadať hráča',
 			Coach: 'Tréner',
+			Attack: 'Útok',
+			Defence: 'Obrana',
+			Transitions: 'Prechody',
 		},
 		validations: {
 			required: "Toto pole je potrebné vyplniť. ",

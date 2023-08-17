@@ -182,7 +182,7 @@ export default {
 							acc[key].push(obj);
 						}
 						return acc;
-					}, {}); */
+					}, {}); */			
 					  
 					context.commit("SETPLAYERMATCHES", response.data.matches)
 				})
@@ -199,7 +199,7 @@ export default {
 
 			await User.refreshedToken();
 
-			axios.get( statBasicUrl + 'players/' + data.id + '/matches/' + data.matchId + '/advancedstats', {
+			axios.get( statBasicUrl + 'get_player_match_stats&player_id=' + data.id + '&match_id=' + data.matchId, {
 				headers: {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
@@ -238,13 +238,18 @@ export default {
 		async getMatchDetails( context, id ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
 
-			await User.refreshedToken();
+			console.log('repos')
+			
 
-			axios.get( statBasicUrl + 'matches/' + id + '?details=coaches,players,teams,competition,round,season', {
+			//await User.refreshedToken();
+
+			/* axios.get( statBasicUrl + 'matches/' + id + '?details=coaches,players,teams,competition,round,season', {
 				headers: {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE,
 				}})
 				.then( response => {
+					console.log(response)
+					
 					const teamsData = response.data.teamsData
 					const key1 = Object.keys(teamsData)[0];
 					const key2 = Object.keys(teamsData)[1];
@@ -281,7 +286,7 @@ export default {
 						timer: 5000,
 						title: "Unable to load match details"
 					})
-				})
+				}) */
 		},
 		async getMatchStats( context, id ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']

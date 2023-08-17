@@ -195,7 +195,7 @@
 				.p-panelmenu-header-content {
 					border: 0;
 					//border-radius: 8px;
-					//box-shadow: var(--card-shadow) 1.95px 1.95px 0px;
+					box-shadow: unset;
 				}
 				.p-toggleable-content {
 					margin-left: 2px;
