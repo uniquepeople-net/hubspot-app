@@ -4,8 +4,8 @@
 		<Divider class="my-4 divider-light"/>
 		<LastGames v-if="!specificMatch" @selectedMatch="selectedMatch"/>
 		<MatchCard v-if="specificMatch"/>
-		<MatchStats />
-		<MatchEvents />
+		<MatchStats v-if="matchId && user" :matchId="matchId" :id="user.instat_id"/>
+		<MatchEvents v-if="matchId" :matchId="matchId"/>
 		<Comparison />
 	</div>
 </template>
@@ -22,15 +22,17 @@
 	
 	export default {
 		created() {
-			this.$store.dispatch('stats/getPlayerCareer', this.user.instat_id )
+			//this.$store.dispatch('stats/getPlayerCareer', this.user.instat_id )
 		},
 		data() {
 			return {
-				specificMatch: false
+				specificMatch: false,
+				matchId: null
 			}
 		},
 		methods: {
 			selectedMatch(id) {
+				this.matchId = id
 				this.specificMatch = true
 			}
 		},

@@ -3,11 +3,11 @@
 		<span class="text-sm-notice center-center">{{ title }}</span>
 		<span class="text-gt-bold">
 			<span class="text-data-bold color-main">{{ value }}</span>
-			<span class="text-data-bold color-light">/{{ total }}</span>
+			<span v-if="!nonRatio" class="text-data-bold color-light">/{{ total }}</span>
 		</span>
-		<div class="chart-bar d-flex">
+		<div v-if="!nonRatio" class="chart-bar d-flex">
 			<span :style="`width: ${calculateValue(value, total)}%`" class="bar bg-succes"></span>
-			<span :style="`width: ${calculateValue( total - value , total)}%`" class="ms-1 bar bg-failed"></span>
+			<span :style="`width: ${calculateValue( total - value , total)}%`" :class="`${ calculateValue( total - value , total) < 100 ? 'ms-1' : ''} bar bg-failed`"></span>
 		</div>
 	</span>
 </template>
@@ -16,7 +16,7 @@
 <script>
 	import PlayerStatBar from '../PlayerData/PlayerStatBar.vue'
 	export default {
-		props: [ 'title', 'value', 'total' ],
+		props: [ 'title', 'value', 'total', 'nonRatio' ],
 		data() {
 			return {
 				}

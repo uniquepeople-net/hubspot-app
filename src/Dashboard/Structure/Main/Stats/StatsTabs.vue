@@ -1,5 +1,6 @@
 <template>
 	<div class="stats-tabs ufp-tabs">
+		<BackButton :title="$t('message.Stats')" route="my-board" class="mb-4"/>
 		<TabView>
 			<TabPanel :header="$t('message.PLAYER')">
 					
@@ -22,6 +23,7 @@
 	import TabPanel from 'primevue/tabpanel';
 	import PlayerStats from './Player/PlayerStats.vue';
 	import MatchStats from './Match/MatchStats.vue'
+	import BackButton from '../../../global/BackButton.vue';
 	
 
 	export default {
@@ -38,11 +40,11 @@
 							matches: 'stats/playerMatches',
 							seasons: 'stats/playerCareer' }), */
 		},
-		components: { TabView, TabPanel, PlayerStats, MatchStats }
+		components: { TabView, TabPanel, PlayerStats, MatchStats, BackButton }
 	}
 </script>
  
- 
+
 <style lang='scss' scoped>
 .stats-tabs {
 	max-width: 768px;
