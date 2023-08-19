@@ -1,7 +1,7 @@
 <template>
 	<div class="mt-4">
 		<h5 class="text-value">{{ $t('message.YourMatchStats') }}</h5>
-		<TabView scrollable="true">
+		<TabView scrollable>
 			<TabPanel v-if="stats && stats.hasOwnProperty('total')" v-for="item in items" :header="item.title">
 
 				<GridCard v-for="stat in item.stats" :gradient="160" class="individual-stat mb-3" bgSize="4rem" padding=".5rem 1rem">
@@ -14,7 +14,7 @@
 				
 			</TabPanel>	
 		</TabView>
-		<LoadingIcon v-if="!stats" :title="$t('message.Stats').toLowerCase()"/>			
+		<LoadingIcon v-if="!stats || !stats.hasOwnProperty('total')" :title="$t('message.Stats').toLowerCase()"/>			
 		<Divider class="divider-light mt-1"/>
 	</div>
 </template>
@@ -80,6 +80,7 @@
 								{ title: i18n.t('message.Goals'), value: totalStats.goals },
 								{ title: i18n.t('message.TotalAttempts'), value: totalStats.shots, sub: [ { title: i18n.t('message.Shotsontarget'), value: totalStats.shotsOnTarget },
 																										  { title: i18n.t('message.HeadShots'), value: totalStats.headShots } ] },
+								{ title: i18n.t('message.Dribbles'), value: totalStats.dribbles, sub: [ { title: i18n.t('message.Successful') + ' ' + i18n.t('message.Dribbles').toLowerCase(), value: totalStats.successfulDribbles} ] },
 								{ title: i18n.t('message.Corners'), value: totalStats.corners },
 								{ title: i18n.t('message.Assists'), value: totalStats.assists, sub: [ { title: i18n.t('message.ShotAssists'), value: totalStats.shotAssists, nonRatio: true },
 																									  { title: i18n.t('message.SecondAssists'), value: totalStats.secondAssists, nonRatio: true },
@@ -97,10 +98,33 @@
 
 							{ title: i18n.t('message.DEFENDING'), stats: [
 								{ title: i18n.t('message.Interceptions'), value: totalStats.interceptions },
+								{ title: i18n.t('message.DefensiveActions'), value: totalStats.defensiveActions, sub: [ { title: i18n.t('message.Successful') + ' ' + i18n.t('message.DefensiveActions').toLowerCase(), value: totalStats.successfulDefensiveAction } ]},
+								{ title: i18n.t('message.Recoveries'), value: totalStats.recoveries, sub: [ { title: i18n.t('message.OpponentHalfRecoveries'), value: totalStats.opponentHalfRecoveries },
+																											{ title: i18n.t('message.DangerousOpponentHalfRecoveries'), value: totalStats.dangerousOpponentHalfRecoveries } ] },
+								{ title: i18n.t('message.BlockedShots'), value: totalStats.shotsBlocked },
+								{ title: i18n.t('message.SlidingTackles'), value: totalStats.slidingTackles, sub: [ { title: i18n.t('message.Successful') + ' ' + i18n.t('message.SlidingTackles').toLowerCase(), value: totalStats.successfulSlidingTackles } ]},
+								{ title: i18n.t('message.Clearances'), value: totalStats.clearances },
 							]},
 
-							{ title: i18n.t('message.DUELS'),  },
-							{ title: i18n.t('message.DISCIPLINARY'),  },
+							{ title: i18n.t('message.DUELS'), stats: [
+								{ title: i18n.t('message.Duels'), value: totalStats.duels },
+								{ title: i18n.t('message.Successfulduels'), value: totalStats.duelsWon },
+								{ title: i18n.t('message.DefensiveDuels'), value: totalStats.defensiveDuels, sub: [ { title: i18n.t('message.Successful') + ' ' + i18n.t('message.DefensiveDuels').toLowerCase(), value: totalStats.defensiveDuelsWon } ]},
+								{ title: i18n.t('message.OffensiveDuels'), value: totalStats.offensiveDuels, sub: [ { title: i18n.t('message.Successful') + ' ' + i18n.t('message.OffensiveDuels').toLowerCase(), value: totalStats.offensiveDuelsWon } ]},
+								{ title: i18n.t('message.AerialDuels'), value: totalStats.aerialDuels, sub: [ { title: i18n.t('message.Successful') + ' ' + i18n.t('message.AerialDuels').toLowerCase(), value: totalStats.aerialDuelsWon } ]},
+								{ title: i18n.t('message.FieldAerialDuels'), value: totalStats.fieldAerialDuels, sub: [ { title: i18n.t('message.Successful') + ' ' + i18n.t('message.FieldAerialDuels').toLowerCase(), value: totalStats.fieldAerialDuelsWon } ]},
+								{ title: i18n.t('message.PressingDuels'), value: totalStats.pressingDuels, sub: [ { title: i18n.t('message.Successful') + ' ' + i18n.t('message.PressingDuels').toLowerCase(), value: totalStats.pressingDuelsWon } ]},
+								{ title: i18n.t('message.LooseBallDuels'), value: totalStats.looseBallDuels, sub: [ { title: i18n.t('message.Successful') + ' ' + i18n.t('message.LooseBallDuels').toLowerCase(), value: totalStats.looseBallDuelsWon } ]},
+								{ title: i18n.t('message.Totallooses'), value: totalStats.losses, sub: [ { title: i18n.t('message.OwnHalfLooses'), value: totalStats.ownHalfLosses },
+								 																		 { title: i18n.t('message.DangerousOwnHalfLooses'), value: totalStats.dangerousOwnHalfLosses }] },
+							] },
+							{ title: i18n.t('message.DISCIPLINARY'), stats: [
+								{ title: i18n.t('message.Fouls'), value: totalStats.fouls },
+								{ title: i18n.t('message.FoulsSuffered'), value: totalStats.foulsSuffered },
+								{ title: i18n.t('message.Yellowcards'), value: totalStats.yellowCards },
+								{ title: i18n.t('message.Redcards'), value: totalStats.redCards },
+								{ title: i18n.t('message.DirectRedCards'), value: totalStats.directRedCards },
+							] },
 						]
 			}
 		},
