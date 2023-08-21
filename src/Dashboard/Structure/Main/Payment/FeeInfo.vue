@@ -1,5 +1,4 @@
 <template>
-	
 	<div class="fee-info">
 		
 		<h5 class="text-gt-bold">{{ $t('message.Payments') }}</h5>				
@@ -23,7 +22,7 @@
 			<Button v-if="!user.fee" :label="$t('message.Pay') + ' ' + $t('message.Fee')" 
 					class="btn-black" @click="redirectPay" />
 
-			<div v-if="user.fee && checkMembership && products && subscriptions" class="text-center">
+			<div v-if="user.fee && upgrades && products && subscriptions" class="text-center">
 				<h5 class="text-description">{{ $t('message.UpgradeMembership') + ':' }}</h5>
 				<Button v-for="upgrade in upgrades" :label="upgrade.name + ' ' + surcharge(upgrade.id)"
 						class="btn-black my-1" @click="redirectPay"/>
@@ -34,7 +33,6 @@
 	
 		<Payments :user="user"/>
 	</div>
-		
 </template>
  
  
@@ -48,6 +46,7 @@
 		props: ['user'],
 		created() {
 			this.$store.dispatch('payments/getProducts')
+			this.checkMembership()
 		},
 		data() {
 			return {
@@ -57,6 +56,19 @@
 		methods: {
 			redirectPay() {
 				this.$router.push({ name: 'wallet-checkout' })
+			},
+			checkMembership() {
+				let highestMembership = this.user.memberships.reduce((acc, obj) => {
+					return obj.id > acc.id ? obj : acc;
+				}, { id: -Infinity })
+				
+				this.upgrades = this.user.memberships.filter( item => item.id > this.user.membership_id )
+
+				if ( this.user.membership_id < highestMembership.id ) {
+					return true 
+				} else { 
+					return false
+				}
 			},
 			surcharge(id) {
 				let lastActiveSubscription = this.subscriptions && this.subscriptions.filter( item => {
@@ -73,9 +85,9 @@
 				})
 
 				let priceToSurcharge = Number(filteredProduct[0].price.unit_amount) - Number(lastActiveSubscription.plan.amount)
-			
-				return ' ( ' + this.$i18n.t('message.Surcharge').toLowerCase() + ' ' + Helpers.formatPrice(priceToSurcharge) + ' )'
-				
+				let interval = filteredProduct[0].price.recurring.interval === 'month' ? this.$i18n.t("message.month") : this.$i18n.t("message.year")
+
+				return ' ( ' + this.$i18n.t('message.Surcharge').toLowerCase() + ' ' + Helpers.formatPrice(priceToSurcharge) + '/' + interval + ' )'		
 			}
 		},
 		computed: {
@@ -87,19 +99,6 @@
 			membership() {
 				let membershipObj = this.user.memberships.filter( m => m.id === this.user.membership_id )
 				return membershipObj[0].name
-			},	
-			checkMembership() {
-				let highestMembership = this.user.memberships.reduce((acc, obj) => {
-					return obj.id > acc.id ? obj : acc;
-				}, { id: -Infinity })
-				
-				this.upgrades = this.user.memberships.filter( item => item.id > this.user.membership_id )
-
-				if ( this.user.membership_id < highestMembership.id ) {
-					return true 
-				} else { 
-					return false
-				}
 			},		
 		},
 		components: { Payments, Subscriptions }

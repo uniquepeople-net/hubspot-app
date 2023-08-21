@@ -21,7 +21,7 @@
 
 	export default {
 		created() {
-			this.$store.dispatch("payments/getProducts");
+			//this.$store.dispatch("payments/getProducts");
 		},
 		data() {
 			return {
@@ -34,7 +34,7 @@
 			}
 		},
 		computed: {
-			...mapGetters({ products: 'payments/products',
+			...mapGetters({ /* products: 'payments/products', */
 							user: 'user/user' })
 		},
 		components: { FeeInfo, Product },
