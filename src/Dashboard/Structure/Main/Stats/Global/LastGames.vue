@@ -2,7 +2,7 @@
 	<div class="position-relative">
 		<h5 class="text-value">{{ $t('message.YourLastGames') }}</h5>
 		<div v-if="matches">
-			<MatchCard v-for="match in matchesLimit" @click="selectMatch(match.matchId)" class="match-card"/>
+			<MatchCard v-for="match in matches" @click="selectMatch(match)" class="match-card" :matchData="match"/>
 			<div class="text-center see-more w-100">
 				<span class="text-sm-bold" @click="seeMore"><u>{{ $t('message.SeeMore') }}</u></span>
 			</div>
@@ -20,34 +20,27 @@
 
 	export default {
 		created() {
-			this.$store.dispatch('stats/getPlayerMatches', this.user.instat_id )
+			this.$store.dispatch('stats/getPlayerMatches', { id: this.user.instat_id, page: this.page } )
 		},
 		data() {
 			return {
-				seeMatches: 6,
-				selectedMatch: null
+				selectedMatch: null,
+				page: 1
 			}
 		},
 		methods: {
 			seeMore() {
-				this.seeMatches = this.seeMatches + 3
+				this.page = this.page + 1
+				this.$store.dispatch('stats/getPlayerMatches', { id: this.user.instat_id, page: this.page } )
 			},
-			selectMatch(id) {
-				this.selectedMatch = id
-				this.$emit('selectedMatch', this.selectedMatch)
+			selectMatch(match) {
+				this.selectedMatch = match.id
+				this.$emit('selectedMatch', match)
 			}
 		},
 		computed: {
 			...mapGetters({ user: 'user/user',
 							matches: 'stats/playerMatches' }),
-			matchesLimit() {
-				let showedMatches = this.matches.slice(0, this.seeMatches)
-				this.selectedMatch = showedMatches[0].matchId
-				/* showedMatches.map( item => {
-					this.$store.dispatch('stats/getMatchDetails', item.matchId )
-				}) */
-				return showedMatches
-			}
 		},
 		components: { MatchCard, LoadingIcon }
 	}

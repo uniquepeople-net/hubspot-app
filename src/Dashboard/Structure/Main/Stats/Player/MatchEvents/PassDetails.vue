@@ -72,7 +72,7 @@ export default {
 	props: ['name', 'time'],
   	data() {
 		return {
-			collapsed: true
+			collapsed: false
 		}
   	},
   	methods: {

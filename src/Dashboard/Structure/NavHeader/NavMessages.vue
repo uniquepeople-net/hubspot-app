@@ -63,7 +63,7 @@
 }
 .nav-message-badge {
 	min-width: 12px;
-	max-width: 14px;
+	//max-width: 14px;
 	//height: 12px;
 	height: 12px;
 	font-size: 7px;
@@ -71,6 +71,7 @@
 	top: 10px;
 	right: 2px;
 	line-height: 12px;
+	padding: 0 .2rem;
 }
 .email-menu {
 	background: var(--surface-0);

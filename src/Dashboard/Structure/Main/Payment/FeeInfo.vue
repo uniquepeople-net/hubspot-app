@@ -13,12 +13,21 @@
 		</div>
 
 		<div class="d-flex align-items-center justify-content-between">
-			<h6><span class="fw-normal me-4">{{ $t('message.Membership') + ':'}}</span> {{ membership }}</h6>
+			<h6>
+				<span class="fw-normal me-4">{{ $t('message.Membership') + ':'}}</span> 
+				{{ membership }}
+			</h6>
 		</div>
 
 		<div class="my-4 center-center">
 			<Button v-if="!user.fee" :label="$t('message.Pay') + ' ' + $t('message.Fee')" 
-					class="btn-black" @click="redirectPay"/>
+					class="btn-black" @click="redirectPay" />
+
+			<div v-if="user.fee && checkMembership && products && subscriptions" class="text-center">
+				<h5 class="text-description">{{ $t('message.UpgradeMembership') + ':' }}</h5>
+				<Button v-for="upgrade in upgrades" :label="upgrade.name + ' ' + surcharge(upgrade.id)"
+						class="btn-black my-1" @click="redirectPay"/>
+			</div>
 		</div>
 
 		<Subscriptions :user="user"/>
@@ -38,22 +47,60 @@
 	export default {
 		props: ['user'],
 		created() {
-			//this.$store.dispatch("payments/getPayments", this.user.id);	
+			this.$store.dispatch('payments/getProducts')
+		},
+		data() {
+			return {
+				upgrades: null,
+			}
 		},
 		methods: {
 			redirectPay() {
 				this.$router.push({ name: 'wallet-checkout' })
+			},
+			surcharge(id) {
+				let lastActiveSubscription = this.subscriptions && this.subscriptions.filter( item => {
+					if ( item.status === 'active' || item.status === 'trialing' ) {
+						return item					
+					}
+				})[0]
+
+				let filteredProduct = this.products.filter( item => {
+					if ( item.price.recurring.interval === lastActiveSubscription.plan.interval && 
+						Number(item.metadata.membership_id) ===  Number(id) ) {
+							return item
+					}
+				})
+
+				let priceToSurcharge = Number(filteredProduct[0].price.unit_amount) - Number(lastActiveSubscription.plan.amount)
+			
+				return ' ( ' + this.$i18n.t('message.Surcharge').toLowerCase() + ' ' + Helpers.formatPrice(priceToSurcharge) + ' )'
+				
 			}
 		},
 		computed: {
-			...mapGetters({ payments: 'payments/payments'}),
+			...mapGetters({ subscriptions: 'payments/subscriptions',
+							products: 'payments/products'  }),
 			fee() {
 				return this.user.fee ? this.$i18n.t('message.Paid') : this.$i18n.t('message.Unpaid')
 			},
 			membership() {
 				let membershipObj = this.user.memberships.filter( m => m.id === this.user.membership_id )
 				return membershipObj[0].name
-			}
+			},	
+			checkMembership() {
+				let highestMembership = this.user.memberships.reduce((acc, obj) => {
+					return obj.id > acc.id ? obj : acc;
+				}, { id: -Infinity })
+				
+				this.upgrades = this.user.memberships.filter( item => item.id > this.user.membership_id )
+
+				if ( this.user.membership_id < highestMembership.id ) {
+					return true 
+				} else { 
+					return false
+				}
+			},		
 		},
 		components: { Payments, Subscriptions }
 	}

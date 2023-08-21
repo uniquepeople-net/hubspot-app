@@ -345,6 +345,8 @@ export const messages = {
 			Clearances: 'Clearances',
 			LooseBallDuels: 'Loose ball duels',
 			DirectRedCards: 'Direct red cards',
+			UpgradeMembership: 'Upgrade membership to',
+			Surcharge: 'Surcharge',
 		},
 		validations: {
 			required: "This field is required. ",
@@ -699,6 +701,8 @@ export const messages = {
 			Clearances: 'Odkop lopty bez tlaku súpera',
 			LooseBallDuels: 'Súboje bez víťaza',
 			DirectRedCards: 'Priame červené karty',
+			UpgradeMembership: 'Aktualizovať členstvo na',
+			Surcharge: 'Doplatok',
 		},
 		validations: {
 			required: "Toto pole je potrebné vyplniť. ",

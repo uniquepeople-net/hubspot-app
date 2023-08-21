@@ -6,7 +6,7 @@ export default {
 	state: () => ({
 		playerDetails: null,
 		playerCareer: null,
-		playerMatches: null,
+		playerMatches: [],
 		playerStats: null,
 		matchDetails: null,
 		matchStats: null,
@@ -32,7 +32,7 @@ export default {
 			state.playerCareer = data
 		},
 		SETPLAYERMATCHES( state, data ) {
-			state.playerMatches = data
+			state.playerMatches = [ ...state.playerMatches, ...data ]
 		},
 		SETPLAYERSTATS( state, data ) {
 			state.playerStats = data
@@ -161,16 +161,20 @@ export default {
 					})
 				})
 		},
-		async getPlayerMatches( context, id ) {
+		async getPlayerMatches( context, data ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
 
 			await User.refreshedToken();
 
-			axios.get( statBasicUrl + 'get_player_matches&player_id=' + id, {
+			await axios.get( statBasicUrl + 'get_player_matches_details&player_id=' + data.id + '&page=' + data.page, {
 				headers: {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
 				.then( response => {
+
+					let matchesLength = context.rootGetters['stats/playerMatches'].length
+					
+					if ( matchesLength/10 >= data.page ) return
 
 					//create separated objects with matches based on seasonId
 					/* const result = response.data.matches.reduce((acc, curr) => {

@@ -36,7 +36,7 @@
 				</div>
 			</template>
 		</Card>  -->
-		<Card class="card match-card" >
+		<Card class="card match-card">
 			<template #content>
 				<div  class="card-body">
 					<div class="row position-relative">
@@ -51,7 +51,8 @@
 						</div>
 	
 						<div class="result position-absolute">
-							<p class="date mb-1">01. 3. 2023 16:00</p>
+							<p class="date mb-1">{{ matchDate(matchData.date) }}</p>
+							<p class="date mb-1">{{ matchData.label }}</p>
 							<span>2&nbsp;&nbsp;:&nbsp;&nbsp;2</span>
 						</div>
 					</div>					
@@ -78,7 +79,9 @@
 	import StatMessage from '../Structure/Main/Stats/StatMessage.vue';
 
 	export default {
-		props: ['displayMatchStats'],
+		props: {
+			matchData: Object
+		},
 		methods: {
 			modifyResult(data) {
 				if (data) {

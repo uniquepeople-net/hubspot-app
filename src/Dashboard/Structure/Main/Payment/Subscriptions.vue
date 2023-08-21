@@ -87,6 +87,9 @@
 					case 'active':
 						return 'active'
 						break;
+					case 'trialing':
+						return 'trialing'
+						break;
 					case 'failed':
 						return 'failed'
 						break;
@@ -147,7 +150,9 @@
 	:deep(.p-accordion-header-link), :deep(.p-accordion-header-link):focus {
 		box-shadow: 0px 4px 5px 0px rgba(0, 0, 0, 0.10);
 	}
-	:deep(.p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link) {
+	:deep(.p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link),
+	:deep(.p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link),
+	:deep(.p-accordion-header:not(.p-disabled).p-highlight:hover .p-accordion-header-link) {
 		background: var(--card-bg);
 	}
 	.acc-tab-header1 {
@@ -178,6 +183,9 @@
 	}
 	.active {
 		color: var(--color-success);
+	}
+	.trialing {
+		color: var(--color-trialing);
 	}
 	.failed {
 		color: var(--color-failed);

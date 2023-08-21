@@ -146,7 +146,7 @@
 
 				this.emails.map( email => {
 					data.append('recipients[]', email.email )
-					data.append('toNames[]', email.name )
+					data.append('toNames[]', email.name + ' ' + email.surname )
 					data.append('toIds[]', email.id )
 				})
 
