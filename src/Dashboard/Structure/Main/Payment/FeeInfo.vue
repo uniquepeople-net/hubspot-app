@@ -25,8 +25,9 @@
 			<div v-if="user.fee && upgrades && products && subscriptions" class="text-center">
 				<h5 class="text-description">{{ $t('message.UpgradeMembership') + ':' }}</h5>
 				<Button v-for="upgrade in upgrades" :label="upgrade.name + ' ' + surcharge(upgrade.id)"
-						class="btn-black my-1" @click="redirectPay"/>
+						class="btn-black my-1" @click="showPayMethods"/>
 			</div>
+			<Pay :payProduct="this.selectedProduct"/>
 		</div>
 
 		<Subscriptions :user="user"/>
@@ -40,6 +41,7 @@
 	import { mapGetters } from 'vuex'
 	import Subscriptions from './Subscriptions.vue'
 	import Payments from './Payments.vue'
+	import Pay from './Pay.vue'
 	
 
 	export default {
@@ -51,11 +53,14 @@
 		data() {
 			return {
 				upgrades: null,
+				showPay: false,
+				productToPay: null
 			}
 		},
 		methods: {
-			redirectPay() {
-				this.$router.push({ name: 'wallet-checkout' })
+			showPayMethods() {
+				this.showPay = true
+				console.log(this.showPay)
 			},
 			checkMembership() {
 				let highestMembership = this.user.memberships.reduce((acc, obj) => {
@@ -78,7 +83,7 @@
 				})[0]
 
 				let filteredProduct = this.products.filter( item => {
-					if ( item.price.recurring.interval === lastActiveSubscription.plan.interval && 
+					if ( item.price.recurring && item.price.recurring.interval === lastActiveSubscription.plan.interval && 
 						Number(item.metadata.membership_id) ===  Number(id) ) {
 							return item
 					}
@@ -101,7 +106,7 @@
 				return membershipObj[0].name
 			},		
 		},
-		components: { Payments, Subscriptions }
+		components: { Payments, Subscriptions, Pay }
 	}
 </script>
  

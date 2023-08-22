@@ -1,14 +1,16 @@
 <template>
 	<div class="pitch-pass" 
-		:style="`transform:rotate(${calculateAngle( this.x1, this.y1, this.x2, this.y2 )}deg); 
-				 top: calc(${this.x1}%); left: calc(100% - ${this.y1}%); width:${passWidth(this.x1, this.y1, this.x2, this.y2)}`">
+		:style="`transform:rotate(${calculateAngle( x1, y1, x2, y2 )}deg); 
+				 top: calc(${x1}%); left: calc(100% - ${y1}%); width:${passWidth(x1, y1, x2, y2)}`">
 		
-		<span class="transmitter text-sm-num center-center" :style="`transform:rotate(-${calculateAngle( this.x1, this.y1, this.x2, this.y2 ) }deg);`">{{ transmitter }}</span>
+		<span class="transmitter text-sm-num center-center">
+			<span :style="`transform:rotate(-${calculateAngle( x1, y1, x2, y2 ) }deg);`">{{ transmitter }}</span>
+		</span>
 		<span class="pass center-center">
 			<span></span>
 		</span>
-		<i class="pi pi-chevron-right icon-arrow"></i>
-		<span class="receiver text-sm-num center-center" :style="`transform:rotate(-${calculateAngle( this.x1, this.y1, this.x2, this.y2 ) }deg);`">{{ receiver }}</span>
+		<i class="bi bi-caret-right-fill icon-arrow"></i>
+		<span class="receiver text-sm-num center-center" :style="`transform:rotate(-${calculateAngle( x1, y1, x2, y2 ) }deg);`">{{ receiver }}</span>
 	
 	</div>
 </template>
@@ -111,14 +113,16 @@
 	}
 	.transmitter {
 		background: var(--stat-chart-bg);
+		left: -12px;
 	}
 	.receiver {
 		right: 0;
 		background: var(--main-dark);
+		right: -12px;
 	}
 	.icon-arrow {
 		position: absolute;
-		right: 20px;
+		right: 8px;
 		color: var(--color-success);
 	}
 }

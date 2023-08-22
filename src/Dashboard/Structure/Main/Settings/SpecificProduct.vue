@@ -40,8 +40,8 @@
 
 								<div class="inputgroup mb-5 col-12 col-lg-6">
 
-									<InputText id="interval" v-model="v$.membership.$model"  disabled
-												name="interval" />
+									<InputText id="membership" v-model="v$.membership.$model"  disabled
+												name="membership" />
 									
 									<InputError :validator="v$.membership" :submitted="submitted" replace="membership"></InputError>
 								</div>
@@ -70,6 +70,30 @@
 											name="description" placeholder="Description"/>
 								
 									<InputError :validator="v$.description" :submitted="submitted" replace="Description"></InputError>
+								</div>
+
+								<h5 class="text-link mb-5" v-if="showUpgradeProduct">
+									<span class="me-2">{{ $t('message.UpgradeProduct') }}</span>
+								</h5>
+
+								<div class="inputgroup mb-5 col-12 col-lg-6" v-if="showUpgradeProduct">
+									<span class="p-float-label w-100">
+										<InputText id="upgradeFrom" v-model="v$.upgradeFrom.$model" :class="{'p-invalid':v$.upgradeFrom.$invalid && submitted}" 
+												   upgradeFrom="upgradeFrom" placeholder="upgradeFrom" disabled/>
+										<label for="upgradeFrom">{{ `Upgrade ${$t('message.from')}:` }}</label>
+									</span>
+								
+									<InputError :validator="v$.upgradeFrom" :submitted="submitted" replace="upgradeFrom"></InputError>
+								</div>
+
+								<div class="inputgroup mb-5 col-12 col-lg-6" v-if="showUpgradeProduct">
+									<span class="p-float-label w-100">
+										<InputText id="upgradeTo" v-model="v$.upgradeTo.$model" :class="{'p-invalid':v$.upgradeTo.$invalid && submitted}" 
+												   upgradeTo="upgradeTo" placeholder="upgradeTo" disabled/>
+										<label for="upgradeTo">{{ `Upgrade ${$t('message.to')}:` }}</label>
+									</span>
+								
+									<InputError :validator="v$.upgradeTo" :submitted="submitted" replace="upgradeTo"></InputError>
 								</div>
 								
 								<div class="col-12 col-lg-6 offset-lg-6">
@@ -107,7 +131,10 @@
 			this.active = Boolean(this.product.active)	
 			this.description = this.product.description
 			this.interval = this.product.price.recurring ? this.product.price.recurring.interval : this.product.price.type
-			this.membership = this.product.metadata ? this.product.metadata.membership_name : ''
+			this.membership = this.product.metadata ? this.product.metadata.membership_name : '',
+			this.showUpgradeProduct = 'from_membership_id' in this.product.metadata ? true : false,
+			this.upgradeFrom = 'from_membership_name' in this.product.metadata ? this.product.metadata.from_membership_name : null
+			this.upgradeTo = 'to_membership_name' in this.product.metadata ? this.product.metadata.to_membership_name : null
 		},
  		setup: () => ({ v$: useVuelidate() }),
 		data() {
@@ -120,6 +147,9 @@
 				description: '',
 				interval: '',
 				membership: '',
+				upgradeFrom: null,
+				upgradeTo: null,
+				showUpgradeProduct: false,
 				intervals: [{ name: 'one-time', id: 'one_time' }, { name: 'yearly', id: 'year' }, { name: 'monthly', id: 'month' }, { name: 'weekly', id: 'week' } ],
 				submitted: false,
 				showMessage: false,
@@ -134,7 +164,9 @@
 				amount: { required, customDecimal },
 				description: { required, minLength: minLength(3) },
 				interval: { required },
-				membership: { required }
+				membership: { required },
+				upgradeFrom: { minLength: minLength(1) },
+				upgradeTo: { minLength: minLength(1) },
 			}
 		},
 		methods: {

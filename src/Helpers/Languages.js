@@ -347,6 +347,9 @@ export const messages = {
 			DirectRedCards: 'Direct red cards',
 			UpgradeMembership: 'Upgrade membership to',
 			Surcharge: 'Surcharge',
+			UpgradeProduct: 'Upgrade product',
+			from: 'from',
+			to: 'to',
 		},
 		validations: {
 			required: "This field is required. ",
@@ -703,6 +706,9 @@ export const messages = {
 			DirectRedCards: 'Priame červené karty',
 			UpgradeMembership: 'Aktualizovať členstvo na',
 			Surcharge: 'Doplatok',
+			UpgradeProduct: 'Produkt pre upgrade',
+			from: 'z',
+			to: 'na',
 		},
 		validations: {
 			required: "Toto pole je potrebné vyplniť. ",

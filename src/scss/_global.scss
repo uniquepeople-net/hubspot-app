@@ -134,6 +134,10 @@ h1, h2, h3, h4, h5, h6 {}
 	font-size: remsize(10);
 	font-weight: 400;
 }
+.text-xxs {
+	font-size: remsize(9);
+	font-weight: 600;
+}
 .full-screen {
 	width: 100vw;
 	height: 100vh;

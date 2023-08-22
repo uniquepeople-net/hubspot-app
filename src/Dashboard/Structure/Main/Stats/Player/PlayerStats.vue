@@ -42,7 +42,6 @@
 			lastGames() {
 				this.specificMatch = false
 			},
-
 		},
 		computed: {
 			...mapGetters({ user: 'user/user' })

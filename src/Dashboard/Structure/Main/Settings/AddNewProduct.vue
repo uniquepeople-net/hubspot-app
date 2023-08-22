@@ -63,6 +63,31 @@
 								
 									<InputError :validator="v$.description" :submitted="submitted" replace="Description"></InputError>
 								</div>
+
+								<h5 class="text-link mb-5">
+									<span class="me-2">{{ $t('message.UpgradeProduct') }}</span>
+									<Checkbox v-model="showUpgradeProduct" :binary="true" />
+								</h5>
+
+								<div class="inputgroup mb-5 col-12 col-lg-6" v-if="showUpgradeProduct">
+									<span class="p-float-label w-100">
+										<Dropdown id="fromMembership" v-model="v$.fromMembership.$model" :options="user.memberships" :class="{'p-invalid':v$.fromMembership.$invalid && submitted}"
+											  		optionLabel="name" :placeholder="`Upgrade ${$t('message.from')}:`"/>
+										<label for="fromMembership">{{ `Upgrade ${$t('message.from')}:` }}</label>
+									</span>
+									
+									<InputError :validator="v$.fromMembership" :submitted="submitted" replace="membership"></InputError>
+								</div>
+
+								<div class="inputgroup mb-5 col-12 col-lg-6" v-if="showUpgradeProduct">
+									<span class="p-float-label w-100">
+										<Dropdown id="toMembership" v-model="v$.toMembership.$model" :options="user.memberships" :class="{'p-invalid':v$.toMembership.$invalid && submitted}"
+											  		optionLabel="name" :placeholder="`Upgrade ${$t('message.to')}:`"/>
+										<label for="toMembership">{{ `Upgrade ${$t('message.to')}:` }}</label>
+									</span>
+									
+									<InputError :validator="v$.toMembership" :submitted="submitted" replace="membership"></InputError>
+								</div>
 								
 								<div class="col-12 col-lg-6 offset-lg-6">
 									<Button type="submit" label="Add Product" class="mt-2 submit-btn btn-black" :loading="loading"/>
@@ -81,6 +106,7 @@
 	import { mapGetters } from 'vuex';
 	import { required, minLength, numeric, helpers } from "@vuelidate/validators";
 	import { useVuelidate } from "@vuelidate/core";
+	import Checkbox from 'primevue/checkbox';
 
 	// Custom decimal validation
 	const customDecimal = {
@@ -99,18 +125,21 @@
 				description: '',
 				interval: '',
 				intervals: [
-					//{ name: 'one-time', id: 'one_time' }, 
+					{ name: 'one-time', id: 'one_time' }, 
 					{ name: 'yearly', id: 'year' }, 
 					{ name: 'monthly', id: 'month' }, 
 					//{ name: 'weekly', id: 'week' }, 
 					{ name: 'daily', id: 'day' } 
 				],
 				membership: '',
+				fromMembership: '',
+				toMembership: '',
 				submitted: false,
 				showMessage: false,
 				response: null,
 				delete: true,
-				loading: false
+				loading: false,
+				showUpgradeProduct: false
 			}
 		},
 		validations() {
@@ -119,7 +148,9 @@
 				amount: { required, customDecimal },
 				description: { required, minLength: minLength(3) },
 				interval: { required },
-				membership: { required }
+				membership: { required },
+				fromMembership: { minLength: minLength(1) },
+				toMembership: { minLength: minLength(1) },
 			}
 		},
 		methods: {
@@ -137,7 +168,10 @@
 					active: this.active,
 					description: this.description,
 					interval: this.interval,
-					membership: this.user.memberships.filter( item => item.id === this.membership )
+					membership: this.user.memberships.filter( item => item.id === this.membership ),
+					upgrade: this.showUpgradeProduct,
+					upgradeFrom: this.fromMembership,
+					upgradeTo: this.toMembership
 				}
 
 				this.addProduct( this.addProductUrl, data );
@@ -174,7 +208,8 @@
 		computed: {
 			...mapGetters({ addProductUrl: 'links/addProduct',
 							user: 'user/user' })
-		}
+		},
+		components: { Checkbox }
 	}
 </script>
  

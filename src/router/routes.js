@@ -71,7 +71,6 @@ import SpecificProduct from '../Dashboard/Structure/Main/Settings/SpecificProduc
 import AddNewProduct from '../Dashboard/Structure/Main/Settings/AddNewProduct.vue';
 import Groups from '../Dashboard/Structure/Main/Settings/Groups.vue';
 import GroupsAll from '../Dashboard/Structure/Main/Settings/GroupsAll.vue';
-import AddNewGroup from '../Dashboard/Structure/Main/Settings/AddNewGroup.vue';
 import DocumentsSet from '../Dashboard/Structure/Main/Settings/Documents/Documents.vue'
 import AddNewDoc from '../Dashboard/Structure/Main/Settings/Documents/AddNewDocument.vue';
 import DocsAll from '../Dashboard/Structure/Main/Settings/Documents/DocumentsAll.vue';
