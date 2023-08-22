@@ -95,6 +95,16 @@
 								
 									<InputError :validator="v$.upgradeTo" :submitted="submitted" replace="upgradeTo"></InputError>
 								</div>
+
+								<div class="inputgroup mb-5 col-12 col-lg-6" v-if="showUpgradeProduct">
+									<span class="p-float-label w-100">
+										<InputText id="upgradeInterval" v-model="v$.upgradeInterval.$model" :class="{'p-invalid':v$.upgradeInterval.$invalid && submitted}" 
+												   name="upgradeInterval" placeholder="Upgrade interval" disabled/>
+										<label for="upgradeInterval">{{ `Upgrade interval` }}</label>
+									</span>
+								
+									<InputError :validator="v$.upgradeInterval" :submitted="submitted" replace="Upgrade interval"></InputError>
+								</div>
 								
 								<div class="col-12 col-lg-6 offset-lg-6">
 									<Button type="submit" label="Update" class="mt-2 submit-btn btn-black" :loading="loading"/>
@@ -135,6 +145,7 @@
 			this.showUpgradeProduct = 'from_membership_id' in this.product.metadata ? true : false,
 			this.upgradeFrom = 'from_membership_name' in this.product.metadata ? this.product.metadata.from_membership_name : null
 			this.upgradeTo = 'to_membership_name' in this.product.metadata ? this.product.metadata.to_membership_name : null
+			this.upgradeInterval = 'interval' in this.product.metadata ? this.product.metadata.interval : null
 		},
  		setup: () => ({ v$: useVuelidate() }),
 		data() {
@@ -149,6 +160,7 @@
 				membership: '',
 				upgradeFrom: null,
 				upgradeTo: null,
+				upgradeInterval: null,
 				showUpgradeProduct: false,
 				intervals: [{ name: 'one-time', id: 'one_time' }, { name: 'yearly', id: 'year' }, { name: 'monthly', id: 'month' }, { name: 'weekly', id: 'week' } ],
 				submitted: false,
@@ -167,6 +179,7 @@
 				membership: { required },
 				upgradeFrom: { minLength: minLength(1) },
 				upgradeTo: { minLength: minLength(1) },
+				upgradeInterval: { minLength: minLength(1) },
 			}
 		},
 		methods: {

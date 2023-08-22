@@ -186,9 +186,11 @@
 			buttonLabel() {
 				if ( this.payProduct.length ) {
 					let price = this.formatPrice(this.payProduct[0].price.unit_amount)
-					let interval = this.payProduct[0].price.recurring.interval === 'month' ? this.$i18n.t("message.month") : this.$i18n.t("message.year")
+					let interval = this.payProduct[0].price.recurring ? 
+								   ( this.payProduct[0].price.recurring.interval === 'month' ? '/' + this.$i18n.t("message.month") : '/' + this.$i18n.t("message.year") ) 
+								   : ''
 					
-					return this.$i18n.t("message.PAY") + ' ' + price + '/' + interval
+					return this.$i18n.t("message.PAY") + ' ' + price + interval
 				} else return this.$i18n.t("message.PAY")
 			},
 		},

@@ -22,13 +22,13 @@
 			<Button v-if="!user.fee" :label="$t('message.Pay') + ' ' + $t('message.Fee')" 
 					class="btn-black" @click="redirectPay" />
 
-			<div v-if="user.fee && upgrades && products && subscriptions" class="text-center">
+			<div v-if="user.fee && upgrades && products && subscriptions && !showPay" class="text-center">
 				<h5 class="text-description">{{ $t('message.UpgradeMembership') + ':' }}</h5>
 				<Button v-for="upgrade in upgrades" :label="upgrade.name + ' ' + surcharge(upgrade.id)"
 						class="btn-black my-1" @click="showPayMethods"/>
 			</div>
-			<Pay :payProduct="this.selectedProduct"/>
 		</div>
+			<Pay v-if="showPay" :payProduct="this.productToPay"/>
 
 		<Subscriptions :user="user"/>
 	
@@ -54,7 +54,7 @@
 			return {
 				upgrades: null,
 				showPay: false,
-				productToPay: null
+				productToPay: null,
 			}
 		},
 		methods: {
@@ -82,7 +82,7 @@
 					}
 				})[0]
 
-				let filteredProduct = this.products.filter( item => {
+				/* let filteredProduct = this.products.filter( item => {
 					if ( item.price.recurring && item.price.recurring.interval === lastActiveSubscription.plan.interval && 
 						Number(item.metadata.membership_id) ===  Number(id) ) {
 							return item
@@ -92,7 +92,21 @@
 				let priceToSurcharge = Number(filteredProduct[0].price.unit_amount) - Number(lastActiveSubscription.plan.amount)
 				let interval = filteredProduct[0].price.recurring.interval === 'month' ? this.$i18n.t("message.month") : this.$i18n.t("message.year")
 
-				return ' ( ' + this.$i18n.t('message.Surcharge').toLowerCase() + ' ' + Helpers.formatPrice(priceToSurcharge) + '/' + interval + ' )'		
+				return ' ( ' + this.$i18n.t('message.Surcharge').toLowerCase() + ' ' + Helpers.formatPrice(priceToSurcharge) + '/' + interval + ' )' */		
+
+				let filteredProduct = this.products.find( item => {
+					if ( 'interval' in item.metadata && item.metadata.interval === lastActiveSubscription.plan.interval ) {
+						return item
+					}
+				})
+
+				let priceToSurcharge = filteredProduct && filteredProduct.price.unit_amount
+				let interval = filteredProduct && filteredProduct.metadata.interval
+
+				this.productToPay = [ filteredProduct ]
+
+				return ' ( ' + this.$i18n.t('message.Surcharge').toLowerCase() + ' ' + Helpers.formatPrice(priceToSurcharge) + '/' + interval + ' )'
+			
 			}
 		},
 		computed: {

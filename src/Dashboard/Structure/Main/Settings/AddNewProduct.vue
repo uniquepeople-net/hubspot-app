@@ -48,7 +48,7 @@
 
 								<div class="inputgroup mb-5 col-12 col-lg-6">
 									<Dropdown v-model="v$.membership.$model" :options="user.memberships" :class="{'p-invalid':v$.membership.$invalid && submitted}"
-											  optionLabel="name" optionValue="id" placeholder="Select an membership"/>
+											  optionLabel="name" optionValue="id" placeholder="Select a membership"/>
 									
 									<InputError :validator="v$.membership" :submitted="submitted" replace="membership"></InputError>
 								</div>
@@ -69,24 +69,38 @@
 									<Checkbox v-model="showUpgradeProduct" :binary="true" />
 								</h5>
 
-								<div class="inputgroup mb-5 col-12 col-lg-6" v-if="showUpgradeProduct">
-									<span class="p-float-label w-100">
-										<Dropdown id="fromMembership" v-model="v$.fromMembership.$model" :options="user.memberships" :class="{'p-invalid':v$.fromMembership.$invalid && submitted}"
-											  		optionLabel="name" :placeholder="`Upgrade ${$t('message.from')}:`"/>
-										<label for="fromMembership">{{ `Upgrade ${$t('message.from')}:` }}</label>
-									</span>
-									
-									<InputError :validator="v$.fromMembership" :submitted="submitted" replace="membership"></InputError>
-								</div>
-
-								<div class="inputgroup mb-5 col-12 col-lg-6" v-if="showUpgradeProduct">
-									<span class="p-float-label w-100">
-										<Dropdown id="toMembership" v-model="v$.toMembership.$model" :options="user.memberships" :class="{'p-invalid':v$.toMembership.$invalid && submitted}"
-											  		optionLabel="name" :placeholder="`Upgrade ${$t('message.to')}:`"/>
-										<label for="toMembership">{{ `Upgrade ${$t('message.to')}:` }}</label>
-									</span>
-									
-									<InputError :validator="v$.toMembership" :submitted="submitted" replace="membership"></InputError>
+								<div v-if="showUpgradeProduct">
+									<div class="row">
+										<div class="inputgroup mb-5 col-12 col-lg-6">
+											<span class="p-float-label w-100">
+												<Dropdown id="fromMembership" v-model="v$.fromMembership.$model" :options="user.memberships" :class="{'p-invalid':v$.fromMembership.$invalid && submitted}"
+															optionLabel="name" :placeholder="`Upgrade ${$t('message.from')}:`"/>
+												<label for="fromMembership">{{ `Upgrade ${$t('message.from')}:` }}</label>
+											</span>
+											
+											<InputError :validator="v$.fromMembership" :submitted="submitted" replace="membership"></InputError>
+										</div>
+		
+										<div class="inputgroup mb-5 col-12 col-lg-6">
+											<span class="p-float-label w-100">
+												<Dropdown id="toMembership" v-model="v$.toMembership.$model" :options="user.memberships" :class="{'p-invalid':v$.toMembership.$invalid && submitted}"
+															optionLabel="name" :placeholder="`Upgrade ${$t('message.to')}:`"/>
+												<label for="toMembership">{{ `Upgrade ${$t('message.to')}:` }}</label>
+											</span>
+											
+											<InputError :validator="v$.toMembership" :submitted="submitted" replace="membership"></InputError>
+										</div>
+		
+										<div class="inputgroup mb-5 col-12 col-lg-6">
+											<span class="p-float-label w-100">
+												<Dropdown v-model="v$.upgradeInterval.$model" :options="upgradeIntervals" :class="{'p-invalid':v$.upgradeInterval.$invalid && submitted}"
+														optionLabel="name" optionValue="id" placeholder="Select an upgrade interval"/>
+												<label for="toMembership">{{ `Upgrade interval` }}</label>
+											</span>
+											
+											<InputError :validator="v$.upgradeInterval" :submitted="submitted" replace="Interval"></InputError>
+										</div>
+									</div>
 								</div>
 								
 								<div class="col-12 col-lg-6 offset-lg-6">
@@ -131,9 +145,14 @@
 					//{ name: 'weekly', id: 'week' }, 
 					{ name: 'daily', id: 'day' } 
 				],
+				upgradeIntervals: [
+					{ name: 'yearly', id: 'year' }, 
+					{ name: 'monthly', id: 'month' }, 
+				],
 				membership: '',
 				fromMembership: '',
 				toMembership: '',
+				upgradeInterval: null,
 				submitted: false,
 				showMessage: false,
 				response: null,
@@ -151,6 +170,7 @@
 				membership: { required },
 				fromMembership: { minLength: minLength(1) },
 				toMembership: { minLength: minLength(1) },
+				upgradeInterval: { minLength: minLength(1) },
 			}
 		},
 		methods: {
@@ -171,7 +191,8 @@
 					membership: this.user.memberships.filter( item => item.id === this.membership ),
 					upgrade: this.showUpgradeProduct,
 					upgradeFrom: this.fromMembership,
-					upgradeTo: this.toMembership
+					upgradeTo: this.toMembership,
+					upgradeInterval: this.upgradeInterval
 				}
 
 				this.addProduct( this.addProductUrl, data );

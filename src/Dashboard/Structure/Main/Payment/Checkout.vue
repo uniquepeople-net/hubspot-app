@@ -109,9 +109,9 @@
 			},
 			filterProducts(month, year, basic, premium) {
 				this.selectedProduct = this.products.filter( item => {
-					if ( month && item.price.recurring.interval === 'month') {
+					if ( month && item.price.recurring && item.price.recurring.interval === 'month') {
 						return item
-					} else if ( year && item.price.recurring.interval === 'year') {
+					} else if ( year && item.price.recurring && item.price.recurring.interval === 'year') {
 						return item
 					} 
 				})
@@ -126,9 +126,9 @@
 			},
 			getPrice( plan ) {
 				let filteredProduct = this.products.filter( item => {
-					if ( this.month && item.price.recurring.interval === 'month' && item.metadata.membership_id === plan ) {
+					if ( this.month && item.price.recurring && item.price.recurring.interval === 'month' && item.metadata.membership_id === plan ) {
 						return item
-					} else if (this.year && item.price.recurring.interval === 'year' && item.metadata.membership_id === plan ) {
+					} else if (this.year && item.price.recurring && item.price.recurring.interval === 'year' && item.metadata.membership_id === plan ) {
 						return item
 					}
 				})
