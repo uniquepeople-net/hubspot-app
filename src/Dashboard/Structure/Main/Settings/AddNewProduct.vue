@@ -139,7 +139,7 @@
 				description: '',
 				interval: '',
 				intervals: [
-					{ name: 'one-time', id: 'one_time' }, 
+					//{ name: 'one-time', id: 'one_time' }, 
 					{ name: 'yearly', id: 'year' }, 
 					{ name: 'monthly', id: 'month' }, 
 					//{ name: 'weekly', id: 'week' }, 

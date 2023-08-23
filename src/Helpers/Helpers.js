@@ -189,11 +189,13 @@ class Helpers {
 
 	// Format price from cents to eur with two decimals
 	formatPrice(price) {
-		let formatter = new Intl.NumberFormat('sk-SK', {
-			style: 'currency',
-			currency: 'EUR',
-		});
-		return formatter.format(price/100)
+		if( price ) {
+			let formatter = new Intl.NumberFormat('sk-SK', {
+				style: 'currency',
+				currency: 'EUR',
+			});
+			return formatter.format(price/100)
+		} else return ''
 	} 
 
 	// Format string to slug

@@ -128,7 +128,8 @@
 							result: result.token,
 							membership_id: this.payProduct[0].metadata.membership_id,
 							interval: this.payProduct[0].price.recurring ? this.payProduct[0].price.recurring.interval : null,
-							customer_id: this.user.stripe_customer_id
+							customer_id: this.user.stripe_customer_id,
+							upgradeSubscriptionId: this.payProduct[1] && 'id' in this.payProduct[1] ? this.payProduct[1].id : null
 							/* amount: this.payProduct[0].amount_decimal,
 							//billing_details: { name: 'fero' },
 							//returnUrl: window.location.href,*/

@@ -21,7 +21,7 @@
 						<p class="text-subtitle mb-0">{{ $t('message.DateOfStart') }}</p>
 						<p class="text-data">{{ formatTimestamp(subscription.start_date) }}</p>
 						<p class="text-subtitle mb-0">{{ 'Interval' }}</p>
-						<p class="text-data">{{ formatPrice(subscription.plan.amount) + ' / ' + subscription.plan.interval }}</p>
+						<p class="text-data">{{ subscription.plan && formatPrice(subscription.plan.amount) + ' / ' + subscription.plan.interval }}</p>
 						<p class="text-subtitle mb-0">{{ $t('message.NextBillingDate') }}</p>
 						<p class="text-data">{{ formatTimestamp(subscription.current_period_end) }}</p>
 						<!-- <div class="col-3 column-list col-r-border">{{subscription.description}}</div>

@@ -28,7 +28,8 @@
 						class="btn-black my-1" @click="showPayMethods"/>
 			</div>
 		</div>
-			<Pay v-if="showPay" :payProduct="this.productToPay"/>
+			
+		<Pay v-if="showPay" :payProduct="this.productToPay" class="pay-methods"/>
 
 		<Subscriptions :user="user"/>
 	
@@ -58,9 +59,11 @@
 			}
 		},
 		methods: {
+			redirectPay() {
+				this.$router.push({ name: 'wallet-checkout' })
+			},
 			showPayMethods() {
 				this.showPay = true
-				console.log(this.showPay)
 			},
 			checkMembership() {
 				let highestMembership = this.user.memberships.reduce((acc, obj) => {
@@ -76,37 +79,29 @@
 				}
 			},
 			surcharge(id) {
+				// Get last active subscription
 				let lastActiveSubscription = this.subscriptions && this.subscriptions.filter( item => {
 					if ( item.status === 'active' || item.status === 'trialing' ) {
 						return item					
 					}
 				})[0]
 
-				/* let filteredProduct = this.products.filter( item => {
-					if ( item.price.recurring && item.price.recurring.interval === lastActiveSubscription.plan.interval && 
-						Number(item.metadata.membership_id) ===  Number(id) ) {
+				if ( lastActiveSubscription ) {
+					// Get upgrade product based on last active subscription interval
+					let filteredProduct = this.products.find( item => {
+						if ( 'interval' in item.metadata && item.metadata.interval === lastActiveSubscription.plan.interval ) {
 							return item
-					}
-				})
+						}
+					})
 
-				let priceToSurcharge = Number(filteredProduct[0].price.unit_amount) - Number(lastActiveSubscription.plan.amount)
-				let interval = filteredProduct[0].price.recurring.interval === 'month' ? this.$i18n.t("message.month") : this.$i18n.t("message.year")
+					let priceToSurcharge = filteredProduct && filteredProduct.price.unit_amount
+					let interval = filteredProduct && filteredProduct.metadata.interval === 'month' ? this.$i18n.t("message.month") : this.$i18n.t("message.year")
 
-				return ' ( ' + this.$i18n.t('message.Surcharge').toLowerCase() + ' ' + Helpers.formatPrice(priceToSurcharge) + '/' + interval + ' )' */		
+					// Product data and subscription passed to payment
+					this.productToPay = [ filteredProduct, lastActiveSubscription ]
 
-				let filteredProduct = this.products.find( item => {
-					if ( 'interval' in item.metadata && item.metadata.interval === lastActiveSubscription.plan.interval ) {
-						return item
-					}
-				})
-
-				let priceToSurcharge = filteredProduct && filteredProduct.price.unit_amount
-				let interval = filteredProduct && filteredProduct.metadata.interval
-
-				this.productToPay = [ filteredProduct ]
-
-				return ' ( ' + this.$i18n.t('message.Surcharge').toLowerCase() + ' ' + Helpers.formatPrice(priceToSurcharge) + '/' + interval + ' )'
-			
+					return ' ( ' + this.$i18n.t('message.Surcharge').toLowerCase() + ' ' + Helpers.formatPrice(priceToSurcharge) + '/' + interval + ' )'
+				} else return ''
 			}
 		},
 		computed: {
@@ -129,5 +124,8 @@
 .fee-info {
 	max-width: 768px;
 	margin: auto;
+}
+.pay-methods {
+	border: 2px solid var(--main-dark);
 }
 </style>
