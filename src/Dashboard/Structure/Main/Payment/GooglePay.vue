@@ -2,7 +2,7 @@
 	<div>
 		<google-pay-button
 			:buttonLocale="this.$i18n.locale"
-			environment='TEST'
+			environment='PRODUCTION'
 			button-type="pay"
 			v-bind:paymentRequest.prop="{
 				apiVersion: 2,
@@ -146,7 +146,6 @@
 								//returnUrl: window.location.href,*/
 							}
 
-							console.log(data, paymentMethod)
 							
 							
 							axios.post( this.url , data, {

@@ -22,7 +22,7 @@
 			<Button v-if="!user.fee" :label="$t('message.Pay') + ' ' + $t('message.Fee')" 
 					class="btn-black" @click="redirectPay" />
 
-			<div v-if="user.fee && upgrades && products && subscriptions && !showPay" class="text-center">
+			<div v-if="user.fee && upgrades && products && subscriptions && !showPay && checkMembership()" class="text-center">
 				<h5 class="text-description">{{ $t('message.UpgradeMembership') + ':' }}</h5>
 				<Button v-for="upgrade in upgrades" :label="upgrade.name + ' ' + surcharge(upgrade.id)"
 						class="btn-black my-1" @click="showPayMethods"/>
@@ -100,8 +100,10 @@
 					// Product data and subscription passed to payment
 					this.productToPay = [ filteredProduct, lastActiveSubscription ]
 
-					return ' ( ' + this.$i18n.t('message.Surcharge').toLowerCase() + ' ' + Helpers.formatPrice(priceToSurcharge) + '/' + interval + ' )'
-				} else return ''
+					return ' ( ' + Helpers.formatPrice(priceToSurcharge) + '/' + interval + ' )'
+				} else {
+					this.showPay = false
+				}
 			}
 		},
 		computed: {

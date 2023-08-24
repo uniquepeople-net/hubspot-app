@@ -32,6 +32,7 @@
 					(async () => {
 						
 						const {paymentIntent, error} = await response.retrievePaymentIntent(clientSecret);
+
 						if (error) {
 							this.status = 'failed'
 						} else if (paymentIntent && paymentIntent.status === 'succeeded') {
@@ -56,7 +57,7 @@
 						}
 
 						// Update payment status in paymets table depending on commited payment
-						axios.post( this.paymentUpdateUrl + paymentId, { status: this.status }, {
+						axios.post( this.paymentUpdateUrl + paymentId, { status: this.status, paymentIntentId: paymentIntent.id }, {
 								headers: {
 									Authorization: 'Bearer ' + User.getToken()
 								}
