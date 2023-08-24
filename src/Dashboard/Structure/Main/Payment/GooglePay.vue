@@ -2,7 +2,7 @@
 	<div>
 		<google-pay-button
 			:buttonLocale="this.$i18n.locale"
-			environment='PRODUCTION'
+			environment='TEST'
 			button-type="pay"
 			v-bind:paymentRequest.prop="{
 				apiVersion: 2,
@@ -98,7 +98,7 @@
 					transactionInfo: {
 						totalPriceStatus: 'FINAL',
 						totalPriceLabel: 'Total',
-						totalPrice: this.product.price,
+						totalPrice: this.product[0].price,
 						currencyCode: 'EUR',
 						countryCode: 'SK'
 					}
@@ -126,21 +126,28 @@
 
 							let data = {
 								returnUrl: window.location.origin + '/' + this.$i18n.locale + '/wallet/pay-status',
-								productId: this.product.id,
-								priceId: this.product.default_price,
-								description: this.product.name,
+								productId: this.product[0].id,
+								priceId: this.product[0].default_price,
+								description: this.product[0].name,
 								userId: this.user.id,
-								productName: this.product.name, 
+								productName: this.product[0].name, 
 								methodId: paymentMethod.id,
 								email: this.user.email,
 								varSymbol: this.user.var_symbol,
 								stripeToken: token.id,
 								result: paymentMethod,
-								googlePay: true
-								/* amount: this.product.amount_decimal,
+								googlePay: true,
+								membership_id: this.product[0].metadata.membership_id,
+								interval: this.product[0].price.recurring ? this.product[0].price.recurring.interval : null,
+								customer_id: this.user.stripe_customer_id,
+								upgradeSubscriptionId: this.product[1] && 'id' in this.product[1] ? this.product[1].id : null
+								/* amount: this.product[0].amount_decimal,
 								//billing_details: { name: 'fero' },
 								//returnUrl: window.location.href,*/
 							}
+
+							console.log(data, paymentMethod)
+							
 							
 							axios.post( this.url , data, {
 								headers: {
@@ -203,7 +210,7 @@
 				event.preventDefault();
 			},
 			amountString() {
-				return (this.product.price.unit_amount / 100).toString()
+				return (this.product[0].price.unit_amount / 100).toString()
 			}
 		},
 	}

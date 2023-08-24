@@ -9,7 +9,7 @@
 			<Divider />
 
 			<div v-if="method && method === 'google'" class="d-flex justify-content-center">
-				<GooglePay class="my-4" :product="payProduct[0]" :user="user" 
+				<GooglePay class="my-4" :product="payProduct" :user="user" 
 							:url="googlePaymentUrl" :stripeKey="stripePubKey"
 							/>
 			</div>
