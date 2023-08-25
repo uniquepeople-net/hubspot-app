@@ -31,8 +31,10 @@
 			
 		<Pay v-if="showPay" :payProduct="this.productToPay" class="pay-methods"/>
 
-		<Subscriptions :user="user"/>
+		<Subscriptions :user="user" />
 	
+		<Divider class="my-4"/>
+
 		<Payments :user="user"/>
 	</div>
 </template>
@@ -100,6 +102,8 @@
 
 					// Product data and subscription passed to payment
 					this.productToPay = [ filteredProduct, lastActiveSubscription ]
+					
+					//if (  )
 
 					return ' ( ' + Helpers.formatPrice(priceToSurcharge) + '/' + interval + ' )'
 				} else {

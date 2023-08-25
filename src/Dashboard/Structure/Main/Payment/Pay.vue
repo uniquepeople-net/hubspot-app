@@ -4,7 +4,7 @@
 		</template> -->
 		<template #content>
 			
-			<PaymentMethods @choosedMethod="choosedMethod"/>
+			<PaymentMethods @choosedMethod="choosedMethod" :changeProduct="method"/>
 
 			<Divider />
 
@@ -201,6 +201,11 @@
 							stripePubKey: 'payments/stripePubKey',
 							/* payProduct: 'payments/payProduct', */
 							user: 'user/user' })
+		},
+		watch: {
+			payProduct( data ) {
+				this.method = null			
+			}
 		},
 		components: { StripeElements, StripeElement, GooglePay, PaymentMethods }
 	}

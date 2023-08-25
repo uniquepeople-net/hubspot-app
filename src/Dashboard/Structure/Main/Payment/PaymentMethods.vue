@@ -1,6 +1,5 @@
 <template>
 	<div class="mb-5">
-		<!-- <h6 class="mb-4">{{ $t('message.Choose') + ' ' + $t('message.PaymentMethod') + ':' }}</h6> -->
 		<div v-for="method in methods" :key="method.key" class="my-3 methods-wrapper app-card" @click="choosedMethod">
 			
 				<label :for="method.key" class="me-2 w-100 d-flex label-wrapper">
@@ -11,12 +10,6 @@
 			
 				<RadioButton v-model="selectedMethod" :inputId="method.key" name="pizza" :value="method.key" class="me-3 check-radio"/>
 		</div>
-		
-		<!-- <div class="d-flex justify-content-center">
-			<Button :label="$t('message.Continue')" class="mt-5 mx-auto btn-border" 
-					@click="choosedMethod"/>
-		</div> -->
-		
 	</div>
 </template>
  
@@ -28,13 +21,14 @@
 	import CircleBorder from '../Stats/Vectors/CircleBorder.vue'
 
 	export default {
+		props: [ 'changeProduct' ],
 		data() {
 			return {
 				selectedMethod: /* 'card' */'',
 				methods: [
 					{ name: this.$i18n.t('message.CreditDebitCard'), key: 'card', icon: 'bi bi-credit-card-2-back' },
 					{ name: 'Google Pay', key: 'google', icon: 'bi bi-google' },
-					/* { name: 'Apple Pay', key: 'apple', icon: 'bi bi-apple' }, */
+					//{ name: 'Apple Pay', key: 'apple', icon: 'bi bi-apple' },
 				]
 			}
 		},
@@ -42,9 +36,10 @@
 			choosedMethod() {
 				this.$emit('choosedMethod', this.selectedMethod)
 			},
-			checkRadio(event) {
-				console.log(event)
-				
+		},
+		watch: {
+			changeProduct(data) {
+				this.selectedMethod = data
 			}
 		},
 		components: { RadioButton, GooglePayMark, CircleCheckFilled, CircleBorder }

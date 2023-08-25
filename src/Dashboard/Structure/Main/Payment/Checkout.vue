@@ -58,7 +58,7 @@
 			<div v-if="this.selectedProduct.length" >
 				<h5 class="text-value mt-4 mb-3">{{ $t('message.PaymentMethodN') + ':' }}</h5>
 	
-				<Pay :payProduct="this.selectedProduct" class="checkout-pay-method"/>
+				<Pay v-if="selectedProduct" :payProduct="selectedProduct" class="checkout-pay-method"/>
 			</div>
 		
 			<!-- <div class="text-center mt-5">
@@ -68,7 +68,7 @@
 		</div>
 		
 
-		<LoadingIcon v-if="!products" title="products" />
+		<LoadingIcon v-if="!products" :title="$t('message.Products').toLowerCase()" />
 
 	</div>
 </template>
@@ -109,11 +109,13 @@
 			},
 			filterProducts(month, year, basic, premium) {
 				this.selectedProduct = this.products.filter( item => {
-					if ( month && item.price.recurring && item.price.recurring.interval === 'month') {
-						return item
-					} else if ( year && item.price.recurring && item.price.recurring.interval === 'year') {
-						return item
-					} 
+					if ( !('from_membership_id' in item.metadata) && !('from_membership_id' in item.metadata) ) {
+						if ( month && item.price.recurring && item.price.recurring.interval === 'month') {
+							return item
+						} else if ( year && item.price.recurring && item.price.recurring.interval === 'year') {
+							return item
+						} 
+					}
 				})
 					
 				this.selectedProduct = this.selectedProduct.filter( item => {

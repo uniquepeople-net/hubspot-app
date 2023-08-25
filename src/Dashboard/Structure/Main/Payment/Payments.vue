@@ -1,8 +1,11 @@
 <template>
 	<div>
+		<div class="text-end">
+			<Button severity="secondary" text @click="showAll" class="mb-3 text-end" :label="(!allPayments ? $t('message.All') : $t('message.Successful') ) + ' ' + $t('message.Payments').toLowerCase()"></Button>
+		</div>
 		<Accordion :multiple="true" v-model:activeIndex="activeIndex" v-if="payments" expandIcon="pi pi-chevron-down" 
 					class="payment-acc" collapseIcon="pi pi-chevron-up">
-			<AccordionTab  v-for="(payment, index) in payments" :key="payment.id" :headerClass="`${activeIndex === index ? 'opened-tab' : ''}`">
+			<AccordionTab  v-for="(payment, index) in allPayments ? payments : successPayments" :key="payment.id" :headerClass="`${activeIndex === index ? 'opened-tab' : ''}`">
 				<template #header>
 					<div class="acc-tab-header1">
 						<span :class="`${ payment.status !== 'succeeded' ? 'failed' : '' }`">
@@ -51,6 +54,7 @@
 		data() {
 			return {
 				activeIndex: [],
+				allPayments: false
 			}
 		},
 		methods: {
@@ -69,6 +73,9 @@
 			hiddenCard(data) {
 				return '**** **** **** ' + data
 			},
+			showAll() {
+				this.allPayments = !this.allPayments
+			}
 			/* openedTabIndex(event) {
 				this.activeIndex.push(event.index)
 			},
@@ -77,7 +84,10 @@
 			} */
 		},
 		computed: {
-			...mapGetters({ payments: 'payments/listPayments' })
+			...mapGetters({ payments: 'payments/listPayments' }),
+			successPayments() {
+				return this.payments.filter( item => item.status === 'succeeded' )
+			}
 		},
 		components: { Accordion, AccordionTab, LoadingIcon, CircleCheck, CircleFailed },
 
@@ -87,7 +97,6 @@
  
 <style lang='scss' scoped>
 .p-accordion.payment-acc {
-	margin-top: 2rem;
 	:deep(.p-accordion-tab) {
 		margin-bottom: 1rem;
 	}

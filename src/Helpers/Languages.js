@@ -350,6 +350,8 @@ export const messages = {
 			UpgradeProduct: 'Upgrade product',
 			from: 'from',
 			to: 'to',
+			response: 'response',
+			All: 'All',
 		},
 		validations: {
 			required: "This field is required. ",
@@ -709,6 +711,8 @@ export const messages = {
 			UpgradeProduct: 'Produkt pre upgrade',
 			from: 'z',
 			to: 'na',
+			response: 'odpoveď',
+			All: 'Všetky',
 		},
 		validations: {
 			required: "Toto pole je potrebné vyplniť. ",

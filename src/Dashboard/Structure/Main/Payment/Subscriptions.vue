@@ -36,7 +36,7 @@
 				</template>
 			</AccordionTab>
 		</Accordion>
-		<LoadingIcon v-if="!subscriptions" title="subscriptions" :hide="true"/>
+		<LoadingIcon v-if="!subscriptions" :title="$t('message.Subscription').toLowerCase()" :hide="true"/>
 	</div>
 </template>
  
