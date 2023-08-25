@@ -51,6 +51,9 @@
 			this.$store.dispatch('payments/getProducts')
 			this.checkMembership()
 		},
+		mounted() {
+			this.upgrades = this.user.memberships.filter( item => item.id > this.user.membership_id )
+		},
 		data() {
 			return {
 				upgrades: null,
@@ -70,8 +73,6 @@
 					return obj.id > acc.id ? obj : acc;
 				}, { id: -Infinity })
 				
-				this.upgrades = this.user.memberships.filter( item => item.id > this.user.membership_id )
-
 				if ( this.user.membership_id < highestMembership.id ) {
 					return true 
 				} else { 
