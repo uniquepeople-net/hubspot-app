@@ -8,12 +8,14 @@
 
 			<Divider />
 
+			<!-- Google Pay Button -->
 			<div v-if="method && method === 'google'" class="d-flex justify-content-center">
 				<GooglePay class="my-4" :product="payProduct" :user="user" 
 							:url="googlePaymentUrl" :stripeKey="stripePubKey"
 							/>
 			</div>
 
+			<!-- Payment Credit Card Component -->
 			<div v-if="method && method === 'card'">
 				<div>
 					<StripeElements
@@ -32,6 +34,9 @@
 					</Button>
 				</div>
 			</div>
+			
+			<LoadingModal :loading="loading" />
+
 		</template>
 	</Card>
 </template>
@@ -43,6 +48,7 @@
 	import { mapGetters } from 'vuex'
 	import GooglePay from './GooglePay.vue'
 	import PaymentMethods from './PaymentMethods.vue'
+	import LoadingModal from '../../../global/LoadingModal.vue'
 
 	export default {
 		props: {
@@ -207,7 +213,7 @@
 				this.method = null			
 			}
 		},
-		components: { StripeElements, StripeElement, GooglePay, PaymentMethods }
+		components: { StripeElements, StripeElement, GooglePay, PaymentMethods, LoadingModal }
 	}
 </script>
  

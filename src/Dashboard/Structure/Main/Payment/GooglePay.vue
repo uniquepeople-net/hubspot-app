@@ -2,7 +2,7 @@
 	<div>
 		<google-pay-button
 			:buttonLocale="this.$i18n.locale"
-			environment='PRODUCTION'
+			environment='TEST'
 			button-type="pay"
 			v-bind:paymentRequest.prop="{
 				apiVersion: 2,
@@ -41,6 +41,8 @@
 			v-on:readytopaychange="onReadyToPayChange"
 			v-on:click="onClick">
 		</google-pay-button>
+
+		<LoadingModal :loading="loading"/>
 	</div>
 </template>
  
@@ -48,8 +50,10 @@
 <script>
 	import { loadStripe } from '@stripe/stripe-js'
 	import '@google-pay/button-element';
+	import LoadingModal from '../../../global/LoadingModal.vue';
 
 	export default {
+	components: { LoadingModal },
 		props: {
 			product: Object,
 			user: Object,
@@ -103,6 +107,7 @@
 						countryCode: 'SK'
 					}
 				},
+				loading: false
 			}
 		},
 		methods: {
@@ -118,6 +123,12 @@
 							token:token.id
 						}					
 					}).then((result) => {
+						
+						this.loading = true
+
+						console.log(this.loading)
+						
+
 						if (result.error) {
 							// Handle any errors that occurred during payment method creation
 						} else {
@@ -162,6 +173,8 @@
 									window.location = action.redirect_to_url.url;
 								}
 
+								this.loading = false
+
 								const success = response.data.charge.status
 								if ( success && success === 'succeeded' ) {
 									window.location = window.location.origin + '/' + this.$i18n.locale + '/wallet/pay-status'
@@ -171,8 +184,6 @@
 										timer: 8000,
 										title: response.data.charge.status
 									})								
-									/* this.loading = false
-									this.disablePay = false */
 								}
 							})
 							.catch( error => {
@@ -181,8 +192,7 @@
 									timer: 5000,
 									title: "Couldn't connect Pay service"
 								})								
-								//this.loading = false
-								//this.disablePay = false
+								this.loading = false
 							})
 						}
 				});

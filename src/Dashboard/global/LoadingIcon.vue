@@ -69,7 +69,7 @@
 		mounted() {
 			this.timeoutF()
 		},
-		props: ['error', 'title', 'hide'],
+		props: ['error', 'title', 'hide', 'infinite'],
 		data() {
 			return {
 				timeout: false,
@@ -78,12 +78,13 @@
 		},
 		methods: {
 			timeoutF() {
+				let interval = this.infinite ? 999999 : 20000
 				setTimeout( () => {
 					this.timeout = true
 					if ( this.hide ) {
 						this.disapear = true
 					}
-				}, 20000);
+				}, interval);
 			}
 		}
 	}
