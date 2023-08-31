@@ -42,10 +42,14 @@
 			</template>
 	
 			<template v-slot:footer>
-				<div class="text-center mt-5 text-lg fs-4">
-					<Button :label="$t('message.ForgotPassword') + ' ?'" 
+				<div class="mt-3 text-lg fs-4">
+					<!-- <Button :label="$t('message.ForgotPassword') + ' ?'" 
 							class="font-bold p-button-raised p-button-secondary p-button-text"
-							@click="redirectForgot"></Button>
+							@click="redirectForgot"></Button> -->
+					<p class="text-subtitle forgot-redirect" @click="redirectForgot">
+						<span class="color-light">{{ $t('message.ForgotYour') + ' ' }}</span>
+						<span class="text-subtitle-bold">{{ $t('message.password') + '?' }}</span>
+					</p>
 				</div>
 			</template>	
 		</AuthWrapper>
@@ -166,18 +170,9 @@ export default {
 		border-radius: 0 4px 4px 0;
 	} 
 }
-/* .p-togglebutton {
-	background-color: #DC2626;
-	&:not(.p-disabled):not(.p-highlight):hover {
-		background-color: #DC2626;
-	}
-	&.p-highlight {
-		background-color: #16A34A;
-		&:hover {
-			background-color: #16A34A;
-		}
-	}
-} */
+.forgot-redirect {
+	cursor: pointer;
+}
 .spinner-grow {
 	top: 0;
 	bottom: 0;

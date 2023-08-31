@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<BackButton :title="$t('message.Emails')" class="mb-4" route="my-board"/>
 		<router-view :key="$route.fullPath" v-if="emails" :emails="emails"></router-view>
 		<LoadingIcon v-if="!emails"/>
 	</div>
@@ -9,7 +8,6 @@
  
 <script>
 	import { mapGetters } from 'vuex';
-	import BackButton from '../../../global/BackButton.vue';
 
 	export default {
 		created() {
@@ -19,7 +17,6 @@
 		computed: {
 			...mapGetters({ emails: 'emails/emails' }),
 		},
-		components: { BackButton },
 	}
 </script>
  

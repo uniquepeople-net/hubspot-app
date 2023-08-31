@@ -52,5 +52,9 @@
 			justify-content: center;
 		}
 	}
+	:deep(.p-tabview-nav li.p-highlight .p-tabview-nav-link) {
+		border-color: var(--stat-chart-bg);
+		color: var(--stat-chart-bg);
+	}
 }
 </style>

@@ -1,44 +1,32 @@
 <template>
 	<div>
-		<!-- <span v-if="language === 'en'" class="lang-btn" @click="switchLanguage('sk')">
-			<span class="img-wrapper">
-				<img class="active-img" src="../../../../assets/images/united-kingdom.png" alt="slovak-lang">
-				<img class="inactive-img" src="../../../../assets/images/slovakia.png" alt="slovak-lang">
-			</span>
-			<span class="d-flex flex-column">
-				<span class="ps-1 f-size text-center">EN</span>
-				<span class="ps-1 f-inactive text-center">SK</span>
-			</span>
-		</span>
-		<span v-if="language === 'sk'" class="lang-btn" @click="switchLanguage('en')">
-			<span class="img-wrapper">
-				<img class="inactive-img" src="../../../../assets/images/united-kingdom.png" alt="slovak-lang">
-				<img class="active-img" src="../../../../assets/images/slovakia.png" alt="slovak-lang">
-			</span>
-			<span class="d-flex flex-column">
-				<span class="ps-1 f-size text-center">SK</span>
-				<span class="ps-1 f-inactive text-center">EN</span>
-			</span>
-		</span> -->
 		<div class="mb-4 d-flex justify-content-between lang-switch" @click="switchLanguage('en')">
-			<p class="text-undertitle">
-				English
-				<span class="text-sm-notice"></span>
+			<p class="text-undertitle d-flex align-items-center">
+				<FlagGB />
+				<span class="mx-1">
+					{{ $t('message.English') }}
+					<span class="text-sm-notice"></span>
+				</span>
+				<i class="pi pi-check" v-if="language === 'en'"></i>
 			</p>
-			<i class="pi pi-check" v-if="language === 'en'"></i>
 		</div>
 		<div class="mb-4 d-flex justify-content-between lang-switch" @click="switchLanguage('sk')">
-			<p class="text-undertitle">
-				Slovenčina
-				<span class="text-sm-notice d-block">Slovak</span>
+			<p class="text-undertitle d-flex align-items-center">
+				<FlagSK />
+				<span class="mx-1">
+					{{ $t('message.Slovak') }}
+				</span>
+				<i class="pi pi-check" v-if="language === 'sk'"></i>
 			</p>
-			<i class="pi pi-check" v-if="language === 'sk'"></i>
 		</div>
 	</div>
 </template>
  
  
 <script>
+	import FlagGB from '../Main/Stats/Vectors/FlagGB.vue';
+	import FlagSK from '../Main/Stats/Vectors/FlagSK.vue';
+	
 	export default {
 		props: {
 			auth: Boolean
@@ -58,7 +46,8 @@
 			language() {
 				return this.$i18n.locale
 			}
-		}
+		},
+		components: { FlagGB, FlagSK },
 	}
 </script>
  

@@ -1,9 +1,9 @@
 <template>
-	<div class="mb-4 mb-sm-0">
+	<div class="mb-4 mb-sm-0 position-relative">
 		<div class="d-flex justify-content-between justify-content-sm-start">
 			<Dropdown v-model="selectedAction" :options="actions" optionLabel="name" :placeholder="$t('message.SelectanAction')" />
 			<Button v-if="selectedAction" :label="selectedAction.name" :icon="selectedAction.icon" 
-					class="p-button-raised p-button-success ms-3 btn-border-radius" @click="commitAction(selectedAction.route)"
+					class="p-button-raised ms-3 btn-border" @click="commitAction(selectedAction.route)"
 					:disabled="selectedAction && (!selected || selected.length === 0)"/>
 		</div>
 		<small class="error" v-if="selectedAction && (!selected || selected.length === 0)">{{ $t('message.Nouserschosen') }}</small>
@@ -52,6 +52,7 @@
  
 <style lang='scss' scoped>
 .error {
+	position: absolute;
 	color: var(--red-600);
 }
 </style>

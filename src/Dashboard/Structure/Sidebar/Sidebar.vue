@@ -205,6 +205,10 @@
 						padding: 0;
 						background: var(--card-bg);
 					}
+					.p-menuitem-icon {
+						font-size: 1.2rem;
+						margin: -0.35rem;
+					}
 				}
 			}
 			.p-panelmenu-header-content {

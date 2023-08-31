@@ -17,7 +17,7 @@
 			</template>
 		</Dialog>
 
-		<h4 class="mb-4">{{ $t('message.EmailEditor')}}</h4>
+		<BackButton :title="$t('message.EmailEditor')" :route="'all-users'" class="mb-4"/>
 		<div class="row g-3">
 			<div class="col-12 col-md-8">
 				<Card class="card">
@@ -43,14 +43,16 @@
 			<div class="col-12 col-md-4">
 				<Card class="card h-100">
 					<template #title>
-						<h5 class="card-header">Choosed Users</h5>
+						<h5 class="card-header">{{ `Choosed Users  (${emails ? emails.length : ''}) `}}</h5>
 					</template>
 					<template #content>
 						<Listbox :options="emails" :optionLabel="labelTemplate" style="width:100%" listStyle="max-height:300px"
 								v-model="v$.emails.$model" :class="{'p-invalid':v$.emails.$invalid && submitted}"/>
 						<InputError :validator="v$.emails" :submitted="submitted" replace="Users"></InputError>					
 
-						<Button label="Send" :disabled="!emails" icon="bi bi-send-check" :loading="loading" class="p-button-raised p-button-success mt-3" @click="sendEmails(!v$.$invalid)"/>
+						<div class="center-center">
+							<Button label="Send" :disabled="!emails" icon="bi bi-send-check" :loading="loading" class="p-button-raised btn-black mt-3" @click="sendEmails(!v$.$invalid)"/>
+						</div>
 					</template>
 				</Card>	
 			</div>
@@ -81,6 +83,7 @@
 	import FileUploadCard from './FileUploadCard.vue';
 	import EmailTemplates from './EmailTemplates.vue';
 	import DynamicData from './DynamicData.vue';
+	import BackButton from '../../../global/BackButton.vue';
 
 	export default {
 		setup: () => ({ v$: useVuelidate() }),
@@ -215,10 +218,9 @@
 			...mapGetters({ emails: 'appData/getUsers',
 							user: 'user/user' }),
 		},
-		components: { Editor, Listbox, FileUploadCard, EmailTemplates, DynamicData }
+		components: { Editor, Listbox, FileUploadCard, EmailTemplates, DynamicData, BackButton }
 	}
 </script>
- 
  
 <style lang='scss' scoped>
 .inputgroup input {

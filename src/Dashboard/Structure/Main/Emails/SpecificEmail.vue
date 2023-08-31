@@ -1,13 +1,15 @@
 <template>
 	<div>
+		<BackButton :title="$t('message.Emails')" class="mb-4" route="inbox"/>
 		<Card v-if="email" class="card spec-email">
 			<template #title>
-				<div class="card-header">
-					<h5><span class="subhead">Subject:</span> {{email.subject}}</h5>
-					<h5><span class="subhead">From:</span> {{email.reply_name}}</h5>
-					<h5><span class="subhead">From (email):</span> {{email.reply_email}}</h5>
-					<h6><span class="subhead">Date:</span> {{email.created_at_formatted}}</h6>
+				<div class="p-0">
+					<h5 class="text-data-bold"><span class="subhead text-link">Subject:</span> {{email.subject}}</h5>
+					<h5 class="text-data-bold"><span class="subhead text-link">From:</span> {{email.reply_name}}</h5>
+					<h5 class="text-data-bold"><span class="subhead text-link">From (email):</span> {{email.reply_email}}</h5>
+					<h5 class="text-data-bold"><span class="subhead text-link">Date:</span> {{email.created_at_formatted}}</h5>
 				</div>
+				<Divider />
 			</template>
 			<template #content>
 				<div v-html="formatEmailBody(email.body)"></div>
@@ -21,6 +23,7 @@
  
 <script>
 	import { mapGetters } from 'vuex';
+	import BackButton from '../../../global/BackButton.vue';
 
 	export default {
 		created() {
@@ -51,7 +54,8 @@
 			email() {
 				return this.specificEmail[0]
 			}
-		} 
+		},
+		components: { BackButton } 
 	}
 </script>
  

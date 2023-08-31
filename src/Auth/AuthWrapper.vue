@@ -72,7 +72,7 @@
 		#auth #auth-left{padding:5rem}
 	}
 	@media screen and (max-width:576px) { 
-		#auth #auth-left{padding:4rem 3rem}
+		#auth #auth-left{padding:4rem 1rem}
 	}
 	.back-button {
 		top: 1.5rem;

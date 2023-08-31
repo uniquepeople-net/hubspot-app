@@ -4,8 +4,8 @@
 
 		<AuthWrapper>
 			<template v-slot:title>
-				<h1 class="auth-title mb-4">{{ $t('message.ForgotPassword') }}</h1>
-				<h5 class="text-secondary mb-5">{{ $t('message.ForgotPasswordNotice')}}</h5>
+				<h1 class="auth-title mb-4 text-gt-bold text-center">{{ $t('message.EnterEmail') }}</h1>
+				<h5 class="text-secondary mb-5 text-undertitle text-center">{{ $t('message.ForgotPasswordNotice')}}</h5>
 			</template>
 	
 			<template v-slot:body>
