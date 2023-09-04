@@ -321,6 +321,28 @@ class Helpers {
 
 		return returnTime
 	}
+
+	// Calculate age from date
+	calculateAge(birthDate) {
+		// Split the birth date into year, month, and day
+		const [birthYear, birthMonth, birthDay] = birthDate.split('-').map(Number);
+
+		// Get the current date
+		const currentDate = new Date();
+		const currentYear = currentDate.getFullYear();
+		const currentMonth = currentDate.getMonth() + 1; // Month is 0-based in JavaScript
+		const currentDay = currentDate.getDate();
+	  
+		// Calculate age
+		let age = currentYear - birthYear;
+	  
+		// Adjust age based on month and day
+		if (currentMonth < birthMonth || (currentMonth === birthMonth && currentDay < birthDay)) {
+		  age--;
+		}
+	  
+		return age;
+	}
 	  
 }
 

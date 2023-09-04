@@ -1,17 +1,17 @@
 <template>
-	<div class="mt-5">
+	<div>
 		<h5 class="text-value">{{ $t('message.Lineups') }}</h5>
-		<LineupsClub club="ZP Sport Podbrezová" coach="Roman Skuhravý"
-					 imgSrc="http://www.zpfutbal.sk/wp-content/uploads/2022/06/LogoFKZP-1.png"/>
+		<LineupsClub :club="matchData.home.team.officialName" :coach="matchData.home.coach.shortName"
+					 :imgSrc="matchData.home.team.imageDataURL"/>
 		
 		<LineupsPitch class="my-4"/>
 	
-		<LineupsClub club="MFK Dukla Banská Bystrica" coach="Michal Ščasný"
-					 imgSrc="http://www.zpfutbal.sk/wp-content/uploads/2022/06/LogoFKZP-1.png"/>
+		<LineupsClub :club="matchData.away.team.officialName" :coach="matchData.away.coach.shortName"
+					 :imgSrc="matchData.away.team.imageDataURL"/>
 		
 		<Divider class="divider-light my-4"/>
 
-		<Substitutes />
+		<Substitutes :substitutesHome="matchData.home" :substitutesAway="matchData.away"/>
 	</div>
 </template>
  
@@ -22,6 +22,9 @@
 	import Substitutes from './Substitutes.vue'
 
 	export default {
+		props: {
+			matchData: Object
+		},
 		data() {
 			return {
 				}

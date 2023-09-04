@@ -212,6 +212,7 @@ export default {
 			this.showMessage = false
 		},
         handleSubmit(isFormValid) {
+
             this.submitted = true;
 
             if (!isFormValid) {
@@ -233,7 +234,6 @@ export default {
 				active: this.active,
 				memberFrom: this.memberFrom,
 				feeFinishDate: this.feeFinishDate,
-				//varSymbol: this.varSymbol
 			}
 			
 			this.updateUser( this.userUrl, this.id, data )	
@@ -271,6 +271,9 @@ export default {
 			}
 		},
     },
+	computed: {
+		...mapGetters({ playerDetails: 'stats/playerDetails' })
+	},
 	watch: {
 		userData: function(data) {
 			if (data.name) {
@@ -287,6 +290,13 @@ export default {
 				this.memberFrom = data.member_from
 				this.feeFinishDate = data.fee_finish_date
 				//this.varSymbol = data.var_symbol 
+			}
+		},
+		playerDetails: function(data) {
+			if ( !this.userData.club || this.userData.club !== data.currentTeam.officialName ) {
+				this.club = data ? data.currentTeam.officialName : this.userData.club
+				
+				this.handleSubmit(!this.v$.$invalid)
 			}
 		}
 	},

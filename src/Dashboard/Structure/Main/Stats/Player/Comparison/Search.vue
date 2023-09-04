@@ -2,7 +2,8 @@
 	<div>
 		<span class="p-input-icon-left w-100 search-player">
 			<i class="pi pi-search" />
-			<InputText v-model="value1" :placeholder="$t('message.SearchPlayer').toUpperCase()" class="input w-100"/>
+			<InputText v-model="value" :placeholder="$t('message.SearchPlayer').toUpperCase()" class="input w-100" 
+					   @update:modelValue="checkValue"/>
 		</span>
 
 		<SearchedItem imgSrc="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ffmdataba.com%2Fimages%2Fp%2F74371.png&f=1&nofb=1&ipt=232ae61d2f58b1c3ca1d46040c62608e0a7a0a9af28545ea459373d3d8d58328&ipo=images"
@@ -12,15 +13,24 @@
  
  
 <script>
+	import { debounce } from 'lodash';
 	import SearchedItem from './SearchedItem.vue'
 
 	export default {
 		data() {
 			return {
+				value: null
 			}
 		},
 		methods: {
-			
+			checkValue(event) {
+				if ( event.length >= 3 ) {
+					this.updateValue()
+				}
+			},
+			updateValue: debounce(function () {
+				//this.$store.dispatch( "surveys/setHashes", { limit: this.limit } )
+			}, 1000),
 		},
 		components: { SearchedItem },
 	}

@@ -109,7 +109,7 @@ export default {
 
 			await User.refreshedToken();
 
-			axios.get( statBasicUrl + 'players/' + id + '?details=currentTeam', {
+			axios.get( statBasicUrl + 'get_player_current&player_id=' + id, {
 				headers: {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
@@ -186,8 +186,42 @@ export default {
 							acc[key].push(obj);
 						}
 						return acc;
-					}, {}); */			
-					  
+					}, {}); */
+					
+					
+					let matchesDividedTeams = response.data.matches.map( item => {
+						const teamsData = item.detail.teamsData
+						const key1 = Object.keys(teamsData)[0];
+						const key2 = Object.keys(teamsData)[1];
+						
+						const team1 = {...teamsData[key1]};
+						const team2 = {...teamsData[key2]};
+												
+						if ( team1.hasFormation && team2.hasFormation ) {
+							Helpers.substitionsHelper(team1)
+							Helpers.substitionsHelper(team2)
+
+							let playersTeam1, playersTeam2
+						
+							if ( team1.side === 'home' ) {
+								playersTeam1 = [...team1.formation.bench, ...team1.formation.lineup]
+								playersTeam2 = [...team2.formation.bench, ...team2.formation.lineup]
+							} else {
+								playersTeam1 = [...team2.formation.bench, ...team2.formation.lineup]
+								playersTeam2 = [...team1.formation.bench, ...team1.formation.lineup]
+							}
+
+							let scorersTeam1 = playersTeam1.filter( p => Number(p.goals) > 0 || Number(p.ownGoals) > 0 && p.player)
+							let scorersTeam2 = playersTeam2.filter( p => Number(p.goals) > 0 || Number(p.ownGoals) > 0 && p.player)
+							
+							item.scorersHome = scorersTeam1
+							item.scorersAway = scorersTeam2
+						}
+						
+						item.home = team1.side === 'home' ? team1 : team2
+						item.away = team2.side === 'away' ? team2 : team1
+					})
+					
 					context.commit("SETPLAYERMATCHES", response.data.matches)
 				})
 				.catch( error => {

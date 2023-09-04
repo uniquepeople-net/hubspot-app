@@ -1,86 +1,65 @@
 <template>
 	<div>
-		<!-- <Card class="card match-card" v-if="match">
-			<template #content>
-				<div  class="card-body">
-					<div class="row position-relative">
-						<div class="col-5 collect ps-0">
-							<img v-if="team1" class="team-logo" :src="team1.team.imageDataURL ? team1.team.imageDataURL : ''" alt="">
-							<h6 class="team-name fw-bold mb-md-3 text-center">{{ team1.team.officialName }}</h6>
-						</div>
-						<div class="col-2"></div>
-						<div class="col-5 collect pe-0">
-							<img v-if="team2" class="team-logo" :src="team2.team.imageDataURL ? team2.team.imageDataURL : ''" alt="">
-							<h6 class="team-name text-center fw-bold mb-md-3">{{ team2.team.officialName }}</h6>
-						</div>
-	
-						<div class="col-6 mt-3">
-							<Scorers :scorers="scorersTeam1" position="right"/>
-						</div>
-	
-						<div class="col-6 mt-3">
-							<Scorers :scorers="scorersTeam2" position="left"/>
-						</div>
-	
-						<div class="result position-absolute">
-							<p class="date mb-1">{{ matchDate(match.dateutc) }}</p>
-							<span>{{ modifyResult(match.label) }}</span>
-						</div>
-					</div>					
-	
-					<AdvancedData class="mt-5" :id="match.wyId" v-if="displayMatchStats"/>
-	
-					<AdvancedDataPlayer class="mt-5" :id="match.wyId" v-if="!displayMatchStats"/>
-	
-					<Skeleton v-if="!match" width="5rem" height="2.5rem" class="result position-absolute"></Skeleton>					
-				</div>
-			</template>
-		</Card>  -->
 		<Card class="card match-card">
 			<template #content>
 				<div  class="card-body">
-					<div class="row position-relative">
+					<div class="row position-relative w-100 mx-auto">
 						<div class="col-4 collect ps-0">
-							<img class="team-logo" src="http://www.zpfutbal.sk/wp-content/uploads/2022/06/LogoFKZP-1.png" alt="">
-							<h6 class="text-sm-bold fw-bold mb-md-3 text-center px-1">ZP Sport Podbrezová</h6>
+							<img class="team-logo" :src="matchData.home.team.imageDataURL" alt="" />
+							<h6 class="text-sm-bold fw-bold mb-md-3 text-center px-1">{{ matchData.home.team.officialName }}</h6>
 						</div>
 						<div class="col-4"></div>
 						<div class="col-4 collect pe-0">
-							<img class="team-logo" src="http://www.zpfutbal.sk/wp-content/uploads/2022/06/LogoFKZP-1.png" alt="">
-							<h6 class="text-sm-bold text-center fw-bold mb-md-3 px-1">ZP Sport Podbrezová</h6>
+							<img class="team-logo" :src="matchData.away.team.imageDataURL" alt="" />
+							<h6 class="text-sm-bold text-center fw-bold mb-md-3 px-1">{{ matchData.away.team.officialName }}</h6>
 						</div>
 	
 						<div class="result position-absolute">
 							<p class="date mb-1">{{ matchDate(matchData.date) }}</p>
-							<p class="date mb-1">{{ matchData.label }}</p>
-							<span>2&nbsp;&nbsp;:&nbsp;&nbsp;2</span>
+							<span class="span-result px-0">
+								<span>{{ score(matchData.home) }}</span>
+								<span class="p-0 px-1">:</span>
+								<span>{{ score(matchData.away) }}</span>
+							</span>
 						</div>
-					</div>					
+					</div>		
+
+					<div v-if="goals" class="row gx-5 mt-3">
+						<div class="col-6 d-flex justify-content-end">
+							<span class="w-auto d-inline-block">
+								<div v-for="scorer in matchData.scorersHome">
+										<Football v-for="goal in Number(scorer.goals)" class="me-1"/>
+										<span class="text-des-small ms-2">{{scorer.player.shortName}}</span>
+								</div>
+							</span>
+						</div>
+						<div class="col-6">
+							<div v-for="scorer in matchData.scorersAway" >
+								<Football v-for="goal in Number(scorer.goals)" class="me-1"/>
+								<span class="text-des-small ms-2">{{scorer.player.shortName}}</span>
+							</div>
+						</div>
+					</div>			
 	
 					<Divider class="divider-light"/>				
 				</div>
 			</template>
 		</Card> 
-	
-		<!-- <div v-if="!match" class="text-center mt-5">
-			<StatMessage />
-		</div> -->
-		
 	</div>
 </template>
  
  
 <script>
-	import { mapGetters } from 'vuex';
 	import AdvancedData from '../Structure/Main/Stats/MatchData/AdvancedData.vue';
 	import AdvancedDataPlayer from '../Structure/Main/Stats/PlayerData/AdvancedDataPlayer.vue';
 	import Scorers from '../Structure/Main/Stats/MatchData/Scorers.vue';
 	import QuestionMark from '../Structure/Main/Stats/Vectors/QuestionMark.vue';
-	import StatMessage from '../Structure/Main/Stats/StatMessage.vue';
+	import Football from '../Structure/Main/Stats/Vectors/Football.vue';
 
 	export default {
 		props: {
-			matchData: Object
+			matchData: Object,
+			goals: Boolean
 		},
 		methods: {
 			modifyResult(data) {
@@ -95,19 +74,18 @@
 					let date = new Date(data)
 					return date.toLocaleString(['sk-SK'], { day: 'numeric', month: 'numeric', year: 'numeric' , hour: '2-digit', minute: '2-digit'})
 				}
+			},
+			score(data) {
+				if ( data.scoreP !== 0 ) {
+					return data.scoreP
+				} else if ( data.scoreET !== 0 ) {
+					return data.scoreET
+				} else return data.score
 			}
 		},
-		computed: {
-			...mapGetters({ match: 'stats/matchDetails',
-							team1: 'stats/team1',
-							team2: 'stats/team2',
-							scorersTeam1: 'stats/scorersTeam1',
-							scorersTeam2: 'stats/scorersTeam2' })
-		},
-		components: { Scorers, AdvancedData, AdvancedDataPlayer, QuestionMark, StatMessage }
+		components: { Scorers, AdvancedData, AdvancedDataPlayer, QuestionMark, Football }
 	}
 </script>
- 
  
 <style lang='scss' scoped>
 .match-card {
@@ -137,8 +115,8 @@
 		transform: translateY(-50%);
 		width: fit-content;
 		text-align: center;
-		span {
-			padding: 0.4rem 1rem;
+		span.span-result {
+			padding: 0.3rem 1rem;
 			width: auto;
 			min-width: 94px;
 			background:var(--main-dark);

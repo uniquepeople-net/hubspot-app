@@ -3,16 +3,17 @@
 		<h5 class="text-value mb-4">{{ $t('message.YourLastGames') }}</h5>
 		<div v-if="matches">
 
-			<MatchCard v-for="match in matches.slice(0, showMatches)" @click="selectMatch(match)" class="match-card" :matchData="match"/>
+			<MatchCard v-for="match in matches.slice(0, showMatches)" @click="selectMatch(match)" class="match-card" 
+					   :matchData="match" :goals="false" />
 			
 			<div class="text-center see-more w-100">
-				<!-- <span class="text-sm-bold" @click="seeMore"><u>{{ $t('message.SeeMore') }}</u></span> -->
 				<Button class="text-sm-bold" link :label="$t('message.SeeMore')" @click="seeMore" :loading="loading" />
 			</div>
 			
 			<Divider class="divider-light mt-0"/>
 		
 		</div>
+
 		<LoadingIcon v-if="!matches" :title="$t('message.Matches')"/>
 	</div>
 </template>

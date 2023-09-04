@@ -2,8 +2,8 @@
 	<div>
 		<BackButton v-if="specificMatch" :title="$t('message.YourLastGames')" @click="lastGames" class="my-4 backbtn-lastgames"/>
 		<LastGames v-if="!specificMatch" @selectedMatch="selectedMatch" class="mt-4"/>
-		<MatchCard v-if="specificMatch" :matchData="match" />
-		<LineUps />
+		<MatchCard v-if="specificMatch" :matchData="match" :goals="true"/>
+		<LineUps v-if="specificMatch" class="mt-4" :matchData="match"/>
 		<AdvStats />
 	</div>
 </template>

@@ -2,27 +2,51 @@
 	<div>
 		<h5 class="text-value">{{ $t('message.Substitutes') }}</h5>
 		<div class="team-btns d-flex">			
-			<Button :label="'team1.team.name'" severity="secondary" @click="switchTeam('1')"
-				:outlined="teamCheck === '1' ? false : true" raised rounded :class="`club-btn btn-home ${ teamCheck === '1'? 'active-btn' : '' }`">
+			<Button severity="secondary" @click="switchTeam('1')"
+					:outlined="teamCheck === '1' ? false : true" raised rounded :class="`club-btn btn-home ${ teamCheck === '1'? 'active-btn' : '' }`">
 				<div class="d-flex align-items-center">
-					<img class="team-logo" :src="'http://www.zpfutbal.sk/wp-content/uploads/2022/06/LogoFKZP-1.png'" alt="">
-					<span class="ms-2 text-sm-notice ">{{ 'MFK Dukla Banská Bystrica' }}</span>
+					<img class="team-logo" :src="substitutesHome.team.imageDataURL" alt="">
+					<span class="ms-2 text-sm-notice ">{{ substitutesHome.team.officialName }}</span>
 				</div>
 			</Button>
-			<Button :label="'team2.team.name'" severity="secondary" @click="switchTeam('2')"
-				:outlined="teamCheck === '2' ? true : false" raised rounded :class="`club-btn btn-guest ${ !teamCheck === '2' ? 'active-btn' : '' }`">
+			<Button severity="secondary" @click="switchTeam('2')"
+					:outlined="teamCheck === '2' ? true : false" raised rounded :class="`club-btn btn-guest ${ !teamCheck === '2' ? 'active-btn' : '' }`">
 				<div class="d-flex align-items-center">
-					<img class="team-logo" :src="'http://www.zpfutbal.sk/wp-content/uploads/2022/06/LogoFKZP-1.png'" alt="">
-					<span class="ms-2 text-sm-notice">{{ 'MFK Dukla Banská Bystrica' }}</span>
+					<img class="team-logo" :src="substitutesAway.team.imageDataURL" alt="">
+					<span class="ms-2 text-sm-notice">{{ substitutesAway.team.officialName }}</span>
 				</div>
 			</Button>
 		</div>
+
+		<div class="mt-3 substitutions">
+			<div v-for="player in (teamCheck === '1' ? substitutesHome.formation.bench : substitutesAway.formation.bench)" class="">
+				<span class="text-description d-flex justify-content-between data">
+					<span>
+						<span v-if="'outside' in player">{{ player.outside.shortName }}</span>
+					</span>
+					<span class="d-flex align-items-center text-smd-message">
+						{{ '(' }}					
+						<span v-if="'outside' in player">{{ player.outside.minute}}'&nbsp;</span>  
+						<span>{{ player.player.shortName + ')' }}</span>
+						<ArrowUp v-if="'outside' in player" class="mx-1"/>	
+					</span>
+				</span>
+				<Divider class="my-1"/>
+			</div>
+		</div>
+
 	</div>
 </template>
  
  
 <script>
+	import ArrowUp from '../../Vectors/ArrowUp.vue'
+	
 	export default {
+		props: {
+			substitutesHome: Object,
+			substitutesAway: Object
+		},
 		data() {
 			return {
 				teamCheck: '1',
@@ -34,6 +58,7 @@
 				this.teamCheck = team
 			}
 		},
+		components: { ArrowUp }
 	}
 </script>
  
@@ -83,4 +108,15 @@
 		z-index: 50;
 	}
 }
+.substitutions {
+	.number {
+		display: inline-flex;
+		justify-content: center;
+		width: 23px;
+	}
+	.data {
+		height: 1.9rem;
+	}
+}
+
 </style>

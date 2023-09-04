@@ -4,7 +4,7 @@
 		<Divider class="my-4 divider-light"/>
 		<BackButton v-if="specificMatch" :title="$t('message.YourLastGames')" @click="lastGames" class="backbtn-lastgames"/>
 		<LastGames v-if="!specificMatch" @selectedMatch="selectedMatch"/>
-		<MatchCard v-if="specificMatch" :matchData="match"/>
+		<MatchCard v-if="specificMatch" :matchData="match" :goals="true"/>
 		<MatchStats v-if="matchId && user && specificMatch" :matchId="matchId" :id="user.instat_id"/>
 		<MatchEvents v-if="matchId && specificMatch" :matchId="matchId"/>
 		<Comparison />
