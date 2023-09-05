@@ -19,14 +19,16 @@
 		</div>
 
 		<div class="mt-3 substitutions">
-			<div v-for="player in (teamCheck === '1' ? substitutesHome.formation.bench : substitutesAway.formation.bench)" class="">
+			<div v-for="player in (teamCheck === '1' ? reversedHomeBench : reversedAwayBench )" class="">
 				<span class="text-description d-flex justify-content-between data">
-					<span>
+					<span class="d-flex align-items-center">
+						<ArrowDown v-if="'outside' in player" class="mx-1" />
 						<span v-if="'outside' in player">{{ player.outside.shortName }}</span>
+						<span  v-if="'outside' in player">{{ ' (' + player.outside.minute + "')" }}</span>
 					</span>
 					<span class="d-flex align-items-center text-smd-message">
 						{{ '(' }}					
-						<span v-if="'outside' in player">{{ player.outside.minute}}'&nbsp;</span>  
+						<!-- <span v-if="'outside' in player">{{ player.outside.minute}}'&nbsp;</span>   -->
 						<span>{{ player.player.shortName + ')' }}</span>
 						<ArrowUp v-if="'outside' in player" class="mx-1"/>	
 					</span>
@@ -40,6 +42,7 @@
  
  
 <script>
+	import ArrowDown from '../../Vectors/ArrowDown.vue'
 	import ArrowUp from '../../Vectors/ArrowUp.vue'
 	
 	export default {
@@ -58,10 +61,18 @@
 				this.teamCheck = team
 			}
 		},
-		components: { ArrowUp }
+		computed: {
+			reversedHomeBench() {
+				return this.substitutesHome.formation.bench.reverse()
+			},
+			reversedAwayBench() {
+				return this.substitutesAway.formation.bench.reverse()
+			}
+		},
+		components: { ArrowUp, ArrowDown }
 	}
 </script>
- 
+
  
 <style lang='scss' scoped>
 .team-btns {
@@ -115,7 +126,7 @@
 		width: 23px;
 	}
 	.data {
-		height: 1.9rem;
+		min-height: 1.9rem;
 	}
 }
 

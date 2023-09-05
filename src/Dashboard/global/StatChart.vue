@@ -53,7 +53,7 @@
 					//labels: ['Accurate','Inaccurate'],
 					datasets: [
 						{
-							data: [this.accurate, .5, this.inacurate, .5],
+							data: [this.accurate, this.space(), this.inacurate, this.space()],
 							backgroundColor: [this.accColor, 'transparent', this.inaccColor, 'transparent'],
 							hoverBackgroundColor: [this.accColor, 'transparent', this.inaccColor, 'transparent'],
 							borderColor: [this.accColor, 'transparent', this.inaccColor, 'transparent'],
@@ -77,6 +77,12 @@
 						padding: -10
 					}
 				},
+			}
+		},
+		methods: {
+			space() {
+				let total = this.accurate + this.inacurate
+				return (total/100) * .5
 			}
 		},
 		components: { GridCard }

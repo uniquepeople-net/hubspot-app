@@ -29,6 +29,7 @@
 							<span class="w-auto d-inline-block">
 								<div v-for="scorer in matchData.scorersHome">
 										<Football v-for="goal in Number(scorer.goals)" class="me-1"/>
+										<Football v-for="goal in Number(scorer.ownGoals)" class="me-1" color="red"/>
 										<span class="text-des-small ms-2">{{scorer.player.shortName}}</span>
 								</div>
 							</span>
@@ -36,6 +37,7 @@
 						<div class="col-6">
 							<div v-for="scorer in matchData.scorersAway" >
 								<Football v-for="goal in Number(scorer.goals)" class="me-1"/>
+								<Football v-for="goal in Number(scorer.ownGoals)" class="me-1" color="red"/>
 								<span class="text-des-small ms-2">{{scorer.player.shortName}}</span>
 							</div>
 						</div>
@@ -105,6 +107,11 @@
 	}
 	h5 {
 		font-size: 1.5rem;
+	}
+	.own-goal {
+		path {
+			stroke: red;
+		}
 	}
 	.result {
 		top: 1.5rem;

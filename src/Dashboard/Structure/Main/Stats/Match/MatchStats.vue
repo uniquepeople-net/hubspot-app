@@ -4,7 +4,7 @@
 		<LastGames v-if="!specificMatch" @selectedMatch="selectedMatch" class="mt-4"/>
 		<MatchCard v-if="specificMatch" :matchData="match" :goals="true"/>
 		<LineUps v-if="specificMatch" class="mt-4" :matchData="match"/>
-		<AdvStats />
+		<AdvStats v-if="matchId && specificMatch" :match="match"/>
 	</div>
 </template>
  

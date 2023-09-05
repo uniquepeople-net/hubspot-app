@@ -326,26 +326,28 @@ export default {
 					})
 				}) */
 		},
-		async getMatchStats( context, id ) {
+		async getMatchStats( context, data ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
 
 			await User.refreshedToken();
 
-			axios.get( statBasicUrl + 'matches/' + id  + '/advancedstats',  {
+			axios.get( statBasicUrl + 'get_match_advanced_stats&match_id=' + data.id,  {
 				headers: {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
 				.then( response => {
-					let team1 = context.rootGetters['stats/team1']
-					let team2 = context.rootGetters['stats/team2']
 
+					let home = data.homeId
+					let away = data.awayId
+
+					// rename Object keys to "home" and "away" instead team id
 					for (let [key, value] of Object.entries(response.data)) {
 						for (let [keyIn, valueIn] of Object.entries(value)) {
-							if ( Number(keyIn) === Number(team1.teamId) ) {
-								value['team1'] = valueIn
+							if ( Number(keyIn) === Number(home) ) {
+								value['home'] = valueIn
 								delete value[keyIn]
-							} else if ( Number(keyIn) === Number(team2.teamId) ){
-								value['team2'] = valueIn
+							} else if ( Number(keyIn) === Number(away) ){
+								value['away'] = valueIn
 								delete value[keyIn]
 							}
 						}
