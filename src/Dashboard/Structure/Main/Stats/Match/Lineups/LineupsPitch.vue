@@ -1,92 +1,47 @@
 <template>
 	<div class="pitch-lineups">
+		<span class="home-formation text-x-small">{{ formations.homeData.scheme }}</span>
 		<Pitch />
-		<TShirtNumber v-for="player in players" :number="3" :x="16" :y="19" :position="player.position" pitchHalf="top"/>
+		<span class="away-formation text-x-small">{{ formations.awayData.scheme }}</span>
+		<LineUpHead v-for="player in homePlayers" :x="'x' in player ? player.x : 0" :y="'y' in player ? player.y : 0" :position="player.position" pitchHalf="top"/>
+		<LineUpHead v-for="player in awayPlayers" :x="'x' in player ? player.x : 0" :y="'y' in player ? player.y : 0" :position="player.position" pitchHalf="top"/>
 	</div>
 </template>
  
  
 <script>
-	import TShirtNumber from '../../Global/TShirtNumber.vue'
+	import LineUpHead from '../../Global/LineUpHead.vue'
 	import Pitch from '../../Vectors/Pitch.vue'
 
 	export default {
+		props: {
+			formations: Object
+		},
 		data() {
 			return {
-				players: [
-					{
-						"9485": {
-							"playerId": 9485,
-							"position": "gk"
-						}
-					},
-					{
-						"288081": {
-							"playerId": 288081,
-							"position": "lcb"
-						}
-					},
-					{
-						"445146": {
-							"playerId": 445146,
-							"position": "rcmf"
-						}
-					},
-					{
-						"8975": {
-							"playerId": 8975,
-							"position": "amf"
-						}
-					},
-					{
-						"381390": {
-							"playerId": 381390,
-							"position": "rb"
-						}
-					},
-					{
-						"62216": {
-							"playerId": 62216,
-							"position": "lb"
-						}
-					},
-					{
-						"106": {
-							"playerId": 106,
-							"position": "lcmf"
-						}
-					},
-					{
-						"445123": {
-							"playerId": 445123,
-							"position": "cf"
-						}
-					},
-					{
-						"11240": {
-							"playerId": 11240,
-							"position": "rcb"
-						}
-					},
-					{
-						"62285": {
-							"playerId": 62285,
-							"position": "rw"
-						}
-					},
-					{
-						"62210": {
-							"playerId": 62210,
-							"position": "lw"
-						}
-					}
-				],
+
 			}
 		},
 		methods: {
 			
 		},
-		components: { Pitch, TShirtNumber },
+		computed: {
+			homePlayers() {
+				return Helpers.positionsCoordinates(this.formations.homePlayers, 'home')
+			},
+			awayPlayers() {
+				return Helpers.positionsCoordinates(this.formations.awayPlayers, 'away')
+			}
+		},
+		watch: {
+			formations: {
+				deep: true, // Watch nested properties of formations
+				handler(newValue) {
+					console.log('formations changed:', newValue);
+				}
+			}
+		},
+		components: { Pitch, LineUpHead },
 	}
 </script>
  
@@ -96,8 +51,19 @@
 	position: relative;
 	width: fit-content;
 	margin: auto;
+	.home-formation, .away-formation {
+		position: absolute;
+	}
+	.home-formation {
+		bottom: 100%;
+	}
+	.away-formation {
+		top: 100%;
+	}
 	svg {
 		width: 100%;
 	}
 }
 </style>
+
+ 

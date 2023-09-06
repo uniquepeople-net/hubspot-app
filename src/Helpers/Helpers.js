@@ -343,7 +343,70 @@ class Helpers {
 	  
 		return age;
 	}
+
+	// Remove object levels to specific level
+	findParentObject(obj, keyName) {
+		for (const key in obj) {
+			if (obj.hasOwnProperty(key)) {
+				if (key === keyName) {
+					return obj; // Return the parent object when "scheme" is found
+				} else if (typeof obj[key] === "object") {
+					// If the current value is an object, recursively search within it
+					const result = this.findParentObject(obj[key], keyName);
+					if (result !== null) {
+						return result; // Return the result if "scheme" is found in the nested object
+					}
+				}
+			}
+		}
+		return null; // Key "scheme" not found in the object
+	}
 	  
+
+	// Positions on pitch
+	positionsCoordinates(playersArray, homeGuest) {
+		const updatedPlayersArray = playersArray && playersArray.map( player => {
+			const key = Object.keys(player);
+			
+			switch (player[key].position) {
+				case 'gk':
+					if ( homeGuest === 'home' ) {
+						return { ...player[key], x: 2.5, y: 50 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player[key], x:96.5, y:50 }
+					} 
+					
+				default:
+					return player;
+			}
+		})
+		return updatedPlayersArray
+	}
+
+
+	// Teams Formations with players details get by multiple promise
+	updatePlayersDetails( responses, data ) {					
+		return data.map( item => {
+			const key = Object.keys(item);
+
+			const matchingResponse = responses.find(response => {
+				return response.data.wyId === item[key].playerId;
+			})
+			
+			if (matchingResponse) {
+				return {
+					[key]: {
+						...item[key],
+						details: matchingResponse.data,
+					},
+				};
+			} else {
+				return item;
+			}
+		})	
+	}
+
+
 }
 
 export default Helpers = new Helpers();

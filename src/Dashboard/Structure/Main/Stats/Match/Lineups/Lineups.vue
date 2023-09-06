@@ -4,7 +4,8 @@
 		<LineupsClub :club="matchData.home.team.officialName" :coach="matchData.home.coach.shortName"
 					 :imgSrc="matchData.home.team.imageDataURL"/>
 		
-		<LineupsPitch class="my-4"/>
+		<LineupsPitch class="my-4" v-if="formations" :formations="formations"/>
+		<LoadingIcon v-if="!formations"/>
 	
 		<LineupsClub :club="matchData.away.team.officialName" :coach="matchData.away.coach.shortName"
 					 :imgSrc="matchData.away.team.imageDataURL"/>
@@ -17,11 +18,16 @@
  
  
 <script>
+	import { mapGetters } from 'vuex'
+	import LoadingIcon from '../../../../../global/LoadingIcon.vue'
 	import LineupsClub from './LineupsClub.vue'
 	import LineupsPitch from './LineupsPitch.vue'
 	import Substitutes from './Substitutes.vue'
 
 	export default {
+		created() {
+			this.$store.dispatch('stats/getMatchFormations', { id: this.matchData.matchId, homeId: this.matchData.home.teamId, awayId: this.matchData.away.teamId } )	
+		},
 		props: {
 			matchData: Object
 		},
@@ -32,7 +38,10 @@
 		methods: {
 			
 		},
-		components: { LineupsClub, LineupsPitch, Substitutes },
+		computed: {
+			...mapGetters({ formations: 'stats/formations' })
+		},
+		components: { LineupsClub, LineupsPitch, Substitutes, LoadingIcon },
 	}
 </script>
  

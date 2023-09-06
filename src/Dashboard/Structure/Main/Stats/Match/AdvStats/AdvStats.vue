@@ -5,9 +5,10 @@
 		<TabView scrollable>
 			<TabPanel v-if="stats" v-for="item in items" :header="item.title">
 				
-				<div v-for="stat in item.stats" class="item-stat">
+				<div v-for="stat in item.stats" :class="`item-stat ${stat.type === 'duplex' ? 'mt-3' : ''}`">
 					<CircleStat v-if="stat.type === 'circle'" :value1="stat.valueHome" :value2="stat.valueAway" :percentage="stat.percentage" :title="stat.title"/>
-					<StatBarSides v-if="stat.type === 'barSides'" :title="stat.title" :valueHome="stat.valueHome" :valueAway="stat.valueAway"/>
+					<StatBarSides v-if="stat.type === 'barSides'" :title="stat.title" :valueHome="stat.valueHome" :valueAway="stat.valueAway" />
+					<StatBarDuplex v-if="stat.type === 'duplex' && checkNull(stat.valueHome, stat.valueAway)" :title="stat.title" :valueHome="stat.valueHome" :valueAway="stat.valueAway" />
 				</div>				
 
 			</TabPanel>				
@@ -30,6 +31,7 @@
 	import CircleStat from '../../Global/CircleStat.vue';
 	import StatBarSides from '../../Global/StatBarSides.vue';
 	import LoadingIcon from '../../../../../global/LoadingIcon.vue';
+	import StatBarDuplex from '../../Global/StatBarDuplex.vue';
 
 	export default {
 		props: [ 'match' ],
@@ -37,21 +39,24 @@
 			this.$store.dispatch('stats/getMatchStats', { id: this.match.matchId, homeId: this.match.home.teamId, awayId: this.match.away.teamId } )
 		},
 		data() {
-			return {
-				/* stats: [
-					{ title: this.$i18n.t('message.General').toUpperCase(), component: 'General' },
-					{ title: this.$i18n.t('message.Shots').toUpperCase(),  },
-					{ title: this.$i18n.t('message.Passes').toUpperCase(),  },
-					{ title: this.$i18n.t('message.BallPossession').toUpperCase(),  },
-					{ title: this.$i18n.t('message.Attack').toUpperCase(),  },
-					{ title: this.$i18n.t('message.Defence').toUpperCase(),  },
-					{ title: this.$i18n.t('message.Duels').toUpperCase(),  },
-					{ title: this.$i18n.t('message.Transitions').toUpperCase(),  },
-				] */
-			}
+			return {}
 		},
 		methods: {
- 
+			checkNull( value1, value2 ) {
+				if ( value1 === 0 && value2 === 0 ) {
+					return false
+				} else if ( value1.toString().includes(':') & value2.toString().includes(':') ) {
+					if ( this.timeToNumber(value1) <= 0 && this.timeToNumber(value2) <= 0 ) {
+						return false
+					} else return true
+				} else return true
+			},
+			timeToNumber(time) {
+				const [minutes, seconds] = time.toString().split(":").map(Number);
+				const fractionOfMinute = seconds / 60;
+				const result = Number(minutes + fractionOfMinute);
+				return result
+			}
 		},
 		computed: {
 			...mapGetters({ stats: 'stats/matchStats' }),
@@ -61,6 +66,10 @@
 				let passes = this.stats.passes
 				let attacks = this.stats.attacks
 				let possession = this.stats.possession
+				let flanks = this.stats.flanks
+				let defence = this.stats.defence
+				let duels = this.stats.duels
+				let transitions = this.stats.transitions
 				return [
 					{ title: this.$i18n.t('message.General').toUpperCase(), 
 						stats: [
@@ -141,12 +150,87 @@
 							{ title: i18n.t('message.AvgPossessionTime'), valueHome: possession.home.avgPossessionDuration, valueAway: possession.away.avgPossessionDuration, type: 'barSides'},
 							{ title: i18n.t('message.ReachingOpponentHalf'), valueHome: possession.home.reachingOpponentHalf, valueAway: possession.away.reachingOpponentHalf, type: 'barSides'},
 							{ title: i18n.t('message.ReachingOpponentBox'), valueHome: possession.home.reachingOpponentBox, valueAway: possession.away.reachingOpponentBox, type: 'barSides'},
+							
+							{ title: i18n.t('message.PossessionPercent'), valueHome: possession.home.possessionPercent, valueAway: possession.away.possessionPercent, type: 'barSides'},
+							{ title: i18n.t('message.BallPossession') + " 1'-15'", valueHome: possession.home['possession1-15'], valueAway: possession.away['possession1-15'], type: 'duplex'},
+							{ title: i18n.t('message.BallPossession') + " 16'-30'", valueHome: possession.home['possession16-30'], valueAway: possession.away['possession16-30'], type: 'duplex'},
+							{ title: i18n.t('message.BallPossession') + " 31'-45'", valueHome: possession.home['possession31-45'], valueAway: possession.away['possession31-45'], type: 'duplex'},
+							{ title: i18n.t('message.BallPossession') + " 46'-60'", valueHome: possession.home['possession46-60'], valueAway: possession.away['possession46-60'], type: 'duplex'},
+							{ title: i18n.t('message.BallPossession') + " 61'-75'", valueHome: possession.home['possession61-75'], valueAway: possession.away['possession61-75'], type: 'duplex'},
+							{ title: i18n.t('message.BallPossession') + " 76'-90'", valueHome: possession.home['possession76-90'], valueAway: possession.away['possession76-90'], type: 'duplex'},
+							{ title: i18n.t('message.BallPossession') + " 91'-105'", valueHome: possession.home['possession91-105'], valueAway: possession.away['possession91-105'], type: 'duplex'},
+							{ title: i18n.t('message.BallPossession') + " 106'-120'", valueHome: possession.home['possession106-120'], valueAway: possession.away['possession106-120'], type: 'duplex'},
+
+							{ title: i18n.t('message.PossessionMinutes'), valueHome: possession.home.purePossessionTime, valueAway: possession.away.purePossessionTime, type: 'barSides'},
+							{ title: i18n.t('message.BallPossession') + " 1'-15'", valueHome: possession.home['minutesOfPossession1-15'], valueAway: possession.away['minutesOfPossession1-15'], type: 'duplex'},
+							{ title: i18n.t('message.BallPossession') + " 16'-30'", valueHome: possession.home['minutesOfPossession16-30'], valueAway: possession.away['minutesOfPossession16-30'], type: 'duplex'},
+							{ title: i18n.t('message.BallPossession') + " 31'-45'", valueHome: possession.home['minutesOfPossession31-45'], valueAway: possession.away['minutesOfPossession31-45'], type: 'duplex'},
+							{ title: i18n.t('message.BallPossession') + " 46'-60'", valueHome: possession.home['minutesOfPossession46-60'], valueAway: possession.away['minutesOfPossession46-60'], type: 'duplex'},
+							{ title: i18n.t('message.BallPossession') + " 61'-75'", valueHome: possession.home['minutesOfPossession61-75'], valueAway: possession.away['minutesOfPossession61-75'], type: 'duplex'},
+							{ title: i18n.t('message.BallPossession') + " 76'-90'", valueHome: possession.home['minutesOfPossession76-90'], valueAway: possession.away['minutesOfPossession76-90'], type: 'duplex'},
+							{ title: i18n.t('message.BallPossession') + " 91'-105'", valueHome: possession.home['minutesOfPossession91-105'], valueAway: possession.away['minutesOfPossession91-105'], type: 'duplex'},
+							{ title: i18n.t('message.BallPossession') + " 106'-120'", valueHome: possession.home['minutesOfPossession106-120'], valueAway: possession.away['minutesOfPossession106-120'], type: 'duplex'},
+						]
+					},
+					{ title: this.$i18n.t('message.Attack').toUpperCase(), 
+						stats: [
+							{ title: i18n.t('message.AttackingActions'), valueHome: attacks.home.total, valueAway: attacks.away.total, type: 'circle'},
+							{ title: i18n.t('message.PositionalAttacks'), valueHome: attacks.home.positionalAttack, valueAway: attacks.away.positionalAttack, type: 'barSides'},
+							{ title: i18n.t('message.PositionalAttacksWithShots'), valueHome: attacks.home.positionalWithShots, valueAway: attacks.away.positionalWithShots, type: 'barSides'},
+							{ title: i18n.t('message.CounterAttacks'), valueHome: attacks.home.counterAttacks, valueAway: attacks.away.counterAttacks, type: 'barSides'},
+							{ title: i18n.t('message.Freekicks'), valueHome: general.home.freeKicks, valueAway: general.away.freeKicks, type: 'barSides'},
+							{ title: i18n.t('message.FreekicksWithShots'), valueHome: attacks.home.freeKicksWithShot, valueAway: attacks.away.freeKicksWithShot, type: 'barSides'},
+							{ title: i18n.t('message.Corners'), valueHome: general.home.corners, valueAway: general.away.corners, type: 'barSides'},
+							{ title: i18n.t('message.CornersWithShot'), valueHome: attacks.home.cornersWithShot, valueAway: attacks.away.cornersWithShot, type: 'barSides'},
+							{ title: i18n.t('message.CenterAttacks'), valueHome: flanks.home.centerAttacks, valueAway: flanks.away.centerAttacks, type: 'barSides'},
+							{ title: i18n.t('message.RightFlankAttacks'), valueHome: flanks.home.rightFlankAttacks, valueAway: flanks.away.rightFlankAttacks, type: 'barSides'},
+							{ title: i18n.t('message.LeftFlankAttacks'), valueHome: flanks.home.leftFlankAttacks, valueAway: flanks.away.leftFlankAttacks, type: 'barSides'},
+						]
+					},
+					{ title: this.$i18n.t('message.Defence').toUpperCase(), 
+						stats: [
+							{ title: i18n.t('message.Tackles'), valueHome: defence.home.tackles, valueAway: defence.away.tackles, type: 'barSides'},
+							{ title: i18n.t('message.Interceptions'), valueHome: defence.home.interceptions, valueAway: defence.away.interceptions, type: 'barSides'},
+							{ title: i18n.t('message.Clearances'), valueHome: defence.home.clearances, valueAway: defence.away.clearances, type: 'barSides'},
+							{ title: i18n.t('message.PPDA'), valueHome: defence.home.ppda, valueAway: defence.away.ppda, type: 'barSides'},
+						]
+					},
+					{ title: this.$i18n.t('message.Duels').toUpperCase(), 
+						stats: [
+							{ title: i18n.t('message.Duels'), valueHome: duels.home.duels, valueAway: duels.away.duels, type: 'circle'},
+							{ title: i18n.t('message.ChallengeIntensity'), valueHome: duels.home.challengeIntensity, valueAway: duels.away.challengeIntensity, type: 'barSides'},
+							{ title: i18n.t('message.Successfulduels'), valueHome: duels.home.duelsSuccessful, valueAway: duels.away.duelsSuccessful, type: 'barSides'},
+							{ title: i18n.t('message.DefensiveDuels'), valueHome: duels.home.defensiveDuels, valueAway: duels.away.defensiveDuels, type: 'barSides'},
+							{ title: i18n.t('message.DefensiveDuelsSuccessful'), valueHome: duels.home.defensiveDuelsSuccessful, valueAway: duels.away.defensiveDuelsSuccessful, type: 'barSides'},
+							{ title: i18n.t('message.OffensiveDuels'), valueHome: duels.home.offensiveDuels, valueAway: duels.away.offensiveDuels, type: 'barSides'},
+							{ title: i18n.t('message.OffensiveDuelsSuccessful'), valueHome: duels.home.offensiveDuelsSuccessful, valueAway: duels.away.offensiveDuelsSuccessful, type: 'barSides'},
+							{ title: i18n.t('message.AerialDuels'), valueHome: duels.home.aerialDuels, valueAway: duels.away.aerialDuels, type: 'barSides'},
+							{ title: i18n.t('message.AerialDuelsSuccessful'), valueHome: duels.home.aerialDuelsSuccessful, valueAway: duels.away.aerialDuelsSuccessful, type: 'barSides'},
+							{ title: i18n.t('message.LooseBallDuels'), valueHome: duels.home.looseBallDuels, valueAway: duels.away.looseBallDuels, type: 'barSides'},
+							{ title: i18n.t('message.LooseBallDuelsSuccessful'), valueHome: duels.home.looseBallDuelsSuccessful, valueAway: duels.away.looseBallDuelsSuccessful, type: 'barSides'},
+							{ title: i18n.t('message.GroundDuels'), valueHome: duels.home.groundDuels, valueAway: duels.away.groundDuels, type: 'barSides'},
+							{ title: i18n.t('message.GroundDuelsSuccessful'), valueHome: duels.home.groundDuelsSuccessful, valueAway: duels.away.groundDuelsSuccessful, type: 'barSides'},
+							{ title: i18n.t('message.Dribbles'), valueHome: general.home.dribbles, valueAway: general.away.dribbles, type: 'barSides'},
+						]
+					},
+					{ title: this.$i18n.t('message.Transitions').toUpperCase(), 
+						stats: [
+							{ title: i18n.t('message.Recoveries'), valueHome: transitions.home.recoveriesTotal, valueAway: transitions.away.recoveriesTotal, type: 'circle'},
+							{ title: i18n.t('message.RecoveriesHigh'), valueHome: transitions.home.recoveriesHigh, valueAway: transitions.away.recoveriesHigh, type: 'barSides'},
+							{ title: i18n.t('message.RecoveriesMedium'), valueHome: transitions.home.recoveriesMedium, valueAway: transitions.away.recoveriesMedium, type: 'barSides'},
+							{ title: i18n.t('message.RecoveriesLow'), valueHome: transitions.home.recoveriesLow, valueAway: transitions.away.recoveriesLow, type: 'barSides'},
+							{ title: i18n.t('message.OpponentHalfRecoveries'), valueHome: transitions.home.opponentHalfRecoveries, valueAway: transitions.away.opponentHalfRecoveries, type: 'barSides'},
+							{ title: i18n.t('message.Totallooses'), valueHome: transitions.home.lossesTotal, valueAway: transitions.away.lossesTotal, type: 'circle'},
+							{ title: i18n.t('message.LossesHigh'), valueHome: transitions.home.lossesHigh, valueAway: transitions.away.lossesHigh, type: 'barSides'},
+							{ title: i18n.t('message.LossesMedium'), valueHome: transitions.home.lossesMedium, valueAway: transitions.away.lossesMedium, type: 'barSides'},
+							{ title: i18n.t('message.LossesLow'), valueHome: transitions.home.lossesLow, valueAway: transitions.away.lossesLow, type: 'barSides'},
+							{ title: i18n.t('message.OwnHalfLooses'), valueHome: transitions.home.ownHalfLosses, valueAway: transitions.away.ownHalfLosses, type: 'barSides'},
 						]
 					}
 				]
 			} 
 		},
-		components: { TabView, TabPanel, General, GridCard, CircleStat, StatBarSides, LoadingIcon }
+		components: { TabView, TabPanel, General, GridCard, CircleStat, StatBarSides, LoadingIcon, StatBarDuplex }
 	}
 </script>
  
@@ -156,3 +240,4 @@
 	margin-top: 2.5rem;
 }
 </style>
+

@@ -1,3 +1,4 @@
+import axios from "axios"
 import Helpers from "../../Helpers/Helpers"
 
 export default {
@@ -21,7 +22,8 @@ export default {
 		competitionsTeams: [],
 		teamSquad: [],
 		currentSeason: null,
-		allCompetitionsTeams: null
+		allCompetitionsTeams: null,
+		formations: null
 	}),
 
 	mutations: {
@@ -78,6 +80,9 @@ export default {
 		},
 		SETALLCOMPETITIONSTEAMS( state, data ) {
 			state.allCompetitionsTeams = data
+		},
+		SETFORMATIONS( state, data ) {
+			state.formations = data
 		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
@@ -365,6 +370,84 @@ export default {
 				})
 
 		},
+		async getMatchFormations( context, data ) {
+			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+
+			await User.refreshedToken();
+
+			axios.get( statBasicUrl + 'get_match_formations&match_id=' + data.id/* ,  {
+				headers: {
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
+				}} */)
+				.then( response => {
+					let statBasicUrl = context.rootGetters['links/statBasicUrl']
+
+					const teamsData = response.data
+					const key1 = Object.keys(teamsData)[0];
+					const key2 = Object.keys(teamsData)[1];
+					
+					const teamformations1 = {...teamsData[key1]};
+					const teamFormations2 = {...teamsData[key2]};
+					
+					for (let key in teamsData) {
+						teamsData.home = data.homeId === key ? teamformations1 : teamFormations2
+						teamsData.away = data.awayId === key ? teamFormations2 : teamformations1
+						delete teamsData[key]
+					}
+					
+					teamsData.homeData = Helpers.findParentObject(teamsData.home, "scheme")
+					teamsData.awayData = Helpers.findParentObject(teamsData.away, "scheme")
+					
+					let updatedHomePlayers = []
+					let updatedAwayPlayers = []
+
+					const requestsHome = teamsData.homeData.players.map( player => {
+						const key = Object.keys(player);
+						return axios.get( statBasicUrl + 'get_player_current&player_id=' + player[key].playerId ) 
+					})
+
+					const requestsAway = teamsData.awayData.players.map( player => {
+						const key = Object.keys(player);
+						return axios.get( statBasicUrl + 'get_player_current&player_id=' + player[key].playerId ) 
+					})
+
+					Promise.all(requestsHome)
+							.then(responses => {							
+								updatedHomePlayers = Helpers.updatePlayersDetails( responses, teamsData.homeData.players )
+								teamsData.homePlayers = updatedHomePlayers
+								context.commit("SETFORMATIONS", teamsData)
+							})
+							.catch(error => {
+								Toast.fire({
+									icon: 'error',
+									timer: 4000,
+									title: "Unable to load player details"
+								})
+							});
+
+					Promise.all(requestsAway)
+							.then(responses => {							
+								updatedAwayPlayers = Helpers.updatePlayersDetails( responses, teamsData.awayData.players )
+								teamsData.awayPlayers = updatedAwayPlayers
+								context.commit("SETFORMATIONS", teamsData)
+							})
+							.catch(error => {
+								Toast.fire({
+									icon: 'error',
+									timer: 4000,
+									title: "Unable to load player details"
+								})
+							});
+				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load match formations"
+					})
+				})
+
+		},
 		async getMatchVideo( context, id ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
 
@@ -590,6 +673,9 @@ export default {
 		},
 		allCompetitionsTeams(state) {
 			return state.allCompetitionsTeams
+		},
+		formations(state) {
+			return state.formations
 		},
 	}
 }
