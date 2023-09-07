@@ -1,13 +1,17 @@
 <template>
 	<div>
 		<span class="p-input-icon-left w-100 search-player">
-			<i class="pi pi-search" />
+			<i v-if="!loading" class="pi pi-search" />
+			<i v-if="loading" class="pi pi-spin pi-spinner" />
 			<InputText v-model="value" :placeholder="$t('message.SearchPlayer').toUpperCase()" class="input w-100" 
 					   @update:modelValue="checkValue"/>
 		</span>
 
-		<SearchedItem imgSrc="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ffmdataba.com%2Fimages%2Fp%2F74371.png&f=1&nofb=1&ipt=232ae61d2f58b1c3ca1d46040c62608e0a7a0a9af28545ea459373d3d8d58328&ipo=images"
-					  name="Marek Kuzma" position="Forward" />
+		<div v-if="showSearched && Array.isArray(searched) && searched.length > 0">
+			<SearchedItem v-if="searched" v-for="item in searched" :imgSrc="item.imageDataURL"
+						  :name="item.firstName + ' ' + item.lastName" :team="item.currentTeam ? item.currentTeam.officialName : ''" 
+						  @click="addPlayer(item)"/>
+		</div>
 	</div>
 </template>
  
@@ -15,22 +19,41 @@
 <script>
 	import { debounce } from 'lodash';
 	import SearchedItem from './SearchedItem.vue'
+	import { mapGetters } from 'vuex';
 
 	export default {
 		data() {
 			return {
-				value: null
+				value: null,
+				loading: false,
+				showSearched: true
 			}
 		},
 		methods: {
 			checkValue(event) {
 				if ( event.length >= 3 ) {
 					this.updateValue()
+					this.showSearched = true
+					this.loading = true
+				} else {
+					this.loading = false
 				}
 			},
 			updateValue: debounce(function () {
-				//this.$store.dispatch( "surveys/setHashes", { limit: this.limit } )
-			}, 1000),
+				this.$store.dispatch( "stats/getCompareSearchedPlayers", this.value )
+			}, 500),
+			addPlayer(item) {
+				this.showSearched = false
+				this.$emit('addPlayer', item)
+			}
+		},
+		computed: {
+			...mapGetters({ searched: 'stats/compareSearched' })
+		},
+		watch: {
+			searched: function(data) {
+				this.loading = false
+			} 
 		},
 		components: { SearchedItem },
 	}

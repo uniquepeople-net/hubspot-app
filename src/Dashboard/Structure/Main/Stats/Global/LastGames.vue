@@ -31,7 +31,7 @@
 		data() {
 			return {
 				selectedMatch: null,
-				showMatches: 5,
+				showMatches: localStorage.getItem('showMatches') ? Number(localStorage.getItem('showMatches')) : 5,
 				page: 1,
 				loading: false
 			}
@@ -42,11 +42,13 @@
 				
 				if ( this.matches.length - this.showMatches !== 0 ) {
 					this.showMatches = this.showMatches + 5
+					localStorage.setItem('showMatches', this.showMatches)
 					this.loading = false
 				} else {				
 					this.page = this.page + 1
 					this.loading = true
 					this.showMatches = this.showMatches + 5
+					localStorage.setItem('showMatches', this.showMatches)
 					this.$store.dispatch('stats/getPlayerMatches', { id: this.user.instat_id, page: this.page } )
 				}
 			},

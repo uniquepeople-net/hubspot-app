@@ -7,7 +7,7 @@
 		<MatchCard v-if="specificMatch" :matchData="match" :goals="true"/>
 		<MatchStats v-if="matchId && user && specificMatch" :matchId="matchId" :id="user.instat_id"/>
 		<MatchEvents v-if="matchId && specificMatch" :matchId="matchId"/>
-		<Comparison />
+		<Comparison v-if="specificMatch && user.membership_id === 3" class="mt-4"/>
 	</div>
 </template>
  

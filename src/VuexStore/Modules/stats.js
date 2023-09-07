@@ -23,7 +23,8 @@ export default {
 		teamSquad: [],
 		currentSeason: null,
 		allCompetitionsTeams: null,
-		formations: null
+		formations: null,
+		compareSearched: null
 	}),
 
 	mutations: {
@@ -83,6 +84,9 @@ export default {
 		},
 		SETFORMATIONS( state, data ) {
 			state.formations = data
+		},
+		SETCOMPARESEARCHED( state, data ) {
+			state.compareSearched = data
 		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
@@ -372,7 +376,9 @@ export default {
 		},
 		async getMatchFormations( context, data ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+			let specificMatch = await context.dispatch('filterSpecificMatch', data.id)
 
+			context.commit("SETFORMATIONS", null)
 			await User.refreshedToken();
 
 			axios.get( statBasicUrl + 'get_match_formations&match_id=' + data.id/* ,  {
@@ -386,22 +392,53 @@ export default {
 					const key1 = Object.keys(teamsData)[0];
 					const key2 = Object.keys(teamsData)[1];
 					
-					const teamformations1 = {...teamsData[key1]};
-					const teamFormations2 = {...teamsData[key2]};
-					
+					const teamFormations1 = {...teamsData[key1]};
+					const teamFormations2 = {...teamsData[key2]};					
+
 					for (let key in teamsData) {
-						teamsData.home = data.homeId === key ? teamformations1 : teamFormations2
-						teamsData.away = data.awayId === key ? teamFormations2 : teamformations1
+						teamsData.home = data.homeId === Number(key1) ? teamFormations1 : teamFormations2
+						teamsData.away = data.awayId === Number(key2) ? teamFormations2 : teamFormations1
 						delete teamsData[key]
 					}
 					
 					teamsData.homeData = Helpers.findParentObject(teamsData.home, "scheme")
-					teamsData.awayData = Helpers.findParentObject(teamsData.away, "scheme")
-					
-					let updatedHomePlayers = []
-					let updatedAwayPlayers = []
+					teamsData.awayData = Helpers.findParentObject(teamsData.away, "scheme")					
 
-					const requestsHome = teamsData.homeData.players.map( player => {
+					let updatedHomePlayers = teamsData.homeData.players.map((player) => {					
+						let key = Object.keys(player)[0]
+						
+						let lineupPlayer = specificMatch[0].home.formation.lineup.find(
+						  (lineupPlayer) => player[key].playerId === lineupPlayer.playerId
+						)
+					  
+						if (lineupPlayer) {
+						  return { ...player[key], details: lineupPlayer };
+						}
+					  
+						return player;
+					  })
+
+					let updatedAwayPlayers = teamsData.awayData.players.map((player) => {					
+						let key = Object.keys(player)[0]
+						
+						let lineupPlayer = specificMatch[0].away.formation.lineup.find(
+						  (lineupPlayer) => player[key].playerId === lineupPlayer.playerId
+						)
+					  
+						if (lineupPlayer) {
+						  return { ...player[key], details: lineupPlayer };
+						}
+					  
+						return player;
+					  });
+
+					
+					teamsData.homePlayers = updatedHomePlayers
+					teamsData.awayPlayers = updatedAwayPlayers
+
+					context.commit("SETFORMATIONS", teamsData)
+
+					/* const requestsHome = teamsData.homeData.players.map( player => {
 						const key = Object.keys(player);
 						return axios.get( statBasicUrl + 'get_player_current&player_id=' + player[key].playerId ) 
 					})
@@ -415,21 +452,22 @@ export default {
 							.then(responses => {							
 								updatedHomePlayers = Helpers.updatePlayersDetails( responses, teamsData.homeData.players )
 								teamsData.homePlayers = updatedHomePlayers
-								context.commit("SETFORMATIONS", teamsData)
-							})
-							.catch(error => {
-								Toast.fire({
-									icon: 'error',
-									timer: 4000,
-									title: "Unable to load player details"
-								})
-							});
 
-					Promise.all(requestsAway)
-							.then(responses => {							
-								updatedAwayPlayers = Helpers.updatePlayersDetails( responses, teamsData.awayData.players )
-								teamsData.awayPlayers = updatedAwayPlayers
-								context.commit("SETFORMATIONS", teamsData)
+								Promise.all(requestsAway)
+								.then(responses => {							
+									updatedAwayPlayers = Helpers.updatePlayersDetails( responses, teamsData.awayData.players )
+									teamsData.awayPlayers = updatedAwayPlayers
+									
+									context.commit("SETFORMATIONS", teamsData)
+								})
+								.catch(error => {
+									Toast.fire({
+										icon: 'error',
+										timer: 4000,
+										title: "Unable to load player details"
+									})
+								});
+
 							})
 							.catch(error => {
 								Toast.fire({
@@ -437,7 +475,9 @@ export default {
 									timer: 4000,
 									title: "Unable to load player details"
 								})
-							});
+							}); */
+
+					
 				})
 				.catch( error => {
 					Toast.fire({
@@ -622,6 +662,30 @@ export default {
 					}
 				})
 			);
+		},
+		async getCompareSearchedPlayers( context, phrase ) {
+			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+
+			await User.refreshedToken();
+
+			axios.get( statBasicUrl + 'get_search_players&phrase=' + phrase, {
+				headers: {
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
+				}
+			}).then( response => {
+				context.commit("SETCOMPARESEARCHED", response.data)
+			}).catch( error => {
+				Toast.fire({
+					icon: 'error',
+					timer: 4000,
+					title: "Unable to search players"
+				})
+			})
+		},
+		filterSpecificMatch(context, id) {
+			let matches = context.rootGetters['stats/playerMatches']
+			let specificMatch = matches.filter( item => item.matchId === id )
+			return specificMatch
 		}
 	},
 
@@ -676,6 +740,9 @@ export default {
 		},
 		formations(state) {
 			return state.formations
+		},
+		compareSearched(state) {
+			return state.compareSearched
 		},
 	}
 }

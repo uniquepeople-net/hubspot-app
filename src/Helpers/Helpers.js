@@ -361,27 +361,6 @@ class Helpers {
 		}
 		return null; // Key "scheme" not found in the object
 	}
-	  
-
-	// Positions on pitch
-	positionsCoordinates(playersArray, homeGuest) {
-		const updatedPlayersArray = playersArray && playersArray.map( player => {
-			const key = Object.keys(player);
-			
-			switch (player[key].position) {
-				case 'gk':
-					if ( homeGuest === 'home' ) {
-						return { ...player[key], x: 2.5, y: 50 }
-					} else if ( homeGuest === 'away' ){
-						return { ...player[key], x:96.5, y:50 }
-					} 
-					
-				default:
-					return player;
-			}
-		})
-		return updatedPlayersArray
-	}
 
 
 	// Teams Formations with players details get by multiple promise
@@ -406,6 +385,214 @@ class Helpers {
 		})	
 	}
 
+
+	// Positions on pitch
+	positionsCoordinates(playersArray, homeGuest) {
+		const updatedPlayersArray = playersArray && playersArray.map( player => {
+			
+			switch (player.position) {
+				case 'gk':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:5.5, y:50 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:95, y:50 }
+					} 
+					
+				case 'rdmf':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:25, y:63 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:75, y:37 }
+					}
+
+				case 'ldmf':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:25, y:37 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:75, y:63 }
+					} 
+
+				case 'rcmf':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:30, y:65 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:70, y:35 }
+					}
+
+				case 'lcmf':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:30, y:35 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:70, y:65 }
+					}
+
+				case 'rcmf3':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:30, y:65 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:70, y:35 }
+					}
+
+				case 'lcmf3':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:30, y:35 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:70, y:65 }
+					} 
+
+				case 'amf':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:35, y:50 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:65, y:50 }
+					} 
+
+				case 'ramf':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:35, y:65 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:65, y:35 }
+					} 
+
+				case 'lamf':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:35, y:35 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:65, y:65 }
+					} 
+
+				case 'rb':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:18, y:90 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:82, y:10 }
+					}
+
+				case 'lb':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:18, y:10 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:82, y:90 }
+					} 
+				
+				case 'rb5':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:23, y:90 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:77, y:10 }
+					}
+
+				case 'lb5':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:23, y:10 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:77, y:90 }
+					} 
+
+				case 'lcb':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:15, y:30 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:85, y:70 }
+					} 
+
+					
+				case 'rcb':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:15, y:70 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:85, y:30 }
+					}
+
+				case 'lcb3':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:17, y:27 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:83, y:73 }
+					} 
+
+				case 'rcb3':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:17, y:73 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:83, y:27 }
+					} 
+
+				case 'cb':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:15, y:50 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:85, y:50 }
+					} 
+				
+				case 'cf':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:45, y:50 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:55, y:50 }
+					} 
+
+				case 'lw':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:40, y:10 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:60, y:90 }
+					} 
+
+				case 'rw':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:40, y:90 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:60, y:10 }
+					} 
+
+				case 'lwf':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:47, y:31 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:53, y:69 }
+					} 
+
+				case 'rwf':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:47, y:69 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:53, y:31 }
+					} 
+
+				case 'lwb':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:30, y:10 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:70, y:90 }
+					} 
+				case 'rwb':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:30, y:90 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:70, y:10 }
+					} 
+
+				case 'dmf':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:23, y:50 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:77, y:50 }
+					} 
+
+				case 'ss':
+					if ( homeGuest === 'home' ) {
+						return { ...player, x:45, y:65 }
+					} else if ( homeGuest === 'away' ){
+						return { ...player, x:55, y:35 }
+					} 
+
+				default:
+					return { ...player };
+			}
+		})
+		return updatedPlayersArray
+	}
 
 }
 

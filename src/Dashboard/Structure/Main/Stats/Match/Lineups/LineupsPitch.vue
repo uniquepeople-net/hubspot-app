@@ -3,14 +3,16 @@
 		<span class="home-formation text-x-small">{{ formations.homeData.scheme }}</span>
 		<Pitch />
 		<span class="away-formation text-x-small">{{ formations.awayData.scheme }}</span>
-		<LineUpHead v-for="player in homePlayers" :x="'x' in player ? player.x : 0" :y="'y' in player ? player.y : 0" :position="player.position" pitchHalf="top"/>
-		<LineUpHead v-for="player in awayPlayers" :x="'x' in player ? player.x : 0" :y="'y' in player ? player.y : 0" :position="player.position" pitchHalf="top"/>
+		<TshirtNumber v-for="player in homePlayers" :x="'x' in player ? player.x : 0" :y="'y' in player ? player.y : 0" color="home"
+					:position="player.position" :number="player.details.shirtNumber" :name="player.details.player.lastName"/>
+		<TshirtNumber v-for="player in awayPlayers" :x="'x' in player ? player.x : 0" :y="'y' in player ? player.y : 0" color="away"
+					:position="player.position" :number="player.details.shirtNumber" :name="player.details.player.lastName"/>
 	</div>
 </template>
  
  
 <script>
-	import LineUpHead from '../../Global/LineUpHead.vue'
+	import TshirtNumber from '../../Global/TshirtNumber.vue'
 	import Pitch from '../../Vectors/Pitch.vue'
 
 	export default {
@@ -23,7 +25,11 @@
 			}
 		},
 		methods: {
-			
+			getValue( object ,value) {
+				if ( value in object ) {
+					return object.value
+				} else return 0
+			}	
 		},
 		computed: {
 			homePlayers() {
@@ -33,15 +39,7 @@
 				return Helpers.positionsCoordinates(this.formations.awayPlayers, 'away')
 			}
 		},
-		watch: {
-			formations: {
-				deep: true, // Watch nested properties of formations
-				handler(newValue) {
-					console.log('formations changed:', newValue);
-				}
-			}
-		},
-		components: { Pitch, LineUpHead },
+		components: { Pitch, TshirtNumber },
 	}
 </script>
  

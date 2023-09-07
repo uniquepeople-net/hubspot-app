@@ -1,30 +1,38 @@
 <template>
-	<div>
+	<div class="mb-5">
 		<h5 class="text-value">{{ $t('message.PlayerComparison') }}</h5>
-		<div class="row g-2 mb-4">
-			<div class="col-6">
-				<GridCard bgSize="4rem" padding=".5rem .5rem 0 .5rem">
+		<Search v-if="showSearch" @addPlayer="addPlayer"/>
+		<div class="row g-2 mt-4" v-if="playerDetails">
+			<div class="col-6 d-flex flex-column">
+				<GridCard bgSize="4rem" padding=".5rem .5rem 0 .5rem" class="d-flex card-compare">
 					<template #content>
-						<PlayerCard firstName="Robert" lastName="Polievka" clubName="MFK Dukla Banská Bystrica"
-									clubImgSrc="http://www.zpfutbal.sk/wp-content/uploads/2022/06/LogoFKZP-1.png"
-									playerImgSrc="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ffmdataba.com%2Fimages%2Fp%2F74371.png&f=1&nofb=1&ipt=232ae61d2f58b1c3ca1d46040c62608e0a7a0a9af28545ea459373d3d8d58328&ipo=images"/>
+						<PlayerCard :firstName="playerDetails.firstName" :lastName="playerDetails.lastName" :clubName="playerDetails.currentTeam.officialName"
+									:clubImgSrc="playerDetails.currentTeam.imageDataURL" :playerImgSrc="playerDetails.imageDataURL"/>
 					</template>
 				</GridCard>
+
+				<Dropdown v-model="selectedMatch1" :options="matches1" optionLabel="label" class="w-100 mt-3 dropdown-matches"
+						  optionValue="id" :placeholder="$t('message.SelectMatch')" />
 			</div>
-			<div class="col-6">
-				<GridCard bgSize="4rem" padding=".5rem .5rem 0 .5rem" class="h-100">
+			<div class="col-6 d-flex flex-column">
+				<GridCard bgSize="4rem" padding=".5rem .5rem 0 .5rem" class="d-flex card-compare">
 					<template #content>
-						<NobodyCard @addPlayer="addPlayer"/>
+						<NobodyCard v-if="!addedPlayer"/>
+						<PlayerCard v-if="addedPlayer" :firstName="addedPlayer.firstName" :lastName="addedPlayer.lastName" :clubName="addedPlayer.currentTeam.officialName"
+									:clubImgSrc="addedPlayer.currentTeam.imageDataURL" :playerImgSrc="addedPlayer.imageDataURL"/>
 					</template>
 				</GridCard>
+
+				<Dropdown v-model="selectedMatch2" :options="roles" optionLabel="name" class="w-100 mt-3"
+						  optionValue="id" :placeholder="$t('message.SelectMatch')" />
 			</div>
 		</div>
-		<Search v-if="showSearch"/>
 	</div>
 </template>
  
  
 <script>
+	import { mapGetters } from 'vuex' 
 	import GridCard from '../../../../../global/GridCard.vue'
 	import NobodyCard from './NobodyCard.vue'
 	import PlayerCard from './PlayerCard.vue'
@@ -33,17 +41,33 @@
 	export default {
 		data() {
 			return {
-				showSearch: false
+				showSearch: true,
+				addedPlayer: null,
+				selectedMatch1: null,
+				selectedMatch2: null
 			}
 		},
 		methods: {
-			addPlayer() {
-				this.showSearch = true				
+			addPlayer(data) {
+				this.addedPlayer = data		
 			}
+		},
+		computed: {
+			...mapGetters({ playerDetails: 'stats/playerDetails',
+							matches1: 'stats/playerMatches',
+							matches2: 'stats/' })
 		},
 		components: { GridCard, PlayerCard, NobodyCard, Search }
 	}
 </script>
  
 <style lang='scss' scoped>
+.card-compare {
+	flex: 1;
+}
+.dropdown-matches {
+	:deep(.p-dropdown-panel) {
+		max-width: 100%;
+	}
+}
 </style>

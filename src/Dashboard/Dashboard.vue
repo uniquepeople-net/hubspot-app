@@ -37,7 +37,7 @@
 						this.$router.push({ name: currentRoute })
 					}
 				}
-		
+				localStorage.setItem('showMatches', '')
 				this.$store.dispatch("user/getUser");
 			}
 			/* const cookies = document.cookie.split('; ');
