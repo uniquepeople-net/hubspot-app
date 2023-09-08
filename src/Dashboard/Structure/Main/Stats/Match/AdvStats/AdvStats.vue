@@ -26,7 +26,6 @@
 	import { mapGetters } from 'vuex'
 	import TabView from 'primevue/tabview';
 	import TabPanel from 'primevue/tabpanel';
-	import General from './General.vue'
 	import GridCard from '../../../../../global/GridCard.vue';
 	import CircleStat from '../../Global/CircleStat.vue';
 	import StatBarSides from '../../Global/StatBarSides.vue';
@@ -230,7 +229,7 @@
 				]
 			} 
 		},
-		components: { TabView, TabPanel, General, GridCard, CircleStat, StatBarSides, LoadingIcon, StatBarDuplex }
+		components: { TabView, TabPanel, GridCard, CircleStat, StatBarSides, LoadingIcon, StatBarDuplex }
 	}
 </script>
  

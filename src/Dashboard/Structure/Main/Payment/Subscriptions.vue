@@ -24,15 +24,12 @@
 						<p class="text-data">{{ subscription.plan && formatPrice(subscription.plan.amount) + ' / ' + intervalTranslate(subscription.plan.interval) }}</p>
 						<p class="text-subtitle mb-0">{{ $t('message.NextBillingDate') }}</p>
 						<p class="text-data">{{ formatTimestamp(subscription.current_period_end) }}</p>
-						<!-- <div class="col-3 column-list col-r-border">{{subscription.description}}</div>
-						<div class="col-3 column-list col-r-border">{{formatPrice(subscription.amount)}}</div>
-						<div class="col-2 column-list col-r-border">{{subscription.status}}</div> -->
 					</div>
-					<div class="text-end mt-4 cancel-sub">
+					<!-- <div class="text-end mt-4 cancel-sub">
 						<Button :label="$t('message.Cancel') + ' ' + $t('message.Subscription')" 
 								@click="cancelSubscription(subscription.id)" class="btn-black w-auto"
 								:loading="loading" v-if="subscription.status !== 'canceled'"/>
-					</div>
+					</div> -->
 				</template>
 			</AccordionTab>
 		</Accordion>

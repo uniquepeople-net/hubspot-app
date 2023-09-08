@@ -50,7 +50,6 @@
 		data() {
 			return {
 				chartData: {
-					//labels: ['Accurate','Inaccurate'],
 					datasets: [
 						{
 							data: [this.accurate, this.space(), this.inacurate, this.space()],
@@ -83,7 +82,20 @@
 			space() {
 				let total = this.accurate + this.inacurate
 				return (total/100) * .5
+			}, 
+			updateDatasets() {
+				console.log('asdasd')
+				
+				this.chartData.datasets[0].data = [this.accurate, this.space(), this.inacurate, this.space()];
 			}
+		},
+		watch: {
+			accurate: function(data) {
+				this.updateDatasets()
+			},
+    		inacurate: function(data) {
+				this.updateDatasets()
+			},
 		},
 		components: { GridCard }
 	}

@@ -412,6 +412,8 @@ export const messages = {
 			GroundDuels: 'Ground duels',
 			GroundDuelsSuccessful: 'Ground successful duels',
 			ChallengeIntensity: 'Challenge intensity',
+			NoData: 'No data',
+			LoadMore: 'Load more',
 		},
 		validations: {
 			required: "This field is required. ",
@@ -837,6 +839,8 @@ export const messages = {
 			GroundDuels: 'Pozemné súboje',
 			GroundDuelsSuccessful: 'Úspešné pozemné súboje',
 			ChallengeIntensity: 'Intenzita súbojov',
+			NoData: 'Žiadne údaje',
+			LoadMore: 'Načítať viac',
 		},
 		validations: {
 			required: "Toto pole je potrebné vyplniť. ",

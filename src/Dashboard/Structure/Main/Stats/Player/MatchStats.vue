@@ -62,7 +62,7 @@
 								{ title: i18n.t('message.SmartPasses'), value: totalStats.smartPasses, sub: [ { title: i18n.t('message.Successful') + ' ' + i18n.t('message.SmartPasses').toLowerCase(), value: totalStats.successfulSmartPasses} ] },
 								{ title: i18n.t('message.Crosses'), value: totalStats.crosses, sub: [ { title: i18n.t('message.Successful') + ' ' + i18n.t('message.Crosses').toLowerCase(), value: totalStats.successfulCrosses} ] },
 								{ title: i18n.t('message.PassesToFinalThird'), value: totalStats.passesToFinalThird, sub: [ { title: i18n.t('message.Successful') + ' ' + i18n.t('message.PassesToFinalThird').toLowerCase(), value: totalStats.successfulPassesToFinalThird} ] },
-								{ title: i18n.t('message.ForwardPasses'), value: totalStats.forwardPasses, sub: [ { title: i18n.t('message.Successful') + ' ' + i18n.t('message.ForwardPasses').toLowerCase(), value: totalStats.successfulForwardPasses} ] },
+								{ title: i18n.t('message.ForwardPasses'), value: totalStats.forwardPasses, sub: [ { title: i18n.t('message.ForwardPassesSuccessful'), value: totalStats.successfulForwardPasses} ] },
 								{ title: i18n.t('message.BackPasses'), value: totalStats.backPasses, sub: [ { title: i18n.t('message.Successful') + ' ' + i18n.t('message.BackPasses').toLowerCase(), value: totalStats.successfulBackPasses} ] },
 								{ title: i18n.t('message.ThroughPasses'), value: totalStats.throughPasses, sub: [ { title: i18n.t('message.Successful') + ' ' + i18n.t('message.ThroughPasses').toLowerCase(), value: totalStats.successfulThroughPasses} ] },
 								{ title: i18n.t('message.KeyPasses'), value: totalStats.keyPasses, sub: [ { title: i18n.t('message.Successful') + ' ' + i18n.t('message.KeyPasses').toLowerCase(), value: totalStats.successfulKeyPasses} ] },

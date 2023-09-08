@@ -8,7 +8,9 @@ export default {
 		playerDetails: null,
 		playerCareer: null,
 		playerMatches: [],
+		player2Matches: [],
 		playerStats: null,
+		player2Stats: null,
 		matchDetails: null,
 		matchStats: null,
 		matchVideo: null,
@@ -37,8 +39,23 @@ export default {
 		SETPLAYERMATCHES( state, data ) {
 			state.playerMatches = [ ...state.playerMatches, ...data ]
 		},
+		SETPLAYER2MATCHES( state, data ) {
+			state.player2Matches = [ ...state.player2Matches, ...data ]
+		},
+		RESETPLAYER2MATCHES( state, data ) {
+			state.player2Matches = data
+		},
 		SETPLAYERSTATS( state, data ) {
 			state.playerStats = data
+		},
+		RESETPLAYERSTATS( state, data ) {
+			state.playerStats = data
+		},
+		SETPLAYER2STATS( state, data ) {
+			state.player2Stats = data
+		},
+		RESETPLAYER2STATS( state, data ) {
+			state.player2Stats = data
 		},
 		SETMATCHDETAILS( state, data ) {
 			state.matchDetails = data
@@ -180,9 +197,12 @@ export default {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
 				.then( response => {
-
-					let matchesLength = context.rootGetters['stats/playerMatches'].length
 					
+					let matchesLength = context.rootGetters['stats/playerMatches'].length
+					if ( data.compare ) {
+						matchesLength = context.rootGetters['stats/player2Matches'].length
+					}
+
 					if ( matchesLength/10 >= data.page ) return
 
 					//create separated objects with matches based on seasonId
@@ -230,8 +250,13 @@ export default {
 						item.home = team1.side === 'home' ? team1 : team2
 						item.away = team2.side === 'away' ? team2 : team1
 					})
-					
-					context.commit("SETPLAYERMATCHES", response.data.matches)
+
+					if ( data.compare ) {
+						context.commit("SETPLAYER2MATCHES", response.data.matches)
+					} else {
+						context.commit("SETPLAYERMATCHES", response.data.matches)
+					}
+
 				})
 				.catch( error => {
 					Toast.fire({
@@ -240,6 +265,9 @@ export default {
 						title: "Unable to load player matches"
 					})
 				})			
+		},
+		resetPlayer2Matches( context ) {
+			context.commit("RESETPLAYER2MATCHES", [])
 		},
 		async getPalyerStats( context, data ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
@@ -251,7 +279,11 @@ export default {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
 				.then( response => {
-					context.commit("SETPLAYERSTATS", response.data)
+					if ( data.compare ) {
+						context.commit("SETPLAYER2STATS", response.data)
+					} else {
+						context.commit("SETPLAYERSTATS", response.data)
+					}
 				})
 				.catch( error => {
 					context.commit("SETPLAYERSTATS", null)
@@ -261,6 +293,12 @@ export default {
 						title: "Unable to load player stats"
 					})
 				})			
+		},
+		resetPlayer2Stats( context ) {
+			context.commit("RESETPLAYER2STATS", [])
+		},
+		resetPlayerStats( context ) {
+			context.commit("RESETPLAYERSTATS", [])
 		},
 		async getPlayerMatchesBySeason( context, data ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
@@ -699,8 +737,14 @@ export default {
 		playerMatches(state) {
 			return state.playerMatches
 		},
+		player2Matches(state) {
+			return state.player2Matches
+		},
 		playerStats(state) {
 			return state.playerStats
+		},
+		player2Stats(state) {
+			return state.player2Stats
 		},
 		matchDetails(state) {
 			return state.matchDetails
