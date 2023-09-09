@@ -507,7 +507,7 @@ export const messages = {
 			LossesLow: 'Straty v obranne zóne',
 			OwnHalfLooses: 'Straty na vlastnej polovici',
 			DangerousOwnHalfLooses: 'Nebezpečné straty na vlastnej polovici',
-			Successfulpasses: 'Úspešné prihrávy',
+			Successfulpasses: 'Úspešné prihrávky',
 			Shots: 'Strely',
 			Duels: 'Súboje',
 			Passes: 'Prihrávky',

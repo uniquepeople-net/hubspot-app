@@ -89,6 +89,7 @@
 				this.addedPlayer = data	
 
 				this.$store.dispatch('stats/resetPlayer2Matches')	
+				this.$store.dispatch('stats/resetPlayer2Stats')	
 				this.$store.dispatch('stats/getPlayerMatches', { id: this.addedPlayer.wyId, page: this.page2, compare: true } )	
 			},
 			matchDate(data) {
@@ -112,11 +113,11 @@
 				this.$store.dispatch('stats/getPlayerMatches', { id: stat_id, page: page, compare: compare } )
 			},
 			updateSelectedMatch(match, id, compare) {
-				if ( compare ) {
+				/* if ( compare ) {
 					this.$store.dispatch('stats/resetPlayer2Stats')
 				} else {
 					this.$store.dispatch('stats/resetPlayerStats')
-				}
+				} */
 				this.$store.dispatch('stats/getPalyerStats', { id: id, matchId: match.matchId, compare: compare } )
 			}
 		},
