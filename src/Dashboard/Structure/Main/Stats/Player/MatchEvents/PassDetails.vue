@@ -18,35 +18,36 @@
 				<Divider class="divider-dark"/>
 				<div class="row">
 					<div class="col-6">
-						<PassDetailsInfo value="Accurate" :description="$t('message.PassAccuracy')">
+						<PassDetailsInfo :value="accurate ? $t('message.Accurate') : $t('message.Inaccurate')" :description="$t('message.PassAccuracy')">
 							<template #vector>
-								<CircleCheck />
+								<CircleCheck v-if="accurate"/>
+								<CircleFailed v-if="!accurate"/>
 							</template>
 						</PassDetailsInfo>
 					</div>
 					<div class="col-6">
-						<PassDetailsInfo value="32:42" :description="$t('message.PassTime')">
+						<PassDetailsInfo :value="time" :description="$t('message.PassTime')">
 							<template #vector>
 								<TimeWatch />
 							</template>
 						</PassDetailsInfo>
 					</div>
 					<div class="col-6">
-						<PassDetailsInfo value="32 meters" :description="$t('message.PassLength')">
+						<PassDetailsInfo :value="length + ' meters'" :description="$t('message.PassLength')">
 							<template #vector>
 								<Meter />
 							</template>
 						</PassDetailsInfo>
 					</div>
 					<div class="col-6">
-						<PassDetailsInfo value="Lateral pass" :description="$t('message.PassType')">
+						<PassDetailsInfo :value="formatName(secondaryName)" :description="$t('message.PassType')">
 							<template #vector>
 								<Football24 />
 							</template>
 						</PassDetailsInfo>
 					</div>
 					<div class="col-6">
-						<PassDetailsInfo value="M. Gresak" :description="$t('message.PassRecipient')">
+						<PassDetailsInfo :value="name ? name : '-'" :description="$t('message.PassRecipient')">
 							<template #vector>
 								<Person />
 							</template>
@@ -69,7 +70,7 @@ import Person from '../../Vectors/Person.vue';
 import TimeWatch from '../../Vectors/TimeWatch.vue';
 
 export default {
-	props: ['name', 'time'],
+	props: ['name', 'time', 'length', 'secondaryName', 'accurate'],
   	data() {
 		return {
 			collapsed: false
@@ -79,6 +80,9 @@ export default {
     	toggle() {
       		this.collapsed = !this.collapsed
     	},
+		formatName(text) {
+			return text.replace(/_/g, ' ') 
+		}
   	},
   	components: { GridCard, CircleCheck, CircleFailed, TimeWatch, PassDetailsInfo, Meter, Football24, Person },
 };

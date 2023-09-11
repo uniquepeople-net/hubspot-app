@@ -1,16 +1,23 @@
 <template>
-	<div class="pitch-pass" 
+	<div class="pitch-pass"
 		:style="`transform:rotate(${calculateAngle( x1, y1, x2, y2 )}deg); 
 				 top: calc(${x1}%); left: calc(100% - ${y1}%); width:${passWidth(x1, y1, x2, y2)}`">
 		
-		<span class="transmitter text-sm-num center-center">
+		<span class="transmitter text-x-small center-center" :style="`${selectedBg && 'border: 2px solid ' + selectedBg };`">
 			<span :style="`transform:rotate(-${calculateAngle( x1, y1, x2, y2 ) }deg);`">{{ transmitter }}</span>
 		</span>
-		<span class="pass center-center">
-			<span></span>
+		<span class="pass center-center" :style="`background: ${selectedBg}`">
+			<span :style="`background:${passBg};`"></span>
 		</span>
-		<i class="bi bi-caret-right-fill icon-arrow"></i>
-		<span class="receiver text-sm-num center-center" :style="`transform:rotate(-${calculateAngle( x1, y1, x2, y2 ) }deg);`">{{ receiver }}</span>
+		<i class="bi bi-caret-right-fill icon-arrow" 
+		   :style="`color:${passBg}; right:${ accuracy ? '1' : '-5' }px`"></i>
+		
+		<span v-if="accuracy" class="receiver text-x-small center-center" 
+			  :style="`transform:rotate(-${calculateAngle( x1, y1, x2, y2 ) }deg); ${selectedBg && 'border: 2px solid ' + selectedBg };`">
+			  
+			  {{ receiver }}
+		
+		</span>
 	
 	</div>
 </template>
@@ -18,12 +25,16 @@
  
 <script>
 	export default {
-		props: ['receiver', 'transmitter', 'x1', 'y1', 'x2', 'y2'],
+		props: ['receiver', 'transmitter', 'x1', 'y1', 'x2', 'y2', 'accuracy', 'selectedPass', 'id'],
 		data() {
 			return {
+				
 			}
 		},
 		methods: {
+			selectPass() {
+				
+			},
 			calculateAngle(x1, y1, x2, y2) {
 				const deltaX = (x2 - x1) * 1.4016;
 				const deltaY = y2 - y1;
@@ -83,6 +94,24 @@
 				return result
 			}
 		},
+		computed: {
+			passBg() {
+				let bgColor = ''
+				if ( this.accuracy ) {
+					bgColor = 'var(--color-success)'
+				} else {
+					bgColor = 'var(--color-failed)'
+				}
+				return bgColor
+			},
+			selectedBg() {
+				let selectedBg = ''
+				if ( this.selectedPass === this.id ) {
+					selectedBg = 'var(--color-selected)'
+				}
+				return selectedBg
+			}
+		}
 	}
 </script>
  
@@ -101,15 +130,14 @@
 		span {
 			width: 100%;
 			height: 3px;
-			background: var(--color-success);
 		}
 	}
 	.receiver, .transmitter {
 		position: absolute;
 		color: var(--main-white);
 		border-radius: 50%;
-		width: 24px;
-		height: 24px;
+		width: 18px;
+		height: 18px;
 	}
 	.transmitter {
 		background: var(--stat-chart-bg);
@@ -122,8 +150,6 @@
 	}
 	.icon-arrow {
 		position: absolute;
-		right: 8px;
-		color: var(--color-success);
 	}
 }
 </style>

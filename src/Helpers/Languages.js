@@ -414,6 +414,11 @@ export const messages = {
 			ChallengeIntensity: 'Challenge intensity',
 			NoData: 'No data',
 			LoadMore: 'Load more',
+			NoCompareAccess: 'To compare yourself to other players, you must have a premium plan.',
+			GoToPlans: 'Got to plans',
+			Accurate: 'Accurate',
+			Inaccurate: 'Inaccurate',
+			Cooperation: 'Cooperation',
 		},
 		validations: {
 			required: "This field is required. ",
@@ -841,6 +846,11 @@ export const messages = {
 			ChallengeIntensity: 'Intenzita súbojov',
 			NoData: 'Žiadne údaje',
 			LoadMore: 'Načítať viac',
+			NoCompareAccess: 'Pre porovnanie s inými hráčmi, je potrebné mať predplatenú prémiovú verziu.',
+			GoToPlans: 'Ísť na predplatné',
+			Accurate: 'Presný',
+			Inaccurate: 'Nepresný',
+			Cooperation: 'Spolupráca',
 		},
 		validations: {
 			required: "Toto pole je potrebné vyplniť. ",

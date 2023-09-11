@@ -6,7 +6,8 @@
 		<LastGames v-if="!specificMatch" @selectedMatch="selectedMatch"/>
 		<MatchCard v-if="specificMatch" :matchData="match" :goals="true"/>
 		<MatchStats v-if="matchId && user && specificMatch" :matchId="matchId" :id="user.instat_id"/>
-		<MatchEvents v-if="matchId && specificMatch" :matchId="matchId"/>
+		<MatchEvents v-if="matchId && specificMatch" :matchId="matchId" 
+					 :playerId="user.instat_id" :matchData="match"/>
 		<Comparison class="mt-4"/>
 	</div>
 </template>

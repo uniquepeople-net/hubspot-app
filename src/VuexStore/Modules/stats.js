@@ -13,12 +13,13 @@ export default {
 		player2Stats: null,
 		matchDetails: null,
 		matchStats: null,
+		playerPasses: null,
+		playerShots: null,
 		matchVideo: null,
 		team1: null,
 		team2: null,
 		scorersTeam1: null,
 		scorersTeam2: null,
-		areas: [],
 		competitionsList: [],
 		competitionsDetail: {},
 		competitionsTeams: [],
@@ -63,6 +64,12 @@ export default {
 		SETMATCHSTATS( state, data ) {
 			state.matchStats = data
 		},
+		SETPLAYERPASS( state, data ) {
+			state.playerPasses = data
+		},
+		SETPLAYERSHOT( state, data ) {
+			state.playerShots = data
+		},
 		SETMATCHVIDEO( state, data ) {
 			state.matchVideo = data
 		},
@@ -77,9 +84,6 @@ export default {
 		},
 		SETSCORERTEAM2( state, data ) {
 			state.scorersTeam2 = data
-		},
-		SETAREAS( state, data ) {
-			state.areas = data;
 		},
 		SETCOMPETITIONSLIST( state, data ) {
 			state.competitionsList = data;
@@ -110,21 +114,27 @@ export default {
 			// https://github.com/vuejs/vuex/issues/1118
 			Object.assign(state, { 
 				playerDetails: null,
-				playerMatches: null,
 				playerCareer: null,
+				playerMatches: [],
+				player2Matches: [],
+				playerStats: null,
+				player2Stats: null,
 				matchDetails: null,
+				matchStats: null,
+				playerPasses: null,
 				matchVideo: null,
 				team1: null,
 				team2: null,
 				scorersTeam1: null,
 				scorersTeam2: null,
-				areas: [],
 				competitionsList: [],
 				competitionsDetail: {},
 				competitionsTeams: [],
 				teamSquad: [],
 				currentSeason: null,
-				allCompetitionsTeams: null
+				allCompetitionsTeams: null,
+				formations: null,
+				compareSearched: null
 			})
 		}
 	},
@@ -300,6 +310,39 @@ export default {
 		resetPlayerStats( context ) {
 			context.commit("RESETPLAYERSTATS", [])
 		},
+		async getPlayerEvent( context, data ) {
+			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+
+			let matchId = data.matchId
+			let teamId = data.teamId
+			let playerId = data.playerId
+			let primary = data.primary
+			let secondary = data.secondary
+
+			await User.refreshedToken();
+
+			axios.get( statBasicUrl + `get_match_events&match_id=${matchId}
+										${ teamId ? '&team_id='+teamId : ''}
+										&player_id=${playerId}
+										&primary=${primary}
+										${ secondary ? '&secondary='+secondary : ''}`, {
+				headers: {
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
+				}})
+				.then( response => {
+					const mutationName = `SETPLAYER${primary.toUpperCase()}`;
+					context.commit(mutationName, response.data)
+				})
+				.catch( error => {
+					const mutationName = `SETPLAYER${primary.toUpperCase()}`;
+					context.commit(mutationName, null)
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load player events"
+					})
+				})	
+		},
 		async getPlayerMatchesBySeason( context, data ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
 
@@ -419,10 +462,10 @@ export default {
 			context.commit("SETFORMATIONS", null)
 			await User.refreshedToken();
 
-			axios.get( statBasicUrl + 'get_match_formations&match_id=' + data.id/* ,  {
+			axios.get( statBasicUrl + 'get_match_formations&match_id=' + data.id,  {
 				headers: {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
-				}} */)
+				}})
 				.then( response => {
 					let statBasicUrl = context.rootGetters['links/statBasicUrl']
 
@@ -470,52 +513,10 @@ export default {
 						return player;
 					  });
 
-					
 					teamsData.homePlayers = updatedHomePlayers
 					teamsData.awayPlayers = updatedAwayPlayers
 
 					context.commit("SETFORMATIONS", teamsData)
-
-					/* const requestsHome = teamsData.homeData.players.map( player => {
-						const key = Object.keys(player);
-						return axios.get( statBasicUrl + 'get_player_current&player_id=' + player[key].playerId ) 
-					})
-
-					const requestsAway = teamsData.awayData.players.map( player => {
-						const key = Object.keys(player);
-						return axios.get( statBasicUrl + 'get_player_current&player_id=' + player[key].playerId ) 
-					})
-
-					Promise.all(requestsHome)
-							.then(responses => {							
-								updatedHomePlayers = Helpers.updatePlayersDetails( responses, teamsData.homeData.players )
-								teamsData.homePlayers = updatedHomePlayers
-
-								Promise.all(requestsAway)
-								.then(responses => {							
-									updatedAwayPlayers = Helpers.updatePlayersDetails( responses, teamsData.awayData.players )
-									teamsData.awayPlayers = updatedAwayPlayers
-									
-									context.commit("SETFORMATIONS", teamsData)
-								})
-								.catch(error => {
-									Toast.fire({
-										icon: 'error',
-										timer: 4000,
-										title: "Unable to load player details"
-									})
-								});
-
-							})
-							.catch(error => {
-								Toast.fire({
-									icon: 'error',
-									timer: 4000,
-									title: "Unable to load player details"
-								})
-							}); */
-
-					
 				})
 				.catch( error => {
 					Toast.fire({
@@ -547,18 +548,6 @@ export default {
 					})
 				})
 
-		},
-		async getAreas(context, season = 30) {
-			let instatBasic = context.rootGetters['links/statBasicUrl']
-			
-			await User.refreshedToken();
-
-			let instatId = context.rootGetters['user/user'].instat_id;				
-
-			/* await axios.get(instatBasic + instatPlayerMatches + instatId + instatTournamentSeason + season + instatOPtions)
-				.then( response => {
-					context.commit("SETMATCHES", response.data.data.match)
-				}) */
 		},
 		async getCompetitionsList( context  ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
@@ -751,6 +740,12 @@ export default {
 		},
 		matchStats(state) {
 			return state.matchStats
+		},
+		playerPasses(state) {
+			return state.playerPasses
+		},
+		playerShots(state) {
+			return state.playerShots
 		},
 		matchVideo(state) {
 			return state.matchVideo

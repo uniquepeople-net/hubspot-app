@@ -1,7 +1,7 @@
 <template>
-	<div class="mb-5 comparison-comp">
+	<div class="mb-5 comparison-comp position-relative">
 		<h5 class="text-value">{{ $t('message.PlayerComparison') }}</h5>
-		<Search v-if="showSearch" @addPlayer="addPlayer"/>
+		<Search v-if="showSearch && !noAccess" @addPlayer="addPlayer"/>
 		<div class="row g-2 mt-4" v-if="playerDetails">
 			<div class="col-6 d-flex flex-column">
 				<GridCard bgSize="4rem" padding=".5rem .5rem 0 .5rem" class="d-flex card-compare">
@@ -56,7 +56,10 @@
 			</div>
 		</div>
 		<Divider class="divider-light"/>
-		<AdvStats :selectedMatch1="selectedMatch1" :selectedMatch2="selectedMatch2"/>
+		<AdvStats v-if="!noAccess" :selectedMatch1="selectedMatch1" :selectedMatch2="selectedMatch2"/>
+		<NoAccess v-if="noAccess" class="no-access"/>
+	
+
 	</div>
 </template>
  
@@ -69,6 +72,7 @@
 	import Search from './Search.vue'
 	import Listbox from 'primevue/listbox'
 	import AdvStats from './AdvStats.vue'
+	import NoAccess from './NoAccess.vue'
 	
 
 	export default {
@@ -82,10 +86,16 @@
 				page1: 1,
 				loading2: false,
 				page2: 1,
+				noAccess: false
 			}
 		},
 		methods: {
 			addPlayer(data) {
+				if ( this.user.membership_id !== 3 ) {
+					this.noAccess = true
+					
+					return
+				}
 				this.addedPlayer = data	
 
 				this.$store.dispatch('stats/resetPlayer2Matches')	
@@ -135,7 +145,7 @@
 				this.loading2 = false
 			} 
 		},
-		components: { GridCard, PlayerCard, NobodyCard, Search, Listbox, AdvStats }
+		components: { GridCard, PlayerCard, NobodyCard, Search, Listbox, AdvStats, NoAccess }
 	}
 </script>
  
@@ -165,6 +175,10 @@
 		:deep(.p-button.p-button-link:enabled:focus) {
 			box-shadow: unset;
 		}
+	}
+	.no-access {
+		position: absolute;
+		bottom: -60%;
 	}
 }
 

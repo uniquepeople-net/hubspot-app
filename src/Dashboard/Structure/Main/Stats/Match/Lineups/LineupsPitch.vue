@@ -4,9 +4,9 @@
 		<Pitch />
 		<span class="away-formation text-x-small">{{ formations.awayData.scheme }}</span>
 		<TshirtNumber v-for="player in homePlayers" :x="'x' in player ? player.x : 0" :y="'y' in player ? player.y : 0" color="home"
-					:position="player.position" :number="player.details.shirtNumber" :name="player.details.player.lastName"/>
+					:position="player.position" :number="player.details.shirtNumber" :name="player.details.player.shortName"/>
 		<TshirtNumber v-for="player in awayPlayers" :x="'x' in player ? player.x : 0" :y="'y' in player ? player.y : 0" color="away"
-					:position="player.position" :number="player.details.shirtNumber" :name="player.details.player.lastName"/>
+					:position="player.position" :number="player.details.shirtNumber" :name="player.details.player.shortName"/>
 	</div>
 </template>
  
