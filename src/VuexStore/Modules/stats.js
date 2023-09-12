@@ -15,6 +15,7 @@ export default {
 		matchStats: null,
 		playerPasses: null,
 		playerShots: null,
+		playerDuels: null,
 		matchVideo: null,
 		team1: null,
 		team2: null,
@@ -69,6 +70,9 @@ export default {
 		},
 		SETPLAYERSHOT( state, data ) {
 			state.playerShots = data
+		},
+		SETPLAYERDUEL( state, data ) {
+			state.playerDuels = data
 		},
 		SETMATCHVIDEO( state, data ) {
 			state.matchVideo = data
@@ -746,6 +750,9 @@ export default {
 		},
 		playerShots(state) {
 			return state.playerShots
+		},
+		playerDuels(state) {
+			return state.playerDuels
 		},
 		matchVideo(state) {
 			return state.matchVideo

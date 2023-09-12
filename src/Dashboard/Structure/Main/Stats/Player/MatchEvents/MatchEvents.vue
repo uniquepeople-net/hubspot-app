@@ -4,8 +4,9 @@
 		<TabView>
 			<TabPanel v-for="stat in stats" :header="stat.title">
 
-				<component v-if="stat.data" :is="stat.component" :data="stat.data" :match="matchData"/>
-				<LoadingIcon v-if="!stat.data" :title="stat.title.toLowerCase()" />
+				<component :is="stat.component" :match="matchData" :title="stat.title.toLowerCase()"
+							:playerId="playerId" :matchId="matchId" :primaryParam="stat.primaryParam"/>
+
 
 			</TabPanel>				
 		</TabView>
@@ -15,23 +16,18 @@
  
  
 <script>
-	import { mapGetters } from 'vuex';
 	import TabView from 'primevue/tabview';
 	import TabPanel from 'primevue/tabpanel';
-	import LoadingIcon from '../../../../../global/LoadingIcon.vue';
 	import PassesEvents from './PassesEvents.vue';
 	import ShotEvents from './ShotEvents.vue';
 	import CooperationEvents from './CooperationEvents.vue';
+	import DuelsEvents from './DuelsEvents.vue';
 
 	export default {
 		props: {
 			matchId: Number, 
 			playerId: Number,
 			matchData: Object
-		},
-		created() {
-			this.$store.dispatch('stats/getPlayerEvent', { matchId: this.matchId, playerId: this.playerId, primary: 'pass' })
-			this.$store.dispatch('stats/getPlayerEvent', { matchId: this.matchId, playerId: this.playerId, primary: 'shot' })
 		},
 		data() {
 			return {	
@@ -41,18 +37,18 @@
  
 		},
 		computed: {
-			...mapGetters({ passes: "stats/playerPasses",
-							shots: "stats/playerShots" }),
 			stats() {
 				return [
-					{ title: this.$i18n.t('message.Passes').toUpperCase(), component: PassesEvents, data: this.passes },
-					{ title: this.$i18n.t('message.Cooperation').toUpperCase(), component: CooperationEvents, data: this.passes },
-					{ title: this.$i18n.t('message.Shots').toUpperCase(), component: ShotEvents, data: this.shots },
+					{ title: this.$i18n.t('message.Passes').toUpperCase(), component: PassesEvents, primaryParam: 'pass' },
+					{ title: this.$i18n.t('message.Cooperation').toUpperCase(), component: CooperationEvents, primaryParam: 'pass' },
+					{ title: this.$i18n.t('message.Shots').toUpperCase(), component: ShotEvents, primaryParam: 'shot' },
+					{ title: this.$i18n.t('message.Duels').toUpperCase(), component: DuelsEvents, primaryParam: 'duel' }
 				]
+				
 			},
 
 		},
-		components: { TabView, TabPanel, PassesEvents, LoadingIcon, ShotEvents, CooperationEvents }
+		components: { TabView, TabPanel, PassesEvents, ShotEvents, CooperationEvents, DuelsEvents }
 	}
 </script>
  
