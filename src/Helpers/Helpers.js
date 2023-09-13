@@ -385,6 +385,27 @@ class Helpers {
 		})	
 	}
 
+	// Calculate angle based on start and end coordinates
+	calculateAngle(x1, y1, x2, y2) {
+		const deltaX = (x2 - x1) * 1.4016;
+		const deltaY = y2 - y1;
+
+		let angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI) + 90
+
+		angle = (angle + 360) % 360;
+
+		return angle
+	}
+
+	// Calculate line length (width) based on start and end coordinates
+	lineWidth(x1, y1, x2, y2) {
+		let angle = this.calculateAngle( x1, y1, x2, y2 )
+
+		let halfMaxWidth = 19.5 / 2; // Half of the maximum width (9.75)
+		let width = Math.sqrt(Math.pow((x2 - x1) * 1.4016, 2) + Math.pow(y2 - y1, 2))
+		
+		return width + '%'			
+	}
 
 	// Positions on pitch
 	positionsCoordinates(playersArray, homeGuest) {
@@ -592,6 +613,20 @@ class Helpers {
 			}
 		})
 		return updatedPlayersArray
+	}
+
+	// Goal net score zones
+	scoreZones( zone ) {
+
+		/* switch (zone) {
+			case 'olt':
+				return 'top:-'
+				break;
+		
+			default:
+				break;
+		} */
+
 	}
 
 }

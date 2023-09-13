@@ -1,7 +1,8 @@
 <template>
 	<div class="pitch-pass"
 		:style="`transform:rotate(${calculateAngle( x1, y1, x2, y2 )}deg); 
-				 top: calc(${x1}%); left: calc(100% - ${y1}%); width:${passWidth(x1, y1, x2, y2)}`">
+				 top: calc(${x1}%); left: calc(100% - ${y1}%); width:${passWidth(x1, y1, x2, y2)};
+				 ${overAll && 'z-index:99;'}`">
 		
 		<span class="transmitter text-x-small center-center" :style="`${selectedBg && 'border: 2px solid ' + selectedBg };`">
 			<span :style="`transform:rotate(-${calculateAngle( x1, y1, x2, y2 ) }deg);`">{{ transmitter }}</span>
@@ -10,15 +11,13 @@
 			<span :style="`background:${passBg};`"></span>
 		</span>
 		<i class="bi bi-caret-right-fill icon-arrow" 
-		   :style="`color:${passBg}; right:${ accuracy ? '1' : '-5' }px`"></i>
+		   :style="`color:${passBg}; right:${ accuracy ? '1' : '-5' }px`">
+		   </i>
 		
 		<span v-if="accuracy" class="receiver text-x-small center-center" 
-			  :style="`transform:rotate(-${calculateAngle( x1, y1, x2, y2 ) }deg); ${selectedBg && 'border: 2px solid ' + selectedBg };`">
-			  
+			  :style="`transform:rotate(-${calculateAngle( x1, y1, x2, y2 ) }deg); ${selectedBg && 'border: 2px solid ' + selectedBg };`">		  
 			  {{ receiver }}
-		
 		</span>
-	
 	</div>
 </template>
  
@@ -28,55 +27,15 @@
 		props: ['receiver', 'transmitter', 'x1', 'y1', 'x2', 'y2', 'accuracy', 'selectedPass', 'id'],
 		data() {
 			return {
-				
+				overAll: false
 			}
 		},
 		methods: {
-			selectPass() {
-				
-			},
 			calculateAngle(x1, y1, x2, y2) {
-				const deltaX = (x2 - x1) * 1.4016;
-				const deltaY = y2 - y1;
-
-				let angle = Math.atan2(deltaY, deltaX) * (180 / Math.PI) + 90
-
-				angle = (angle + 360) % 360;
-
-				return angle
+				return Helpers.calculateAngle(x1, y1, x2, y2)
 			},
 			passWidth(x1, y1, x2, y2) {
-				let angle = this.calculateAngle( x1, y1, x2, y2 )
-
-				let halfMaxWidth = 19.5 / 2; // Half of the maximum width (9.75)
-				let width = Math.sqrt(Math.pow((x2 - x1) * 1.4016, 2) + Math.pow(y2 - y1, 2))
- 
-				/* if ( widthCounted > 51 ) {
-					halfMaxWidth = 19.5
-				} */
-
-				// Map the angle to the width pattern
-				/* let result;
-				if (angle >= 0 && angle <= 90) {
-					result = (angle / 90) * halfMaxWidth * 2;
-				} else if (angle > 90 && angle <= 180) {
-					result = halfMaxWidth * 2 - ((angle - 90) / 90) * halfMaxWidth * 2;
-				} else if (angle > 180 && angle <= 270) {
-					result = (angle - 180) / 90 * halfMaxWidth * 2;
-				} else {
-					result = halfMaxWidth * 2 - ((angle - 270) / 90) * halfMaxWidth * 2;
-				} */
-
-				/* if ( widthCounted > 50 ) {
-					result = result * 2.5 
-				} */
-
-				//return result + '%';
-				
-
-				//let increase = (19.5 / 90) * angle
-				
-				return width + '%'			
+				return Helpers.lineWidth(x1, y1, x2, y2)		
 			},
 			calculateMove() {
 				let angle = this.calculateAngle( this.x1, this.y1, this.x2, this.y2 )
@@ -107,7 +66,10 @@
 			selectedBg() {
 				let selectedBg = ''
 				if ( this.selectedPass === this.id ) {
-					selectedBg = 'var(--color-selected)'
+					selectedBg = 'var(--color-selected)',
+					this.overAll = true
+				} else {
+					this.overAll = false
 				}
 				return selectedBg
 			}

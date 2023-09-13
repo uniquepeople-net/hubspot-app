@@ -40,7 +40,7 @@
 			title: String
 		},
 		created() {
-			this.$store.dispatch('stats/getPlayerEvent', { matchId: this.matchId, playerId: this.playerId, primary: this.primaryParam/* , secondary: 'offensive_duel' */ })
+			this.$store.dispatch('stats/getPlayerEvent', { matchId: this.matchId, playerId: this.playerId, primary: this.primaryParam  /* , secondary: 'offensive_duel'  */ })
 		},
 		data() {
 			return {
@@ -50,20 +50,29 @@
 		methods: {
 			// check various types of duels that are successful
 			checkDuel(data) {
+				if ( 'secondary' in data.type && data.type.secondary.includes('loss') ) {
+					return false
+				}
+				if ( data.carry ) {
+					return data.carry.progression > 0 ? true : false
+				}
 				if ( data.aerialDuel ) {
 					return data.aerialDuel.firstTouch ? true : false
 				}
 				if ( data.groundDuel ) {
 					if ( data.groundDuel.duelType === "defensive_duel" ) {
-						return data.groundDuel.stoppedProgress /* && data.groundDuel.recoveredPossession */ ? true : false
+						return data.groundDuel.keptPossession || ( data.groundDuel.stoppedProgress && data.groundDuel.recoveredPossession) ? true : false
 					} 
+					if ( data.groundDuel.duelType === 'dribble' ) {
+						return data.groundDuel.keptPossession && data.groundDuel.progressedWithBall ? true : false
+					}
+					if ( data.groundDuel.duelType === 'offensive_duel' ) {
+						return data.groundDuel.keptPossession ? true : false
+					}
 					return data.groundDuel.keptPossession /* && data.groundDuel.progressedWithBall */ ? true : false 
 				}
-				if ( 'secondary' in data.type && data.type.secondary.includes('recovery') || data.type.secondary.includes('foul_suffered') ) {
+				if ( 'secondary' in data.type && data.type.secondary.includes('foul_suffered') ) {
 					return true
-				}
-				if ( data.carry ) {	
-					return data.carry.progression > 0 ? true : false 
 				}
 				return false
 			},
