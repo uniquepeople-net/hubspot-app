@@ -67,7 +67,7 @@
 			},
 			selectedBg() {
 				let selectedBg = ''
-				if ( this.selectedPass === this.id ) {
+				if ( this.selectedShot === this.id ) {
 					selectedBg = 'var(--color-selected)',
 					this.overAll = true
 				} else {

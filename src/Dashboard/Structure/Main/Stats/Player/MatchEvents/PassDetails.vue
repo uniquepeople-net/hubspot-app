@@ -11,8 +11,8 @@
 					·
 					<span class="text-sm-bold">{{time}}</span>
 				</span>
-				<i class="pi pi-chevron-down"></i>
-				<!-- <i class="pi pi-chevron-up"></i> -->
+				<i v-if="!collapsed" class="pi pi-chevron-down"></i>
+				<i v-if="collapsed" class="pi pi-chevron-up"></i>
 			</div>
 			<div v-if="collapsed">
 				<Divider class="divider-dark"/>
@@ -81,7 +81,7 @@ export default {
       		this.collapsed = !this.collapsed
     	},
 		formatName(text) {
-			return text.replace(/_/g, ' ') 
+			return text && text.replace(/_/g, ' ')
 		}
   	},
   	components: { GridCard, CircleCheck, CircleFailed, TimeWatch, PassDetailsInfo, Meter, Football24, Person },

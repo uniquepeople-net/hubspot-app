@@ -11,14 +11,14 @@
 					·
 					<span class="text-sm-bold">{{time}}</span>
 				</span>
-				<i class="pi pi-chevron-down"></i>
-				<!-- <i class="pi pi-chevron-up"></i> -->
+				<i v-if="!collapsed" class="pi pi-chevron-down"></i>
+				<i v-if="collapsed" class="pi pi-chevron-up"></i>
 			</div>
 			<div v-if="collapsed">
 				<Divider class="divider-dark"/>
 				<div class="row">
 					<div class="col-6">
-						<PassDetailsInfo :value="accurate ? $t('message.Accurate') : $t('message.Inaccurate')" :description="''">
+						<PassDetailsInfo :value="accurate ? $t('message.Successful') : $t('message.Unsuccessful')" :description="''">
 							<template #vector>
 								<CircleCheck v-if="accurate"/>
 								<CircleFailed v-if="!accurate"/>
@@ -58,7 +58,6 @@ import PassDetailsInfo from '../../Global/PassDetailsInfo.vue';
 import CircleCheck from '../../Vectors/CircleCheck.vue';
 import CircleFailed from '../../Vectors/CircleFailed.vue';
 import Football24 from '../../Vectors/Football24.vue';
-import Meter from '../../Vectors/Meter.vue';
 import Person from '../../Vectors/Person.vue';
 import TimeWatch from '../../Vectors/TimeWatch.vue';
 
@@ -74,10 +73,10 @@ export default {
       		this.collapsed = !this.collapsed
     	},
 		formatName(text) {
-			return text.replace(/_/g, ' ') 
+			return text && text.replace(/_/g, ' ')
 		}
   	},
-  	components: { GridCard, CircleCheck, CircleFailed, TimeWatch, PassDetailsInfo, Meter, Football24, Person },
+  	components: { GridCard, CircleCheck, CircleFailed, TimeWatch, PassDetailsInfo, Football24, Person },
 };
 </script>
 

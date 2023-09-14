@@ -615,18 +615,72 @@ class Helpers {
 		return updatedPlayersArray
 	}
 
+	// Get random number between range of numbers
+	randomBetweenRange( min, max ) {
+		return Math.floor(Math.random() * (max - min)) + min;
+	}
+
 	// Goal net score zones
 	scoreZones( zone ) {
 
-		/* switch (zone) {
-			case 'olt':
-				return 'top:-'
-				break;
+		let topOut = `${this.randomBetweenRange( -5, -25 ).toString()}%`
+		let half = `${this.randomBetweenRange( 33, 66 ).toString()}%`
+		let sixth = `${this.randomBetweenRange( 3, 100/6 ).toString()}%`
+		let fiveSixth = `${this.randomBetweenRange( 66, 97 ).toString()}%`
+		let remInsideFull = `calc(${this.randomBetweenRange( 66, 97 ).toString()}%)`
+		let remOutside = `calc(${this.randomBetweenRange( 103, 105 ).toString()}%)`
+		let remInsideNull = `calc(${this.randomBetweenRange( -5, -3 ).toString()}%)`
+
+		switch (zone) {
+			case 'otl':
+				return [{top: topOut, left: remInsideNull}]
+			case 'ot':
+			case 'pr':
+			case 'bc':
+				return [{top: topOut, left: half}]
+			case 'otr':
+				return [{top: topOut, left: remOutside}]
+			case 'gtl':
+				return [{top: sixth, left: sixth}]
+			case 'gt':
+				return [{top: sixth, left: half}]
+			case 'gtr':
+				return [{top: sixth, left: fiveSixth}]
+			case 'ol':
+				return [{top: half, left: remInsideNull}]
+			case 'gl':
+				return [{top: half, left: sixth}]
+			case 'gc':
+				return [{top: half, left: half}]
+			case 'gr':
+				return [{top: half, left: fiveSixth}]
+			case 'or':
+				return [{top: half, left: remOutside}]
+			case 'olb':
+				return [{top: remInsideFull, left: remInsideNull}]
+			case 'glb':
+				return [{top: remInsideFull, left: sixth}]
+			case 'gc':
+				return [{top: remInsideFull, left: half}]
+			case 'gbr':
+				return [{top: remInsideFull, left: fiveSixth}]
+			case 'obr':
+				return [{top: remInsideFull, left: remOutside}]
 		
 			default:
-				break;
-		} */
+				return [{top: half, left: half}]
+		}
+	}
 
+	// Format stats event time divided to minutes and seconds
+	formatTime(minute, second) {
+		if ( minute !== null && second !== null ) {
+			let minuteF = minute && minute >= 0 && minute <= 9 ? '0' + minute.toString() : minute.toString()
+			let secondF = second && second >= 0 && second <= 9 ? '0' + second.toString() : second.toString()
+			return minuteF + ':' + secondF
+		} else {
+			return '00:00'
+		}
 	}
 
 }

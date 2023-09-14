@@ -50,6 +50,9 @@
 		methods: {
 			// check various types of duels that are successful
 			checkDuel(data) {
+				if ( 'secondary' in data.type && data.type.secondary.includes('foul_suffered') ) {
+					return true
+				}
 				if ( 'secondary' in data.type && data.type.secondary.includes('loss') ) {
 					return false
 				}
@@ -71,9 +74,6 @@
 					}
 					return data.groundDuel.keptPossession /* && data.groundDuel.progressedWithBall */ ? true : false 
 				}
-				if ( 'secondary' in data.type && data.type.secondary.includes('foul_suffered') ) {
-					return true
-				}
 				return false
 			},
 			specificDuel(data) {
@@ -83,13 +83,7 @@
 				return data.groundDuel ? data.groundDuel.opponent.name : ( data.aerialDuel ? data.aerialDuel.opponent.name : '' )
 			},
 			formatTime(minute, second) {
-				if ( minute !== null && second !== null ) {
-					let minuteF = minute && minute >= 0 && minute <= 9 ? '0' + minute.toString() : minute.toString()
-					let secondF = second && second >= 0 && second <= 9 ? '0' + second.toString() : second.toString()
-					return minuteF + ':' + secondF
-				} else {
-					return '00:00'
-				}
+				return Helpers.formatTime(minute, second) 
 			}
 
 		},

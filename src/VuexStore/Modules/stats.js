@@ -16,6 +16,7 @@ export default {
 		playerPasses: null,
 		playerShots: null,
 		playerDuels: null,
+		seasonStats: null,
 		matchVideo: null,
 		team1: null,
 		team2: null,
@@ -74,6 +75,9 @@ export default {
 		SETPLAYERDUEL( state, data ) {
 			state.playerDuels = data
 		},
+		SETSEASONSTATS( state, data ) {
+			state.seasonStats = data
+		},
 		SETMATCHVIDEO( state, data ) {
 			state.matchVideo = data
 		},
@@ -126,6 +130,9 @@ export default {
 				matchDetails: null,
 				matchStats: null,
 				playerPasses: null,
+				playerShots: null,
+				playerDuels: null,
+				seasonStats: null,
 				matchVideo: null,
 				team1: null,
 				team2: null,
@@ -370,9 +377,6 @@ export default {
 		async getMatchDetails( context, id ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
 
-			console.log('repos')
-			
-
 			//await User.refreshedToken();
 
 			/* axios.get( statBasicUrl + 'matches/' + id + '?details=coaches,players,teams,competition,round,season', {
@@ -530,6 +534,26 @@ export default {
 					})
 				})
 
+		},
+		async getSeasonStats( context, data ) {
+			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+
+			await User.refreshedToken();
+
+			axios.get( statBasicUrl + 'get_sum_player_stats&player_id=' + data.playerId + '&comp_id=775&season_id=' + data.seasonId + '&avg=0&perc=0&total=1', {
+				headers: {
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
+				}})
+				.then( response => {
+					context.commit("SETSEASONSTATS", response.data)
+				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load season stats"
+					})
+				})			
 		},
 		async getMatchVideo( context, id ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
@@ -753,6 +777,9 @@ export default {
 		},
 		playerDuels(state) {
 			return state.playerDuels
+		},
+		seasonStats(state) {
+			return state.seasonStats
 		},
 		matchVideo(state) {
 			return state.matchVideo

@@ -12,8 +12,8 @@
 		props: ['color'],
 		methods: {
 			strokeColor() {
-				if ( this.color && this.color === 'red') {
-					return 'red'
+				if ( this.color ) {
+					return this.color
 				} else return 'black'
 			}
 		}

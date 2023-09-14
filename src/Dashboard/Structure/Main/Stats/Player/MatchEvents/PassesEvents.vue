@@ -5,7 +5,6 @@
 					:length="pass.pass.length" :accurate="pass.pass.accurate" :secondaryName="pass.type.secondary[0]"/>
 
 		<LoadingIcon v-if="!passes" :title="title" />
-	
 	</div>
 </template>
  
@@ -37,13 +36,7 @@
 				this.pass = data ? data[0] : null
 			},
 			formatTime(minute, second) {
-				if ( minute && second ) {
-					let minuteF = minute && minute >= 0 && minute <= 9 ? '0' + minute.toString() : minute.toString()
-					let secondF = second && second >= 0 && second <= 9 ? '0' + second.toString() : second.toString()
-					return minuteF + ':' + secondF
-				} else {
-					return '00:00'
-				}
+				return Helpers.formatTime(minute, second) 
 			}
 		},
 		computed: {

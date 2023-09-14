@@ -84,8 +84,6 @@
 				return (total/100) * .5
 			}, 
 			updateDatasets() {
-				console.log('asdasd')
-				
 				this.chartData.datasets[0].data = [this.accurate, this.space(), this.inacurate, this.space()];
 			}
 		},

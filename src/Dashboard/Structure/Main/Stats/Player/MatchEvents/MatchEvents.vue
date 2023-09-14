@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<h5 class="text-value">{{ $t('message.MatchEvents') }}</h5>
-		<TabView>
+		<TabView scrollable>
 			<TabPanel v-for="stat in stats" :header="stat.title">
 
 				<component :is="stat.component" :match="matchData" :title="stat.title.toLowerCase()"

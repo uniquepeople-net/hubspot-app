@@ -8,7 +8,8 @@
 		<MatchStats v-if="matchId && user && specificMatch" :matchId="matchId" :id="user.instat_id"/>
 		<MatchEvents v-if="matchId && specificMatch" :matchId="matchId" 
 					 :playerId="user.instat_id" :matchData="match"/>
-		<Comparison class="mt-4"/>
+		<Comparison v-if="specificMatch" class="mt-4"/>
+		<SeasonStats v-if="matches && !specificMatch" />
 	</div>
 </template>
  
@@ -22,6 +23,7 @@
 	import PlayerInfo from './PlayerInfo.vue'
 	import MatchCard from '../../../../global/MatchCard.vue'
 	import BackButton from '../../../../global/BackButton.vue'
+	import SeasonStats from './SeasonStats.vue'
 	
 	export default {
 		created() {
@@ -45,9 +47,10 @@
 			},
 		},
 		computed: {
-			...mapGetters({ user: 'user/user' })
+			...mapGetters({ user: 'user/user',
+							matches: 'stats/playerMatches' })
 		},
-		components: { PlayerInfo, LastGames, MatchStats, MatchEvents, Comparison, MatchCard, BackButton }
+		components: { PlayerInfo, LastGames, MatchStats, MatchEvents, Comparison, MatchCard, BackButton, SeasonStats }
 	}
 </script>
  
