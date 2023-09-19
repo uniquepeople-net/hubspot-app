@@ -115,8 +115,8 @@
 		color: var(--main-white);
 		background: var(--main-dark);
 		border: 1px solid var(--main-dark);
-		display: inline-block;
 		z-index: 50;
+		transition: all .3s;
 	}
 }
 .substitutions {

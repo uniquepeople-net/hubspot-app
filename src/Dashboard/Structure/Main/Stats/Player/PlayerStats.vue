@@ -9,7 +9,7 @@
 		<MatchEvents v-if="matchId && specificMatch" :matchId="matchId" 
 					 :playerId="user.instat_id" :matchData="match"/>
 		<Comparison v-if="specificMatch" class="mt-4"/>
-		<SeasonStats v-if="matches && !specificMatch" />
+		<SeasonStats v-if="matches.length > 0 && !specificMatch" :lastMatch="matches[0]" :playerId="user.instat_id"/>
 	</div>
 </template>
  
@@ -26,9 +26,6 @@
 	import SeasonStats from './SeasonStats.vue'
 	
 	export default {
-		created() {
-			//this.$store.dispatch('stats/getPlayerCareer', this.user.instat_id )
-		},
 		data() {
 			return {
 				specificMatch: false,

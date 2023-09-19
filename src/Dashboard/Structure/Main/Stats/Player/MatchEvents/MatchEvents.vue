@@ -5,7 +5,7 @@
 			<TabPanel v-for="stat in stats" :header="stat.title">
 
 				<component :is="stat.component" :match="matchData" :title="stat.title.toLowerCase()"
-							:playerId="playerId" :matchId="matchId" :primaryParam="stat.primaryParam"/>
+							:playerId="playerId" :matchId="matchId" :primaryParam="stat.primaryParam" :secondaryParam="stat.secondaryParam ? stat.secondaryParam : null"/>
 
 
 			</TabPanel>				
@@ -40,9 +40,10 @@
 			stats() {
 				return [
 					{ title: this.$i18n.t('message.Passes').toUpperCase(), component: PassesEvents, primaryParam: 'pass' },
-					{ title: this.$i18n.t('message.Cooperation').toUpperCase(), component: CooperationEvents, primaryParam: 'pass' },
-					{ title: this.$i18n.t('message.Shots').toUpperCase(), component: ShotEvents, primaryParam: 'shot' },
-					{ title: this.$i18n.t('message.Duels').toUpperCase(), component: DuelsEvents, primaryParam: 'duel' }
+					//{ title: this.$i18n.t('message.Cooperation').toUpperCase(), component: CooperationEvents, primaryParam: 'pass' },
+					{ title: this.$i18n.t('message.Shots').toUpperCase(), component: ShotEvents, primaryParam: 'shot,penalty' },
+					{ title: this.$i18n.t('message.Duels').toUpperCase(), component: DuelsEvents, primaryParam: 'duel' },
+					//{ title: this.$i18n.t('message.Dribbles').toUpperCase(), component: DuelsEvents, primaryParam: null, secondaryParam: 'dribble' }
 				]
 				
 			},

@@ -1,6 +1,9 @@
 <template>
 	<div>
-		<Pitch v-if="passes" class="mb-4" :events="passes.events" :match="match" @selectedPass="selectedPass"/>
+		<Pitch v-if="passes" :events="passes.events" :match="match" @selectedPass="selectedPass"/>
+
+		<Legend v-if="passes" :legends="legends" class="mb-4"/>
+
 		<PassDetails v-if="pass" :name="pass.pass.recipient.name" :time="formatTime(pass.minute, pass.second)" 
 					:length="pass.pass.length" :accurate="pass.pass.accurate" :secondaryName="pass.type.secondary[0]"/>
 
@@ -14,6 +17,7 @@
 	import PassDetails from './PassDetails.vue'
 	import Pitch from './Pitch.vue'
 	import LoadingIcon from '../../../../../global/LoadingIcon.vue';
+	import Legend from '../../Global/Legend.vue';
 
 	export default {
 		props: {
@@ -28,7 +32,11 @@
 		},
 		data() {
 			return {
-				pass: null
+				pass: null,
+				legends: [
+					{ icon: 'bi bi-arrow-right', title: this.$i18n.t('message.Successful').toLowerCase(), color: 'var(--color-success)' },
+					{ icon: 'bi bi-arrow-right', title: this.$i18n.t('message.Unsuccessful').toLowerCase(), color: 'var(--color-failed)' },
+				]
 			}
 		},
 		methods: {
@@ -42,7 +50,7 @@
 		computed: {
 			...mapGetters({ passes: 'stats/playerPasses' })
 		},
-		components: { Pitch, PassDetails, LoadingIcon }
+		components: { Pitch, PassDetails, LoadingIcon, Legend }
 	}
 </script>
  

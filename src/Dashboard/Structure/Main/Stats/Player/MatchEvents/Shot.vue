@@ -1,5 +1,5 @@
 <template>
-	<div class="pitch-pass"
+	<div :class="`pitch-pass ${ blockedShot ? 'w-auto' : ''}`"
 		:style="`transform:rotate(${calculateAngle( x1, y1, x2, y2 )}deg); 
 				 top: calc(${x1}%); left: calc(100% - ${y1}%); width:${passWidth(x1, y1, x2, y2)};
 				 ${overAll && 'z-index:99;'}`">
@@ -7,12 +7,17 @@
 		<span class="transmitter text-x-small center-center" :style="`${selectedBg && 'border: 2px solid ' + selectedBg };`">
 			<span v-if="transmitter" :style="`transform:rotate(-${calculateAngle( x1, y1, x2, y2 ) }deg);`">{{ transmitter }}</span>
 		</span>
-		<span class="pass center-center" :style="`background: ${selectedBg}`">
+		<span v-if="!blockedShot" class="pass center-center" :style="`background: ${selectedBg}`">
 			<span :style="`background:${passBg};`"></span>
 		</span>
-		<i class="pi pi-angle-right icon-arrow" 
+
+		<span class="center-center blocked" v-if="blockedShot">
+			<i class="pi pi-times"></i>
+		</span>
+
+		<i class="pi pi-angle-right icon-arrow" v-if="!blockedShot"
 		   :style="`color:${passBg}; right:${ accuracy && receiver ? '0' : '-6' }px`">
-		   </i>
+		</i>
 		
 		<span v-if="accuracy && receiver" class="receiver text-x-small center-center" 
 			  :style="`transform:rotate(-${calculateAngle( x1, y1, x2, y2 ) }deg); ${selectedBg && 'border: 2px solid ' + selectedBg };`">		  
@@ -24,7 +29,7 @@
  
 <script>
 	export default {
-		props: ['receiver', 'transmitter', 'x1', 'y1', 'x2', 'y2', 'accuracy', 'goal', 'selectedShot', 'id'],
+		props: ['receiver', 'transmitter', 'x1', 'y1', 'x2', 'y2', 'accuracy', 'goal', 'selectedShot', 'id', 'blockedShot'],
 		data() {
 			return {
 				overAll: false
@@ -51,7 +56,7 @@
 				}
 
 				return result
-			}
+			},
 		},
 		computed: {
 			passBg() {
@@ -67,14 +72,14 @@
 			},
 			selectedBg() {
 				let selectedBg = ''
-				if ( this.selectedShot === this.id ) {
+				if (this.selectedShot && this.selectedShot.id === this.id ) {
 					selectedBg = 'var(--color-selected)',
 					this.overAll = true
 				} else {
 					this.overAll = false
 				}
 				return selectedBg
-			}
+			},
 		}
 	}
 </script>
@@ -94,6 +99,11 @@
 		span {
 			width: 100%;
 			height: 2px;
+		}
+	}
+	.blocked {
+		i {
+			font-size: .6rem;
 		}
 	}
 	.transmitter {

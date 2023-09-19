@@ -5,16 +5,8 @@
 			<Duel v-if="duels" v-for="duel in duels.events" :x="duel.location.x" :selected="selectedDuel ? selectedDuel.id : null"
 				  :y="duel.location.y" :won="checkDuel(duel)" @click="specificDuel(duel)" :id="duel.id"/>
 		</div>
-		<div class="duel-desc d-flex align-items-center justify-content-between mt-1">
-			<span class="ms-2 me-3">
-				<span class="won"></span>
-				<span class="ms-2">{{$t('message.Successful').toLowerCase()}}</span>
-			</span>
-			<span class="ms-3 me-2">
-				<i class="pi pi-times"></i>
-				<span class="ms-2">{{$t('message.Unsuccessful').toLowerCase()}}</span>
-			</span>
-		</div>
+
+		<Legend v-if="duels" :legends="legends"/>
 
 		<DuelDetails v-if="selectedDuel" class="mt-3 w-100" :name="opponentName(selectedDuel)" :time="formatTime(selectedDuel.minute, selectedDuel.second)" 
 					:length="''" :accurate="checkDuel(selectedDuel)" :secondaryName="selectedDuel.type.secondary[0]" />
@@ -30,21 +22,27 @@
 	import Pitch from '../../Vectors/Pitch.vue';
 	import Duel from './Duel.vue';
 	import DuelDetails from './DuelDetails.vue';
+	import Legend from '../../Global/Legend.vue';
 	
 	export default {
 		props: {
 			match: Object,
 			primaryParam: String,
+			secondaryParam: String,
 			playerId: Number,
 			matchId: Number,
 			title: String
 		},
 		created() {
-			this.$store.dispatch('stats/getPlayerEvent', { matchId: this.matchId, playerId: this.playerId, primary: this.primaryParam  /* , secondary: 'offensive_duel'  */ })
+			this.$store.dispatch('stats/getPlayerEvent', { matchId: this.matchId, playerId: this.playerId, primary: this.primaryParam, secondary: this.secondaryParam ? this.secondaryParam : null })
 		},
 		data() {
 			return {
-				selectedDuel: null
+				selectedDuel: null,
+				legends: [
+					{ icon: 'bi bi-record-fill', title: this.$i18n.t('message.Successful').toLowerCase(), color: 'var(--stat-chart-bg)' },
+					{ icon: 'bi bi-x', title: this.$i18n.t('message.Unsuccessful').toLowerCase(), color: 'var(--color-failed)' },
+				]
 			}
 		},
 		methods: {
@@ -90,7 +88,7 @@
 		computed: {
 			...mapGetters({ duels: 'stats/playerDuels' })
 		},
-		components: { Pitch, LoadingIcon, Duel, DuelDetails, Pitch }
+		components: { Pitch, LoadingIcon, Duel, DuelDetails, Pitch, Legend }
 	}
 </script>
  

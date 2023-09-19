@@ -18,23 +18,21 @@
 				<Divider class="divider-dark"/>
 				<div class="row">
 					<div class="col-6">
-						<PassDetailsInfo :value="accurate === true ? $t('message.Accurate') : ( accurate === 'goal' ? $t('message.Goal') : $t('message.Inaccurate') )" :description="''">
+						<PassDetailsInfo :value="accurate.title" :description="''">
 							<template #vector>
-								<CircleCheckBlue v-if="accurate === true" :stroke="strokeCheck"/>
-								<CircleFailed v-if="!accurate"/>
-								<Football v-if="accurate === 'goal'" :color="'green'" class="goal"/>
+								<component :is="accurate.icon" :color="`${accurate.icon === 'Football' ? 'green' : ''}`" :class="`${accurate.icon === 'Football' ? 'goal' : ''}`"/>
 							</template>
 						</PassDetailsInfo>
 					</div>
 					<div class="col-6">
-						<PassDetailsInfo :value="time" :description="$t('message.DuelTime')">
+						<PassDetailsInfo :value="time" :description="$t('message.ShotTime')">
 							<template #vector>
 								<TimeWatch />
 							</template>
 						</PassDetailsInfo>
 					</div>
 					<div class="col-6">
-						<PassDetailsInfo :value="formatName(secondaryName)" :description="$t('message.DuelType')">
+						<PassDetailsInfo :value="formatName(secondaryName)" :description="$t('message.ShotType')">
 							<template #vector>
 								<Football24 />
 							</template>
@@ -65,7 +63,13 @@
 	import TimeWatch from '../../Vectors/TimeWatch.vue';
 
 	export default {
-		props: ['name', 'time', 'length', 'secondaryName', 'accurate'],
+		props: {
+			name: String,
+			time: String,
+			length: String,
+			secondaryName: String, 
+			accurate: Object
+		},
 		data() {
 			return {
 				collapsed: false
@@ -90,8 +94,8 @@
 <style lang='scss' scoped>
 .shot-accordion {
 	.goal {
-		width: 25px;
-		height: 25px;
+		width: 20px;
+		height: 20px;
 	}
 }
 </style>

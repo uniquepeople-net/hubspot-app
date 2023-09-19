@@ -3,15 +3,13 @@
 		<h5 class="text-value">{{ $t('message.YourMatchStats') }}</h5>
 		<TabView scrollable>
 			<TabPanel v-if="stats && stats.hasOwnProperty('total')" v-for="item in items" :header="item.title">
-
 				<GridCard v-for="stat in item.stats" :gradient="160" class="individual-stat mb-3" bgSize="4rem" padding=".5rem 1rem">
 					<template #content>
 						<StatBarMain :title="stat.title" :value="stat.value"/>
 						<Divider v-if="stat.sub" class="divider my-1" />
 						<StatBarSub v-if="stat.sub" v-for="sub in stat.sub" :title="sub.title" :value="sub.value" :total="stat.value" :nonRatio="sub.nonRatio"/>
 					</template>	
-				</GridCard>	
-				
+				</GridCard>					
 			</TabPanel>	
 		</TabView>
 		<LoadingIcon v-if="!stats || !stats.hasOwnProperty('total')" :title="$t('message.Stats').toLowerCase()"/>			

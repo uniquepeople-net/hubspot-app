@@ -16,6 +16,7 @@ export default {
 		playerPasses: null,
 		playerShots: null,
 		playerDuels: null,
+		playerDribbles: null,
 		seasonStats: null,
 		matchVideo: null,
 		team1: null,
@@ -74,6 +75,9 @@ export default {
 		},
 		SETPLAYERDUEL( state, data ) {
 			state.playerDuels = data
+		},
+		SETPLAYERDRIBBLE( state, data ) {
+			state.playerDribbles = data
 		},
 		SETSEASONSTATS( state, data ) {
 			state.seasonStats = data
@@ -292,7 +296,7 @@ export default {
 		},
 		async getPalyerStats( context, data ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
-
+			context.commit("SETPLAYERSTATS", null)
 			await User.refreshedToken();
 
 			axios.get( statBasicUrl + 'get_player_match_stats&player_id=' + data.id + '&match_id=' + data.matchId, {
@@ -324,28 +328,32 @@ export default {
 		async getPlayerEvent( context, data ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
 
+			console.log(data)
+			
+
 			let matchId = data.matchId
 			let teamId = data.teamId
 			let playerId = data.playerId
 			let primary = data.primary
 			let secondary = data.secondary
+			const stateHelper = primary ? primary : secondary
+			const mutationName = `SETPLAYER${stateHelper.split(',')[0].toUpperCase()}`;
+			context.commit(mutationName, null)
 
 			await User.refreshedToken();
 
 			axios.get( statBasicUrl + `get_match_events&match_id=${matchId}
 										${ teamId ? '&team_id='+teamId : ''}
 										&player_id=${playerId}
-										&primary=${primary}
+										${ primary ? '&primary='+primary : ''}
 										${ secondary ? '&secondary='+secondary : ''}`, {
 				headers: {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
 				.then( response => {
-					const mutationName = `SETPLAYER${primary.toUpperCase()}`;
 					context.commit(mutationName, response.data)
 				})
 				.catch( error => {
-					const mutationName = `SETPLAYER${primary.toUpperCase()}`;
 					context.commit(mutationName, null)
 					Toast.fire({
 						icon: 'error',
@@ -426,6 +434,7 @@ export default {
 		},
 		async getMatchStats( context, data ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+			context.commit("SETMATCHSTATS", null)
 
 			await User.refreshedToken();
 
