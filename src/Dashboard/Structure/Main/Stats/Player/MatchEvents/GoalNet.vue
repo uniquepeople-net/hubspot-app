@@ -1,8 +1,8 @@
 <template>
 	<div class="goal-net">
 		<img src="../../../../../../../assets/images/Goal-Net-c.png" alt="" width="366">
-		<span v-for="shot in shots" class="shot d-flex" @click="selectShot(shot)"
-			  :style="`top:${scoreZones(shot.shot.goalZone)[0].top}; left:${scoreZones(shot.shot.goalZone)[0].left}; 
+		<span v-for="(shot, index) in shots" class="shot d-flex" @click="selectShot(shot)"
+			  :style="`top:${scoreZones(shot.shot.goalZone, id, 'top')[0].top}; left:${scoreZones(shot.shot.goalZone, id, 'left')[0].left}; 
 			  		    transform-origin: center center;
     					transform: translate(-50%, -50%);
 						${selectedBg(shot.id)  && 'z-index:99;'}
@@ -22,24 +22,21 @@ import Football from '../../Vectors/Football.vue'
 		},
 		data() {
 			return {
-				topOut: `${this.randomBetweenRange( -5, -25 ).toString()}%`,
-				half: `${this.randomBetweenRange( 33, 66 ).toString()}%`,
-				third: `${this.randomBetweenRange( 3, 100/3 ).toString()}%`,
-				twoThirds: `${this.randomBetweenRange( (100/3)*2, 97 ).toString()}%`,
-				remInsideFull: `calc(${this.randomBetweenRange( 66, 97 ).toString()}%)`,
-				remOutside: `calc(${this.randomBetweenRange( 103, 104.5 ).toString()}%)`,
-				remInsideNull: `calc(${this.randomBetweenRange( -4.5, -3 ).toString()}%)`,
-				postTop: '0%',
-				postLeft: '1%',
-				postRight: '99%',
+				topOut: null,
+				half: null,
+				third: null,
+				twoThirds: null,
+				remInsideFull: null,
+				remOutside: null,
+				remInsideNull: null,
 			}
 		},
 		methods: {
 			checkShot(shot) {
 				if ( shot.isGoal ) {
-					return 'green'
+					return 'var(--color-success)'
 				} else if ( !shot.onTarget ) {
-					return 'red'
+					return 'var(--color-failed)'
 				} else if ( shot.onTarget ) {
 					return 'var(--stat-chart-bg)'
 				}
@@ -59,59 +56,88 @@ import Football from '../../Vectors/Football.vue'
 			selectShot(shot) {
 				this.$emit('selectShot', shot)
 			},
-			scoreZones(zone) {
+			scoreZones(zone, id, key) {
+							
+				let topOut = `${this.randomBetweenRange( -5, -25 ).toString()}%`
+				let half = `${this.randomBetweenRange( 33, 66 ).toString()}%`
+				let third = `${this.randomBetweenRange( 3, 100/3 ).toString()}%`
+				let twoThirds = `${this.randomBetweenRange( (100/3)*2, 97 ).toString()}%`
+				let remInsideFull = `calc(${this.randomBetweenRange( 66, 97 ).toString()}%)`
+				let remOutside = `calc(${this.randomBetweenRange( 103, 104.5 ).toString()}%)`
+				let remInsideNull = `calc(${this.randomBetweenRange( -4.5, -3 ).toString()}%)`
+				let postTop = '0%'
+				let postLeft = '1%'
+				let postRight = '99%'
+			
+				if ( !this.selectedShotId ) {					
+					/* this.topOut = !this.topOut && topOut
+					this.half = !this.half && half
+					this.third = !this.third && third
+					this.twoThirds = !this.twoThirds && twoThirds
+					this.remInsideFull = !this.remInsideFull && remInsideFull
+					this.remOutside = !this.remOutside && remOutside
+					this.remInsideNull = !this.remInsideNull && remInsideNull */
+				}
+
+				/* this.shots.map( shot => {
+					if ( shot.shot.id === id ) {
+						return { ...shot, shot.shot[key] =  }
+					}
+					
+				}) */
+
 				switch (zone) {
 					case 'bc':
-						return [{top: this.topOut, left: '-10000%'}]
+						return [{top: this.topOut ? this.topOut : topOut, left: '-10000%'  }]
 					case 'gb':
-						return [{top: this.remInsideFull, left: this.half}]
+						return [{top: this.remInsideFull ? this.remInsideFull : remInsideFull , left: this.half ? this.half : half  }]
 					case 'gbr':
-						return [{top: this.remInsideFull, left: this.twoThirds}]
+						return [{top: this.remInsideFull ? this.remInsideFull : remInsideFull , left: this.twoThirds ? this.twoThirds : twoThirds }]
 					case 'gc':
-						return [{top: this.half, left: this.half}]
+						return [{top: this.half ? this.half : half, left: this.half ? this.half : half }]
 					case 'gl':
-						return [{top: this.half, left: this.third}]
+						return [{top: this.half ? this.half : half, left: this.third ? this.third : third }]
 					case 'glb':
-						return [{top: this.remInsideFull, left: this.third}]
+						return [{top: this.remInsideFull ? this.remInsideFull : remInsideFull, left: this.third ? this.third : third }]
 					case 'gr':
-						return [{top: this.half, left: this.twoThirds}]
+						return [{top: this.half ? this.half : half, left: this.twoThirds ? this.twoThirds : twoThirds }]
 					case 'gt':
-						return [{top: this.third, left: this.half}]
+						return [{top: this.third ? this.third : third, left: this.half ? this.half : half }]
 					case 'gtl':
-						return [{top: this.third, left: this.third}]
+						return [{top: this.third ? this.third : third, left: this.third ? this.third : third }]
 					case 'gtr':
-						return [{top: this.third, left: this.twoThirds}]
+						return [{top: this.third ? this.third : third, left: this.twoThirds ? this.twoThirds : twoThirds }]
 					case 'obr':
-						return [{top: this.remInsideFull, left: this.remOutside}]
+						return [{top: this.remInsideFull ? this.remInsideFull : remInsideFull, left: this.remOutside ? this.remOutside : remOutside }]
 					case 'ol':
-						return [{top: this.half, left: this.remInsideNull}]
+						return [{top: this.half ? this.half : half, left: this.remInsideNull ? this.remInsideNull : remInsideNull }]
 					case 'olb':
-						return [{top: this.remInsideFull, left: this.remInsideNull}]
+						return [{top: this.remInsideFull ? this.remInsideFull : remInsideFull, left: this.remInsideNull ? this.remInsideNull : remInsideNull }]
 					case 'or':
-						return [{top: this.half, left: this.remOutside}]
+						return [{top: this.half ? this.half : half, left: this.remOutside ? this.remOutside : remOutside }]
 					case 'ot':
-						return [{top: this.topOut, left: this.half}]
+						return [{top: this.topOut ? this.topOut : topOut, left: this.half ? this.half : half }]
 					case 'otl':
-						return [{top: this.topOut, left: this.remInsideNull}]
+						return [{top: this.topOut ? this.topOut : topOut, left: this.remInsideNull ? this.remInsideNull : remInsideNull }]
 					case 'otr':
-						return [{top: this.topOut, left: this.remOutside}]
+						return [{top: this.topOut ? this.topOut : topOut, left: this.remOutside ? this.remOutside : remOutside }]
 					case 'pbr':
-						return [{top: this.twoThirds, left: this.postRight}]
+						return [{top: this.twoThirds ? this.twoThirds : twoThirds, left: postRight }]
 					case 'pl':
-						return [{top: this.half, left: this.postLeft}]
+						return [{top: this.half ? this.half : half, left: postLeft  }]
 					case 'plb':
-						return [{top: this.twoThirds, left: this.postLeft}]
+						return [{top: this.twoThirds ? this.twoThirds : twoThirds, left: postLeft }]
 					case 'pr':
-						return [{top: this.half, left: this.postRight}]
+						return [{top: this.half ? this.half : half, left: postRight }]
 					case 'pt':
-						return [{top: this.postTop, left: this.half}]
+						return [{top: postTop, left: this.half ? this.half : half }]
 					case 'ptl':
-						return [{top: this.postTop, left: this.postLeft}]
+						return [{top: postTop, left: postLeft }]
 					case 'ptr':
-						return [{top: this.postTop, left: this.postRight}]
+						return [{top: postTop, left: postRight}]
 				
 					default:
-						return [{top: this.half, left: this.half}]
+						return [{top: this.half ? this.half : half, left: this.half ? this.half : half }]
 				}
 				
 				//return Helpers.scoreZones( zone )

@@ -1,21 +1,6 @@
 <template>
 	<div>
-		<Dialog v-model:visible="showMessage" :breakpoints="{ '960px': '80vw' }" :style="{ width: '30vw' }" position="top">
-			<div class="flex align-items-center flex-column pt-6 px-3">
-				<i v-if="response.message" class="pi pi-check-circle" :style="{fontSize: '4rem', color: 'var(--green-400)' }"></i>
-				<i v-if="response.error" class="pi pi-times-circle" :style="{fontSize: '4rem', color: 'var(--red-400)' }"></i>
-				<h5 v-if="response.message" class="mt-3">{{ response.message }}</h5>
-				<h6 v-if="response.error" v-for="(error, index) in response.error" class="mt-3">{{ index + ': ' + error[0].replace('validation.', '') }}</h6>
-				<h6 v-if="!response" class="mt-3">
-					Emails sent!
-				</h6>
-			</div>
-			<template #footer>
-				<div class="flex justify-content-center">
-					<Button label="OK" @click="toggleDialog" class="p-button-text" />
-				</div>
-			</template>
-		</Dialog>
+		<CustomDialog :visible="showMessage" :response="response" @hideDialog="hideDialog"/>
 
 		<BackButton :title="$t('message.EmailEditor')" :route="'all-users'" class="mb-4"/>
 		<div class="row g-3">
@@ -84,21 +69,13 @@
 	import EmailTemplates from './EmailTemplates.vue';
 	import DynamicData from './DynamicData.vue';
 	import BackButton from '../../../global/BackButton.vue';
+	import CustomDialog from '../../../global/CustomDialog.vue';
 
 	export default {
 		setup: () => ({ v$: useVuelidate() }),
 		data() {
 			return {
-				value: `<div>
-							<div>
-								<img src="https://api.QRGenerator.sk/by-square/pay/qr.png?iban=SK2709000000005112386457&amount=40&currency=EUR&vs={$_dynamic_var_symbol_$}&payment_note=ufp-clenske-2023&due_date=2023-06-03&size=256&transparent=false" alt="QR kod"/>
-							</div>
-							<h3 style="font-weight:bold;">Únia futbalových profesionálov</h3>
-							<div><img src="https://ufp.sk/wp-content/uploads/2023/04/cropped-logo-transp.png" alt="logo Ufp"></div>
-							<h4>Miletičova 5, 821 08 Bratislava</h4>
-							<h4>info@ufp.sk</h4>
-							<h4>ufp.sk</h4>
-						</div>`,
+				value: null,
 				files: null,
 				subject: '',
 				submitted: false,
@@ -118,6 +95,9 @@
 			}
 		},
 		methods: {
+			hideDialog() {
+				this.showMessage = false
+			},
 			async sendEmails(isFormValid) {
 				this.submitted = true;
 				let someEmptyDynamic = this.dynamicArr.some( d => d.data === '' || d.value === '' )
@@ -128,9 +108,9 @@
 				
 				this.loading = true;
 
-				setTimeout(() => {
+				/* setTimeout(() => {
 					this.showMessage = true
-				}, 2500)
+				}, 2500) */
 
 				const data = new FormData()
 				
@@ -176,7 +156,6 @@
 			},
 			toggleDialog() {
 				this.showMessage = !this.showMessage
-				//this.$router.push({ name: 'all-users' })
 			},
 			labelTemplate(data) {
 				return data ? data.name + ' ' + data.surname : ''
@@ -218,7 +197,7 @@
 			...mapGetters({ emails: 'appData/getUsers',
 							user: 'user/user' }),
 		},
-		components: { Editor, Listbox, FileUploadCard, EmailTemplates, DynamicData, BackButton }
+		components: { Editor, Listbox, FileUploadCard, EmailTemplates, DynamicData, BackButton, CustomDialog }
 	}
 </script>
  

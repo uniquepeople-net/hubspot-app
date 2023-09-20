@@ -328,9 +328,6 @@ export default {
 		async getPlayerEvent( context, data ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
 
-			console.log(data)
-			
-
 			let matchId = data.matchId
 			let teamId = data.teamId
 			let playerId = data.playerId
