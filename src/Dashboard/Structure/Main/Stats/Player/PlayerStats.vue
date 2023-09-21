@@ -8,8 +8,8 @@
 		<MatchStats v-if="matchId && user && specificMatch" :matchId="matchId" :id="user.instat_id"/>
 		<MatchEvents v-if="matchId && specificMatch" :matchId="matchId" 
 					 :playerId="user.instat_id" :matchData="match"/>
-		<Comparison v-if="specificMatch" class="mt-4"/>
 		<SeasonStats v-if="matches.length > 0 && !specificMatch" :lastMatch="matches[0]" :playerId="user.instat_id"/>
+		<Comparison class="mt-4"/>
 	</div>
 </template>
  

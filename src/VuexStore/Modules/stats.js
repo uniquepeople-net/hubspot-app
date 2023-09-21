@@ -296,7 +296,12 @@ export default {
 		},
 		async getPalyerStats( context, data ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
-			context.commit("SETPLAYERSTATS", null)
+			if ( data.compare ) {
+				context.commit( "SETPLAYER2STATS", null )
+			} else {
+				context.commit( "SETPLAYERSTATS", null )
+			}
+			
 			await User.refreshedToken();
 
 			axios.get( statBasicUrl + 'get_player_match_stats&player_id=' + data.id + '&match_id=' + data.matchId, {
