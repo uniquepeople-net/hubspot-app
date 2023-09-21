@@ -1,8 +1,8 @@
 <template>
 	<div class="goal-net">
 		<img src="../../../../../../../assets/images/Goal-Net-c.png" alt="" width="366">
-		<span v-for="(shot, index) in shots" class="shot d-flex" @click="selectShot(shot)"
-			  :style="`top:${scoreZones(shot.shot.goalZone, id, 'top')[0].top}; left:${scoreZones(shot.shot.goalZone, id, 'left')[0].left}; 
+		<span v-for="(shot, index) in shotsData" class="shot d-flex" @click="selectShot(shot)"
+			  :style="`top:${shot.shot.position.top}; left:${shot.shot.position.left}; 
 			  		    transform-origin: center center;
     					transform: translate(-50%, -50%);
 						${selectedBg(shot.id)  && 'z-index:99;'}
@@ -22,16 +22,17 @@ import Football from '../../Vectors/Football.vue'
 		},
 		data() {
 			return {
-				topOut: null,
-				half: null,
-				third: null,
-				twoThirds: null,
-				remInsideFull: null,
-				remOutside: null,
-				remInsideNull: null,
+				shotsData: this.shotsDataHandler()
 			}
 		},
 		methods: {
+			shotsDataHandler() {
+				const mutatedShots = this.shots.map( shot => {
+					shot.shot.position = this.scoreZones( shot.shot.goalZone )
+					return shot
+				})
+				return this.shots
+			},
 			checkShot(shot) {
 				if ( shot.isGoal ) {
 					return 'var(--color-success)'
@@ -56,7 +57,7 @@ import Football from '../../Vectors/Football.vue'
 			selectShot(shot) {
 				this.$emit('selectShot', shot)
 			},
-			scoreZones(zone, id, key) {
+			scoreZones(zone) {
 							
 				let topOut = `${this.randomBetweenRange( -5, -25 ).toString()}%`
 				let half = `${this.randomBetweenRange( 33, 66 ).toString()}%`
@@ -68,76 +69,59 @@ import Football from '../../Vectors/Football.vue'
 				let postTop = '0%'
 				let postLeft = '1%'
 				let postRight = '99%'
-			
-				if ( !this.selectedShotId ) {					
-					/* this.topOut = !this.topOut && topOut
-					this.half = !this.half && half
-					this.third = !this.third && third
-					this.twoThirds = !this.twoThirds && twoThirds
-					this.remInsideFull = !this.remInsideFull && remInsideFull
-					this.remOutside = !this.remOutside && remOutside
-					this.remInsideNull = !this.remInsideNull && remInsideNull */
-				}
-
-				/* this.shots.map( shot => {
-					if ( shot.shot.id === id ) {
-						return { ...shot, shot.shot[key] =  }
-					}
-					
-				}) */
 
 				switch (zone) {
 					case 'bc':
-						return [{top: this.topOut ? this.topOut : topOut, left: '-10000%'  }]
+						return {top: topOut, left: '-10000%'  }
 					case 'gb':
-						return [{top: this.remInsideFull ? this.remInsideFull : remInsideFull , left: this.half ? this.half : half  }]
+						return {top: remInsideFull , left: half  }
 					case 'gbr':
-						return [{top: this.remInsideFull ? this.remInsideFull : remInsideFull , left: this.twoThirds ? this.twoThirds : twoThirds }]
+						return {top: remInsideFull , left: twoThirds }
 					case 'gc':
-						return [{top: this.half ? this.half : half, left: this.half ? this.half : half }]
+						return {top: half, left: half }
 					case 'gl':
-						return [{top: this.half ? this.half : half, left: this.third ? this.third : third }]
+						return {top: half, left: third }
 					case 'glb':
-						return [{top: this.remInsideFull ? this.remInsideFull : remInsideFull, left: this.third ? this.third : third }]
+						return {top: remInsideFull, left: third }
 					case 'gr':
-						return [{top: this.half ? this.half : half, left: this.twoThirds ? this.twoThirds : twoThirds }]
+						return {top: half, left: twoThirds }
 					case 'gt':
-						return [{top: this.third ? this.third : third, left: this.half ? this.half : half }]
+						return {top: third, left: half }
 					case 'gtl':
-						return [{top: this.third ? this.third : third, left: this.third ? this.third : third }]
+						return {top: third, left: third }
 					case 'gtr':
-						return [{top: this.third ? this.third : third, left: this.twoThirds ? this.twoThirds : twoThirds }]
+						return {top: third, left: twoThirds }
 					case 'obr':
-						return [{top: this.remInsideFull ? this.remInsideFull : remInsideFull, left: this.remOutside ? this.remOutside : remOutside }]
+						return {top: remInsideFull, left: remOutside }
 					case 'ol':
-						return [{top: this.half ? this.half : half, left: this.remInsideNull ? this.remInsideNull : remInsideNull }]
+						return {top: half, left: remInsideNull }
 					case 'olb':
-						return [{top: this.remInsideFull ? this.remInsideFull : remInsideFull, left: this.remInsideNull ? this.remInsideNull : remInsideNull }]
+						return {top: remInsideFull, left: remInsideNull }
 					case 'or':
-						return [{top: this.half ? this.half : half, left: this.remOutside ? this.remOutside : remOutside }]
+						return {top: half, left: remOutside }
 					case 'ot':
-						return [{top: this.topOut ? this.topOut : topOut, left: this.half ? this.half : half }]
+						return {top: topOut, left: half }
 					case 'otl':
-						return [{top: this.topOut ? this.topOut : topOut, left: this.remInsideNull ? this.remInsideNull : remInsideNull }]
+						return {top: topOut, left: remInsideNull }
 					case 'otr':
-						return [{top: this.topOut ? this.topOut : topOut, left: this.remOutside ? this.remOutside : remOutside }]
+						return {top: topOut, left: remOutside }
 					case 'pbr':
-						return [{top: this.twoThirds ? this.twoThirds : twoThirds, left: postRight }]
+						return {top: twoThirds, left: postRight }
 					case 'pl':
-						return [{top: this.half ? this.half : half, left: postLeft  }]
+						return {top: half, left: postLeft  }
 					case 'plb':
-						return [{top: this.twoThirds ? this.twoThirds : twoThirds, left: postLeft }]
+						return {top: twoThirds, left: postLeft }
 					case 'pr':
-						return [{top: this.half ? this.half : half, left: postRight }]
+						return {top: half, left: postRight }
 					case 'pt':
-						return [{top: postTop, left: this.half ? this.half : half }]
+						return {top: postTop, left: half }
 					case 'ptl':
-						return [{top: postTop, left: postLeft }]
+						return {top: postTop, left: postLeft }
 					case 'ptr':
-						return [{top: postTop, left: postRight}]
+						return {top: postTop, left: postRight}
 				
 					default:
-						return [{top: this.half ? this.half : half, left: this.half ? this.half : half }]
+						return {top: half, left: half }
 				}
 				
 				//return Helpers.scoreZones( zone )

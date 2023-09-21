@@ -27,13 +27,13 @@
 	
 			<Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
 	
-			<!-- <Column headerStyle="width: 4rem; text-align: center" bodyStyle="text-align: center; overflow: visible" >
+			<Column headerStyle="width: 4rem; text-align: center" bodyStyle="text-align: center; overflow: visible" >
 				<template #body="{data}">
 					<router-link :to="{name: 'specific-email', params: {email_id: data.id}}">
 						<Button type="button" icon="pi pi-eye" class="p-button-rounded p-button-warning"></Button>
 					</router-link> 
 				</template>
-			</Column> -->
+			</Column>
 	
 			<Column field="reply_name" :header="$t('message.Name')" sortable style="min-width: 14rem">
 				<template #body="{data}">
@@ -134,9 +134,13 @@
 				this.selectedEmails = null
 			},
 			handleRowClick(event) {
-				console.log(event.data.id)
+				let clickedCell = event.originalEvent.target
 				
-				this.$router.push({ name: 'specific-email', params: { email_id: event.data.id } })
+				if ( clickedCell && clickedCell.classList.contains('p-selection-column')) {
+					return 
+				} else {
+					//this.$router.push({ name: 'specific-email', params: { email_id: event.data.id } })
+				}
 			}
 		},		
 		watch: {
@@ -160,6 +164,6 @@
 	color: var(--red-600)
 }
 :deep(.p-datatable .p-datatable-tbody > tr) {
-	cursor: zoom-in;
+	cursor: pointer;
 }
 </style>

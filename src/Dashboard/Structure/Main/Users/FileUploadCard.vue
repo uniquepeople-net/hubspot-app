@@ -74,7 +74,7 @@
  
  
 <style lang='scss' scoped>
-::v-deep(.custom-progress-bar) {
+:deep(.custom-progress-bar) {
 	.p-progressbar-value {
 		background-color: #f44336;
 	}

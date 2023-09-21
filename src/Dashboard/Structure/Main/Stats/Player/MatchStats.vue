@@ -2,7 +2,7 @@
 	<div class="mt-4">
 		<h5 class="text-value">{{ $t('message.YourMatchStats') }}</h5>
 		<TabView scrollable>
-			<TabPanel v-if="stats && stats.hasOwnProperty('total')" v-for="item in items" :header="item.title">
+			<TabPanel v-if="stats && stats.hasOwnProperty('total')" v-for="item in checkedItems" :header="item.title">
 				<GridCard v-for="stat in item.stats" :gradient="160" class="individual-stat mb-3" bgSize="4rem" padding=".5rem 1rem">
 					<template #content>
 						<StatBarMain :title="stat.title" :value="stat.value"/>
@@ -40,7 +40,8 @@
 
 		},
 		computed: {
-			...mapGetters({ stats: 'stats/playerStats' }),
+			...mapGetters({ stats: 'stats/playerStats',
+							playerDetails: 'stats/playerDetails' }),
 			items() { 
 				let totalStats = this.stats.total
 				let i18n = this.$i18n
@@ -53,6 +54,21 @@
 								{ title: i18n.t('message.Fouls'), value: totalStats.fouls },
 								{ title: i18n.t('message.Assists'), value: totalStats.assists },
 								{ title: i18n.t('message.Minutesplayed'), value: totalStats.minutesOnField },
+							]},
+
+							{ title: i18n.t('message.Goalkeeping').toUpperCase(), goalkeeper: true, stats: [
+								{ title: i18n.t('message.GoalKicks'), value: totalStats.goalKicks, 
+									sub: [ { title: i18n.t('message.SuccessfulGoalKicks') , value: totalStats.successfulGoalKicks},
+										   { title: i18n.t('message.GoalKicksLong') , value: totalStats.goalKicksLong},
+										   { title: i18n.t('message.GoalKicksShort') , value: totalStats.goalKicksShort} ] 
+								},
+								{ title: i18n.t('message.CleanSheet'), value: totalStats.gkCleanSheets },
+								{ title: i18n.t('message.ConcededGoals'), value: totalStats.gkConcededGoals },
+								{ title: i18n.t('message.GkShotsAgainst'), value: totalStats.gkShotsAgainst },
+								{ title: i18n.t('message.GkSaves'), value: totalStats.gkSaves },
+								{ title: i18n.t('message.GkExits'), value: totalStats.gkExits,
+									sub: [ { title: i18n.t('message.GkSuccessfulExits'), value: totalStats.gkSuccessfulExits } ]  
+								},
 							]},
 
 							{ title: i18n.t('message.DISTRIBUTION'), stats: [
@@ -124,6 +140,15 @@
 								{ title: i18n.t('message.DirectRedCards'), value: totalStats.directRedCards },
 							] },
 						]
+			},
+			checkedItems() {
+				return this.items.filter( item => {
+					if ( this.playerDetails.role.code2 === 'GK' && 'goalkeeper' in item ) {
+						return item
+					} else if ( !('goalkeeper' in item) ) { 
+						return item
+					}
+				})
 			}
 		},
 		components: { TabView, TabPanel, GridCard, StatBarMain, StatBarSub, LoadingIcon }
