@@ -33,14 +33,21 @@
 			playerId: Number
 		},
 		created() {
-			this.$store.dispatch('stats/getSeasonStats', { playerId: this.playerId, seasonId: this.lastMatch.seasonId } )
+			this.fetchData()
 		},	
 		data() {
 			return {
 			}
 		},
 		methods: {
-			
+			fetchData() {
+				this.$store.dispatch('stats/getSeasonStats', { playerId: this.playerId, seasonId: this.lastMatch.seasonId } )
+			}
+		},
+		watch: {
+			lastMatch: function(data) {
+				this.fetchData()
+			},
 		},
 		computed: {
 			...mapGetters({ seasonStats: 'stats/seasonStats',

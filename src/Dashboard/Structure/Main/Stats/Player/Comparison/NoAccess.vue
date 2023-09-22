@@ -1,6 +1,6 @@
 <template>
 	<div class="text-center noaccess">
-		<p class="text-data-bold text-center px-5">{{ $t('message.NoCompareAccess') }}</p>
+		<p class="text-data-bold text-center px-5">{{ title }}</p>
 		<Button :label="$t('message.GoToPlans').toUpperCase()" class="btn-border fw-bold" @click="redirectPlans"/>
 	</div>
 </template>
@@ -8,6 +8,7 @@
  
 <script>
 	export default {
+		props: ['title'],
 		data() {
 			return {
 			}

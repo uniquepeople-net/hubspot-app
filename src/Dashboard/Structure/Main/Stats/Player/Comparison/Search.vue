@@ -8,10 +8,11 @@
 		</span>
 
 		<div v-if="showSearched && Array.isArray(searched) && searched.length > 0">
-			<SearchedItem v-if="searched" v-for="item in searched" :imgSrc="item.imageDataURL"
+			<SearchedItem v-if="searched && searched !== 'empty'" v-for="item in searched" :imgSrc="item.imageDataURL"
 						  :name="item.firstName + ' ' + item.lastName" :team="item.currentTeam ? item.currentTeam.officialName : ''" 
-						  @click="addPlayer(item)"/>
+						  :imgSrcClub="item.currentTeam ? item.currentTeam.imageDataURL : null"  @click="addPlayer(item)"/>
 		</div>
+		<p v-if="searched === 'empty'" class="text-center mt-3 mb-0">{{ $t('message.NoSearched') }}</p>
 	</div>
 </template>
  
@@ -22,6 +23,7 @@
 	import { mapGetters } from 'vuex';
 
 	export default {
+		props: ['storeAction', 'storeData', 'type'],
 		data() {
 			return {
 				value: null,
@@ -40,7 +42,7 @@
 				}
 			},
 			updateValue: debounce(function () {
-				this.$store.dispatch( "stats/getCompareSearchedPlayers", this.value )
+				this.$store.dispatch( "stats/" + this.storeAction, { phrase: this.value, type: this.type }  )
 			}, 500),
 			addPlayer(item) {
 				this.showSearched = false
@@ -48,7 +50,9 @@
 			}
 		},
 		computed: {
-			...mapGetters({ searched: 'stats/compareSearched' })
+			searched() {
+				return this.$store.getters['stats/' + this.type + 'Searched' ]
+			}
 		},
 		watch: {
 			searched: function(data) {

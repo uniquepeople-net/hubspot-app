@@ -6,8 +6,10 @@ export default {
 
 	state: () => ({
 		playerDetails: null,
+		playerDetailsOther: null,
 		playerCareer: null,
 		playerMatches: [],
+		player1Matches: [],
 		player2Matches: [],
 		playerStats: null,
 		player2Stats: null,
@@ -30,12 +32,16 @@ export default {
 		currentSeason: null,
 		allCompetitionsTeams: null,
 		formations: null,
-		compareSearched: null
+		compareSearched: null,
+		otherSearched: null
 	}),
 
 	mutations: {
 		SETPLAYERDETAILS( state, data ) {
 			state.playerDetails = data
+		},
+		SETPLAYERDETAILSOTHER( state, data ) {
+			state.playerDetailsOther = data
 		},
 		SETPLAYERCAREER( state, data ) {
 			state.playerCareer = data
@@ -43,11 +49,17 @@ export default {
 		SETPLAYERMATCHES( state, data ) {
 			state.playerMatches = [ ...state.playerMatches, ...data ]
 		},
+		RESETPLAYERMATCHES( state, data ) {
+			state.playerMatches = data
+		},
+		SETPLAYER1MATCHES( state, data ) {
+			state.player1Matches = [ ...state.player1Matches, ...data ]
+		},
 		SETPLAYER2MATCHES( state, data ) {
 			state.player2Matches = [ ...state.player2Matches, ...data ]
 		},
 		RESETPLAYER2MATCHES( state, data ) {
-			state.player2Matches = data
+			state.Player2Matches = data
 		},
 		SETPLAYERSTATS( state, data ) {
 			state.playerStats = data
@@ -121,13 +133,18 @@ export default {
 		SETCOMPARESEARCHED( state, data ) {
 			state.compareSearched = data
 		},
+		SETOTHERSEARCHED( state, data ) {
+			state.otherSearched = data
+		},
 		RESETSTATE ( state ) {
 			// Merge rather than replace so we don't lose observers
 			// https://github.com/vuejs/vuex/issues/1118
 			Object.assign(state, { 
 				playerDetails: null,
+				playerDetailsOther: null,
 				playerCareer: null,
 				playerMatches: [],
+				player1Matches: [],
 				player2Matches: [],
 				playerStats: null,
 				player2Stats: null,
@@ -136,6 +153,7 @@ export default {
 				playerPasses: null,
 				playerShots: null,
 				playerDuels: null,
+				playerDribbles: null,
 				seasonStats: null,
 				matchVideo: null,
 				team1: null,
@@ -149,13 +167,34 @@ export default {
 				currentSeason: null,
 				allCompetitionsTeams: null,
 				formations: null,
-				compareSearched: null
+				compareSearched: null,
+				otherSearched: null
 			})
 		}
 	},
 
 	actions: {
 		async getPlayerDetails( context, id ) {
+			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+
+			await User.refreshedToken();
+
+			axios.get( statBasicUrl + 'get_player_current&player_id=' + id, {
+				headers: {
+					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
+				}})
+				.then( response => {
+					context.commit("SETPLAYERDETAILS", response.data)
+				})
+				.catch( error => {
+					Toast.fire({
+						icon: 'error',
+						timer: 5000,
+						title: "Unable to load player details"
+					})
+				})
+		},
+		async getPlayerDetailsOther( context, id ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
 
 			await User.refreshedToken();
@@ -214,6 +253,11 @@ export default {
 		},
 		async getPlayerMatches( context, data ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+			
+			// Clear player matches array if selected another player
+			if (data.other) { 
+				context.commit("RESETPLAYERMATCHES", [] )
+			}
 
 			await User.refreshedToken();
 
@@ -223,8 +267,11 @@ export default {
 				}})
 				.then( response => {
 					
+					// Check length of matches array to correctly set page for request
 					let matchesLength = context.rootGetters['stats/playerMatches'].length
-					if ( data.compare ) {
+					if ( data.compare === '1' ) {
+						matchesLength = context.rootGetters['stats/player1Matches'].length
+					} else if ( data.compare === '2' ) {
 						matchesLength = context.rootGetters['stats/player2Matches'].length
 					}
 
@@ -276,12 +323,12 @@ export default {
 						item.away = team2.side === 'away' ? team2 : team1
 					})
 
+					// Save matches based on compare player1, compare player2, or main player matches in "LastMatches" component
 					if ( data.compare ) {
-						context.commit("SETPLAYER2MATCHES", response.data.matches)
+						context.commit("SETPLAYER"+ data.compare +"MATCHES", response.data.matches)
 					} else {
 						context.commit("SETPLAYERMATCHES", response.data.matches)
 					}
-
 				})
 				.catch( error => {
 					Toast.fire({
@@ -549,6 +596,8 @@ export default {
 		async getSeasonStats( context, data ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
 
+			context.commit("SETSEASONSTATS", null)
+
 			await User.refreshedToken();
 
 			axios.get( statBasicUrl + 'get_sum_player_stats&player_id=' + data.playerId + '&comp_id=775&season_id=' + data.seasonId + '&avg=0&perc=0&total=1', {
@@ -729,17 +778,23 @@ export default {
 				})
 			);
 		},
-		async getCompareSearchedPlayers( context, phrase ) {
+		async getSearchedPlayers( context, data ) {
 			let statBasicUrl = context.rootGetters['links/statBasicUrl']
+			let type = data.type.toUpperCase()
 
 			await User.refreshedToken();
 
-			axios.get( statBasicUrl + 'get_search_players&phrase=' + phrase, {
+			axios.get( statBasicUrl + 'get_search_players&phrase=' + data.phrase, {
 				headers: {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}
 			}).then( response => {
-				context.commit("SETCOMPARESEARCHED", response.data)
+				let data = response.data
+				
+				if ( !response.data ) {
+					data = 'empty'
+				}				
+				context.commit("SET" + type + "SEARCHED", data)
 			}).catch( error => {
 				Toast.fire({
 					icon: 'error',
@@ -759,11 +814,17 @@ export default {
 		playerDetails(state) {
 			return state.playerDetails
 		},
+		playerDetailsOther(state) {
+			return state.playerDetailsOther
+		},
 		playerCareer(state) {
 			return state.playerCareer
 		},
 		playerMatches(state) {
 			return state.playerMatches
+		},
+		player1Matches(state) {
+			return state.player1Matches
 		},
 		player2Matches(state) {
 			return state.player2Matches
@@ -827,6 +888,9 @@ export default {
 		},
 		compareSearched(state) {
 			return state.compareSearched
+		},
+		otherSearched(state) {
+			return state.otherSearched
 		},
 	}
 }

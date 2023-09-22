@@ -1,7 +1,8 @@
 <template>
 	<div class="mb-5 comparison-comp position-relative">
 		<h5 class="text-value">{{ $t('message.PlayerComparison') }}</h5>
-		<Search v-if="showSearch && !noAccess" @addPlayer="addPlayer"/>
+		<Search v-if="showSearch && !noAccess" @addPlayer="addPlayer" :storeAction="'getSearchedPlayers'" 
+				:storeData="'compareSearched'" type="compare"/>
 		<div class="row g-2 mt-4" v-if="playerDetails">
 			<div class="col-6 d-flex flex-column">
 				<GridCard bgSize="4rem" padding=".5rem .5rem 0 .5rem" class="d-flex card-compare">
@@ -34,13 +35,13 @@
 				</Listbox>
 
 				<div v-if="addedPlayer" class="text-center see-more w-100">
-					<Button class="text-sm-bold" link :label="$t('message.LoadMore')" @click="seeMore(user.instat_id, false)" :loading="loading1" />
+					<Button class="text-sm-bold" link :label="$t('message.LoadMore')" @click="seeMore(user.instat_id, '1')" :loading="loading1" />
 				</div>
 			</div>
 
 			<div class="col-6 d-flex flex-column">
 				<Listbox v-if="addedPlayer" v-model="selectedMatch2" :options="matches2" :emptyMessage="$t('message.NoData')"
-						class="w-full md:w-14rem mt-3 l-box" listStyle="max-height:170px" @update:modelValue="updateSelectedMatch($event, addedPlayer.wyId, true)">
+						class="w-full md:w-14rem mt-3 l-box" listStyle="max-height:170px" @update:modelValue="updateSelectedMatch($event, addedPlayer.wyId, '2')">
 					<template #option="slotProps">
 						<div class="flex align-items-center">
 							<span class="text-des-small">{{ slotProps.option.label }}</span>
@@ -51,13 +52,13 @@
 				</Listbox>
 
 				<div v-if="addedPlayer" class="text-center see-more w-100">
-					<Button class="text-sm-bold" link :label="$t('message.LoadMore')" @click="seeMore(addedPlayer.wyId, true)" :loading="loading2" />
+					<Button class="text-sm-bold" link :label="$t('message.LoadMore')" @click="seeMore(addedPlayer.wyId, '2')" :loading="loading2" />
 				</div>
 			</div>
 		</div>
 		<Divider class="divider-light"/>
 		<AdvStats v-if="!noAccess" :selectedMatch1="selectedMatch1" :selectedMatch2="selectedMatch2"/>
-		<NoAccess v-if="noAccess" class="no-access"/>
+		<NoAccess v-if="noAccess" class="no-access" :title="$t('message.NoCompareAccess')"/>
 	
 
 	</div>
@@ -76,6 +77,9 @@
 	
 
 	export default {
+		created() {
+			this.$store.dispatch('stats/getPlayerMatches', { id: this.user.instat_id, page: this.page1, compare: '1' } )	
+		},
 		data() {
 			return {
 				showSearch: true,
@@ -100,7 +104,7 @@
 
 				this.$store.dispatch('stats/resetPlayer2Matches')	
 				this.$store.dispatch('stats/resetPlayer2Stats')	
-				this.$store.dispatch('stats/getPlayerMatches', { id: this.addedPlayer.wyId, page: this.page2, compare: true } )	
+				this.$store.dispatch('stats/getPlayerMatches', { id: this.addedPlayer.wyId, page: this.page2, compare: '2' } )	
 			},
 			matchDate(data) {
 				if (data) {
@@ -128,7 +132,7 @@
 		},
 		computed: {
 			...mapGetters({ playerDetails: 'stats/playerDetails',
-							matches1: 'stats/playerMatches',
+							matches1: 'stats/player1Matches',
 							matches2: 'stats/player2Matches',
 							user: 'user/user' })
 		},

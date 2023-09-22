@@ -20,20 +20,20 @@
  
  
 <script>
-	import { mapGetters } from 'vuex'
 	import LoadingIcon from '../../../../global/LoadingIcon.vue'
 	import MatchCard from "../../../../global/MatchCard.vue"
 
 	export default {
-		created() {
-			this.$store.dispatch('stats/getPlayerMatches', { id: this.user.instat_id, page: this.page } )
+		props: {
+			matches: Array,
+			playerId: Number
 		},
 		data() {
 			return {
 				selectedMatch: null,
 				showMatches: localStorage.getItem('showMatches') ? Number(localStorage.getItem('showMatches')) : 5,
 				page: 1,
-				loading: false
+				loading: false,
 			}
 		},
 		methods: {
@@ -49,17 +49,14 @@
 					this.loading = true
 					this.showMatches = this.showMatches + 5
 					localStorage.setItem('showMatches', this.showMatches)
-					this.$store.dispatch('stats/getPlayerMatches', { id: this.user.instat_id, page: this.page } )
+					this.$store.dispatch('stats/getPlayerMatches', { id: this.playerId, page: this.page } )
 				}
 			},
 			selectMatch(match) {
 				this.selectedMatch = match.id
 				this.$emit('selectedMatch', match)
-			}
-		},
-		computed: {
-			...mapGetters({ user: 'user/user',
-							matches: 'stats/playerMatches' }),
+			},
+			
 		},
 		watch: {
 			matches: function(data) {

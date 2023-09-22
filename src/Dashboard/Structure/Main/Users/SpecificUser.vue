@@ -1,5 +1,7 @@
 <template>	
 	<div class="row gy-3 mt-3">
+		<BackButton :title="$t('message.user')" :route="'all-users'" class="mb-4"/>
+
 		<div class="col-12 col-xl-5">
 			<PersonalCard v-if="instatTeam"
 						  :user="specificUser"/>
@@ -23,6 +25,7 @@
 	import DataCard from './DataCard.vue';
 	import PersonalCard from './PersonalCard.vue';
 	import ChangePasswordCard from './ChangePasswordCard.vue';
+	import BackButton from '../../../global/BackButton.vue';
 
 	export default {
 		created() {
@@ -39,10 +42,10 @@
 							instatUser: 'specificUser/instatUser',
 							instatTeam: 'specificUser/instatTeam' }),
 		},
-		components: { PersonalCard, DataCard, ChangePasswordCard },
+		components: { PersonalCard, DataCard, ChangePasswordCard, BackButton  },
 	}
 </script>
  
- 
+
 <style lang='scss' scoped>
 </style>

@@ -30,14 +30,24 @@
 	export default {
 		props: [ 'matchId', 'id' ],
 		created() {
-			this.$store.dispatch('stats/getPalyerStats', { id: this.id, matchId: this.matchId } )
+			this.fetchData()
 		},
 		data() {
 			return {
 			}
 		},
 		methods: {
-
+			fetchData() {
+				this.$store.dispatch('stats/getPalyerStats', { id: this.id, matchId: this.matchId } )
+			}
+		},
+		watch: {
+			id: function(data) {
+				this.fetchData()
+			},
+			matchId: function(data) {
+				this.fetchData()
+			}
 		},
 		computed: {
 			...mapGetters({ stats: 'stats/playerStats',
