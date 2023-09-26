@@ -249,6 +249,11 @@
 						let result = this.checkNumber(q.max_choosed) ? null : Number(q.index) + 1
 						return result
 					}
+
+					if (q.type === 8) {
+						let result = 'info' in q && q.info.length > 0 ? null : Number(q.index) + 1 
+						return result
+					}
 				})
 
 				if ( errors.some( e => e !== null ) ) {

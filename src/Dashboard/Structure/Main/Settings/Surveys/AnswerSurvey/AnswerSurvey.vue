@@ -244,5 +244,8 @@
 	:deep(.p-steps-list) {
 		flex-wrap: wrap;
 	}
+	:deep(.p-steps-item .p-menuitem-link:not(.p-disabled):focus) {
+		box-shadow: unset;
+	}
 }
 </style>

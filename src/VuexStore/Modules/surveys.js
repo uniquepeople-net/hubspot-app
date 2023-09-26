@@ -156,6 +156,7 @@ export default {
 				})
 		},
 		setNewSurvey( context, data ) {
+			
 			let newSurvey = context.rootGetters['surveys/newSurvey']		
 
 			if ( 'questions' in data ) {
@@ -220,6 +221,16 @@ export default {
 						if ( 'value_default' in data ) {
 							quest.value_default = data.value_default
 						}
+					}					
+				})
+				
+				context.commit("SETNEWSURVEY", { ...newSurvey })
+			
+			} else if ( 'info' in data ) {
+
+				newSurvey.questions.map( quest => {
+					if (quest.index === data.index)  {				  
+						quest.info = data.info
 					}					
 				})
 				

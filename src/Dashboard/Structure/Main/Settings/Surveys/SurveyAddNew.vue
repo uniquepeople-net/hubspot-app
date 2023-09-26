@@ -174,7 +174,7 @@
 					active: this.active,
 					public: this.public,
 					advanced: this.advancedData
-				}
+				}				
 
 				this.addSurvey( this.addSurveyUrl, data );
 
@@ -236,6 +236,11 @@
 
 					if (q.type === 6) {
 						let result = this.checkNumber(q.max_choosed) ? null : Number(q.index) + 1
+						return result
+					}
+
+					if (q.type === 8) {
+						let result = 'info' in q && q.info.length > 0 ? null : Number(q.index) + 1 
 						return result
 					}
 				})
@@ -308,9 +313,6 @@
 	:deep(.p-dropdown) {
 		width: 100%;
 	}
-	:deep(.p-inputtext), :deep(.p-dropdown) {
-		border-radius: 0 6px 6px 0;
-	}
 }
 :deep(.p-calendar) {
 	flex: 1;
@@ -320,9 +322,6 @@
 	:deep(.p-button) {
 		color: #6c757d;
 		background: #e9ecef;
-	}
-	:deep(.p-inputtext) {
-		border-radius: 6px 0 0 6px;
 	}
 }
 .p-togglebutton {

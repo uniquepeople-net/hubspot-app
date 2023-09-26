@@ -7,6 +7,7 @@
 		<AnswerScale 	v-if="checkQuestionType(5)" :question="questionData()" :step="step"/>
 		<AnswerBest11 	v-if="checkQuestionType(6)" :question="questionData()" :step="step"/>
 		<AnswerBestW11  v-if="checkQuestionType(7)" :question="questionData()" :step="step"/>
+		<AnswerInfo 	v-if="checkQuestionType(8)" :question="questionData()" :step="step" />
 	</div>
 </template>
  
@@ -18,6 +19,7 @@
 	import AnswerScale from './AnswerScale.vue'
 	import AnswerBest11 from './AnswerBest11.vue'
 	import AnswerBestW11 from './AnswerBestW11.vue'
+	import AnswerInfo from './AnswerInfo.vue'
 
 	export default {
 		props: {
@@ -40,7 +42,7 @@
 				return this.survey.questions[this.step - 1]
 			}
 		},
-		components: { AnswerOpen, AnswerClosed, AnswerMulti, AnswerScale, AnswerBest11, AnswerBestW11 },
+		components: { AnswerOpen, AnswerClosed, AnswerMulti, AnswerScale, AnswerBest11, AnswerBestW11, AnswerInfo },
 	}
 </script>
  

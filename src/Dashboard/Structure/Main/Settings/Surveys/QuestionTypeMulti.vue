@@ -20,10 +20,17 @@
 			</div>
 
 			<div class="max-choosed" v-if="type === 3 || type === 4">
-				<label for="maxChoosed">Max. questions to choose</label>
+				<label for="maxChoosed">Max. to choose</label>
 				<InputNumber inputId="maxChoosed" v-model="maxChoosed" showButtons mode="decimal" 
 							 :min="1" :max="values.length + (type === 4 ? opened_value_child : 0)" 
-							 :change="handleChange()" :class="{'p-invalid':submitted && maxChoosed < 1}"/>
+							 :change="handleChange('minChoosed', 'maxChoosed')" :class="{'p-invalid':submitted && maxChoosed < 1}"/>
+		    </div>
+
+			<div class="min-choosed" v-if="type === 3 || type === 4">
+				<label for="maxChoosed">Min. to choose</label>
+				<InputNumber inputId="minChoosed" v-model="minChoosed" showButtons mode="decimal" 
+							 :min="1" :max="values.length + (type === 4 ? opened_value_child : 0)" 
+							 :change="handleChange('minChoosed', 'maxChoosed')" :class="{'p-invalid':submitted && minChoosed < 1}"/>
 		    </div>
 
 			<div class="opinion-levels" v-if="type === 5">
@@ -76,6 +83,7 @@
 			return {
 				values: [],
 				maxChoosed: 0,
+				minChoosed: 1,
 				levels: 1,
 				opened_value: null,
 				opened_value_child: 1
@@ -100,23 +108,27 @@
 			max() {
 				return this.values.length
 			},
-			handleChange() {
-				this.updateValue()
+			handleChange(min, max) {
+				this.updateValue(min, max)
 			},		
-			updateValue: debounce(function () {
-				
+			updateValue: debounce(function (min, max) {
+			
 				let dataObj = {
 					...( this.type == 3 || this.type === 4 ? {
 							multi_values: this.values,
-							max_choosed: this.maxChoosed,
+							[min]: this[min],
+							[max]: this[max],
 						} : null),
 					...( this.type === 5 ? {
 							levels: this.levels
 						} : null),
 					index: this.id
 				}
+
+				console.log(dataObj)
 				
-				this.$store.dispatch("surveys/setNewSurvey",  dataObj )
+				
+				//this.$store.dispatch("surveys/setNewSurvey",  dataObj )
 			
 			}, 100),
 			valueOpen(value) {
@@ -142,8 +154,8 @@
 	max-width: 8rem;
 	margin-right: 2rem;
 }
-.max-choosed, .opened-questions {
-	max-width: 15rem;
+.max-choosed, .opened-questions, .min-choosed {
+	max-width: 7rem;
 	//margin-right: 2rem;
 }
 .opinion-levels {
