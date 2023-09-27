@@ -19,19 +19,20 @@
 				<QuestionTypeOpen :id="id" :question="question" @value="valueOpen"/>
 			</div>
 
+			<div class="min-choosed" v-if="type === 3 || type === 4">
+				<label for="minChoosed">Min. to choose</label>
+				<InputNumber inputId="minChoosed" v-model="minChoosed" showButtons mode="decimal" id="minChoosed"
+							 :min="1" :max="maxChoosed" 
+							 :change="handleChange('minChoosed', 'maxChoosed')" :class="{'p-invalid':submitted && minChoosed < 1}"/>
+		    </div>
+
 			<div class="max-choosed" v-if="type === 3 || type === 4">
 				<label for="maxChoosed">Max. to choose</label>
-				<InputNumber inputId="maxChoosed" v-model="maxChoosed" showButtons mode="decimal" 
-							 :min="1" :max="values.length + (type === 4 ? opened_value_child : 0)" 
+				<InputNumber inputId="maxChoosed" v-model="maxChoosed" showButtons mode="decimal" id="maxChoosed"
+							 :min="minChoosed" :max="values.length + (type === 4 ? opened_value_child : 0)" 
 							 :change="handleChange('minChoosed', 'maxChoosed')" :class="{'p-invalid':submitted && maxChoosed < 1}"/>
 		    </div>
 
-			<div class="min-choosed" v-if="type === 3 || type === 4">
-				<label for="maxChoosed">Min. to choose</label>
-				<InputNumber inputId="minChoosed" v-model="minChoosed" showButtons mode="decimal" 
-							 :min="1" :max="values.length + (type === 4 ? opened_value_child : 0)" 
-							 :change="handleChange('minChoosed', 'maxChoosed')" :class="{'p-invalid':submitted && minChoosed < 1}"/>
-		    </div>
 
 			<div class="opinion-levels" v-if="type === 5">
 				<label for="levels">Scale levels</label>
@@ -63,6 +64,7 @@
 				this.question.multi_answers && this.question.multi_answers.map( answ => {
 					this.values.push( { value: answ, id: uniqueId() } )
 				})
+				this.minChoosed = this.question.min_to_choose ? this.question.min_to_choose : this.minChoosed
 				this.maxChoosed = this.question.max_to_choose ? this.question.max_to_choose : this.maxChoosed
 				this.levels = this.question.opinion_sc_levels ? this.question.opinion_sc_levels : this.levels
 				this.opened_value = this.question.opened_answers ? this.question.opened_answers : null
@@ -71,6 +73,7 @@
 			this.$store.dispatch("surveys/setNewSurvey",  {
 					...( this.type == 3 || this.type === 4 ? {
 							multi_values: this.values,
+							min_choosed: this.minChoosed,
 							max_choosed: this.maxChoosed,
 						} : null),
 					...( this.type === 5 ? {
@@ -125,10 +128,7 @@
 					index: this.id
 				}
 
-				console.log(dataObj)
-				
-				
-				//this.$store.dispatch("surveys/setNewSurvey",  dataObj )
+				this.$store.dispatch("surveys/setNewSurvey",  dataObj )
 			
 			}, 100),
 			valueOpen(value) {
@@ -154,9 +154,11 @@
 	max-width: 8rem;
 	margin-right: 2rem;
 }
-.max-choosed, .opened-questions, .min-choosed {
+.max-choosed, .min-choosed {
 	max-width: 7rem;
-	//margin-right: 2rem;
+}
+.opened-questions {
+	max-width: 10rem;
 }
 .opinion-levels {
 	max-width: 15rem;

@@ -46,7 +46,7 @@
 			<div class="position-relative text-center d-flex flex-column align-items-center w-100 mt-5">
 				<Button label="Send survey" class="p-button-raised p-button-success submit-btn" :loading="loading"
 						@click="sendSurvey(saveSurveyLink, fulfilledSurvey)" v-if="checkFinish()" :disabled="disabledBtn"/>
-				<small class="warning mt-3" v-if="unfilledQuestions && showError">Otázky {{unfilledQuestions}} nie sú správne vyplnené / Questions {{unfilledQuestions}} are not correctly filled.</small>
+				<small class="warning mt-3" v-if="unfilledQuestions && showError">{{ $t('message.Questions') }} {{unfilledQuestions}} {{ $t('message.NotCorrectlyFilled').toLowerCase() }}.</small>
 			</div>
 		</template>
 	</Card>
@@ -98,8 +98,6 @@
 			},
 			async sendSurvey( url, data) {
 
-				//await User.refreshedToken();
-
 				let obj = {
 					data: data,
 					hash: this.hash,
@@ -123,11 +121,11 @@
 
 
 				// Check if question has preciselly number of permitted values filled 
-				const unfilled = obj.data.map( (item, index) => {
+				const unfilled = obj.data.map( (item, index) => {					
 					if ( ( 'scale_value' in item && item.scale_value == null ) ||
 					 	 ( 'closed_value' in item && item.closed_value == null ) ||
 						 ( 'value' in item && 
-						 	this.survey.type_id === 1 ? item.value.every( item => item === "") : 
+						 	( this.survey.type_id === 1 && ( item.value.length < item.question.min_to_choose || item.value.length > item.question.max_to_choose )) ||
 							( this.survey.type_id === 2 && item.value.length !== item.question.max_to_choose ))
 					 ) {
 						return item.step
@@ -139,7 +137,7 @@
 					this.unfilledQuestions = unfilled.filter(value => value !== null).sort().toString()
 				} else {
 					this.loading = true
-					this.disabledBtn = true				
+					this.disabledBtn = true		
 
 					await axios.post( url + this.survey.id, obj,  {
 							headers: {
@@ -180,7 +178,7 @@
 					if ( ( 'scale_value' in item && item.scale_value == null ) ||
 					 	 ( 'closed_value' in item && item.closed_value == null ) ||
 						 ( 'value' in item && 
-						 	this.survey.type_id === 1 ? item.value.every( item => item === "") : 
+						 	( this.survey.type_id === 1 && ( item.value.length < item.question.min_to_choose || item.value.length > item.question.max_to_choose )) ||
 							( this.survey.type_id === 2 && item.value.length !== item.question.max_to_choose ))
 					 ) {
 						return item.step

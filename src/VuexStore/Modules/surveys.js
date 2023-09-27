@@ -155,9 +155,9 @@ export default {
 					})
 				})
 		},
-		setNewSurvey( context, data ) {
-			
-			let newSurvey = context.rootGetters['surveys/newSurvey']		
+		setNewSurvey( context, data ) {			
+
+			let newSurvey = context.rootGetters['surveys/newSurvey']
 
 			if ( 'questions' in data ) {
 				context.commit("SETNEWSURVEY", {...newSurvey, ...data })
@@ -197,7 +197,8 @@ export default {
 				newSurvey.questions.map( quest => {
 					if (quest.index === data.index)  {				  
 						quest.multi_values = data.multi_values
-						quest.max_choosed = data.max_choosed
+						quest.max_choosed = data.maxChoosed
+						quest.min_choosed = data.minChoosed
 					}					
 				})
 				
@@ -213,7 +214,7 @@ export default {
 				
 				context.commit("SETNEWSURVEY", { ...newSurvey })
 
-			} else if ( 'max_choosed' in data ) {
+			}/*  else if ( 'max_choosed' in data ) {
 
 				newSurvey.questions.map( quest => {
 					if (quest.index === data.index)  {				  
@@ -226,7 +227,7 @@ export default {
 				
 				context.commit("SETNEWSURVEY", { ...newSurvey })
 			
-			} else if ( 'info' in data ) {
+			} */ else if ( 'info' in data ) {
 
 				newSurvey.questions.map( quest => {
 					if (quest.index === data.index)  {				  
@@ -235,30 +236,29 @@ export default {
 				})
 				
 				context.commit("SETNEWSURVEY", { ...newSurvey })
+			
+			} else if ( 'checkbox_label' in data ) {
+
+				newSurvey.questions.map( quest => {
+					if (quest.index === data.index)  {				  
+						quest.checkbox_label = data.checkbox_label
+					}					
+				})
+				
+				context.commit("SETNEWSURVEY", { ...newSurvey })
 			}
 		},
 		resetNewSurvey( context, data ) {
 			let newSurvey = context.rootGetters['surveys/newSurvey']
-			// clear question object to default values
-			if ( data && 'qId' in data ) {
-				/* newSurvey.questions.map( (q, index) => {
-					if ( Number(q.qId) === Number(data.qId) ) {
-						/* const keepKeys = ['index', 'qId', 'title', 'type']
-						const result = Object.keys(q)
-							.filter(key => keepKeys.includes(key)) // only keep keys that are in the keepKeys array
-							.reduce((obj, key) => {
-								obj[key] = q[key];
-								return obj;
-						}, {});
-						return result 
-						return { ...q, title: 'jkjkjjj' }
-					}
-					return q
+
+			if ( data ) {
+				let questions = newSurvey.questions.map( (question, index) => {
+					if ( data.index === index ) {
+						return { title: data.title, index: data.index, qId: data.qId, type: data.type }
+					} else return question
 				})
-
-				//newSurvey.questions = newS
-
-				console.log(newSurvey) */
+				
+				newSurvey.questions = questions
 				
 				context.commit("SETNEWSURVEY", {...newSurvey })
 			} else {

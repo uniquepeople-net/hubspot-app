@@ -6,7 +6,8 @@
 		<AnswerMulti 	v-if="checkQuestionType(4)" :question="questionData()" :step="step"/>
 		<AnswerScale 	v-if="checkQuestionType(5)" :question="questionData()" :step="step"/>
 		<AnswerBest11 	v-if="checkQuestionType(6)" :question="questionData()" :step="step"/>
-		<AnswerBestW11  v-if="checkQuestionType(7)" :question="questionData()" :step="step"/>
+		<AnswerBestW11  v-if="checkQuestionType(77)" :question="questionData()" :step="step"/>
+		<AnswerCheckbox v-if="checkQuestionType(7)" :question="questionData()" :step="step"/>
 		<AnswerInfo 	v-if="checkQuestionType(8)" :question="questionData()" :step="step" />
 	</div>
 </template>
@@ -20,6 +21,7 @@
 	import AnswerBest11 from './AnswerBest11.vue'
 	import AnswerBestW11 from './AnswerBestW11.vue'
 	import AnswerInfo from './AnswerInfo.vue'
+	import AnswerCheckbox from './AnswerCheckbox.vue'
 
 	export default {
 		props: {
@@ -32,7 +34,7 @@
 		},
 		methods: {
 			checkQuestionType(id) {
-				if ( this.survey.type_id === 2 && this.survey.advanced.competition_id === 771 && id === 7 ) {
+				if ( this.survey.type_id === 2 && this.survey.advanced.competition_id === 771 && id === 77 ) {
 					return true
 				} else if ( (this.survey.type_id === 2 && this.survey.advanced.competition_id !== 771) || this.survey.type_id === 1 ) {
 					return this.survey.questions[this.step - 1].type_id === id ? true : false
@@ -42,7 +44,7 @@
 				return this.survey.questions[this.step - 1]
 			}
 		},
-		components: { AnswerOpen, AnswerClosed, AnswerMulti, AnswerScale, AnswerBest11, AnswerBestW11, AnswerInfo },
+		components: { AnswerOpen, AnswerClosed, AnswerMulti, AnswerScale, AnswerBest11, AnswerBestW11, AnswerInfo, AnswerCheckbox },
 	}
 </script>
  

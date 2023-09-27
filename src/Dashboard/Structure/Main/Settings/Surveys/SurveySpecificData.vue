@@ -83,8 +83,8 @@
 
 							<Divider />
 
-							<div class="d-flex align-items-end flex-column">
-								<Button type="submit" label="Update Survey" class="mt-2 submit-btn" />
+							<div class="d-flex align-items-center flex-column">
+								<Button type="submit" label="Update Survey" class="mt-2 submit-btn btn-black" />
 								<small v-if="errors" class="q-errors mt-3">Questions {{errors}} not correctly created</small>
 							</div>
 						</form>

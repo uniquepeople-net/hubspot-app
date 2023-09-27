@@ -1,7 +1,16 @@
 <template>
 	<div>
 		<h5>{{question.title}}</h5>
-		<small>Choose and/or write max. {{ this.question.max_to_choose }} answers </small>
+		<small>{{ this.question.type_id === 3 ? $t('message.Choose') : $t('message.ChooseAndOrWrite') }} 
+				<span v-if="this.question.min_to_choose !== this.question.max_to_choose">
+					min. {{ this.question.min_to_choose }} 
+					{{ $t('message.and') }} 
+					max. {{ this.question.max_to_choose }} {{ $t('message.options') }}
+				</span> 
+				<span v-if="this.question.min_to_choose === this.question.max_to_choose">
+					{{ $t('message.precisely') + ' ' + this.question.min_to_choose + ' ' + $t('message.options') }}
+				</span>
+		</small>
 
 		<div class="checkbox-wrapper mt-4">
 			<div class="field-checkbox my-3 position-relative" v-for="(item, index) in items" :key="index" :class="`${checkMaxChoosed(item) ? 'opacity-35' : ''}`">
@@ -37,7 +46,6 @@
 				selectedInputs: [],
 				activeCheckbox: [],
 				activeInput: [],
-
 			}
 		},
 		created() {
@@ -46,7 +54,7 @@
 			})
 		},
 		mounted() {
-			this.$store.dispatch("surveys/setFulfilledSurvey", { value: [...this.selectedInputs, ...this.selectedValues], question: this.question, step: this.step })
+			this.$store.dispatch("surveys/setFulfilledSurvey", { value: [...this.handleSelectedInputs(), ...this.selectedValues], question: this.question, step: this.step })
 		},	
 		methods: {
 			checkMaxChoosed(item) {
@@ -73,7 +81,7 @@
 				this.updateValue()
 			},
 			updateValue: debounce(function () {
-				this.$store.dispatch("surveys/setFulfilledSurvey", { value: [...this.selectedInputs, ...this.selectedValues], question: this.question, step: this.step })
+				this.$store.dispatch("surveys/setFulfilledSurvey", { value: [...this.handleSelectedInputs(), ...this.selectedValues], question: this.question, step: this.step })
 			}, 100),
 			handleClick(index){
 				if (this.activeCheckbox.includes(index)) { 
@@ -92,6 +100,10 @@
 				} else {
 					this.activeInput = this.activeInput.filter( a => a !== index )
 				}
+			},
+			handleSelectedInputs() {
+				this.selectedInputs = this.selectedInputs.filter( input => input.length > 0 )
+				return this.selectedInputs
 			}
 		},
 		watch: {

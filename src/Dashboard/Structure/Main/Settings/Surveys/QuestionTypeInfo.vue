@@ -1,5 +1,6 @@
 <template>
 	<div class="question-info mt-3">
+		<span v-if="type === 7" class="d-inline-block mb-3 ">Checkbox label:</span>
 		<Editor v-model="value" :class="{'p-invalid':submitted && !value }" @update:modelValue="changeValue"/>
 	</div>
 </template>
@@ -13,13 +14,15 @@
 		props: { 
 			id: Number,
 			question: Object,
-			submitted: Boolean 
+			submitted: Boolean,
+			type: Number
 		},
 		mounted() {			
 			if ( this.question ) {
 				this.value = this.question.info ? this.question.info : this.value
 			}
-			this.$store.dispatch("surveys/setNewSurvey", { info: this.value, index: this.id })
+
+			this.$store.dispatch("surveys/setNewSurvey", { [this.type === 8 ? 'info' : 'checkbox_label']: this.value, index: this.id })
 		},
 		data() {
 			return {
@@ -32,7 +35,9 @@
 				this.updateValue()
 			},
 			updateValue: debounce(function () {
-				this.$store.dispatch("surveys/setNewSurvey", { info: this.value, index: this.id })
+				console.log({ [this.type === 8 ? 'info' : 'checkbox_label']: this.value, index: this.id })
+				
+				this.$store.dispatch("surveys/setNewSurvey", { [this.type === 8 ? 'info' : 'checkbox_label']: this.value, index: this.id })
 			}, 100),
 		},
 		components: { Editor }

@@ -61,17 +61,25 @@
 		methods: {
 			addComponent() {
 				let newObj = { title: '', index: null/* , qId: uniqueId() */ }
-				this.questions = [...this.questions, newObj]
+
+				let questions =  this.newSurvey && 'questions' in this.newSurvey ? this.newSurvey.questions : this.questions
+
+				this.questions = [...questions, newObj]
 				this.questions.map( (question, index) => {	
 					question.index = index
 				})
+
 				this.$store.dispatch("surveys/setNewSurvey", { questions: [...this.questions] }); 
 			},
 			deleteItem({ qId, index}) {
-				this.$store.dispatch("surveys/deleteFromSpecific", qId );	
-				let q = this.questions.filter( q => q.index !== index )
-				this.$store.dispatch("surveys/setNewSurvey", { questions: [...q] });	
-				this.questions = q
+				if ( this.specSurvey ) {
+					this.$store.dispatch("surveys/deleteFromSpecific", qId );	
+				}
+				let questions =  this.newSurvey && 'questions' in this.newSurvey ? this.newSurvey.questions : this.questions
+				
+				this.questions = questions.filter( q => q.index !== index )
+				this.$store.dispatch("surveys/setNewSurvey", { questions: [...this.questions] });	
+	
 			},
 			handleWatch() {
 				if ( this.types ) {
@@ -85,7 +93,8 @@
 			}
 		},
 		computed: {
-			...mapGetters({ types: 'surveys/questionTypes' }),
+			...mapGetters({ types: 'surveys/questionTypes',
+							newSurvey: 'surveys/newSurvey' }),
 		},
 		watch: {
 			surveyType: ['handleWatch'],

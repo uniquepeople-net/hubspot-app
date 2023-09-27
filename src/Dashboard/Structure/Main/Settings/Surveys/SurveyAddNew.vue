@@ -80,8 +80,8 @@
 
 							<Divider />
 
-							<div class="d-flex align-items-end flex-column">
-								<Button type="submit" label="Add Survey" class="mt-2 submit-btn" />
+							<div class="d-flex align-items-center flex-column">
+								<Button type="submit" label="Add Survey" class="mt-2 submit-btn btn-black" />
 								<small v-if="errors" class="q-errors mt-3">Questions {{errors}} not correctly created</small>
 							</div>
 						</form>
@@ -239,10 +239,11 @@
 						return result
 					}
 
-					if (q.type === 8) {
+					if (q.type === 7 || q.type === 8) {
 						let result = 'info' in q && q.info.length > 0 ? null : Number(q.index) + 1 
 						return result
 					}
+
 				})
 
 				if ( errors.some( e => e !== null ) ) {

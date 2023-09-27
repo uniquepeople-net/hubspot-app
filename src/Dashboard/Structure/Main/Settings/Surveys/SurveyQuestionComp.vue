@@ -67,9 +67,8 @@
 			deleteItem() {
 				this.$emit('deleteItem', { qId: this.qId, index: this.index })
 			},
-			selectType() {
-				/* this.$store.dispatch( "surveys/resetNewSurvey", 
-						{ title: this.title, index: this.index,  qId: this.qId, type: this.type } ) */
+			selectType(event) {	
+				this.$store.dispatch( "surveys/resetNewSurvey", { title: this.title, index: this.index,  qId: this.qId, type: this.type } )
 				this.questionType = true;
 			},
 			questionNum() {
