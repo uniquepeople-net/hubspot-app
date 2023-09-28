@@ -14,6 +14,8 @@
 			</template>
 		</Dialog>
 	
+		<BackButton :title="$t('message.Surveys')" class="mb-4" route="surveys-all"/>
+
 		<Card class="card mx-auto">
 			<template #title>
 				<div class="card-header d-flex justify-content-between align-items-center">
@@ -100,6 +102,7 @@
 	import SurveyQuestions from './SurveyQuestions.vue';
 	import Hashes from './Hashes.vue';
 	import SurveyAdvanced from './SurveyAdvanced.vue';
+	import BackButton from '../../../../global/BackButton.vue';
 
 	export default {
  		setup: () => ({ v$: useVuelidate() }),
@@ -292,11 +295,11 @@
 		unmounted() {
 			this.$store.dispatch("surveys/resetNewSurvey");
 		},
-		components: { Calendar, SurveyQuestions, Hashes, SurveyAdvanced }
+		components: { Calendar, SurveyQuestions, Hashes, SurveyAdvanced, BackButton }
 	}
 </script>
- 
- 
+
+
 <style lang='scss' scoped>
 .card {
 	max-width: 1400px;

@@ -78,6 +78,10 @@
 				let questions =  this.newSurvey && 'questions' in this.newSurvey ? this.newSurvey.questions : this.questions
 				
 				this.questions = questions.filter( q => q.index !== index )
+				this.questions = this.questions.map( q =>  {
+					q.index = q.index - 1
+					return q
+				})
 				this.$store.dispatch("surveys/setNewSurvey", { questions: [...this.questions] });	
 	
 			},

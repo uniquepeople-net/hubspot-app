@@ -187,6 +187,8 @@ export default {
 					if (quest.index === data.index)  {				  
 						quest.options = data.options
 						quest.value_default = data.value_default
+						quest.notice = data.notice
+						quest.skip = data.skip
 					}					
 				})
 				
@@ -428,6 +430,9 @@ export default {
 							}
 						})
 					}
+
+					// remove "info" question from results
+					response.data = response.data && response.data.filter( answer => answer.type_id !== 8 )
 
 					context.commit("SETSPECIFICRESULTS", response.data)
 				})

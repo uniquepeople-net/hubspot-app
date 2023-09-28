@@ -454,6 +454,7 @@ export const messages = {
 			Questions: 'Questions',
 			NotCorrectlyFilled: 'Not correctly filled',
 			Guidelines: 'Guidelines',
+			StartSurvey: 'Start survey',
 		},
 		validations: {
 			required: "This field is required. ",
@@ -921,6 +922,7 @@ export const messages = {
 			Questions: 'Otázky',
 			NotCorrectlyFilled: 'Nie sú správne vyplnené',
 			Guidelines: 'Pokyny',
+			StartSurvey: 'Začať dotazník',
 		},
 		validations: {
 			required: "Toto pole je potrebné vyplniť. ",

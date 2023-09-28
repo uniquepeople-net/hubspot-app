@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<AnswerSurveyInfo v-if="survey" :survey="survey" :hash="queryHash"/>
-		<Fieldset v-if="survey" :legend="$t('message.Guidelines')" :toggleable="true" class="fieldset" :collapsed="true">
+		<Fieldset v-if="survey && 'advanced' in survey && survey.advanced.guidelines" 
+				  :legend="$t('message.Guidelines')" :toggleable="true" class="fieldset" :collapsed="true">
 			<div v-html="survey.advanced.guidelines"></div>
 		</Fieldset>
 		<Message v-if="message" :message="message">

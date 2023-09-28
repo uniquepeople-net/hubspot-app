@@ -20,6 +20,16 @@
 			</div>
 			<!-- <SelectButton v-model="valueDefault" :options="options" aria-labelledby="single" class="mt-4"/> -->
 		</div>
+	
+		<div class="mt-5 p-inputgroup">
+			<InputText name="notice" id="notice" v-model="notice" :placeholder="'Notice'"/>
+		</div>
+
+		<div class="mt-4">
+			<ToggleButton v-model="skip" onLabel="Can be skipped" offLabel="Can't be skipped" 
+						  :class="`toggle-skip ${skip ? 'bg-danger' : 'bg-success text-light'} p-togglebutton`"/>
+		</div>
+
 	</div>
 </template>
  
@@ -38,13 +48,18 @@
 			if ( this.question ) {				
 				this.options = this.question.closed_answers ? this.question.closed_answers : this.options
 				this.valueDefault = this.question.closed_answs_default
+				this.notice = this.question.notice
+				this.skip = Boolean(this.question.skip)
 			}
-			this.$store.dispatch("surveys/setNewSurvey", { options: this.options, value_default: this.valueDefault, index: this.id })		
+			this.$store.dispatch("surveys/setNewSurvey", 
+					{ options: this.options, value_default: this.valueDefault, index: this.id, notice: this.notice, skip: this.skip })		
 		},
 		data() {
 			return {
 				valueDefault: '',
 				options: ['', ''],
+				notice: '',
+				skip: false
 			}
 		},
 		methods: {
@@ -52,7 +67,8 @@
 				this.updateValue()
 			},
 			updateValue: debounce(function () {
-				this.$store.dispatch("surveys/setNewSurvey", { options: this.options, value_default: this.valueDefault, index: this.id })
+				this.$store.dispatch("surveys/setNewSurvey", 
+						{ options: this.options, value_default: this.valueDefault, index: this.id, notice: this.notice, skip: this.skip  })
 			}, 100),
 		},
 		components: { SelectButton }
@@ -64,6 +80,9 @@
 .select-question {
 	.row {
 		max-width: 576px;
+	}
+	.toggle-skip {
+		width: auto;
 	}
 }
 </style>
