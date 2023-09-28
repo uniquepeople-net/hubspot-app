@@ -14,6 +14,8 @@
 			</template>
 		</Dialog>
 	
+		<BackButton :title="$t('message.Surveys')" class="mb-4" route="surveys-all"/>
+
 		<Card class="card mx-auto">
 			<template #title>
 				<div class="card-header d-flex justify-content-between align-items-center">
@@ -80,8 +82,8 @@
 
 							<Divider />
 
-							<div class="d-flex align-items-end flex-column">
-								<Button type="submit" label="Add Survey" class="mt-2 submit-btn" />
+							<div class="d-flex align-items-center flex-column">
+								<Button type="submit" label="Add Survey" class="mt-2 submit-btn btn-black" />
 								<small v-if="errors" class="q-errors mt-3">Questions {{errors}} not correctly created</small>
 							</div>
 						</form>
@@ -100,6 +102,7 @@
 	import SurveyQuestions from './SurveyQuestions.vue';
 	import Hashes from './Hashes.vue';
 	import SurveyAdvanced from './SurveyAdvanced.vue';
+	import BackButton from '../../../../global/BackButton.vue';
 
 	export default {
  		setup: () => ({ v$: useVuelidate() }),
@@ -174,7 +177,7 @@
 					active: this.active,
 					public: this.public,
 					advanced: this.advancedData
-				}
+				}				
 
 				this.addSurvey( this.addSurveyUrl, data );
 
@@ -238,6 +241,12 @@
 						let result = this.checkNumber(q.max_choosed) ? null : Number(q.index) + 1
 						return result
 					}
+
+					if (q.type === 7 || q.type === 8) {
+						let result = 'info' in q && q.info.length > 0 ? null : Number(q.index) + 1 
+						return result
+					}
+
 				})
 
 				if ( errors.some( e => e !== null ) ) {
@@ -286,11 +295,11 @@
 		unmounted() {
 			this.$store.dispatch("surveys/resetNewSurvey");
 		},
-		components: { Calendar, SurveyQuestions, Hashes, SurveyAdvanced }
+		components: { Calendar, SurveyQuestions, Hashes, SurveyAdvanced, BackButton }
 	}
 </script>
- 
- 
+
+
 <style lang='scss' scoped>
 .card {
 	max-width: 1400px;
@@ -308,9 +317,6 @@
 	:deep(.p-dropdown) {
 		width: 100%;
 	}
-	:deep(.p-inputtext), :deep(.p-dropdown) {
-		border-radius: 0 6px 6px 0;
-	}
 }
 :deep(.p-calendar) {
 	flex: 1;
@@ -320,9 +326,6 @@
 	:deep(.p-button) {
 		color: #6c757d;
 		background: #e9ecef;
-	}
-	:deep(.p-inputtext) {
-		border-radius: 6px 0 0 6px;
 	}
 }
 .p-togglebutton {

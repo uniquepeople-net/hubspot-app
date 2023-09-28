@@ -3,7 +3,6 @@
 		<Fieldset legend="Advanced" :toggleable="true" :collapsed="true">
 			<div class="row mt-5">
 				
-
 				<div class="d-flex flex-column mb-5 col-12 col-lg-6">
 					<label for="type">Type</label>
 					<Dropdown inputId="type" v-model="type" :options="types" 
@@ -18,13 +17,6 @@
 							  @change="handleChange()" :class="{'p-invalid': submitted && competition === null}"/>
 				</div>
 
-				<!-- <div v-if="type === 2" class="d-flex flex-column mb-5 col-12 col-lg-6">
-					<label for="competition">Competitions</label>
-					<Dropdown inputId="competition" v-model="competition" :options="competitionsList" 
-							  optionLabel="name" optionValue="wyId" placeholder="Select Competition"
-							  @change="handleChange()" :class="{'p-invalid': submitted && competition === null}"/>
-				</div> -->
-
 				<div class="d-flex mb-5 col-12 col-lg-6">
 					<!-- <InputIcon icon="bi bi-chat-square-text"></InputIcon> -->
 					<Textarea id="message" v-model="message" rows="2"
@@ -32,6 +24,12 @@
 				
 					<!-- <InputError :validator="v$.name" :submitted="submitted" replace="Name"></InputError> -->
 				</div>
+
+				<div class="d-flex flex-column mb-5 col-12 col-xxl-6">
+					<label for="competition">Guidelines:</label>
+					<Editor v-model="guidelines" @update:modelValue="handleChange()"/>
+				</div>
+				
 			</div>
 		</Fieldset>
 	</div>
@@ -40,6 +38,7 @@
  
 <script>
 	import { mapGetters } from 'vuex'
+	import Editor from 'primevue/editor'
 
 	export default {
 		props: {
@@ -52,9 +51,12 @@
 		},
 		mounted() {
 			if ( this.specSurvey && this.specSurvey.advanced ) {
-				this.message = this.specSurvey.advanced.success_message ? this.specSurvey.advanced.success_message : this.message
-				this.competition = this.specSurvey.advanced.competition_id ? this.specSurvey.advanced.competition_id : this.competition
+				let advanced = this.specSurvey.advanced
+
+				this.message = advanced.success_message ? advanced.success_message : this.message
+				this.competition = advanced.competition_id ? advanced.competition_id : this.competition
 				this.type = this.specSurvey.type_id ? this.specSurvey.type_id : this.type
+				this.guidelines = advanced.guidelines ? advanced.guidelines : this.guidelines
 			}
 			this.handleChange()
 		},
@@ -62,13 +64,14 @@
 			return {
 				message: '',
 				competition: null,
-				type: 1
+				type: 1,
+				guidelines: ''
 			}
 		},
 		methods: {
 			handleChange() {
 				this.$emit('update:modelValue', 
-					{ message: this.message, competition: this.competition, type: this.type })
+					{ message: this.message, competition: this.competition, type: this.type, guidelines: this.guidelines })
 			}
 		},
 		computed: {
@@ -76,7 +79,8 @@
 							competitionsSvkUrl: 'links/competitionsListSvk',
 							competitionsList: 'stats/competitionsList',
 							types: 'surveys/types'}),
-		}
+		},
+		components: { Editor }
 	}
 </script>
  

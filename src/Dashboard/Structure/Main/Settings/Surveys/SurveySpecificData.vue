@@ -14,6 +14,8 @@
 			</template>
 		</Dialog>
 
+		<BackButton :title="$t('message.Surveys')" class="mb-4" route="surveys-all"/>
+
 		<Card class="card mx-auto">
 			<template #title>
 				<div class="card-header d-flex justify-content-between align-items-center">
@@ -83,8 +85,8 @@
 
 							<Divider />
 
-							<div class="d-flex align-items-end flex-column">
-								<Button type="submit" label="Update Survey" class="mt-2 submit-btn" />
+							<div class="d-flex align-items-center flex-column">
+								<Button type="submit" label="Update Survey" class="mt-2 submit-btn btn-black" />
 								<small v-if="errors" class="q-errors mt-3">Questions {{errors}} not correctly created</small>
 							</div>
 						</form>
@@ -104,6 +106,7 @@
 	import Hashes from './Hashes.vue';
 	import DeleteItem from '../../Users/DeleteItem.vue';
 	import SurveyAdvanced from './SurveyAdvanced.vue';
+	import BackButton from '../../../../global/BackButton.vue';
 
 
 	export default {
@@ -249,6 +252,11 @@
 						let result = this.checkNumber(q.max_choosed) ? null : Number(q.index) + 1
 						return result
 					}
+
+					if (q.type === 8) {
+						let result = 'info' in q && q.info.length > 0 ? null : Number(q.index) + 1 
+						return result
+					}
 				})
 
 				if ( errors.some( e => e !== null ) ) {
@@ -295,7 +303,7 @@
 							survey: 'surveys/specificSurvey',
 							newSurvey: 'surveys/newSurvey' })
 		},
-		components: { Calendar, SurveyQuestions, Hashes, DeleteItem, SurveyAdvanced }
+		components: { Calendar, SurveyQuestions, Hashes, DeleteItem, SurveyAdvanced, BackButton }
 	}
 </script>
  

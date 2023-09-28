@@ -12,6 +12,9 @@
 
 		<QuestionTypeBest11 v-if="type === 6" :type="type" :id="index" 
 							:question="question ? question : null" :submitted="submitted"/>
+		
+		<QuestionTypeInfo v-if="type === 8 || type === 7" :type="type" :id="index" 
+						  :question="question ? question : null" :submitted="submitted"/>
 	
 	</div>
 </template>
@@ -23,6 +26,7 @@
 	import QuestionTypeClosed from './QuestionTypeClosed.vue';
 	import QuestionTypeMulti from './QuestionTypeMulti.vue';
 	import QuestionTypeBest11 from './QuestionTypeBest11.vue';
+	import QuestionTypeInfo from './QuestionTypeInfo.vue';
 
 	export default {
 		props: { 
@@ -31,7 +35,7 @@
 			question: Object,
 			submitted: Boolean
 		},
-		components: { QuestionTypeOpen, QuestionTypeClosed, QuestionTypeMulti, QuestionTypeBest11 },
+		components: { QuestionTypeOpen, QuestionTypeClosed, QuestionTypeMulti, QuestionTypeBest11, QuestionTypeInfo },
 	}
 </script>
  

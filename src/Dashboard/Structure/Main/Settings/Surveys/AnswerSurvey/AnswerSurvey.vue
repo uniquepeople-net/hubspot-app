@@ -18,7 +18,7 @@
 		<template #title>
 			<div class="card-header">{{ survey.name }}</div>
 			<div class="text-center p-5" v-if="!started">
-				<Button  label="Start Survey" class="ms-auto mt-2 submit-btn" @click="startSurvey()"/>
+				<Button  :label="$t('message.StartSurvey')" class="ms-auto mt-2 submit-btn btn-black" @click="startSurvey()"/>
 			</div>
 			<h6 class="fw-normal mt-3 desc" v-if="!started"> {{ survey.description }} </h6>
 
@@ -44,9 +44,9 @@
 						@click="nextPage($event, fulfilledSurvey)" v-show="checkNext()"/>
 			</div>
 			<div class="position-relative text-center d-flex flex-column align-items-center w-100 mt-5">
-				<Button label="Send survey" class="p-button-raised p-button-success submit-btn" :loading="loading"
+				<Button label="Send survey" class="p-button-raised submit-btn btn-black" :loading="loading"
 						@click="sendSurvey(saveSurveyLink, fulfilledSurvey)" v-if="checkFinish()" :disabled="disabledBtn"/>
-				<small class="warning mt-3" v-if="unfilledQuestions && showError">Otázky {{unfilledQuestions}} nie sú správne vyplnené / Questions {{unfilledQuestions}} are not correctly filled.</small>
+				<small class="warning mt-3" v-if="unfilledQuestions && showError">{{ $t('message.Questions') }} {{unfilledQuestions}} {{ $t('message.NotCorrectlyFilled').toLowerCase() }}.</small>
 			</div>
 		</template>
 	</Card>
@@ -98,13 +98,14 @@
 			},
 			async sendSurvey( url, data) {
 
-				//await User.refreshedToken();
-
 				let obj = {
 					data: data,
 					hash: this.hash,
 					survey: this.survey
 				}
+
+				console.log(obj)
+				
 				
 				const errors = this.checkCorrectAnswers(obj.data)
 
@@ -123,11 +124,11 @@
 
 
 				// Check if question has preciselly number of permitted values filled 
-				const unfilled = obj.data.map( (item, index) => {
+				const unfilled = obj.data.map( (item, index) => {					
 					if ( ( 'scale_value' in item && item.scale_value == null ) ||
-					 	 ( 'closed_value' in item && item.closed_value == null ) ||
+					 	 /* ( 'closed_value' in item && item.closed_value == null ) || */
 						 ( 'value' in item && 
-						 	this.survey.type_id === 1 ? item.value.every( item => item === "") : 
+						 	( this.survey.type_id === 1 && ( item.value.length < item.question.min_to_choose || item.value.length > item.question.max_to_choose )) ||
 							( this.survey.type_id === 2 && item.value.length !== item.question.max_to_choose ))
 					 ) {
 						return item.step
@@ -139,7 +140,7 @@
 					this.unfilledQuestions = unfilled.filter(value => value !== null).sort().toString()
 				} else {
 					this.loading = true
-					this.disabledBtn = true				
+					this.disabledBtn = true		
 
 					await axios.post( url + this.survey.id, obj,  {
 							headers: {
@@ -152,9 +153,10 @@
 							if ( 'error' in response.data ) {
 								this.loading = false
 								this.disabledBtn = false
-							}
-							localStorage.setItem(this.survey.slug + 'done', true)
-							this.$router.push({name: 'success'})						
+							} else {
+								localStorage.setItem(this.survey.slug + 'done', true)
+								this.$router.push({name: 'success'})
+							}						
 						}).catch( error => {
 							this.loading = false
 							this.disabledBtn = false							
@@ -178,9 +180,9 @@
 			checkCorrectAnswers(data) {
 				const unfilled = data.map( (item, index) => {
 					if ( ( 'scale_value' in item && item.scale_value == null ) ||
-					 	 ( 'closed_value' in item && item.closed_value == null ) ||
+					 	 /* ( 'closed_value' in item && item.closed_value == null ) || */
 						 ( 'value' in item && 
-						 	this.survey.type_id === 1 ? item.value.every( item => item === "") : 
+						 	( this.survey.type_id === 1 && ( item.value.length < item.question.min_to_choose || item.value.length > item.question.max_to_choose )) ||
 							( this.survey.type_id === 2 && item.value.length !== item.question.max_to_choose ))
 					 ) {
 						return item.step
@@ -243,6 +245,9 @@
 .steps-survey {
 	:deep(.p-steps-list) {
 		flex-wrap: wrap;
+	}
+	:deep(.p-steps-item .p-menuitem-link:not(.p-disabled):focus) {
+		box-shadow: unset;
 	}
 }
 </style>

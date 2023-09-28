@@ -4,7 +4,7 @@
 		<div>
 			<div class="limit my-4">
 				<label for="limit">Survey limit:</label>
-				<InputNumber inputId="limit" v-model="limit" showButtons mode="decimal" :max="50" :min="1" :change="handleLimit()"/>
+				<InputNumber inputId="limit" v-model="limit" showButtons mode="decimal" :max="500" :min="1" :change="handleLimit()"/>
 			</div>
 
 

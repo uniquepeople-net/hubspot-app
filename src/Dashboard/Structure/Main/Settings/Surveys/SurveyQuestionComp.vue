@@ -11,7 +11,6 @@
 		</div>
 
 		<div class="inputgroup my-3 col-11 col-lg-5">
-			<InputIcon icon="bi bi-justify"></InputIcon>
 			<Dropdown v-model="type" :options="types" optionLabel="type" optionValue="id" 
 					  placeholder="Select a Type" @change="selectType" />
 			
@@ -54,7 +53,7 @@
 		data() {
 			return {
 				title: '',
-				type: null,
+				type: this.question ? this.question.type : null,
 				questionType: false,
 			}
 		},
@@ -68,9 +67,8 @@
 			deleteItem() {
 				this.$emit('deleteItem', { qId: this.qId, index: this.index })
 			},
-			selectType() {
-				/* this.$store.dispatch( "surveys/resetNewSurvey", 
-						{ title: this.title, index: this.index,  qId: this.qId, type: this.type } ) */
+			selectType(event) {	
+				this.$store.dispatch( "surveys/resetNewSurvey", { title: this.title, index: this.index,  qId: this.qId, type: this.type } )
 				this.questionType = true;
 			},
 			questionNum() {
@@ -93,6 +91,10 @@
 .inputgroup {
 	position: relative;
 	display: flex;
+	.p-inputgroup-addon {
+		border: 0;
+		box-shadow: var(--card-shadow) 0px 3px 3px;
+	}
 	& span.error-msg {
 		position: absolute;
 		bottom: -60%;
@@ -103,8 +105,9 @@
 	:deep(.p-dropdown) {
 		width: 100%;
 	}
-	:deep(.p-inputtext), :deep(.p-dropdown) {
-		border-radius: 0 6px 6px 0;
+	:deep(.p-inputtext) {
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
 	}
 }
 .trash {
