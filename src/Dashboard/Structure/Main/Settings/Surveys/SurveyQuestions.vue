@@ -60,14 +60,18 @@
 		},
 		methods: {
 			addComponent() {
-				let newObj = { title: '', index: null/* , qId: uniqueId() */ }
-
 				let questions =  this.newSurvey && 'questions' in this.newSurvey ? this.newSurvey.questions : this.questions
+				
+				const highestValue = questions.reduce((highest, obj) => {
+					if ('index' in obj) {
+						return Math.max(highest, obj.index);
+					}
+					return highest;
+				}, 0);
+
+				let newObj = { title: '', index: highestValue + 1 }
 
 				this.questions = [...questions, newObj]
-				this.questions.map( (question, index) => {	
-					question.index = index
-				})
 
 				this.$store.dispatch("surveys/setNewSurvey", { questions: [...this.questions] }); 
 			},
@@ -78,10 +82,10 @@
 				let questions =  this.newSurvey && 'questions' in this.newSurvey ? this.newSurvey.questions : this.questions
 				
 				this.questions = questions.filter( q => q.index !== index )
-				this.questions = this.questions.map( q =>  {
+				/* this.questions = this.questions.map( q =>  {
 					q.index = q.index - 1
 					return q
-				})
+				}) */
 				this.$store.dispatch("surveys/setNewSurvey", { questions: [...this.questions] });	
 	
 			},

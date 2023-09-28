@@ -53,7 +53,7 @@
 		data() {
 			return {
 				title: '',
-				type: null,
+				type: this.question ? this.question.type : null,
 				questionType: false,
 			}
 		},
