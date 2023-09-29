@@ -211,10 +211,10 @@
 				}				
 				
 				// check errors resp. unfilled inputs in questions
-				let errors = dataObj.questions.map( q =>  {
+				let errors = dataObj.questions.map( (q, index) =>  {
 					if ( q.type === 1 ) {
 						//check if is namuber with value higher than 0
-						let result = this.checkNumber(q.open_value) ? null : (Number(q.index) + 1)
+						let result = this.checkNumber(q.open_value) ? null : (Number(index) + 1)
 						return result
 					}
 
@@ -225,7 +225,7 @@
 									 q.options[0].length > 0 && 
 									 typeof q.options[1] === 'string' && 
 									 q.options[1].length > 0 ? 
-									 	null : (Number(q.index) + 1);
+									 	null : (Number(index) + 1);
 						return result
 					}
 
@@ -233,28 +233,33 @@
 						// check if is namuber with value higher than 0
 						let resultNum = this.checkNumber(q.max_choosed)
 						// check if array has objects with not empty string value
-						let resultArr = this.checkArrayObjectsValues(q.multi_values, 'value', q.index)
+						let resultArr = this.checkArrayObjectsValues(q.multi_values, 'value', index)
 
 						if ( q.type === 4 ) {
 							let resultOpen = this.checkNumber(q.open_value)
-							return resultNum && resultArr && resultOpen ? null : (Number(q.index) + 1)
+							return resultNum && resultArr && resultOpen ? null : (Number(index) + 1)
 						}
 
-						return resultNum && resultArr ? null : (Number(q.index) + 1)
+						return resultNum && resultArr ? null : (Number(index) + 1)
 					}
 
 					if ( q.type === 5 ) {
-						let result = this.checkNumber(q.levels) ? null : Number(q.index) + 1
+						let result = this.checkNumber(q.levels) ? null : Number(index) + 1
 						return result
 					}
 					
 					if (q.type === 6) {
-						let result = this.checkNumber(q.max_choosed) ? null : Number(q.index) + 1
+						let result = this.checkNumber(q.max_choosed) ? null : Number(index) + 1
+						return result
+					}
+
+					if (q.type === 7) {
+						let result = q.checkbox_label && q.checkbox_label.length > 0 ? null : Number(index) + 1
 						return result
 					}
 
 					if (q.type === 8) {
-						let result = 'info' in q && q.info.length > 0 ? null : Number(q.index) + 1 
+						let result = q.info && q.info.length > 0 ? null : Number(index) + 1 
 						return result
 					}
 				})

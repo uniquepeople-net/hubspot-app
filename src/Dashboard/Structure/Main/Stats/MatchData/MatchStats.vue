@@ -16,7 +16,7 @@
 <script>
 	import { mapGetters } from 'vuex';
 	import MatchSelects from '../MatchSelects.vue'
-	import MatchCard from '../../../../global/MatchCard.vue'
+	import MatchCard from '../Global/MatchCard.vue'
 	import BackButton from '../../../../global/BackButton.vue';
 
 	export default {

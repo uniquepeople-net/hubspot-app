@@ -1,5 +1,5 @@
 <template>
-	<div>
+	
 		<Card class="card match-card">
 			<template #content>
 				<div  class="card-body">
@@ -47,16 +47,16 @@
 				</div>
 			</template>
 		</Card> 
-	</div>
+	
 </template>
  
  
 <script>
-	import AdvancedData from '../Structure/Main/Stats/MatchData/AdvancedData.vue';
-	import AdvancedDataPlayer from '../Structure/Main/Stats/PlayerData/AdvancedDataPlayer.vue';
-	import Scorers from '../Structure/Main/Stats/MatchData/Scorers.vue';
-	import QuestionMark from '../Structure/Main/Stats/Vectors/QuestionMark.vue';
-	import Football from '../Structure/Main/Stats/Vectors/Football.vue';
+	import AdvancedData from '../MatchData/AdvancedData.vue';
+	import AdvancedDataPlayer from '../PlayerData/AdvancedDataPlayer.vue';
+	import Scorers from '../MatchData/Scorers.vue';
+	import QuestionMark from '../Vectors/QuestionMark.vue';
+	import Football from '../Vectors/Football.vue';
 
 	export default {
 		props: {

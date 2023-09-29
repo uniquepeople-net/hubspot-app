@@ -1,10 +1,10 @@
 <template>
 	<div class="position-relative">
 		<h5 class="text-value mb-4">{{ $t('message.YourLastGames') }}</h5>
-		<div v-if="matches && matches.length !== 0">
+		<div v-if="matches && matches.length > 0">
 
-			<MatchCard v-for="match in matches.slice(0, showMatches)" @click="selectMatch(match)" class="match-card" 
-					   :matchData="match" :goals="false" />
+			<MatchCard v-for="match in matches.slice(0, showMatches)" class="match-card" 
+					   :matchData="match" :goals="false" @click="selectMatch(match)"/>
 			
 			<div class="text-center see-more w-100">
 				<Button class="text-sm-bold" link :label="$t('message.SeeMore')" @click="seeMore" :loading="loading" />
@@ -21,12 +21,12 @@
  
 <script>
 	import LoadingIcon from '../../../../global/LoadingIcon.vue'
-	import MatchCard from "../../../../global/MatchCard.vue"
+	import MatchCard from "./MatchCard.vue"
 
 	export default {
 		props: {
 			matches: Array,
-			playerId: Number
+			playerId: Number,
 		},
 		data() {
 			return {
@@ -55,8 +55,7 @@
 			selectMatch(match) {
 				this.selectedMatch = match.id
 				this.$emit('selectedMatch', match)
-			},
-			
+			}
 		},
 		watch: {
 			matches: function(data) {

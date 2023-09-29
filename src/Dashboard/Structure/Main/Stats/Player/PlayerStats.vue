@@ -41,7 +41,7 @@
 	import MatchEvents from './MatchEvents/MatchEvents.vue'
 	import MatchStats from './MatchStats.vue'
 	import PlayerInfo from './PlayerInfo.vue'
-	import MatchCard from '../../../../global/MatchCard.vue'
+	import MatchCard from '../Global/MatchCard.vue'
 	import BackButton from '../../../../global/BackButton.vue'
 	import SeasonStats from './SeasonStats.vue'
 	import Search from './Comparison/Search.vue'

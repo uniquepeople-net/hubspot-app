@@ -12,7 +12,7 @@
  
 <script>
 	import { mapGetters } from 'vuex'
-	import MatchCard from '../../../../global/MatchCard.vue'
+	import MatchCard from '../Global/MatchCard.vue'
 	import LastGames from "../Global/LastGames.vue"
 	import AdvStats from './AdvStats/AdvStats.vue'
 	import LineUps from './Lineups/Lineups.vue'
@@ -20,7 +20,7 @@
 
 	export default {
 		created() {
-			this.fetchMatches()
+			//this.fetchMatches()
 		},
 		data() {
 			return {

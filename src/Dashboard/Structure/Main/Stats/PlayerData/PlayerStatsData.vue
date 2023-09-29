@@ -6,7 +6,7 @@
  
  
 <script>
-	import MatchCard from '../../../../global/MatchCard.vue'
+	import MatchCard from '../Global/MatchCard.vue'
 
 	export default {
 		props: ['id', 'matchId'],
