@@ -38,13 +38,14 @@
 			<Divider />
 
 			<div class="d-flex justify-content-between mt-5">
-				<Button label="Previous" class="p-button-raised p-button-secondary p-button-text me-auto mt-2 submit-btn" 
+				<Button :label="$t('message.Previous')" class="p-button-raised p-button-secondary p-button-text me-auto mt-2 submit-btn" 
 						@click="prevPage($event, fulfilledSurvey)" v-show="checkPrev()"/>
-				<Button label="Next" class="p-button-raised p-button-secondary p-button-text ms-auto mt-2 submit-btn " 
+				
+				<Button :label="$t('message.Next')" class="p-button-raised p-button-secondary p-button-text ms-auto mt-2 submit-btn " 
 						@click="nextPage($event, fulfilledSurvey)" v-show="checkNext()"/>
 			</div>
 			<div class="position-relative text-center d-flex flex-column align-items-center w-100 mt-5">
-				<Button label="Send survey" class="p-button-raised submit-btn btn-black" :loading="loading"
+				<Button :label="$t('message.SendSurvey')" class="p-button-raised submit-btn btn-black" :loading="loading"
 						@click="sendSurvey(saveSurveyLink, fulfilledSurvey)" v-if="checkFinish()" :disabled="disabledBtn"/>
 				<small class="warning mt-3" v-if="unfilledQuestions && showError">{{ $t('message.Questions') }} {{unfilledQuestions}} {{ $t('message.NotCorrectlyFilled').toLowerCase() }}.</small>
 			</div>
