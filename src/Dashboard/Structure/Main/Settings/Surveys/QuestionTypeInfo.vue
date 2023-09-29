@@ -19,7 +19,9 @@
 		},
 		mounted() {			
 			if ( this.question ) {
-				this.value = this.question.info ? this.question.info : this.value
+				this.value = this.question.checkbox_label ? 
+							this.question.checkbox_label : 
+							( this.question.info ? this.question.info : this.value )
 			}
 
 			this.$store.dispatch("surveys/setNewSurvey", { [this.type === 8 ? 'info' : 'checkbox_label']: this.value, index: this.id })
