@@ -1,5 +1,5 @@
 <template>
-	<div :class="`row pb-3 ${ keyValue % 2 == 0 ? 'bgGrey' : 'bgBlue' }`">
+	<div :class="`row question-comp mb-2 pb-3 ${ keyValue % 2 == 0 ? 'bgGrey' : 'bgBlue' }`">
 		<div class="inputgroup my-3 col-12 col-lg-6">			
 			<span class="p-inputgroup-addon fw-bold">
 				{{ questionNum() }}
@@ -121,10 +121,17 @@
 		cursor: pointer;
 	}
 }
+.question-comp {
+	border-radius: var(--btn-border-radius);
+}
 .bgGrey {
 	background: var(--green-50);
+	border: 1px solid var(--green-200);
+	box-shadow: var(--green-100) 0px 3px 3px;
 }
 .bgBlue {
 	background: var(--yellow-50);
+	border: 1px solid var(--yellow-200);
+	box-shadow: var(--yellow-100) 0px 3px 3px;
 }
 </style>
