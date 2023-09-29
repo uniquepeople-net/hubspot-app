@@ -16,7 +16,7 @@
 
 	<Card class="card mx-3 mx-auto">
 		<template #title>
-			<div class="card-header">{{ survey.name }}</div>
+			<div class="card-header border-bottom-0">{{ survey.name }}</div>
 			<div class="text-center p-5" v-if="!started">
 				<Button  :label="$t('message.StartSurvey')" class="ms-auto mt-2 submit-btn btn-black" @click="startSurvey()"/>
 			</div>
