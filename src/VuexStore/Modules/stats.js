@@ -266,7 +266,6 @@ export default {
 					Authorization: 'Basic ' + process.env.VUE_APP_WY_KE
 				}})
 				.then( response => {
-					
 					// Check length of matches array to correctly set page for request
 					let matchesLength = context.rootGetters['stats/playerMatches'].length
 					if ( data.compare === '1' ) {
@@ -288,7 +287,6 @@ export default {
 						}
 						return acc;
 					}, {}); */
-					
 					
 					let matchesDividedTeams = response.data.matches.map( item => {
 						const teamsData = item.detail.teamsData

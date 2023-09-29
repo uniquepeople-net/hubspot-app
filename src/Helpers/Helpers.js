@@ -276,20 +276,22 @@ class Helpers {
 	// Helper function to check object with substitutions players Id's and add 
 	// lineup player his bench substitution and vice versa
 	substitionsHelper(team) {
-		team.formation.substitutions.map( s => {
+		
+		team && team.formation && team.formation.substitutions && team.formation.substitutions.map( s => {
 			let findedOut = team.formation.lineup.find( f => f.playerId === s.playerOut )
 			let findedIn = team.formation.bench.find( f => f.playerId === s.playerIn )
+		
 			if ( findedIn ) {
 				team.formation.lineup.find( f => {
 					if (f.playerId === s.playerOut) {
-						return f.inside = { shortName: findedIn.player.shortName, minute: s.minute }
+						return f.inside = { shortName: 'player' in findedIn ? findedIn.player.shortName : null, minute: s.minute }
 					}
 				})
 			}
 			if ( findedOut ) {
 				team.formation.bench.find( f => {
 					if (f.playerId === s.playerIn) {
-						return f.outside = { shortName: findedOut.player.shortName, minute: s.minute }
+						return f.outside = { shortName: 'player' in findedOut ? findedOut.player.shortName : null, minute: s.minute }
 					}
 				})
 			}

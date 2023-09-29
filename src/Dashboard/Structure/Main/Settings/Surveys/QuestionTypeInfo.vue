@@ -35,8 +35,6 @@
 				this.updateValue()
 			},
 			updateValue: debounce(function () {
-				console.log({ [this.type === 8 ? 'info' : 'checkbox_label']: this.value, index: this.id })
-				
 				this.$store.dispatch("surveys/setNewSurvey", { [this.type === 8 ? 'info' : 'checkbox_label']: this.value, index: this.id })
 			}, 100),
 		},

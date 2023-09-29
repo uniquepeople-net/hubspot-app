@@ -104,9 +104,6 @@
 					survey: this.survey
 				}
 
-				console.log(obj)
-				
-				
 				const errors = this.checkCorrectAnswers(obj.data)
 
 				/* 	Check if question has some value filled not if has precisely 
@@ -124,12 +121,15 @@
 
 
 				// Check if question has preciselly number of permitted values filled 
-				const unfilled = obj.data.map( (item, index) => {					
+				const unfilled = obj.data.map( (item, index) => {
+					let skip = Boolean(item.question.skip)
+										
 					if ( ( 'scale_value' in item && item.scale_value == null ) ||
-					 	 /* ( 'closed_value' in item && item.closed_value == null ) || */
+					 	 ( 'closed_value' in item && item.closed_value == null && !skip ) ||
 						 ( 'value' in item && 
 						 	( this.survey.type_id === 1 && ( item.value.length < item.question.min_to_choose || item.value.length > item.question.max_to_choose )) ||
-							( this.survey.type_id === 2 && item.value.length !== item.question.max_to_choose ))
+							( this.survey.type_id === 2 && item.value.length !== item.question.max_to_choose )) ||
+						( 'checkbox' in item && item.checkbox === false )
 					 ) {
 						return item.step
 					} else return null
@@ -166,9 +166,6 @@
 								title: "Unable to save survey"
 							})
 						})
-
-					//this.$store.dispatch("surveys/sendSurvey", survey.id)
-				
 				}
 			},
 			complete() {
@@ -179,11 +176,14 @@
 			},
 			checkCorrectAnswers(data) {
 				const unfilled = data.map( (item, index) => {
+					let skip = Boolean(item.question.skip)
+
 					if ( ( 'scale_value' in item && item.scale_value == null ) ||
-					 	 /* ( 'closed_value' in item && item.closed_value == null ) || */
+					 	 ( 'closed_value' in item && item.closed_value == null && !skip) ||
 						 ( 'value' in item && 
 						 	( this.survey.type_id === 1 && ( item.value.length < item.question.min_to_choose || item.value.length > item.question.max_to_choose )) ||
-							( this.survey.type_id === 2 && item.value.length !== item.question.max_to_choose ))
+							( this.survey.type_id === 2 && item.value.length !== item.question.max_to_choose )) ||
+						( 'checkbox' in item && item.checkbox === false )
 					 ) {
 						return item.step
 					} else return null
