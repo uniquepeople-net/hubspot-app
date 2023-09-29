@@ -35,8 +35,13 @@
 			}
 		},
 		methods: {
-			checkSurveyAcces() {				
+			checkSurveyAcces() {
 				if ( this.survey ) {
+
+					if ( 'completed' in this.survey && this.survey.completed ) {
+						this.message = this.$i18n.t('message.CompletedSurvey')
+						return false
+					}
 
 					//if ( this.survey.questions.some( q => q.type_id === 6 ) ) {
 					if ( this.survey.type_id === 2 && this.survey.advanced.competition_id !== 771 ) {
@@ -53,12 +58,12 @@
 					let surveyDone = localStorage.getItem(this.slug + 'done');
 
 					if ( surveyDone === 'true'  ) {
-						this.message = 'You have successfully filled out the survey before!'
+						this.message = this.$i18n.t('message.CompletedSurvey')
 						return false
 					}
 
 					if ( status !== 2 ) {
-						this.message = 'This survey is ' + this.survey.survey_status.name
+						this.message = this.$i18n.t('message.ThisSurveyStatus') + ': ' + this.surveyStatus(this.survey.survey_status.name)
 						return false
 					}
 					
@@ -69,7 +74,7 @@
 
 					if ( !isPublic ) {
 						if (!User.loggedIn()) {
-							this.message = 'You are not authorized to do this survey.'
+							this.message = this.$i18n.t('message.NotAuthorizedToSurvey')
 							return false
 						}
 					}					
@@ -79,7 +84,7 @@
 
 						for ( const hash of hashesArr ) {
 							if ( this.queryHash === hash.hash && hash.count >= hash.max_limit ) {								
-								this.message = 'You are over limit to do this survey'
+								this.message = this.$i18n.t('message.OverLimitSurvey')
 								return false
 							}
 						}
@@ -90,7 +95,7 @@
 							return true
 						}
 
-						this.message = 'Invalid hash'
+						this.message = this.$i18n.t('message.InvalidHash')
 
 					} else {
 						return true
@@ -98,6 +103,17 @@
 				} else {
 					return false
 				}					
+			},
+			surveyStatus(status) {
+				switch (status) {
+					case 'Waiting':
+						return this.$i18n.t('message.Waiting')
+					
+					case 'Finished':
+						return this.$i18n.t('message.Finished')
+					default:
+						break;
+				}
 			},
 			pushToLogin() {
 				this.$router.push({ name: 'login' })

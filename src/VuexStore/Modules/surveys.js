@@ -317,7 +317,12 @@ export default {
 							Authorization: 'Bearer ' + User.getToken()
 					}})
 					.then( response =>  {
-						context.commit("SETSPECIFICSURVEYBYSLUG", response.data[0])	
+						let data = response.data[0]
+
+						if ( 'completed' in response.data && response.data.completed ) {
+							data = response.data
+						}
+						context.commit("SETSPECIFICSURVEYBYSLUG", data)	
 					})
 					.catch( error => {
 						Toast.fire({
