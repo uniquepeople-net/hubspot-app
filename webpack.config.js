@@ -4,8 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader')
 const webpack = require('webpack');
 const path = require('path');
-const Dotenv = require('dotenv-webpack');
-//const { GenerateSW } = require('workbox-webpack-plugin');
+
 
 
 module.exports = {
@@ -50,8 +49,6 @@ module.exports = {
 				  },
 				  // other vue-loader options go here
 				  compilerOptions: {
-					//exclude google-pay-button from native components
-					isCustomElement: (tag) => tag === 'google-pay-button'
 				  }
 				}
 			},
@@ -110,37 +107,8 @@ module.exports = {
       		'__VUE_PROD_DEVTOOLS__': true,
 
 			// Define feature flags for vue-i18n
-			'__VUE_I18N_FULL_INSTALL__': JSON.stringify(true),
-			'__VUE_I18N_LEGACY_API__': JSON.stringify(true),
 			'__INTLIFY_PROD_DEVTOOLS__': JSON.stringify(true),
 		}),
         new webpack.HotModuleReplacementPlugin(),
-		new Dotenv(),
-		/* new GenerateSW({
-			// These are some common options, and not all are required.
-			// Consult the docs for more info.
-			exclude: [/.../, '...'],
-			navigateFallback: '...',
-			runtimeCaching: [
-			  {
-				urlPattern: /^https:\/\/www\.gstatic\.com\/firebasejs\/8\.10\.1\//,
-				handler: 'StaleWhileRevalidate',
-				options: {
-				  cacheName: 'firebase-js',
-				  expiration: {
-					maxEntries: 10,
-					maxAgeSeconds: 60 * 60 * 24 * 7, // 7 days
-				  },
-				},
-			  },
-			  {
-				urlPattern: /^http:\/\/localhost:5000\/firebase-messaging-sw\.js$/,
-				handler: 'NetworkFirst',
-				options: {
-				  cacheName: 'firebase-messaging-sw',
-				},
-			  },
-			],
-		  }), */
     ],
 };

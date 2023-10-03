@@ -1,4 +1,4 @@
-Rename vue-app to your project folder app name
+Rename hubspot-app to your project folder app name
 
 **To first start docker** \
 First time you start you need to build the image 
@@ -12,7 +12,7 @@ First time you start you need to build the image
 
 **Install packges (node_modules)** \
 
-> docker run --rm -w /home/node/vue-app -v $PWD:/home/node/vue-app node:16 npm install 
+> docker run --rm -w /home/node/hubspot-app -v $PWD:/home/node/hubspot-app node:16 npm install 
 
 
 **To every next start docker** \
@@ -24,7 +24,7 @@ First time you start you need to build the image
 **Commands**
 **1. For Node commands** \
 
-> docker run --rm -w /home/node/vue-app -v $PWD:/home/node/vue-app node:16 npm install || do npm install
+> docker run --rm -w /home/node/hubspot-app -v $PWD:/home/node/hubspot-app node:16 npm install || do npm install
 
 **To stop docker**
 > docker-compose down

@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cp -r /build-dir/node_modules/ /vue-app/
+cp -r /build-dir/node_modules/ /hubspot-app/
 
 exec npm start

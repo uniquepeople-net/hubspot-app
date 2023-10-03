@@ -1,186 +1,40 @@
 <template>
-	<div>
-		<CustomDialog :visible="showMessage" :response="response" @hideDialog="hideDialog"/>
-	
-		<AuthWrapper>
-			<template v-slot:title>
-				<h1 class="auth-title mb-5">{{ $t('message.Login') }}</h1>
-			</template>
-	
-			<template v-slot:body>
-				<form @submit.prevent="handleSubmit(!v$.$invalid)" class="p-fluid">
-					<div class="row">
-						<div class="mb-4 p-inputgroup mb-5 col-12">
-							<span class="p-float-label w-100">
-								<InputText id="email" v-model="v$.email.$model" :class="{'p-invalid':v$.email.$invalid && submitted}" aria-describedby="email-error"
-											name="email" placeholder="Email"/>
-			
-								<label for="email">Email</label>
-							</span>
-							<InputError :validator="v$.email" :submitted="submitted" replace="Email"></InputError>
-						</div>
-						<div class="mb-4 p-inputgroup mb-5 col-12">
-							<span class="p-float-label w-100">
-								<Password id="password" v-model="v$.password.$model" :class="{'p-invalid':v$.password.$invalid && submitted}" toggleMask
-											name="password" :placeholder="$t('message.Password')" :feedback="false">
-								</Password>
-								<label for="password">{{$t('message.Password')}}</label>
-							</span>
-			
-							<InputError :validator="v$.password" :submitted="submitted" :replace="$t('message.Password')"></InputError>
-						</div>
-					</div>
-					<div class="position-relative text-center mt-5">
-						<Button type="submit" :label="$t('message.LoginV')" class="submit-btn btn btn-primary btn-block btn-lg btn-border" :loading="loading"/>
-					</div>
-				</form>
-				<div class="mt-4 center-center flex-column">
-					<span class="registered-text mb-3">{{ $t('message.Notregistered') + '?' }}</span>
-					<Button :label="$t('message.Create') + ' ' +  $t('message.Account')" 
-							@click="redirectRegister" class="btn-black"/>
-				</div>
-			</template>
-	
-			<template v-slot:footer>
-				<div class="mt-3 text-lg fs-4">
-					<!-- <Button :label="$t('message.ForgotPassword') + ' ?'" 
-							class="font-bold p-button-raised p-button-secondary p-button-text"
-							@click="redirectForgot"></Button> -->
-					<p class="text-subtitle forgot-redirect" @click="redirectForgot">
-						<span class="color-light">{{ $t('message.ForgotYour') + ' ' }}</span>
-						<span class="text-subtitle-bold">{{ $t('message.password') + '?' }}</span>
-					</p>
-				</div>
-			</template>	
-		</AuthWrapper>
+	<div class="login flex-column">
+		<h5 class="mb-5">Hubspot app</h5>
+		<GoogleLogin :callback="callback" prompt class="google-oauth"/>
 	</div>
 </template>
  
  
 <script>
-import { sameAs, numeric } from "@vuelidate/validators";
-import { required, email, minLength } from "../plugins/vuelidate-i18n";
-import { useVuelidate } from "@vuelidate/core";
-import CustomDialog from '../Dashboard/global/CustomDialog.vue'
-import AuthWrapper from '../Auth/AuthWrapper.vue';
+import { mapGetters } from 'vuex'
+import { decodeCredential } from 'vue3-google-login'
 
 export default {
-	setup: () => ({ v$: useVuelidate() }),
-    data() {
-        return {            
-            email: '',			
-            password: '',
-			submitted: false,
-            showMessage: false,
-			response: {},
-			loading: false
-        }
-    },
-    validations() {
-        return {
-            email: { required, email },
-            password: { required, minLength: minLength(8)},
-        }
-    },
     methods: {
-		hideDialog() {
-			this.showMessage = false
-		},
-        handleSubmit(isFormValid) {
-            this.submitted = true;
+		callback(response) {
+			const userData = decodeCredential(response.credential)
 
-            if (!isFormValid) {
-                return;
-            }
-			this.loading = true
+			let authorized = User.responseAfterLogin(response.credential, this.googleUrl )
 
-			let apiGwloginUrl = this.$store.getters['links/loginApiGwUrl'];
-
-			axios.post( apiGwloginUrl , { 
-							email: this.email,
-							password: this.password,										  
-				}).then(
-					response => {									
-						this.toggleDialog();
-						this.loading = false
-						let data = response.data
-						this.response = data
-
-
-
-						if ( data.authorisation ) {
-							User.responseAfterLogin(data.authorisation.token)
-							Toast.fire({
-								icon: 'success',
-								title: 'Signed in successfully'
-							})
-
-							this.$store.dispatch("user/getLoginUser", response.data.user);
-							//this.$router.go(-1)
-							this.$router.push('/');							
-						}
-					}
-				).catch( error => {
-					this.loading = false
-					if ( error.response.status >= 400 && error.response.status < 500 ) {
-						this.toggleDialog();
-						let data = error.response.data
-						this.response = data
-					} else {
-						Toast.fire({
-							icon: 'error',
-							timer: 5000,
-							title: 'Server error, try again later'
-						}) 
-					}
-				})
-        },
-        toggleDialog() {
-            this.showMessage = !this.showMessage;
-        
-            if(!this.showMessage) {
-                //this.resetForm();
-            }
-        },
-        resetForm() {
-            this.email = '';
-            this.password = '';
-            this.submitted = false;
-        },
-		redirectForgot() {
-			this.$router.push({name: 'forgot'})
-		},
-		redirectRegister() {
-			this.$router.push({name: 'register'})
+			if ( authorized ) {
+				this.$router.push({ name: 'dashboard' })
+			}			
 		}
     },
-	components: { AuthWrapper, CustomDialog }
+	computed: {
+		...mapGetters({ googleUrl: 'login/googleUrl' })
+	},
 }
 </script>
  
  
 <style lang='scss' scoped>
-.p-inputgroup {
-	position: relative;
-	& span.error-msg {
-		position: absolute;
-		top: 100%;
-	}
-	& > .p-button {
-		border-radius: 0 4px 4px 0;
-	} 
+.login {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
-.forgot-redirect {
-	cursor: pointer;
-}
-.spinner-grow {
-	top: 0;
-	bottom: 0;
-	margin: auto;
-	margin-left: .5rem;
-}
-.registered-text {
-	font-size: .8rem;
-}
-
 </style>

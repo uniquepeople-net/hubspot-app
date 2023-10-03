@@ -3,9 +3,9 @@ import Helpers from './Helpers';
 class AppStorage {
 
 	storeToken(data) { 
-		/*let encToken = Helpers.encryptAes(data, 'skey')
-		localStorage.setItem('token', encToken)*/
-		localStorage.setItem('token', data)
+		// Calculate the expiration time for 1 minute from the current time
+		const oneMinuteFromNow = new Date(new Date().getTime() + 60000);
+		Cookies.set('token', data);
 	}
 
 	store(token) {
@@ -13,14 +13,12 @@ class AppStorage {
 	}
 
 	clear() {
-		localStorage.removeItem('token')
+		Cookies.remove('token');
 	}
 
 	getToken() {
-		let localStorageToken = localStorage.getItem('token');
-		/* let decToken = Helpers.decryptAes( localStorageToken, 'skey' );
-		return decToken; */
-		return localStorageToken
+		const token = Cookies.get('token');
+		return token
 	}
 
 }

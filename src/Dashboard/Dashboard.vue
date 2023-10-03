@@ -1,79 +1,32 @@
 <template>
-	<div v-if="show" class="dashboard">
-		<Sidebar />
+	<div class="dashboard">
 
-		<div id="main" :class="`pt-0 ${activeSidebar ? 'main-active-sidebar' : ''}`">
-			<NavHeader class="navbar"/>	
-			
-			<router-view></router-view>
-			<!-- <router-view v-slot="{ Component }">
-				<transition name="fade">
-					<component :is="Component" />
-				</transition>
-			</router-view> -->
-		</div>
+		<Grid />
+		
 	</div>
 </template>
  
 <script>	
 	import { mapGetters } from 'vuex'; 
-	import Sidebar from './Structure/Sidebar/Sidebar.vue'
-	import NavHeader from './Structure/NavHeader/NavHeader.vue';
+	import Grid from './Products/Grid.vue';
 
 	export default {
 		created() {	
-			if (!User.loggedIn()) {
-				this.$router.push({ name: 'intro' })				
-			} else {			
-				let currentRoute = this.$router.currentRoute._value.name;
-				
-				// check the first login of newly registered user
-				if ( this.loginUser && this.loginUser.first_login === true ) {
-					this.$router.push({ name: 'tutorial' })
-				} else {
-					if ( currentRoute === 'dashboard' ) {
-						this.$router.push({ name: 'my-board' })
-					} else {
-						this.$router.push({ name: currentRoute })
-					}
-				}
-				localStorage.setItem('showMatches', '')
-				this.$store.dispatch("user/getUser");
+			if(!User.loggedIn(this.googleUrl)) {
+				this.$router.push({ name: 'login' })
 			}
-			/* const cookies = document.cookie.split('; ');
-			const jwtCookie = cookies.find(cookie => cookie.startsWith('jwt='));			
-			const token = jwtCookie ? jwtCookie.substring(4) : null;
-			console.log(cookies) */
-			
 		},
 		data() {
 			return{
-				show: false, 
+				show: true, 
 			}
 		},
 		computed: {
-			...mapGetters({ loginUser: 'user/loginUser',
-							unAuth: 'user/unAuth',
-							user: 'user/user',
-							activeSidebar: 'appData/activeSidebar'}),
+			...mapGetters({ googleUrl: 'login/googleUrl' })
 		},
-		watch: {
-			user: function (data) {
-				if ( data.role_id ) {
-					this.show = true
-					if ( this.user.instat_id ) {
-						this.$store.dispatch('stats/getPlayerDetails', this.user.instat_id )
-					}
-				}
-			},
-			unAuth: function(data) {
-				if ( data ) {
-					this.$router.push({ name: 'logout' })
-				}
-			}
-		},
-		components: { NavHeader, Sidebar }
+		components: { Grid }
 	}
+
 </script>
  
  
@@ -82,31 +35,5 @@
 	//background-color: var(--bg-color);
 	min-height: 100vh;
 }
-#main {
-	padding: 1rem 1rem;
-	transition: all .2s ease-in-out;
-	.navbar {
-		display: flex;
-		justify-content: flex-end;
-	}
-}
-@media(min-width: 991px) {
-	#main {
-		padding: 1rem 2rem;
-	}
-	.main-active-sidebar {
-		margin-left: 15rem;
-	}
-}
-/* .fade-enter-active {
-	transition: all .8s;
-}
-.fade-leave-active {
-  	transition: all 0.2s;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-  scale: .99;
-} */
+
 </style>
