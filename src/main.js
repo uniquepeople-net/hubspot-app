@@ -20,6 +20,9 @@ window.Helpers = Helpers;
 import User from './Helpers/User'
 window.User = User
 
+// import globally components
+import Button from 'primevue/button'
+
 // Vue ROUTER
 import {routes} from './router/routes'
  
@@ -49,4 +52,5 @@ app.use(router)
 	.use(vue3GoogleLogin, {
 		clientId: '465240835637-r8qei9ch3ks7eka428kj2a7mffkaviqh.apps.googleusercontent.com'
 	})
+	.component('Button', Button)
 	.mount('#app')

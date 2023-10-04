@@ -87,6 +87,15 @@ module.exports = {
         open: true,
         hot: true,
         historyApiFallback: true,
+		proxy: {
+			'/api': {
+				target: 'https://api.hubapi.com/crm/v3/objects/', // Replace with your API server URL
+				changeOrigin: true,
+				pathRewrite: {
+					'^/api': '', // Remove the /api prefix when proxying
+				},
+			},
+		},
     },
     // resolve: {
     //     alias: {
