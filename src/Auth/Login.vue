@@ -5,7 +5,6 @@
 	</div>
 </template>
  
- 
 <script>
 import { mapGetters } from 'vuex'
 import { decodeCredential } from 'vue3-google-login'
