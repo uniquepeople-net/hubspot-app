@@ -94,7 +94,6 @@ export default {
 	components: { TableData, Dialog, FilterInput, InputText }
 }
 </script>
- 
- 
+
 <style lang='scss' scoped>
 </style>
