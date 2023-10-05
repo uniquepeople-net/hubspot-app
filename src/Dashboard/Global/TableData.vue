@@ -18,7 +18,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<div class="text-end">
+		<div class="center-center">
 			<Button icon="pi pi-plus" severity="success" text raised rounded aria-label="Add" @click="add">
 				<Plus />
 			</Button>

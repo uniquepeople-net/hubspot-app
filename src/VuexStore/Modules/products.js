@@ -16,6 +16,7 @@ export default {
 		}
 	},
 	actions: {
+		// Get list of products
 		async getProducts( context, query) {
 
 			let endpointBase = context.rootGetters['products/endpointBase']
@@ -34,7 +35,8 @@ export default {
 					console.log(error)
 				})		
 		},
-		async updateProduct( context, data ) {
+		// Handle add, delete, update products based on passed action 
+		async handleProduct( context, data ) {
 			context.commit("SETLOADING", true)
 
 			let endpointBase = context.rootGetters['products/endpointBase']
@@ -45,7 +47,9 @@ export default {
 			
 			let axiosRequest;
 
-			if (data.action === 'delete') {
+			if (data.action === 'add') {
+				axiosRequest = axios.post(endpointBase, { properties: { name: data.name, price: 99 } }, config);
+			} else if (data.action === 'remove') {
 				axiosRequest = axios.delete(endpointBase + '/' + data.id, config);
 			} else if (data.action === 'update') {
 				axiosRequest = axios.patch(endpointBase + '/' + data.id, { properties: { name: data.name } }, config);

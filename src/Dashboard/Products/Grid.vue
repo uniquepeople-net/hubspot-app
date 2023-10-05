@@ -10,9 +10,9 @@
 		<Dialog v-model:visible="dialog" modal dismissableMask :header="dialogHeader" :style="{ width: '90vw', maxWidth: '576px' }"
 				@after-hide="hideDialog()">
 			<div class="center-center flex-column">
-				<InputText v-model="product.properties.name" placeholder="Name" />
+				<InputText v-if="action === 'add' || action === 'update'" v-model="name" placeholder="Name" />
 				<Button :label="checkAction(action)[0]" :severity="checkAction(action)[1]" class="mt-3"
-						@click="updateProduct(action, product)" :loading="loading"/>
+						@click="handleProduct(action, product)" :loading="loading"/>
 			</div>
 		</Dialog>
 	</div>
@@ -37,13 +37,15 @@ export default {
 			dialogHeader: '',
 			action: '',
 			product: null,
-			filterKeyword: ''
+			filterKeyword: '',
+			name: '',
 		}
 	},
 	methods: {
 		updateItem(event, action, header) {
 			this.toggleDialog()
 			this.product = event
+			this.name = event ? event.properties.name : ''
 			this.action = action
 			this.dialogHeader = header
 		},
@@ -53,8 +55,10 @@ export default {
 		updateFilterInput(event) {
 			this.filterKeyword = event
 		},
-		updateProduct(action, product) {
-			this.$store.dispatch('products/updateProduct', { id: product.id, name: product.properties.name, action: action } )
+		handleProduct(action, product) {
+			this.$store.dispatch('products/handleProduct', { id: product ? product.id : null, 
+															 name: this.name, 
+															 action: action } )
 		},
 		hideDialog() {
 			this.$store.dispatch('products/getProducts', '?limit=10&archived=false' )
