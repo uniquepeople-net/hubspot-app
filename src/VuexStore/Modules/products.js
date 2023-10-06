@@ -2,7 +2,7 @@ export default {
 	namespaced: true,
 	state: () => ({
 		endpointBase: 'api/products',
-		accessToken: 'pat-eu1-1831caf1-4459-4a16-8a55-c2b4938785e9',
+		accessToken: process.env.HUBSPOT_APP_API_TOKEN,
 		list: null,
 		loading: false,
 		message: ''

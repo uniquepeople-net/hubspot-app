@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader')
 const webpack = require('webpack');
 const path = require('path');
-
+const Dotenv = require('dotenv-webpack');
 
 
 module.exports = {
@@ -112,10 +112,11 @@ module.exports = {
 			DOMAIN_URL: JSON.stringify('http://localhost:80'),
 			'__VUE_OPTIONS_API__': true,
       		'__VUE_PROD_DEVTOOLS__': true,
-
+			
 			// Define feature flags for vue-i18n
 			'__INTLIFY_PROD_DEVTOOLS__': JSON.stringify(true),
 		}),
         new webpack.HotModuleReplacementPlugin(),
+		new Dotenv(),
     ],
 };
