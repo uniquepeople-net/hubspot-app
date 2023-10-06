@@ -109,9 +109,7 @@ module.exports = {
             template: './src/index.html',
         }),
 		new webpack.DefinePlugin({
-			//DOMAIN_URL: JSON.stringify('https://ufp-dev-api-gw.uniquekube.uniquepeople.cloud'),
 			DOMAIN_URL: JSON.stringify('http://localhost:80'),
-			//DOMAIN_URL: JSON.stringify('https://ufp-apigw.uniquepeople.cloud'),
 			'__VUE_OPTIONS_API__': true,
       		'__VUE_PROD_DEVTOOLS__': true,
 
