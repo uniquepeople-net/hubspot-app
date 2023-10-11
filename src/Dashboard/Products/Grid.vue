@@ -2,7 +2,7 @@
 	<div >
 		<FilterInput class="mb-4" @update="updateFilterInput"/>
 
-		<TableData v-if="list" :list="listItems" :labels="['Id', 'Name', 'Update', 'Remove' ]" :data="['id', 'properties.name']"
+		<TableData :list="listItems" :labels="['Id', 'Name', 'Update', 'Remove' ]" :data="['id', 'properties.name']"
 				   @update="updateItem($event, 'update', 'Update product: ' + $event.properties.name)" 
 				   @remove="updateItem($event, 'remove', 'Remove product: ' + $event.properties.name)"
 				   @add="updateItem($event, 'add', 'Add product')"/>
